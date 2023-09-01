@@ -23,17 +23,21 @@ app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xd
 
 @app.route("/dashboard")
 def dash():
-    data = None
     de = dataengine.knightclient()
-    de.load_data_index(None)
-    return render_template("index.html", data=data)
+    dt = de.load_data_index(None)  # loads datas
 
+    return render_template("index.html", data=dt)
 
 # Start - Route functions
+
+
 @app.route("/", methods=['POST', 'GET'])
 @app.route("/index", methods=['POST', 'GET'])
 def index():
-    return render_template("index.html")
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+
+    return render_template("index.html", data=dt)
 
 
 @app.route("/inquire", methods=['POST', 'GET'])

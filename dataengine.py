@@ -6,7 +6,16 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
+    def timestamp(self):
+        """
+        Returns timestamp
+        """
+        return 0
+
     def update_data(self, key, value):
+        """
+        Update existing data
+        """
         pass
 
     def load_data_index(self, which):
@@ -22,21 +31,19 @@ class knightclient:
         # 2 - Article/Blog style
         # 3 - Shopping site
         # 4 - Business
-
         all_data = {  # 0 - Off, 1 - On
-            "sitedescription": self.site_data[0],
-            "sitename": self.site_data[1],
-            "footercopyright": self.site_data[2],
-            "logo": self.site_data[3],
-            "uparrow": self.site_data[4],
-            "domain": self.site_data[5],
-            "socialshare": self.site_data[6],
-            "popup": self.site_data[7],
-            "meta_description": self.site_data[8],
-            "meta_keywords": self.site_data[9],
-            "favicon": self.site_data[10],
-            # 0 - single list, 1 - multiple list, 9 - disable
-            "site_type": self.site_data[11],
+            "sitedescription": self.site_data[0][0],
+            "sitename": self.site_data[0][1],
+            "footercopyright": self.site_data[0][2],
+            "logo": self.site_data[0][3],
+            "uparrow": self.site_data[0][4],
+            "domain": self.site_data[0][5],
+            "socialshare": self.site_data[0][6],
+            "popup": self.site_data[0][7],
+            "meta_description": self.site_data[0][8],
+            "meta_keywords": self.site_data[0][9],
+            "favicon": self.site_data[0][10],
+            "site_type": self.site_data[0][11],
         }
 
         # adds menu_list in dict if either single, multi, otherwise False
@@ -50,7 +57,7 @@ class knightclient:
 
         # Add more condition depends on site_type
 
-        self.connection.close()
+        # self.connection.close()
 
         return all_data
 
