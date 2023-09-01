@@ -6,6 +6,7 @@
 import flask
 from flask import Flask, render_template, request, jsonify, session
 import sqlite3
+import dataengine
 
 app = Flask(__name__,
             static_url_path='',
@@ -23,8 +24,9 @@ app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xd
 @app.route("/dashboard")
 def dash():
     data = None
-
-    return render_template("", data=data)
+    de = dataengine.knightclient()
+    de.load_data_index(None)
+    return render_template("index.html", data=data)
 
 
 # Start - Route functions
