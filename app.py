@@ -1,7 +1,7 @@
 # KnightSolutions Canada
-# www.KnightSolutions.ca - Secured and Responsive Web Technologies
-# Aug 22,2023
-# MARP - Python 2.7
+# www.KnightSolutions.ca - Client Files / Dashboard
+# Aug 31,2023
+# MARP - Python 3
 
 import flask
 from flask import Flask, render_template, request, jsonify, session
@@ -12,18 +12,25 @@ app = Flask(__name__,
             static_folder='static',
             template_folder='templates')
 
-# Start - Local functions not in route
-user = "mark"
-password = "warfreaker"
 
-# End - Local functions not in route
+app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
+
+# session['owner'] = False
+
+# Owner Dashboard
+
+
+@app.route("/dashboard")
+def dash():
+    data = None
+
+    return render_template("", data=data)
 
 
 # Start - Route functions
-# Index Page (Landing)
 @app.route("/", methods=['POST', 'GET'])
 @app.route("/index", methods=['POST', 'GET'])
-def landing():
+def index():
     return render_template("index.html")
 
 
@@ -77,6 +84,3 @@ def product_show(product_name):
     return product_name
 
 # End - Route functions
-
-
-app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
