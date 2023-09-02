@@ -31,6 +31,7 @@ class knightclient:
         # 2 - Article/Blog style
         # 3 - Shopping site
         # 4 - Business
+        # 99 - Load ALL
         all_data = {  # 0 - Off, 1 - On
             "sitedescription": self.site_data[0][0],
             "sitename": self.site_data[0][1],
