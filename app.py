@@ -23,8 +23,11 @@ app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xd
 def dashboard():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
+    if 'authenticated' in session:
+        if len(session['authenticated']):
+            return render_template("dashboard.html", data=dt)
 
-    return render_template("dashboard.html", data=dt)
+    return redirect(url_for("login"))
 
 
 # Start - Route functions
@@ -57,6 +60,12 @@ def messageRec():
         return jsonify({"result": 0})
 
 
+@app.route("/logout")
+def logout():
+    del session['authenticated']
+    return "1"
+
+
 @app.route("/messages")
 def message():
 
@@ -69,8 +78,11 @@ def message():
     return render_template("messages.html", data=data)
 
 
-@app.route("/log", methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    """
+    authenticator for dashboad route
+    """
 
     if request.method == 'POST':
         _u = request.form.get('uname')
@@ -94,6 +106,10 @@ def login():
             print("Error: ", e)
             return render_template("login.html", error=True)
 
+    if 'authenticated' in session:
+        if len(session['authenticated']):
+            return redirect(url_for("dashboard"))
+            
     return render_template("login.html", error=False)
 
 
