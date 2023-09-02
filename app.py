@@ -2,11 +2,12 @@
 # www.KnightSolutions.ca - Client Files / Dashboard
 # Aug 31,2023
 # MARP - Python 3
-
-import flask
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-import sqlite3
 import dataengine
+import sqlite3
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+import flask
+
+version = "1.4"
 
 app = Flask(__name__,
             static_url_path='',
@@ -109,7 +110,7 @@ def login():
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard"))
-            
+
     return render_template("login.html", error=False)
 
 
