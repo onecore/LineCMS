@@ -23,7 +23,7 @@ def index():
     """
     main page
     """
-    return render_template("dashboard.html")
+    return render_template("main.html")
 
 
 @app.route("/dashboard", methods=['POST', 'GET'])
@@ -84,7 +84,6 @@ def login():
     """
     authenticator for dashboad route
     """
-
     if request.method == 'POST':
         _u = request.form.get('uname')
         _p = request.form.get('pwd')
