@@ -4,7 +4,7 @@
 # MARP - Python 3
 
 import flask
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import sqlite3
 import dataengine
 
@@ -16,29 +16,18 @@ app = Flask(__name__,
 
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 
-# session['owner'] = False
-
 # Owner Dashboard
 
 
-@app.route("/dashboard")
-def dash():
+@app.route("/dashboard", methods=['POST', 'GET'])
+def dashboard():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
 
-    return render_template("index.html", data=dt)
+    return render_template("dashboard.html", data=dt)
+
 
 # Start - Route functions
-
-
-@app.route("/", methods=['POST', 'GET'])
-@app.route("/index", methods=['POST', 'GET'])
-def index():
-    de = dataengine.knightclient()
-    dt = de.load_data_index(None)  # loads datas
-
-    return render_template("index.html", data=dt)
-
 
 @app.route("/inquire", methods=['POST', 'GET'])
 def messageRec():
@@ -80,9 +69,32 @@ def message():
     return render_template("messages.html", data=data)
 
 
-@app.route("/log")
+@app.route("/log", methods=['GET', 'POST'])
 def login():
-    return render_template("log.html")
+
+    if request.method == 'POST':
+        _u = request.form.get('uname')
+        _p = request.form.get('pwd')
+
+        try:
+            _de = dataengine.knightclient()
+            _cred = _de.get_cred(_u, _p)
+            _cred_data = _cred[0]
+
+            if _cred_data[0] == _u and _cred_data[1] == _p:
+                print("Auth success")
+                # Set session
+                session['authenticated'] = _u
+                return redirect(url_for("dashboard"))
+            else:
+                print("Auth Failed")
+                return render_template("login.html", error=True)
+
+        except Exception as e:
+            print("Error: ", e)
+            return render_template("login.html", error=True)
+
+    return render_template("login.html", error=False)
 
 
 @app.route("/product/<product_name>")

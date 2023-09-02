@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KnightStudio Dashboard - Manage your business</title>
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="shortcut icon" href="../../img/terminal.svg" />
+</head>
+<!--
+<script>
+
+function logAPI(){
+    var xhr = new XMLHttpRequest();
+
+    // xhr.onload = function() {
+    //   var res = this.responseText;
+    //   var result = JSON.parse(res)
+    //   if (result['success']){
+    //
+    //   }else{
+    //     swal("", "Username and Password doesnt match!", "warning");
+    //   }
+    // }
+
+    xhr.open("POST", "/log", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        uname: document.getElementById("uname").value,
+        pwd: document.getElementById("pwd").value,
+
+    }));
+
+
+
+  // swal("Thanks "+document.getElementById("name").value+"!", "Message sent, We will get back to you!", "success");
+}
+</script> -->
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                  <h3>KnightStudio Dashboard</h3>
+              </div>
+              <h4> </h4>
+              <h6 class="fw-light">Sign in to continue.</h6>
+              <form class="pt-3" method="post">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" id="uname" name="uname" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" id="pwd" name="pwd" placeholder="Password">
+                </div>
+                <div class="mt-3">
+                  <button type="submit" class="btn btn-primary">SIGN IN</button>
+                  <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a> -->
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script src="../../vendors/js/vendor.bundle.base.js"></script> -->
+  <!-- <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script> -->
+
+  <script>
+{% if error %}
+swal("", "Username and Password doesnt match!", "warning");
+{% endif %}
+  </script>
+</body>
+
+</html>

@@ -6,6 +6,12 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
+    def closedb(self):
+        """
+        Need to be close out of scope
+        """
+        self.connection.close()
+
     def timestamp(self):
         """
         Returns timestamp
@@ -17,6 +23,12 @@ class knightclient:
         Update existing data
         """
         pass
+
+    def get_cred(self, username, passw):
+        self.gc_fetch = self.cursor.execute("SELECT * FROM users")
+        self.gc_data = self.gc_fetch.fetchall()
+
+        return self.gc_data
 
     def load_data_index(self, which):
         """
@@ -57,8 +69,6 @@ class knightclient:
             all_data['menu_list'] = self.menu.fetchall()
 
         # Add more condition depends on site_type
-
-        # self.connection.close()
 
         return all_data
 
