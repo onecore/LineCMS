@@ -315,6 +315,8 @@ $(function() {
             processData: false,
             success: function(data) {
                 $("#logoview").attr('src','/media/'+data['status']);
+                swal("", 'Website Logo updated', "success");
+
             },
         });
     });
@@ -332,6 +334,8 @@ $(function() {
             processData: false,
             success: function(data) {
                 $("#favview").attr('src','/media/'+data['status']);
+                swal("", 'Website Favicon updated', "success");
+
             },
         });
     });

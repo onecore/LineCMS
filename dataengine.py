@@ -7,6 +7,9 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
+    def logger(self, message):
+        pass
+
     def closedb(self):
         """
         Need to be close out of scope
@@ -19,12 +22,17 @@ class knightclient:
         """
         return datetime.datetime.now()
 
-    def update_data(self, table, column, newvalue, where, whereequal):
+    def update_data_uploads(self, table, column, newvalue, where, whereequal):
         """
         Update existing data
         """
-        q = 'UPDATE {table} SET {column} = {value} WHERE {where} = {whereequal};'
-        pass
+        q = "UPDATE {table} SET {column} = '{value}' WHERE {where} = '{whereequal}';".format(
+            table=table, column=column, value=newvalue, where=where, whereequal=whereequal
+        )
+        print(q)
+        self.cursor.execute(q)
+        self.connection.commit()
+        return {"status": "success"}
 
     def update_websitesettings(self, dicts, owner):
         """

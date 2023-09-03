@@ -43,23 +43,28 @@ def showuploaded(file):
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
             print("No selected file")
             return redirect(request.url)
-
         if file and allowed_file(file.filename):
             print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+            d_e = dataengine.knightclient()
+            try:
+                d_e.update_data_uploads("control", "logo", filename,
+                                        "owner", session['authenticated'][0])
+            except Exception as e:
+                print("error ", e)
+                # if fails, revert to sample logo
+                d_e.update_data_uploads("control", "logo", 'sample.png',
+                                        "owner", session['authenticated'][0])
+                filename = "sample.png"
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
 
@@ -67,23 +72,28 @@ def upload_file():
 @app.route('/upload_fav', methods=['POST'])
 def upload_fav():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
             print("No selected file")
             return redirect(request.url)
-
         if file and allowed_file(file.filename):
             print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+            d_e = dataengine.knightclient()
+            try:
+                d_e.update_data_uploads("control", "favicon", filename,
+                                        "owner", session['authenticated'][0])
+            except Exception as e:
+                print("error ", e)
+                # if fails, revert to sample logo
+                d_e.update_data_uploads("control", "favicon", 'knight.svg',
+                                        "owner", session['authenticated'][0])
+                filename = "knight.svg"
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
 
@@ -105,7 +115,6 @@ def dashboard_main():
                 u_metadescription = request.form.get('meta_description')
                 u_metakeywords = request.form.get('meta_keywords')
                 u_footercopyright = request.form.get('footercopyright')
-
                 dicts = {
                     "sitename": u_sitename,
                     "description": u_description,
@@ -113,7 +122,6 @@ def dashboard_main():
                     "meta_keywords": u_metakeywords,
                     "footercopyright": u_footercopyright
                         }
-
                 for k, v in dicts.items():
                     if len(v) < 5:
                         error = "Some information must be 5 characters or more"
@@ -122,17 +130,10 @@ def dashboard_main():
                         upd = dataengine.knightclient()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
-
                             return render_template("dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
                             return render_template("dashboard.html", data=dt, error=error, success=False)
-
-                # if len(u_sitename) < 4 or len(u_description) < 4 or len(u_metadescription) < 4 or len(u_metakeywords):
-                #     error = "Some information must be 5 characters or more"
-                #     print("Failed")
-                # else:  # process
-                #     print("Success")
 
             return render_template("dashboard.html", data=dt, error=error, success=success)
     return redirect(url_for("login"))
