@@ -14,7 +14,7 @@ app = Flask(__name__,
             static_url_path='',
             static_folder='static',
             template_folder='templates')
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'static/dashboard/uploads'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -156,7 +156,7 @@ def dashboard_main():
                         upd = dataengine.knightclient()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
-                            return render_template("dashboard.html", data=dt, error=False, success=True)
+                            return render_template("dashboard/dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
                             return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
