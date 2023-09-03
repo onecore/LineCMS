@@ -228,14 +228,14 @@ swal("", `{{error}}`, "warning");
                   </p>
                   <hr>
                     <p class="text-center">Website Logo</p>
-                    <img></img>
-
-                    <img src="/media/{{data['logo']}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px">
+                    <center>
+                    <img src="/media/{{data['logo']}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:60%;width:60%">
+                    </center>
                     <center>
                     <label class="custom-file-upload center">
                       <form id="upload-file" name="upload-file">
                         <input type="file" name="file"/>
-                        <i class="fa fa-cloud-upload"></i> Click here to choose
+                        <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
                         <button class="btn btn-primary rounded" id="upload-file-btn" type="button">Upload</button>
                       </form>
                     </label>
@@ -245,6 +245,18 @@ swal("", `{{error}}`, "warning");
 
                   <hr>
                     <p class="text-center">Website Favicon</p>
+                    <center>
+                      <img src="/media/{{data['favicon']}}" alt="..." id="favview" name="favview" class="img-thumbnail" style="border:none;bottom:30px;width:10%;height:10%;">
+                    </center>
+                      <center>
+                      <label class="custom-file-upload center">
+                        <form id="upload-fav" name="upload-file">
+                          <input type="file" name="file"/>
+                          <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                          <button class="btn btn-primary rounded" id="upload-fav-btn" type="button">Upload</button>
+                        </form>
+                      </label>
+                    </center>
                   <hr>
                     <p class="text-center">Modules</p>
 
@@ -294,7 +306,6 @@ swal("", `{{error}}`, "warning");
 $(function() {
     $('#upload-file-btn').click(function() {
         var form_data = new FormData($('#upload-file')[0]);
-        console.log(form_data)
         $.ajax({
             type: 'POST',
             url: '/upload',
@@ -304,6 +315,23 @@ $(function() {
             processData: false,
             success: function(data) {
                 $("#logoview").attr('src','/media/'+data['status']);
+            },
+        });
+    });
+});
+
+$(function() {
+    $('#upload-fav-btn').click(function() {
+        var form_data = new FormData($('#upload-fav')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/upload_fav',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $("#favview").attr('src','/media/'+data['status']);
             },
         });
     });

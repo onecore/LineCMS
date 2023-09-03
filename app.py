@@ -8,7 +8,7 @@ import sqlite3
 from flask import Flask, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 version = "1.4"
 app = Flask(__name__,
             static_url_path='',
@@ -42,6 +42,30 @@ def showuploaded(file):
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            print("No selected file")
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            print("success processing now")
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            return jsonify({"status": filename})
+    return jsonify({"status": "success"})
+
+
+@app.route('/upload_fav', methods=['POST'])
+def upload_fav():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
