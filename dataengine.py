@@ -15,9 +15,10 @@ class knightclient:
 
     def message(self, dicts):
         try:
-            params = "INSERT INTO messages (name,subject,email,message,phone) VALUES (?,?,?,?,?)"
-            vals = (dicts['name'], dicts['subject'],
-                    dicts['email'], dicts['message', dicts['phone']])
+            params = "INSERT INTO messages (name,email,message,phone,timestamp) VALUES (?,?,?,?,?)"
+            vals = (dicts['name'], dicts['email'],
+                    dicts['message'], dicts['phone'], self.timestamp())
+            print(params, vals)
             self.cursor.execute(params, vals)
             self.connection.commit()
             return True

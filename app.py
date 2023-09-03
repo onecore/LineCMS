@@ -21,6 +21,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Owner Dashboard
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route("/")
 @app.route("/index")
 @app.route("/main")
@@ -28,12 +33,29 @@ def main():
     """
     main page
     """
-    return render_template("main.html")
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+
+    return render_template("index.html", data=dt)
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+@app.route("/inquire", methods=['POST'])
+def messagerec():
+    data = request.json
+    json = data
+    dicts = {
+        'name': json['name'],
+        'email': json['email'],
+        'phone': json['phone'],
+        'message': json['message'],
+    }
+
+    _de = dataengine.knightclient()
+
+    if (_de.message(dicts)):
+        return jsonify({'status': True})
+    else:
+        return jsonify({'status': False})
 
 
 @app.route("/media/<file>")
