@@ -20,6 +20,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Owner Dashboard
 
+_logger = dataengine.knightclient()
+log = _logger.log
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -35,7 +38,6 @@ def main():
     """
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
-
     return render_template("index.html", data=dt)
 
 
@@ -53,6 +55,7 @@ def messagerec():
     _de = dataengine.knightclient()
 
     if (_de.message(dicts)):
+        log("New message from ", dicts['name'])
         return jsonify({'status': True})
     else:
         return jsonify({'status': False})
@@ -66,6 +69,7 @@ def showuploaded(file):
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
+        log("New Logo upload started")
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -82,8 +86,9 @@ def upload_file():
             try:
                 d_e.update_data_uploads("control", "logo", filename,
                                         "owner", session['authenticated'][0])
+                log("Logo file uploaded")
             except Exception as e:
-                print("error ", e)
+                log("Logo upload failed, revert")
                 # if fails, revert to sample logo
                 d_e.update_data_uploads("control", "logo", 'sample.png',
                                         "owner", session['authenticated'][0])
@@ -110,16 +115,18 @@ def messageRec():
             'phone': phone,
             'message': message
         }
-
+        log("New message from customer")
         return jsonify({"result": 1})
 
     except Exception as e:
+        log("Message from customer failed to process: ", e)
         return jsonify({"result": 0})
 
 
 @app.route('/upload_fav', methods=['POST'])
 def upload_fav():
     if request.method == 'POST':
+        log("New Favicon file upload started")
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -136,8 +143,9 @@ def upload_fav():
             try:
                 d_e.update_data_uploads("control", "favicon", filename,
                                         "owner", session['authenticated'][0])
+                log("Favicon file uploaded")
             except Exception as e:
-                print("error ", e)
+                log("Favicon file failed to upload: ", e)
                 # if fails, revert to sample logo
                 d_e.update_data_uploads("control", "favicon", 'knight.svg',
                                         "owner", session['authenticated'][0])
@@ -158,6 +166,7 @@ def dashboard_main():
     if 'authenticated' in session:
         if len(session['authenticated']):
             if request.method == "POST":
+
                 u_sitename = request.form.get('sitename')
                 u_description = request.form.get('description')
                 u_metadescription = request.form.get('meta_description')
@@ -178,12 +187,13 @@ def dashboard_main():
                         upd = dataengine.knightclient()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
+                            log("Website Information Updated")
                             return render_template("dashboard/dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
                             return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
-
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
+    log("Authenticate failed, returning to login")
     return redirect(url_for("login"))
 
 
@@ -208,13 +218,16 @@ def dashboard_account():
             else:
                 de_ = dataengine.knightclient()
                 if de_.update_credential(session['authenticated'][0], p2):
+                    log("Account update success")
                     success = True
                 else:
+                    log("Account update failed")
                     success = False
                     error = "System cannot process your request"
 
         except Exception as e:
             print("Exception 'Account_settings change' ", e)
+            log("Account settings filed error: ", e)
             pass
     try:
         _de = dataengine.knightclient()
@@ -227,28 +240,6 @@ def dashboard_account():
 
 
 # Start - Route functions
-
-
-@app.route("/inquire", methods=['POST', 'GET'])
-def messagereceive():
-    try:
-        data = request.json
-        json = data
-        name = json['name']
-        email = json['email']
-        subject = json['subject']
-        message = json['message']
-        con = sqlite3.connect("knightstudiomsg")
-        cur = con.cursor()
-        params = "INSERT INTO Messages (Name,Subject,Email,Message) VALUES (?,?,?,?)"
-        vals = (name, subject, email, message)
-        cur.execute(params, vals)
-        con.commit()
-        con.close()
-        return jsonify({"result": 1})
-    except Exception as e:
-        print(e)
-        return jsonify({"result": 0})
 
 
 @app.route("/logoff")
@@ -276,6 +267,7 @@ def login():
     authenticator for dashboad route
     """
     if request.method == 'POST':
+        log("New login activity")
         _u = request.form.get('uname')
         _p = request.form.get('pwd')
         try:

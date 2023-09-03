@@ -26,6 +26,17 @@ class knightclient:
             print("Error ", e)
             return False
 
+    def log(self, message):
+        try:
+            params = "INSERT INTO logging (log,timestamp) VALUES (?,?)"
+            vals = (message, self.timestamp())
+            self.cursor.execute(params, vals)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print("Error ", e)
+            return False
+
     def closedb(self):
         """
         Need to be close out of scope
