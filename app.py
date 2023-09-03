@@ -31,11 +31,47 @@ def dashboard_main():
     """
     main dashboard page
     """
+    error, success = False, False
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     if 'authenticated' in session:
         if len(session['authenticated']):
-            return render_template("dashboard.html", data=dt)
+            if request.method == "POST":
+                u_sitename = request.form.get('sitename')
+                u_description = request.form.get('description')
+                u_metadescription = request.form.get('meta_description')
+                u_metakeywords = request.form.get('meta_keywords')
+                u_footercopyright = request.form.get('footercopyright')
+
+                dicts = {
+                    "sitename": u_sitename,
+                    "description": u_description,
+                    "meta_description": u_metadescription,
+                    "meta_keywords": u_metakeywords,
+                    "footercopyright": u_footercopyright
+                        }
+
+                for k, v in dicts.items():
+                    if len(v) < 5:
+                        error = "Some information must be 5 characters or more"
+                        return render_template("dashboard.html", data=dt, error=error, success=success)
+                    else:
+                        upd = dataengine.knightclient()
+                        if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
+                            dt = de.load_data_index(None)  # loads datas
+
+                            return render_template("dashboard.html", data=dt, error=False, success=True)
+                        else:
+                            error = "System cannot process your request"
+                            return render_template("dashboard.html", data=dt, error=error, success=False)
+
+                # if len(u_sitename) < 4 or len(u_description) < 4 or len(u_metadescription) < 4 or len(u_metakeywords):
+                #     error = "Some information must be 5 characters or more"
+                #     print("Failed")
+                # else:  # process
+                #     print("Success")
+
+            return render_template("dashboard.html", data=dt, error=error, success=success)
     return redirect(url_for("login"))
 
 
@@ -58,9 +94,13 @@ def dashboard_account():
                 error = "Password must have 5 characters and above"
                 print("Error 2")
             else:
-                success = True
                 de_ = dataengine.knightclient()
-                de_.update_credential(session['authenticated'][0], p2)
+                if de_.update_credential(session['authenticated'][0], p2):
+                    success = True
+                else:
+                    success = False
+                    error = "System cannot process your request"
+
         except Exception as e:
             print("Exception 'Account_settings change' ", e)
             pass

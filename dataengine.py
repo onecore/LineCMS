@@ -19,12 +19,29 @@ class knightclient:
         """
         return datetime.datetime.now()
 
-    def update_data(self, table, column, newvalue, where, v):
+    def update_data(self, table, column, newvalue, where, whereequal):
         """
         Update existing data
         """
-        q = 'UPDATE {table} SET {column} = {value} WHERE '
+        q = 'UPDATE {table} SET {column} = {value} WHERE {where} = {whereequal};'
         pass
+
+    def update_websitesettings(self, dicts, owner):
+        """
+        Website settings
+        """
+        try:
+            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}' WHERE owner = '{owner}';".format(
+                sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'], owner=owner)
+            print(q)
+            self.cursor.execute(q)
+            print("update success")
+            self.connection.commit()
+            return True
+
+        except Exception as e:
+            print("update_wsettings() error ", e)
+            return False
 
     def update_credential(self, uname, newpwd):
         """

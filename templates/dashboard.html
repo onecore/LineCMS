@@ -22,9 +22,22 @@
   <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../img/terminal.svg" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
+<script>
+{% if success %}
+swal("", 'Website information updated', "success");
+{% endif %}
+
+
+{% if error %}
+swal("", `{{error}}`, "warning");
+{% endif %}
+</script>
+
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -297,20 +310,20 @@
                   <p class="card-description">
                     Please do not leave any form blank
                   </p>
-                  <form class="forms-sample">
+                  <form class="forms-sample" method="post">
                     <div class="form-group">
                       <label for="exampleInputUsername1">Website name</label>
-                      <input type="text" class="form-control" id="sitename" placeholder="Website Name" value="{{data['sitename']}}">
+                      <input type="text" class="form-control" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}">
                     </div>
 
                     <div class="form-group">
                       <label for="exampleInputEmail1">Website description</label>
-                      <input type="email" class="form-control" id="description" placeholder="Description" value="{{data['sitedescription']}}">
+                      <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="{{data['sitedescription']}}">
                     </div>
 
                     <div class="form-group">
                       <label for="exampleInputConfirmPassword1">Meta description</label>
-                      <input type="text" class="form-control" id="meta_description" placeholder="website description" value="{{data['meta_description']}}">
+                      <input type="text" class="form-control" id="meta_description" name="meta_description" placeholder="website description" value="{{data['meta_description']}}">
                       <p class="card-description">
                         For Search Engine Optimization (Improves online search)
                       </p>
@@ -318,11 +331,20 @@
 
                     <div class="form-group">
                       <label for="exampleInputConfirmPassword1">Meta keywords</label>
-                      <input type="text" class="form-control" id="meta_keywords" placeholder="keywords seperated by comma" value="{{data['meta_description']}}">
+                      <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="keywords seperated by comma" value="{{data['meta_keywords']}}">
                       <p class="card-description">
                         For Search Engine Optimization (Improves online search)
                       </p>
                     </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Footer Copyright</label>
+                      <input type="text" class="form-control" id="footercopyright" name="footercopyright" placeholder="keywords seperated by comma" value="{{data['footercopyright']}}">
+                      <p class="card-description">
+                        For Search Engine Optimization (Improves online search)
+                      </p>
+                    </div>
+
 
                     <div class="form-group">
                       <label for="exampleInputConfirmPassword1">Domain</label>
