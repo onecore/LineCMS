@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 
 class knightclient:
@@ -16,13 +17,30 @@ class knightclient:
         """
         Returns timestamp
         """
-        return 0
+        return datetime.datetime.now()
 
-    def update_data(self, key, value):
+    def update_data(self, table, column, newvalue, where, v):
         """
         Update existing data
         """
+        q = 'UPDATE {table} SET {column} = {value} WHERE '
         pass
+
+    def update_credential(self, uname, newpwd):
+        """
+        Only for Account password update
+        """
+        try:
+            q = "UPDATE users SET passw = '{value}' WHERE username = '{uname}';".format(
+                value=newpwd, uname=uname)
+            print(q)
+            self.cursor.execute(q)
+            print("update success")
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print("update_credential() error ", e)
+            return False
 
     def get_cred(self, username, passw):
         self.gc_fetch = self.cursor.execute("SELECT * FROM users")

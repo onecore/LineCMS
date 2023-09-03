@@ -27,7 +27,10 @@ def index():
 
 
 @app.route("/dashboard", methods=['POST', 'GET'])
-def dashboard():
+def dashboard_main():
+    """
+    main dashboard page
+    """
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     if 'authenticated' in session:
@@ -36,7 +39,43 @@ def dashboard():
     return redirect(url_for("login"))
 
 
+@app.route("/account", methods=['POST', 'GET'])
+def dashboard_account():
+    """
+    dashboard account settings page
+    """
+    error = False
+    success = False
+    if request.method == 'POST':
+        try:
+            p1 = request.form.get('pwd1')
+            p2 = request.form.get('pwd2')
+            if p1 != p2:
+                error = "Password does not match"
+                print("Error 1")
+
+            elif len(p1) < 4 or len(p2) < 4:
+                error = "Password must have 5 characters and above"
+                print("Error 2")
+            else:
+                success = True
+                de_ = dataengine.knightclient()
+                de_.update_credential(session['authenticated'][0], p2)
+        except Exception as e:
+            print("Exception 'Account_settings change' ", e)
+            pass
+    try:
+        _de = dataengine.knightclient()
+        _cred = _de.get_cred(
+            session['authenticated'][0], session['authenticated'][1])
+        _cred_data = _cred[0]
+        return render_template("account.html", data=_cred_data, error=error, success=success)
+    except Exception as e:
+        return redirect(url_for("logout"))
+
+
 # Start - Route functions
+
 
 @app.route("/inquire", methods=['POST', 'GET'])
 def messagereceive():
@@ -94,8 +133,8 @@ def login():
             if _cred_data[0] == _u and _cred_data[1] == _p:
                 print("Auth success")
                 # Set session
-                session['authenticated'] = _u
-                return redirect(url_for("dashboard"))
+                session['authenticated'] = (_u, _p)
+                return redirect(url_for("dashboard_main"))
             else:
                 print("Auth Failed")
                 return render_template("login.html", error=True)
@@ -104,7 +143,7 @@ def login():
             return render_template("login.html", error=True)
     if 'authenticated' in session:
         if len(session['authenticated']):
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("dashboard_main"))
     return render_template("login.html", error=False)
 
 
