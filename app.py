@@ -3,16 +3,20 @@
 # Aug 31,2023
 # MARP - Python 3
 import dataengine
+import os
 import sqlite3
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-import flask
+from flask import Flask, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
+from werkzeug.utils import secure_filename
 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg'])
 version = "1.4"
 app = Flask(__name__,
             static_url_path='',
             static_folder='static',
             template_folder='templates')
+UPLOAD_FOLDER = 'static/uploads'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Owner Dashboard
 
@@ -26,6 +30,40 @@ def index():
     return render_template("main.html")
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/media/<file>")
+def showuploaded(file):
+    return send_from_directory("static/uploads", file)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            print("No selected file")
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            print("success processing now")
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            return jsonify({"status": filename})
+    return jsonify({"status": "success"})
+
+
 @app.route("/dashboard", methods=['POST', 'GET'])
 def dashboard_main():
     """
@@ -34,6 +72,7 @@ def dashboard_main():
     error, success = False, False
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
+
     if 'authenticated' in session:
         if len(session['authenticated']):
             if request.method == "POST":
