@@ -7,20 +7,29 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
-    def logger(self, message):
-        pass
+    def timestamp(self):
+        """
+        Returns timestamp
+        """
+        return datetime.datetime.now()
+
+    def message(self, dicts):
+        try:
+            params = "INSERT INTO messages (name,subject,email,message,phone) VALUES (?,?,?,?,?)"
+            vals = (dicts['name'], dicts['subject'],
+                    dicts['email'], dicts['message', dicts['phone']])
+            self.cursor.execute(params, vals)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print("Error ", e)
+            return False
 
     def closedb(self):
         """
         Need to be close out of scope
         """
         self.connection.close()
-
-    def timestamp(self):
-        """
-        Returns timestamp
-        """
-        return datetime.datetime.now()
 
     def update_data_uploads(self, table, column, newvalue, where, whereequal):
         """

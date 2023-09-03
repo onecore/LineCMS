@@ -7,21 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{data['sitename']}} - KnightStudio Dashboard</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="../../vendors/feather/feather.css">
-  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
-  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../../img/terminal.svg" />
+  <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 input[type="file"] {
@@ -51,7 +51,7 @@ swal("", `{{error}}`, "warning");
 </script>
 
   <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
+    <!-- partial:../../dashboard/partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
         <div class="me-3">
@@ -60,11 +60,11 @@ swal("", `{{error}}`, "warning");
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="../../index.html">
-            <img src="../../images/logo.svg" alt="logo" />
+          <a class="navbar-brand brand-logo" href="../../dashboard/index.html">
+            <img src="../../dashboard/images/logo.svg" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="../../index.html">
-            <img src="../../images/logo-mini.svg" alt="logo" />
+          <a class="navbar-brand brand-logo-mini" href="../../dashboard/index.html">
+            <img src="../../dashboard/images/logo-mini.svg" alt="logo" />
           </a>
         </div>
       </div>
@@ -96,7 +96,7 @@ swal("", `{{error}}`, "warning");
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_settings-panel.html -->
+      <!-- partial:../../dashboard/partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
         <div id="theme-settings" class="settings-panel">
@@ -117,7 +117,7 @@ swal("", `{{error}}`, "warning");
       </div>
 
       <!-- partial -->
-      <!-- partial:../../partials/_sidebar.html -->
+      <!-- partial:../../dashboard/partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item nav-category">Website & Account</li>
@@ -145,8 +145,8 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="ui-basic2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Customer Messages</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Website Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../dashboard/pages/ui-features/buttons.html">Customer Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../dashboard/pages/ui-features/dropdowns.html">Website Messages</a></li>
               </ul>
             </div>
           </li>
@@ -268,7 +268,7 @@ swal("", `{{error}}`, "warning");
         </div>
 
         <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+        <!-- partial:../../dashboard/partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
@@ -283,24 +283,24 @@ swal("", `{{error}}`, "warning");
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
-  <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
-  <script src="../../vendors/select2/select2.min.js"></script>
-  <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../dashboard/vendors/select2/select2.min.js"></script>
+  <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
   <!-- End plugin js for this page -->
   <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
+  <script src="../../dashboard/js/off-canvas.js"></script>
+  <script src="../../dashboard/js/hoverable-collapse.js"></script>
+  <script src="../../dashboard/js/template.js"></script>
+  <script src="../../dashboard/js/settings.js"></script>
+  <script src="../../dashboard/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="../../js/file-upload.js"></script>
-  <script src="../../js/typeahead.js"></script>
-  <script src="../../js/select2.js"></script>
+  <script src="../../dashboard/js/file-upload.js"></script>
+  <script src="../../dashboard/js/typeahead.js"></script>
+  <script src="../../dashboard/js/select2.js"></script>
   <!-- End custom js for this page-->
   <script>
 $(function() {
@@ -314,7 +314,7 @@ $(function() {
             cache: false,
             processData: false,
             success: function(data) {
-                $("#logoview").attr('src','/media/'+data['status']);
+                $("#logoview").attr('src','dashboad/media/'+data['status']);
                 swal("", 'Website Logo updated', "success");
 
             },
@@ -333,7 +333,7 @@ $(function() {
             cache: false,
             processData: false,
             success: function(data) {
-                $("#favview").attr('src','/media/'+data['status']);
+                $("#favview").attr('src','dashboad/media/'+data['status']);
                 swal("", 'Website Favicon updated', "success");
 
             },

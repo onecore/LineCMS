@@ -23,7 +23,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 @app.route("/index")
-def index():
+@app.route("/main")
+def main():
     """
     main page
     """
@@ -37,7 +38,7 @@ def allowed_file(filename):
 
 @app.route("/media/<file>")
 def showuploaded(file):
-    return send_from_directory("static/uploads", file)
+    return send_from_directory("static/dashboard/uploads", file)
 
 
 @app.route('/upload', methods=['POST'])
@@ -67,6 +68,31 @@ def upload_file():
                 filename = "sample.png"
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
+
+
+@app.route("/inquire", methods=['POST', 'GET'])
+def messageRec():
+    try:
+        data = request.json
+        json = data
+
+        name = json['name']
+        email = json['email']
+        subject = json['subject']
+        message = json['message']
+        phone = json['phone']
+        dicts = {
+            'name': name,
+            'email': email,
+            'subject': subject,
+            'phone': phone,
+            'message': message
+        }
+
+        return jsonify({"result": 1})
+
+    except Exception as e:
+        return jsonify({"result": 0})
 
 
 @app.route('/upload_fav', methods=['POST'])
@@ -133,9 +159,9 @@ def dashboard_main():
                             return render_template("dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
-                            return render_template("dashboard.html", data=dt, error=error, success=False)
+                            return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
 
-            return render_template("dashboard.html", data=dt, error=error, success=success)
+            return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
     return redirect(url_for("login"))
 
 
@@ -173,7 +199,7 @@ def dashboard_account():
         _cred = _de.get_cred(
             session['authenticated'][0], session['authenticated'][1])
         _cred_data = _cred[0]
-        return render_template("account.html", data=_cred_data, error=error, success=success)
+        return render_template("dashboard/account.html", data=_cred_data, error=error, success=success)
     except Exception as e:
         return redirect(url_for("logout"))
 
@@ -219,7 +245,7 @@ def message():
     ret = cur.execute("SELECT * FROM MESSAGES")
     data = ret.fetchall()
     con.close()
-    return render_template("messages.html", data=data)
+    return render_template("dashboard/messages.html", data=data)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -241,14 +267,14 @@ def login():
                 return redirect(url_for("dashboard_main"))
             else:
                 print("Auth Failed")
-                return render_template("login.html", error=True)
+                return render_template("dashboard/login.html", error=True)
         except Exception as e:
             print("Error: ", e)
-            return render_template("login.html", error=True)
+            return render_template("dashboard/login.html", error=True)
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
-    return render_template("login.html", error=False)
+    return render_template("dashboard/login.html", error=False)
 
 
 @app.route("/product/<product_name>")
