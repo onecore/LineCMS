@@ -22,157 +22,12 @@
   <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<style>
-.job-box-filter label {
-    width: 100%;
-}
-.job-box-filter select.input-sm {
-    display: inline-block;
-    max-width: 120px;
-    margin: 0 5px;
-    border: 1px solid #e8eef1;
-    border-radius: 2px;
-    height: 34px;
-    font-size: 15px;
-}
-.job-box-filter label input.form-control {
-    max-width: 200px;
-    display: inline-block;
-    border: 1px solid #e8eef1;
-    border-radius: 2px;
-    height: 34px;
-    margin-left:5px;
-    font-size: 15px;
-}
-.text-right{
-text-align:right;
-}
-.job-box-filter {
-    padding: 12px 15px;
-    background: #ffffff;
-    border-bottom: 1px solid #e8eef1;
-    margin-bottom: 20px;
-}
-.job-box {
-    background: #ffffff;
-    display: inline-block;
-    width: 100%;
-    padding: 0 0px 40px 0px;
-    border: 1px solid #e8eef1;
-}
-.job-box-filter a.filtsec {
-    margin-top: 8px;
-    display: inline-block;
-    margin-right: 15px;
-    padding: 4px 10px;
-    font-family: 'Quicksand', sans-serif;
-	transition: all ease 0.4s;
-    background: #edf0f3;
-    border-radius: 50px;
-    font-size: 13px;
-    color: #81a0b1;
-    border: 1px solid #e2e8ef;
-}
-.job-box-filter a.filtsec.active {
-    color: #ffffff;
-    background: #16262c;
-	border-color:#16262c;
-}
-.job-box-filter a.filtsec i {
-    color: #03A9F4;
-    margin-right: 5px;
-}
-.job-box-filter a.filtsec:hover, .job-box-filter a.filtsec:focus {
-    color: #ffffff;
-    background: #07b107;
-    border-color: #07b107;
-}
-.job-box-filter a.filtsec:hover i, .job-box-filter a.filtsec:focus i{
-color:#ffffff;
-}
-.job-box-filter h4 i {
-    margin-right: 10px;
-}
-
-/*=====================================
-Inbox Message Style
-=======================================*/
-.inbox-message ul {
-    padding: 0;
-    margin: 0;
-}
-.inbox-message ul li {
-    list-style: none;
-    position: relative;
-    padding: 15px 20px;
-	border-bottom: 1px solid #e8eef1;
-}
-.inbox-message ul li:hover, .inbox-message ul li:focus {
-    background: #eff6f9;
-}
-.inbox-message .message-avatar {
-    position: absolute;
-    left: 30px;
-    top: 20%;
-    transform: translateY(-50%);
-}
-.message-avatar img {
-    display: inline-block;
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-}
-.inbox-message .message-body {
-    margin-left: 85px;
-    font-size: 15px;
-    color:#62748F;
-}
-.message-body-heading h5 {
-    font-weight: 600;
-	display:inline-block;
-    color:#62748F;
-    margin: 0 0 7px 0;
-    padding: 0;
-}
-.message-body h5 span {
-    border-radius: 50px;
-    line-height: 14px;
-    font-size: 12px;
-    color: #fff;
-    font-style: normal;
-    padding: 4px 10px;
-    margin-left: 5px;
-    margin-top: -5px;
-}
-.message-body h5 span.unread{
-	background:#07b107;
-}
-.message-body h5 span.important{
-	background:#dd2027;
-}
-.message-body h5 span.pending{
-	background:#2196f3;
-}
-.message-body-heading span {
-    float: right;
-    color:#62748F;
-    font-size: 14px;
-}
-.messages-inbox .message-body p {
-    margin: 0;
-    padding: 0;
-    line-height: 27px;
-    font-size: 15px;
-}
-
-a:hover{
-    text-decoration:none;
-}
-</style>
 </head>
 
 <body>
+
 <script>
 {% if success %}
 swal("", 'Website information updated', "success");
@@ -230,6 +85,7 @@ swal("", `{{error}}`, "warning");
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
+
       <!-- partial:../../dashboard/partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
@@ -296,60 +152,76 @@ swal("", `{{error}}`, "warning");
         </ul>
       </nav>
       <!-- partial -->
+          <script>
+          function toggle(id){
+            var x = document.getElementById(id+"msg");
+            if (x.style.display === "none") {
+              x.style.display = "block";
+            } else {
+              x.style.display = "none";
+            }
+            }
+
+          function toggledeletebtn(id){
+            var x = document.getElementById(id+"deletebtn");
+            if (x.style.display === "none") {
+              x.style.display = "block";
+            } else {
+              x.style.display = "none";
+            }
+            }
+
+            function deletenow(id){
+              var x = document.getElementById(id+"item");
+              x.style.display = "none";
+
+              toggle(id)
+            }
+          </script>
+
       <div class="main-panel">
+
         <div class="content-wrapper">
           <div class="row">
-
-            <div class="grid-margin stretch-card">
-                              <div class="container">
-                <div class="row">
-                <div class="col">
-                	<div class="chat_container">
-                		<div class="job-box">
-                			<div class="job-box-filter">
-                        Customer messages <button class="btn btn-success btn-xs">{{data|length}}</button>
-                			</div>
-                			<div class="inbox-message rounded">
-                				<ul>
+            <h4>Customer Messages</h4>
+            <hr>
+            <table class="table table-hover">
                           {% if data %}
+
                           {% for item in data %}
 
-                					<li>
-                						<a href="#">
-                							<div class="message-avatar">
-                                                                <button class="btn btn-danger btn-xs">x</button>
+                          <tbody onclick="toggle({{item[0]}})" id="{{item[0]}}item" name="{{item[0]}}item">
+                              <tr class="unread">
+                                  <td class="view-message  dont-show"><span class="btn-primary rounded text-truncate">&nbsp&nbsp&nbsp{{item[1]}}&nbsp&nbsp&nbsp</span> - {{item[3]|truncate(43, True)}}</td>
+                                  <td class="view-message  text-right">{{item[5]}}</td>
+                              </tr>
 
-                								<!-- <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
-                							</div>
-                							<div class="message-body">
-                								<div class="message-body-heading">
-                									<h5><span class="btn-secondary">{{item[2]}}</span><span class="btn-secondary">{{item[1]}}</span><span class="btn-secondary">{{item[4]}}</span></h5>
-                									<span>{{ item[5] }}</span>
-                								</div>
-                								<p>{{ item[3] }}</p>
-                							</div>
-                						</a>
-                            <button class="btn btn-primary btn-xs right">Call Now</button>
-                            <button class="btn btn-primary btn-xs right">Email Now</button>
-                					</li>
-
+                          </tbody>
+                          <br>
+                          <div class="card" style="display:none" id="{{item[0]}}msg" name="{{item[1]}}msg">
+                            <div class="card-body">
+                              <button onclick="toggledeletebtn({{item[0]}})" class="btn fa fa-trash inline pull-right" style="margin:3px;padding:3px;background-color:black;color:white;"></button>
+                              <button onclick="toggle({{item[0]}})" class="btn fa fa-angle-down inline pull-right" style="margin:3px;padding:3px;background-color:black;color:white;"></button>
+                              <button onclick="deletenow({{item[0]}})" id="{{item[0]}}deletebtn" class="btn inline pull-right" style="margin:3px;padding:3px;background-color:red;color:white;display:none">Delete now</button>
+                              <h5 class="">Message from {{item[1]}}</h5>
+                              <hr>
+                              <p class="card-text"><h5>{{item[3]}}</h5></p>
+                              <p>Received: {{item[5]}}
+                              <br>Email: {{item[2]}}
+                              <br>Mobile: {{item[4]}}
+                              </p
+                              <hr>
+                              <a href="tel:{{item[4]}}" class="btn btn-dark">Call number</a>
+                              <a href="mailto:{{item[2]}}" class="btn btn-dark">Send email</a>
+                            </div>
+                          </div>
                           {% endfor %}
                           {% else %}
-                          <center>No Message yet.</center>
+                          <center>No Logs yet.</center>
                           {% endif %}
-
-                				</ul>
-                			</div>
-                		</div>
-                	</div>
-                </div>
-                </div>
-                </div>
-            </div>
+                          </table>
 
           </div>
-
-        </div>
 
         <!-- content-wrapper ends -->
         <!-- partial:../../dashboard/partials/_footer.html -->
@@ -364,7 +236,9 @@ swal("", `{{error}}`, "warning");
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
+
   </div>
+
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>

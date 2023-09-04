@@ -41,6 +41,12 @@ def main():
     return render_template("index.html", data=dt)
 
 
+@app.route("/delete/<id>")
+def deletemessage(id):
+    mid = id
+    return jsonify({"status": True})
+
+
 @app.route("/inquire", methods=['POST'])
 def messagerec():
     data = request.json
