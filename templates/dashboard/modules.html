@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{data['sitename']}} - KnightStudio Dashboard</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
+
+<style>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 13px 13px 13px 13px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top:10px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<script>
+{% if success %}
+swal("", 'Website information updated', "success");
+{% endif %}
+
+
+{% if error %}
+swal("", `{{error}}`, "warning");
+{% endif %}
+</script>
+
+  <div class="container-scroller">
+    <!-- partial:../../dashboard/partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+          <a class="navbar-brand brand-logo" href="../../dashboard/index.html">
+            <img src="../../dashboard/img/knightstudio.png" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="../../dashboard/index.html">
+            <img src="../../dashboard/img/knightstudio-s.png" alt="logo" />
+          </a>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-top">
+
+        <ul class="navbar-nav ms-auto">
+
+
+
+          <li class="nav-item d-none d-lg-block">
+              <span class="input-group-addon input-group-prepend border-right">
+                <a href="/messages" class="btn btn-sm btn-dark fa fa-envelope-o"> Message <span class="rounded" style="background-color:white;color:black">&nbsp{{data['messages']}}&nbsp</span></a>
+              </span>
+          </li>
+
+          <li class="nav-item d-none d-lg-block">
+              <span class="input-group-addon input-group-prepend border-right">
+                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
+              </span>
+          </li>
+          <li class="nav-item d-none d-lg-block">
+              <span class="input-group-addon input-group-prepend border-right">
+                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
+              </span>
+          </li>
+          <!-- <li class="nav-item">
+            <form class="search-form" action="#">
+              <i class="icon-search"></i>
+              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+            </form>
+          </li> -->
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../dashboard/partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- partial -->
+      <!-- partial:../../dashboard/partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-category">Website & Account</li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+              <i class="menu-icon mdi mdi-floor-plan"></i>
+              <span class="menu-title">Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="dashboard">Website</a></li>
+                <li class="nav-item"> <a class="nav-link" href="account">Account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="modules">Modules</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item nav-category">Messages</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+              <i class="menu-icon mdi mdi-floor-plan"></i>
+              <span class="menu-title">View Messages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="messages">Customer Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="mwebsite">Website Logging</a></li>
+              </ul>
+            </div>
+          </li>
+
+
+          <li class="nav-item nav-category">Information</li>
+          <li class="nav-item">
+            <a class="nav-link" href="other">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Other Information</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Website Settings</h4>
+                  <p class="card-description">
+                    Please do not leave any form blank
+                  </p>
+                  <form class="forms-sample" method="post">
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Website name</label>
+                      <input type="text" class="form-control" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Website description</label>
+                      <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="{{data['sitedescription']}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Meta description</label>
+                      <input type="text" class="form-control" id="meta_description" name="meta_description" placeholder="website description" value="{{data['meta_description']}}">
+                      <p class="card-description">
+                        For Search Engine Optimization (Improves online search)
+                      </p>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Meta keywords</label>
+                      <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="keywords seperated by comma" value="{{data['meta_keywords']}}">
+                      <p class="card-description">
+                        For Search Engine Optimization (Improves online search)
+                      </p>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Footer Copyright</label>
+                      <input type="text" class="form-control" id="footercopyright" name="footercopyright" placeholder="keywords seperated by comma" value="{{data['footercopyright']}}">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Domain</label>
+                      <input type="text" class="form-control" id="domain" placeholder="" disabled value="www.sangkalan.ca">
+                      <p class="card-description">
+                        Contact us to update
+                      </p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary me-2">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Miscellaneous Settings</h4>
+                  <p class="card-description">
+                    Modules and other website functionality
+                  </p>
+                  <hr>
+                    <p class="text-center">Website Logo</p>
+                    <center>
+                    <img src="/media/{{data['logo']}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:60%;width:60%">
+                    </center>
+                    <center>
+                    <label class="custom-file-upload center">
+                      <form id="upload-file" name="upload-file">
+                        <input type="file" name="file"/>
+                        <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                        <button class="btn btn-primary rounded" id="upload-file-btn" type="button">Upload</button>
+                      </form>
+                    </label>
+                  </center>
+
+
+
+                  <hr>
+                    <p class="text-center">Website Favicon</p>
+                    <center>
+                      <img src="/media/{{data['favicon']}}" alt="..." id="favview" name="favview" class="img-thumbnail" style="border:none;bottom:30px;width:10%;height:10%;">
+                    </center>
+                      <center>
+                      <label class="custom-file-upload center">
+                        <form id="upload-fav" name="upload-file">
+                          <input type="file" name="file"/>
+                          <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                          <button class="btn btn-primary rounded" id="upload-fav-btn" type="button">Upload</button>
+                        </form>
+                      </label>
+                    </center>
+                  <hr>
+                  <br>
+                    <p class="text-center">Files uploaded are stored in a secured folder, File with the same file name will be overwritten</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- content-wrapper ends -->
+        <!-- partial:../../dashboard/partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../dashboard/vendors/select2/select2.min.js"></script>
+  <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../dashboard/js/off-canvas.js"></script>
+  <script src="../../dashboard/js/hoverable-collapse.js"></script>
+  <script src="../../dashboard/js/template.js"></script>
+  <script src="../../dashboard/js/settings.js"></script>
+  <script src="../../dashboard/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../dashboard/js/file-upload.js"></script>
+  <script src="../../dashboard/js/typeahead.js"></script>
+  <script src="../../dashboard/js/select2.js"></script>
+  <!-- End custom js for this page-->
+  <script>
+$(function() {
+    $('#upload-file-btn').click(function() {
+        var form_data = new FormData($('#upload-file')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/upload',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $("#logoview").attr('src','/media/'+data['status']);
+                swal("", 'Website Logo updated', "success");
+
+            },
+        });
+    });
+});
+
+$(function() {
+    $('#upload-fav-btn').click(function() {
+        var form_data = new FormData($('#upload-fav')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/upload_fav',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $("#favview").attr('src','/media/'+data['status']);
+                swal("", 'Website Favicon updated', "success");
+
+            },
+        });
+    });
+});
+  </script>
+</body>
+
+</html>

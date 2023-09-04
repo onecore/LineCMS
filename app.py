@@ -41,6 +41,11 @@ def main():
     return render_template("index.html", data=dt)
 
 
+@app.route("/modules")
+def modules():
+    pass
+
+
 @app.route("/delete/<table>/<id>")
 def delete(table, id):
     mid = id
