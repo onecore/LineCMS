@@ -33,6 +33,15 @@ class knightclient:
             print("Error ", e)
             return False
 
+    def delete(self, table, id):
+        try:
+            q = "DELETE FROM {table} WHERE id = {id};".format(
+                table=table, id=id)
+            self.cursor.execute(q)
+            self.log("Message deleted #id "+id)
+        except Exception as e:
+            self.log("Unable to delete message, "+str(e))
+
     def log(self, message):
         try:
             params = "INSERT INTO logging (log,timestamp) VALUES (?,?)"
@@ -120,6 +129,9 @@ class knightclient:
         self.fetch_control = self.cursor.execute("SELECT * FROM control")
         self.site_data = self.fetch_control.fetchall()
 
+        self.fetch_msg = self.cursor.execute("SELECT * FROM messages")
+        self.site_msgs = self.fetch_msg.fetchall()
+
         # site_type:
         # 0 - Restaurant (Single Menu)
         # 1 - Restaurant (Multi Menu)
@@ -140,6 +152,7 @@ class knightclient:
             "meta_keywords": self.site_data[0][9],
             "favicon": self.site_data[0][10],
             "site_type": self.site_data[0][11],
+            "messages": len(self.site_msgs),
         }
 
         # adds menu_list in dict if either single, multi, otherwise False

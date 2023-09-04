@@ -63,12 +63,12 @@ swal("", `{{error}}`, "warning");
 
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="{{data['domain']}}" class="btn btn-sm btn-success">Visit Website</a>
+                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
               </span>
           </li>
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="/logoff" class="btn btn-sm btn-primary">Log out</a>
+                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
               </span>
           </li>
           <!-- <li class="nav-item">
@@ -122,6 +122,7 @@ swal("", `{{error}}`, "warning");
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="dashboard">Website</a></li>
                 <li class="nav-item"> <a class="nav-link" href="account">Account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="modules">Modules</a></li>
               </ul>
             </div>
           </li>
@@ -174,7 +175,9 @@ swal("", `{{error}}`, "warning");
             function deletenow(id){
               var x = document.getElementById(id+"item");
               x.style.display = "none";
-
+              const xhr = new XMLHttpRequest();
+              xhr.open("GET", "/delete/messages/"+id);
+              xhr.send();
               toggle(id)
             }
           </script>

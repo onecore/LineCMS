@@ -41,10 +41,16 @@ def main():
     return render_template("index.html", data=dt)
 
 
-@app.route("/delete/<id>")
-def deletemessage(id):
+@app.route("/delete/<table>/<id>")
+def delete(table, id):
     mid = id
-    return jsonify({"status": True})
+    if 'authenticated' in session:
+        d = dataengine.knightclient()
+        if d.delete(table, id):
+            return jsonify({"status": True})
+        else:
+            return jsonify("status", False)
+    return jsonify({"status": False})
 
 
 @app.route("/inquire", methods=['POST'])
@@ -229,7 +235,14 @@ def logout():
         del session['authenticated']
     except Exception as e:
         pass
-    return redirect(url_for("index"))
+    return redirect(url_for("main"))
+
+
+@app.route("/other")
+def help():
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+    return render_template("dashboard/help.html", data=dt)
 
 
 @app.route("/messages")
