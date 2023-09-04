@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+import time
 
 
 class knightclient:
@@ -11,7 +12,13 @@ class knightclient:
         """
         Returns timestamp
         """
-        return datetime.datetime.now()
+        _n = datetime.datetime.now()
+        d_ = str(_n).split()
+        dt = d_[0]
+        t = time.strftime("%I:%M %p")
+        ts = dt + " " + t
+
+        return ts
 
     def message(self, dicts):
         try:
