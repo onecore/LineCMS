@@ -58,6 +58,7 @@ def messagerec():
         log("New message from ", dicts['name'])
         return jsonify({'status': True})
     else:
+        log("New message failed to process")
         return jsonify({'status': False})
 
 
@@ -95,32 +96,6 @@ def upload_file():
                 filename = "sample.png"
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
-
-
-@app.route("/inquire", methods=['POST', 'GET'])
-def messageRec():
-    try:
-        data = request.json
-        json = data
-
-        name = json['name']
-        email = json['email']
-        subject = json['subject']
-        message = json['message']
-        phone = json['phone']
-        dicts = {
-            'name': name,
-            'email': email,
-            'subject': subject,
-            'phone': phone,
-            'message': message
-        }
-        log("New message from customer")
-        return jsonify({"result": 1})
-
-    except Exception as e:
-        log("Message from customer failed to process: ", e)
-        return jsonify({"result": 0})
 
 
 @app.route('/upload_fav', methods=['POST'])
@@ -252,13 +227,22 @@ def logout():
 
 
 @app.route("/messages")
-def message():
-    con = sqlite3.connect("knightstudiomsg")
-    cur = con.cursor()
-    ret = cur.execute("SELECT * FROM MESSAGES")
-    data = ret.fetchall()
-    con.close()
+def messages():
+    # con = sqlite3.connect("knightstudiomsg")
+    # cur = con.cursor()
+    # ret = cur.execute("SELECT * FROM MESSAGES")
+    # data = ret.fetchall()
+    # con.close()
+    _m = dataengine.knightclient()
+    data = _m.get_messages()
     return render_template("dashboard/messages.html", data=data)
+
+
+@app.route("/mwebsite")
+def logpage():
+    _l = dataengine.knightclient()
+    data = _l.get_logs()
+    return render_template("dashboard/log.html", data=data)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -295,4 +279,5 @@ def login():
 def product_show(product_name):
     return product_name
 
+# End - Route functions
 # End - Route functions

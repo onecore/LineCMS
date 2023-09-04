@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>{{data['sitename']}} - KnightStudio Dashboard</title>
+  <title>Messages - KnightStudio Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -24,16 +24,150 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
-input[type="file"] {
-    display: none;
+.job-box-filter label {
+    width: 100%;
 }
-.custom-file-upload {
-    border: 1px solid #ccc;
-    border-radius: 13px 13px 13px 13px;
+.job-box-filter select.input-sm {
     display: inline-block;
-    padding: 6px 12px;
-    margin-top:10px;
-    cursor: pointer;
+    max-width: 120px;
+    margin: 0 5px;
+    border: 1px solid #e8eef1;
+    border-radius: 2px;
+    height: 34px;
+    font-size: 15px;
+}
+.job-box-filter label input.form-control {
+    max-width: 200px;
+    display: inline-block;
+    border: 1px solid #e8eef1;
+    border-radius: 2px;
+    height: 34px;
+    margin-left:5px;
+    font-size: 15px;
+}
+.text-right{
+text-align:right;
+}
+.job-box-filter {
+    padding: 12px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e8eef1;
+    margin-bottom: 20px;
+}
+.job-box {
+    background: #ffffff;
+    display: inline-block;
+    width: 100%;
+    padding: 0 0px 40px 0px;
+    border: 1px solid #e8eef1;
+}
+.job-box-filter a.filtsec {
+    margin-top: 8px;
+    display: inline-block;
+    margin-right: 15px;
+    padding: 4px 10px;
+    font-family: 'Quicksand', sans-serif;
+	transition: all ease 0.4s;
+    background: #edf0f3;
+    border-radius: 50px;
+    font-size: 13px;
+    color: #81a0b1;
+    border: 1px solid #e2e8ef;
+}
+.job-box-filter a.filtsec.active {
+    color: #ffffff;
+    background: #16262c;
+	border-color:#16262c;
+}
+.job-box-filter a.filtsec i {
+    color: #03A9F4;
+    margin-right: 5px;
+}
+.job-box-filter a.filtsec:hover, .job-box-filter a.filtsec:focus {
+    color: #ffffff;
+    background: #07b107;
+    border-color: #07b107;
+}
+.job-box-filter a.filtsec:hover i, .job-box-filter a.filtsec:focus i{
+color:#ffffff;
+}
+.job-box-filter h4 i {
+    margin-right: 10px;
+}
+
+/*=====================================
+Inbox Message Style
+=======================================*/
+.inbox-message ul {
+    padding: 0;
+    margin: 0;
+}
+.inbox-message ul li {
+    list-style: none;
+    position: relative;
+    padding: 15px 20px;
+	border-bottom: 1px solid #e8eef1;
+}
+.inbox-message ul li:hover, .inbox-message ul li:focus {
+    background: #eff6f9;
+}
+.inbox-message .message-avatar {
+    position: absolute;
+    left: 30px;
+    top: 20%;
+    transform: translateY(-50%);
+}
+.message-avatar img {
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
+.inbox-message .message-body {
+    margin-left: 85px;
+    font-size: 15px;
+    color:#62748F;
+}
+.message-body-heading h5 {
+    font-weight: 600;
+	display:inline-block;
+    color:#62748F;
+    margin: 0 0 7px 0;
+    padding: 0;
+}
+.message-body h5 span {
+    border-radius: 50px;
+    line-height: 14px;
+    font-size: 12px;
+    color: #fff;
+    font-style: normal;
+    padding: 4px 10px;
+    margin-left: 5px;
+    margin-top: -5px;
+}
+.message-body h5 span.unread{
+	background:#07b107;
+}
+.message-body h5 span.important{
+	background:#dd2027;
+}
+.message-body h5 span.pending{
+	background:#2196f3;
+}
+.message-body-heading span {
+    float: right;
+    color:#62748F;
+    font-size: 14px;
+}
+.messages-inbox .message-body p {
+    margin: 0;
+    padding: 0;
+    line-height: 27px;
+    font-size: 15px;
+}
+
+a:hover{
+    text-decoration:none;
 }
 </style>
 </head>
@@ -166,103 +300,51 @@ swal("", `{{error}}`, "warning");
         <div class="content-wrapper">
           <div class="row">
 
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Website Settings</h4>
-                  <p class="card-description">
-                    Please do not leave any form blank
-                  </p>
-                  <form class="forms-sample" method="post">
-                    <div class="form-group">
-                      <label for="exampleInputUsername1">Website name</label>
-                      <input type="text" class="form-control" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}">
-                    </div>
+            <div class="grid-margin stretch-card">
+                              <div class="container">
+                <div class="row">
+                <div class="col">
+                	<div class="chat_container">
+                		<div class="job-box">
+                			<div class="job-box-filter">
+                        Website logs <button class="btn btn-success btn-xs">{{data|length}}</button>
+                			</div>
+                			<div class="inbox-message rounded">
+                				<ul>
+                          {% if data %}
+                          {% for item in data %}
 
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Website description</label>
-                      <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="{{data['sitedescription']}}">
-                    </div>
+                					<li>
+                						<a href="#">
+                							<div class="message-avatar">
+                              <button class="btn btn-danger btn-xs">x</button>
 
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Meta description</label>
-                      <input type="text" class="form-control" id="meta_description" name="meta_description" placeholder="website description" value="{{data['meta_description']}}">
-                      <p class="card-description">
-                        For Search Engine Optimization (Improves online search)
-                      </p>
-                    </div>
+                								<!-- <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
+                							</div>
+                							<div class="message-body">
+                								<div class="message-body-heading">
+                									<h5><span style="color:black">{{item[2]}}</span><span class="btn-secondary">{{item[1]}}</span></h5>
+                									<span>{{ item[5] }}</span>
+                								</div>
+                								<p>{{ item[3] }}</p>
+                							</div>
+                						</a>
+                					</li>
 
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Meta keywords</label>
-                      <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="keywords seperated by comma" value="{{data['meta_keywords']}}">
-                      <p class="card-description">
-                        For Search Engine Optimization (Improves online search)
-                      </p>
-                    </div>
+                          {% endfor %}
+                          {% else %}
+                          <center>No Logs yet.</center>
+                          {% endif %}
 
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Footer Copyright</label>
-                      <input type="text" class="form-control" id="footercopyright" name="footercopyright" placeholder="keywords seperated by comma" value="{{data['footercopyright']}}">
-                    </div>
-
-
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Domain</label>
-                      <input type="text" class="form-control" id="domain" placeholder="" disabled value="www.sangkalan.ca">
-                      <p class="card-description">
-                        Contact us to update
-                      </p>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary me-2">Save</button>
-                  </form>
+                				</ul>
+                			</div>
+                		</div>
+                	</div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Miscellaneous Settings</h4>
-                  <p class="card-description">
-                    Modules and other website functionality
-                  </p>
-                  <hr>
-                    <p class="text-center">Website Logo</p>
-                    <center>
-                    <img src="/media/{{data['logo']}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:60%;width:60%">
-                    </center>
-                    <center>
-                    <label class="custom-file-upload center">
-                      <form id="upload-file" name="upload-file">
-                        <input type="file" name="file"/>
-                        <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
-                        <button class="btn btn-primary rounded" id="upload-file-btn" type="button">Upload</button>
-                      </form>
-                    </label>
-                  </center>
-
-
-
-                  <hr>
-                    <p class="text-center">Website Favicon</p>
-                    <center>
-                      <img src="/media/{{data['favicon']}}" alt="..." id="favview" name="favview" class="img-thumbnail" style="border:none;bottom:30px;width:10%;height:10%;">
-                    </center>
-                      <center>
-                      <label class="custom-file-upload center">
-                        <form id="upload-fav" name="upload-file">
-                          <input type="file" name="file"/>
-                          <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
-                          <button class="btn btn-primary rounded" id="upload-fav-btn" type="button">Upload</button>
-                        </form>
-                      </label>
-                    </center>
-                  <hr>
-                    <p class="text-center">Modules</p>
-
                 </div>
-              </div>
+                </div>
             </div>
+
           </div>
 
         </div>
@@ -302,45 +384,7 @@ swal("", `{{error}}`, "warning");
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
   <!-- End custom js for this page-->
-  <script>
-$(function() {
-    $('#upload-file-btn').click(function() {
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                $("#logoview").attr('src','/media/'+data['status']);
-                swal("", 'Website Logo updated', "success");
 
-            },
-        });
-    });
-});
-
-$(function() {
-    $('#upload-fav-btn').click(function() {
-        var form_data = new FormData($('#upload-fav')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload_fav',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                $("#favview").attr('src','/media/'+data['status']);
-                swal("", 'Website Favicon updated', "success");
-
-            },
-        });
-    });
-});
-  </script>
 </body>
 
 </html>

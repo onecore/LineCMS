@@ -88,6 +88,18 @@ class knightclient:
             print("update_credential() error ", e)
             return False
 
+    def get_messages(self):
+        self.m_fetch = self.cursor.execute("SELECT * FROM messages")
+        self.m_data = self.m_fetch.fetchall()
+
+        return self.m_data
+
+    def get_logs(self):
+        self.m_fetch = self.cursor.execute("SELECT * FROM logging")
+        self.m_data = self.m_fetch.fetchall()
+
+        return self.m_data
+
     def get_cred(self, username, passw):
         self.gc_fetch = self.cursor.execute("SELECT * FROM users")
         self.gc_data = self.gc_fetch.fetchall()
