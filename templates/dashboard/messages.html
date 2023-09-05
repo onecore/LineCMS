@@ -195,7 +195,7 @@ swal("", `{{error}}`, "warning");
 
                           <tbody onclick="toggle({{item[0]}})" id="{{item[0]}}item" name="{{item[0]}}item">
                               <tr class="unread">
-                                  <td class="view-message  dont-show"><span class="btn-primary rounded text-truncate">&nbsp&nbsp&nbsp{{item[1]}}&nbsp&nbsp&nbsp</span> - {{item[3]|truncate(43, True)}}</td>
+                                  <td class="view-message  dont-show"><span class="btn-primary rounded text-truncate">&nbsp&nbsp&nbsp{{item[1]}}&nbsp&nbsp&nbsp</span> &nbsp {{item[3]|truncate(43, True)}}</td>
                                   <td class="view-message  text-right">{{item[5]}}</td>
                               </tr>
 

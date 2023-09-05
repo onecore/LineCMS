@@ -247,7 +247,7 @@ def logout():
 def help():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
-    return render_template("dashboard/help.html", data=dt)
+    return render_template("dashboard/help.html", version=version, data=dt)
 
 
 @app.route("/messages")
