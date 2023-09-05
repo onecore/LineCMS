@@ -122,6 +122,11 @@ class knightclient:
 
         return self.gc_data
 
+    def load_modules_settings(self):
+        self.ld = self.cursor.execute("SELECT * FROM modules")
+        self.ld_all = self.ld.fetchall()
+        return self.ld_all
+
     def load_data_index(self, which):
         """
         Loads data from DB, function calls in main page
@@ -139,6 +144,7 @@ class knightclient:
         # 3 - Shopping site
         # 4 - Business
         # 99 - Load ALL
+
         all_data = {  # 0 - Off, 1 - On
             "sitedescription": self.site_data[0][0],
             "sitename": self.site_data[0][1],
@@ -169,4 +175,5 @@ class knightclient:
         return all_data
 
     def insert_data(self, quer):
+        pass
         pass

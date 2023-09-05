@@ -43,7 +43,21 @@ def main():
 
 @app.route("/modules")
 def modules():
-    pass
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    dicts = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+    }
+
+    # print(dicts['popup']['enabled'])
+    return render_template("dashboard/modules.html", data=dicts)
 
 
 @app.route("/delete/<table>/<id>")
