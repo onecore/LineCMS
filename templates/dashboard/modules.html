@@ -62,10 +62,10 @@ swal("", `{{error}}`, "warning");
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="../../dashboard/index.html">
+          <a class="navbar-brand brand-logo" href="/dashboard">
             <img src="../../dashboard/img/knightstudio.png" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="../../dashboard/index.html">
+          <a class="navbar-brand brand-logo-mini" href="/dashboard">
             <img src="../../dashboard/img/knightstudio-s.png" alt="logo" />
           </a>
         </div>
@@ -187,7 +187,7 @@ swal("", `{{error}}`, "warning");
 
                   <h5 class="text-center text-muted">Announcement</h5>
                   <input class="flex rounded form-control" style="width:80%" placeholder="Please share a message you'd like to be in announcement"></input>
-                  {% if data['announcement']['enabled'] %}
+                  {% if mod['announcement']['enabled'] %}
                   <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
                   {% else %}
                   <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
@@ -201,7 +201,7 @@ swal("", `{{error}}`, "warning");
                 <h5 class="text-center text-muted">Banner / Pop-up</h5>
                 <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="bannerimg" name="sitename" placeholder="Popup image" value="">
                 <p>Message</p> <input type="text" style="width:80%" class="form-control" id="bannermessage" name="sitename" placeholder="Popup message" value="">
-                {% if data['popup']['enabled'] %}
+                {% if mod['popup']['enabled'] %}
                 <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
                 {% else %}
                 <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
@@ -214,7 +214,7 @@ swal("", `{{error}}`, "warning");
 
                 <h5 class="text-center text-muted">Up-arrow</h5>
                 <p>Color</p><input class="flex rounded form-control" style="width:80%" placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green"></input>
-                  {% if data['uparrow']['enabled'] %}
+                  {% if mod['uparrow']['enabled'] %}
                   <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
                   {% else %}
                   <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
@@ -230,7 +230,7 @@ swal("", `{{error}}`, "warning");
                 <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
                 <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
                 <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
-                {% if data['socialshare']['enabled'] %}
+                {% if mod['socialshare']['enabled'] %}
                 <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
                 {% else %}
                 <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
@@ -243,7 +243,7 @@ swal("", `{{error}}`, "warning");
 
                 <h5 class="text-center text-muted">Video embed</h5>
                 <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)"></input>
-                {% if data['videoembed']['enabled'] %}
+                {% if mod['videoembed']['enabled'] %}
                 <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
                 {% else %}
                 <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>

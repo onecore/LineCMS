@@ -57,7 +57,7 @@ def modules():
     }
 
     # print(dicts['popup']['enabled'])
-    return render_template("dashboard/modules.html", data=dicts)
+    return render_template("dashboard/modules.html", data=dt, mod=dicts)
 
 
 @app.route("/delete/<table>/<id>")
