@@ -112,13 +112,14 @@ class knightclient:
             return False
 
     def get_messages(self):
-        self.m_fetch = self.cursor.execute("SELECT * FROM messages")
+        self.m_fetch = self.cursor.execute(
+            "SELECT * FROM messages ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
-
         return self.m_data
 
     def get_logs(self):
-        self.m_fetch = self.cursor.execute("SELECT * FROM logging")
+        self.m_fetch = self.cursor.execute(
+            "SELECT * FROM logging ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
 
         return self.m_data

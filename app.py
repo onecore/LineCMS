@@ -102,7 +102,7 @@ def modules():
         "videoembed": eval(all_d[4]),
         "custom": eval(all_d[5]),
     }
-    log("KS Modules Loaded")
+    log("KSEngine Modules Loaded")
 
     # print(dicts['popup']['enabled'])
     return render_template("dashboard/modules.html", data=dt, mod=dicts)
