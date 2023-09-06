@@ -41,6 +41,19 @@ def main():
     return render_template("index.html", data=dt)
 
 
+@app.route("/module_update", methods=['POST', 'GET'])
+def modupdate():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+            print("data >>>", eval(request.data))
+            return jsonify({'status': True})
+
+        return "KnightStudio Dashboard build ", version
+
+    else:
+        return "KnightStudio Dashboard build ", version
+
+
 @app.route("/modules")
 def modules():
     de = dataengine.knightclient()

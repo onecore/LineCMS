@@ -177,6 +177,43 @@ swal("", `{{error}}`, "warning");
         <div class="content-wrapper">
           <div>
 
+            <script>
+            let on = 'margin-top:5px;background-color:mediumseagreen;color:white'
+            let off = 'margin-top:5px;background-color:black;color:white'
+
+            function updateMod(which,OnOrOff){
+
+                  let data = {'module': which};
+
+                  fetch("/module_update", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                  }).then(res => {
+                    //console.log("Request complete! response:", res);
+                  });
+                  return true
+            }
+
+            function OnOff(which){
+                  var mod = document.getElementById(which+"_btn");
+                  if (mod.textContent === "On") { // Turn OFF
+                    mod.textContent = "Off";
+                    if (updateMod(which,false)){
+                        mod.style = off
+                    }
+
+                  } else {                        // Turn ON
+                    mod.textContent = "On";
+                    if (updateMod(which,true)){
+                        mod.style = on
+                    }
+                  }
+
+            }
+
+            </script>
+
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Website Modules Control</h4>
@@ -188,9 +225,9 @@ swal("", `{{error}}`, "warning");
                   <h5 class="text-center text-muted">Announcement</h5>
                   <input class="flex rounded form-control" style="width:80%" placeholder="Please share a message you'd like to be in announcement"></input>
                   {% if mod['announcement']['enabled'] %}
-                  <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="announcement_btn" onclick="OnOff('announcement')">On</button><br>
                   {% else %}
-                  <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="announcement_btn" onclick="OnOff('announcement')">Off</button><br>
                   {% endif %}
 
 
@@ -201,11 +238,11 @@ swal("", `{{error}}`, "warning");
                 <h5 class="text-center text-muted">Banner / Pop-up</h5>
                 <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="bannerimg" name="sitename" placeholder="Popup image" value="">
                 <p>Message</p> <input type="text" style="width:80%" class="form-control" id="bannermessage" name="sitename" placeholder="Popup message" value="">
-                {% if mod['popup']['enabled'] %}
-                <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
-                {% else %}
-                <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
-                {% endif %}
+                  {% if mod['popup']['enabled'] %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="popup_btn" onclick="OnOff('popup')">On</button><br>
+                  {% else %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="popup_btn" onclick="OnOff('popup')">Off</button><br>
+                  {% endif %}
 
 
                 <br>
@@ -215,9 +252,9 @@ swal("", `{{error}}`, "warning");
                 <h5 class="text-center text-muted">Up-arrow</h5>
                 <p>Color</p><input class="flex rounded form-control" style="width:80%" placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green"></input>
                   {% if mod['uparrow']['enabled'] %}
-                  <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="uparrow_btn" onclick="OnOff('uparrow')">On</button><br>
                   {% else %}
-                  <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="uparrow_btn" onclick="OnOff('uparrow')">Off</button><br>
                   {% endif %}
 
 
@@ -231,9 +268,9 @@ swal("", `{{error}}`, "warning");
                 <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
                 <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
                 {% if mod['socialshare']['enabled'] %}
-                <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
+                <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="socialshare_btn" onclick="OnOff('socialshare')">On</button><br>
                 {% else %}
-                <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
+                <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="socialshare_btn" onclick="OnOff('socialshare')">Off</button><br>
                 {% endif %}
 
 
@@ -243,18 +280,18 @@ swal("", `{{error}}`, "warning");
 
                 <h5 class="text-center text-muted">Video embed</h5>
                 <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)"></input>
-                {% if mod['videoembed']['enabled'] %}
-                <button class="btn btn-sm btn-success pull-left" style="margin-top:5px;">On</button><br>
-                {% else %}
-                <button class="btn btn-sm btn-dark pull-left" style="margin-top:5px;">Off</button><br>
-                {% endif %}
+                  {% if mod['videoembed']['enabled'] %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="videoembed_btn" onclick="OnOff('videoembed')">On</button><br>
+                  {% else %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="videoembed_btn" onclick="OnOff('videoembed')">Off</button><br>
+                  {% endif %}
 
 
 
                 <br>
                 <hr>
                 <br>
-                  <p class="text-center text-muted">Website needs refresh to view changes</p>
+                  <p class="text-center text-muted">Website needs refresh to view changes, Module will be Off automatically when theres an important value that is missing</p>
 
               </div>
             </div>
