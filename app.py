@@ -75,8 +75,10 @@ def knightapi():
             d = dataengine.knightclient()
 
             if (d.knightclientapi(eval(request.data)['action'])):
+                log("API Call success")
                 return jsonify({'status': True})
             else:
+                log("API Call failed")
                 return jsonify({'status': False})
 
         return "KnightStudio Dashboard build ", version
@@ -100,6 +102,7 @@ def modules():
         "videoembed": eval(all_d[4]),
         "custom": eval(all_d[5]),
     }
+    log("KS Modules Loaded")
 
     # print(dicts['popup']['enabled'])
     return render_template("dashboard/modules.html", data=dt, mod=dicts)
@@ -242,6 +245,7 @@ def dashboard_main():
                             return render_template("dashboard/dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
+                            log(error, " dashboard POST call")
                             return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
     log("Authenticate failed, returning to login")
@@ -296,6 +300,7 @@ def dashboard_account():
 @app.route("/logoff")
 def logout():
     try:
+        log("Logged out, Session deleted")
         del session['authenticated']
     except Exception as e:
         pass
@@ -342,12 +347,12 @@ def login():
             _cred = _de.get_cred(_u, _p)
             _cred_data = _cred[0]
             if _cred_data[0] == _u and _cred_data[1] == _p:
-                print("Auth success")
+                log("Login success adding to session")
                 # Set session
                 session['authenticated'] = (_u, _p)
                 return redirect(url_for("dashboard_main"))
             else:
-                print("Auth Failed")
+                log("Login failed, session deleted")
                 return render_template("dashboard/login.html", error=True)
         except Exception as e:
             print("Error: ", e)
