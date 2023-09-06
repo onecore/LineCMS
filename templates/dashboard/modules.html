@@ -23,7 +23,8 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
+  <script src="../../dashboard/knightstudio.js"></script>
 
 <style>
 input[type="file"] {
@@ -177,43 +178,6 @@ swal("", `{{error}}`, "warning");
         <div class="content-wrapper">
           <div>
 
-            <script>
-            let on = 'margin-top:5px;background-color:mediumseagreen;color:white'
-            let off = 'margin-top:5px;background-color:black;color:white'
-
-            function updateMod(which,OnOrOff){
-
-                  let data = {'module': which};
-
-                  fetch("/module_update", {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
-                  }).then(res => {
-                    //console.log("Request complete! response:", res);
-                  });
-                  return true
-            }
-
-            function OnOff(which){
-                  var mod = document.getElementById(which+"_btn");
-                  if (mod.textContent === "On") { // Turn OFF
-                    mod.textContent = "Off";
-                    if (updateMod(which,false)){
-                        mod.style = off
-                    }
-
-                  } else {                        // Turn ON
-                    mod.textContent = "On";
-                    if (updateMod(which,true)){
-                        mod.style = on
-                    }
-                  }
-
-            }
-
-            </script>
-
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Website Modules Control</h4>
@@ -223,7 +187,9 @@ swal("", `{{error}}`, "warning");
                   <br>
 
                   <h5 class="text-center text-muted">Announcement</h5>
-                  <input class="flex rounded form-control" style="width:80%" placeholder="Please share a message you'd like to be in announcement"></input>
+                  <p class="text-muted">Announcement message will show on the top of the page, please make the announcement as short as posible.</p>
+
+                  <input class="flex rounded form-control" style="width:80%" placeholder="Please share a message you'd like to be in announcement" id="announcement_content"></input>
                   {% if mod['announcement']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="announcement_btn" onclick="OnOff('announcement')">On</button><br>
                   {% else %}
@@ -236,8 +202,9 @@ swal("", `{{error}}`, "warning");
 
 
                 <h5 class="text-center text-muted">Banner / Pop-up</h5>
-                <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="bannerimg" name="sitename" placeholder="Popup image" value="">
-                <p>Message</p> <input type="text" style="width:80%" class="form-control" id="bannermessage" name="sitename" placeholder="Popup message" value="">
+                <p class="text-muted">Make the message as short as posible, either can be blank</p>
+                <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="popup_img" name="sitename" placeholder="Popup image" value="">
+                <p>Message</p> <input type="text" style="width:80%" class="form-control" id="popup_message" name="sitename" placeholder="Popup message" value="">
                   {% if mod['popup']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="popup_btn" onclick="OnOff('popup')">On</button><br>
                   {% else %}
@@ -250,7 +217,9 @@ swal("", `{{error}}`, "warning");
 
 
                 <h5 class="text-center text-muted">Up-arrow</h5>
-                <p>Color</p><input class="flex rounded form-control" style="width:80%" placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green"></input>
+                <p class="text-muted">Up-arrow shows when visitor reached the bottom of the page</p>
+
+                <p>Color</p><input class="flex rounded form-control" style="width:80%" placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green" id="uparrow_content"></input>
                   {% if mod['uparrow']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="uparrow_btn" onclick="OnOff('uparrow')">On</button><br>
                   {% else %}
@@ -263,10 +232,11 @@ swal("", `{{error}}`, "warning");
 
 
                 <h5 class="text-center text-muted">Social share</h5>
-                <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
-                <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
-                <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
-                <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"></input>
+                <p class="text-muted">Please do not include 'http://', e.g fb.com/mypagename</p>
+                <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link" id="socialshare_facebook"></input>
+                <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Twitter link" id="socialshare_twitter"></input>
+                <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Instagram link" id="socialshare_instagram"></input>
+                <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Google link" id="socialshare_google"></input>
                 {% if mod['socialshare']['enabled'] %}
                 <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="socialshare_btn" onclick="OnOff('socialshare')">On</button><br>
                 {% else %}
@@ -279,7 +249,8 @@ swal("", `{{error}}`, "warning");
 
 
                 <h5 class="text-center text-muted">Video embed</h5>
-                <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)"></input>
+                <p class="text-muted">Embed codes can be copied from Youtube, Vimeo or any Video sharing platform</p>
+                <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code"></input>
                   {% if mod['videoembed']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="videoembed_btn" onclick="OnOff('videoembed')">On</button><br>
                   {% else %}
