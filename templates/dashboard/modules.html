@@ -262,10 +262,26 @@ swal("", `{{error}}`, "warning");
                 <br>
                 <hr>
 
+                <h5 class="text-center text-muted">Extras</h5>
+                <p class="text-muted">Inputs below might be shown on website as Button, Inputs or Text (Contact us to customize)</p>
+                <p class="text-muted">Whatsapp (If you want to recieve a message thru Whatsapp)</p><input class="flex rounded form-control" style="width:80%" placeholder="Your Whatsapp number you want to show online" id="extras_whatsapp" value="{{mod['extras']['whatsapp']}}"></input>
+                <p class="text-muted">Number (If you want to show or receive a call on your Business number)</p><input class="flex rounded form-control" style="width:80%" placeholder="Business number" id="extras_number" value="{{mod['extras']['number']}}"></input>
+                <p class="text-muted">Email (If you want to show or receive an email on your Business email)</p><input class="flex rounded form-control" style="width:80%" placeholder="Business email" id="extras_email" value="{{mod['extras']['email']}}"></input>
+                <p class="text-muted">Full Address (If you wanna show your Business location/address)</p><input class="flex rounded form-control" style="width:80%" placeholder="Full address" id="extras_address" value="{{mod['extras']['address']}}"></input>
+                  {% if mod['extras']['enabled'] %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="extras_btn" onclick="OnOff('extras')">On</button><br>
+                  {% else %}
+                  <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="extras_btn" onclick="OnOff('extras')">Off</button><br>
+                  {% endif %}
+
+
+
+                <br>
+                <hr>
                 <h5 class="text-center text-muted">Other Modules (Developer mode)</h5>
                 <p class="text-muted">Custom module settings goes here (Only for KnightStudio Developer)</p>
                 <p>Code</p><input class="flex rounded form-control" style="width:80%" placeholder="Custom modules settings" id="custom_code" value="{{mod['custom']['code']}}"></input>
-                  {% if mod['videoembed']['enabled'] %}
+                  {% if mod['custom']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="custom_btn" onclick="OnOff('custom')">On</button><br>
                   {% else %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:black;color:white" id="custom_btn" onclick="OnOff('custom')">Off</button><br>
@@ -276,7 +292,8 @@ swal("", `{{error}}`, "warning");
                 <br>
                 <hr>
                 <br>
-                  <p class="text-center text-muted">Website needs refresh to view changes, Module will be Off automatically when theres an important value that is missing</p>
+                  <p class="text-center text-muted">Website needs refresh to view changes, Module will be Off automatically when theres an important value that is missing, Turning Off will make the specified module hidden.</p>
+                  <p class="text-center text-muted">Contact us for any help with the inputs above or module placement.</p>
 
               </div>
             </div>

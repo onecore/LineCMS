@@ -83,6 +83,21 @@ function updateMod(which, OnOrOff) {
         } else {
             return false
         }
+    }else if (which == "extras") {
+        extras_whatsapp = document.getElementById('extras_whatsapp').value
+        extras_number = document.getElementById('extras_number').value
+        extras_email = document.getElementById('extras_email').value
+        extras_address = document.getElementById('extras_address').value
+        if (extras_whatsapp || extras_number || extras_email || extras_address) { // process here
+            data.module = which;
+            data.status = OnOrOff;
+            data.whatsapp = extras_whatsapp;
+            data.number = extras_number;
+            data.email = extras_email;
+            data.address = extras_address;
+        } else {
+            return false
+        }
     }
 
 

@@ -49,6 +49,7 @@ def main():
         "socialshare": eval(all_d[3]),
         "videoembed": eval(all_d[4]),
         "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
     }
 
     return render_template("index.html", data=dt, mod=mod)
@@ -101,6 +102,7 @@ def modules():
         "socialshare": eval(all_d[3]),
         "videoembed": eval(all_d[4]),
         "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
     }
     log("KSEngine Modules Loaded")
 
