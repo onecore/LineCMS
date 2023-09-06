@@ -8,6 +8,13 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
+    def knightclientapi(self, action):
+        a = {
+            "dlogs": """DELETE FROM logging""",
+            }
+        self.cursor.execute(a[action])
+        return True
+
     def timestamp(self):
         """
         Returns timestamp

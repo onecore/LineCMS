@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Messages - KnightStudio Dashboard</title>
+  <title>Website loggings - KnightStudio Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -23,6 +23,9 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
+  <script src="../../dashboard/knightstudio.js"></script>
+
 <style>
 .job-box-filter label {
     width: 100%;
@@ -306,7 +309,8 @@ swal("", `{{error}}`, "warning");
                 	<div class="chat_container">
                 		<div class="job-box">
                 			<div class="job-box-filter">
-                        Website logs <button class="btn btn-success btn-xs">{{data|length}}</button>
+                        Website logs <button class="btn btn-dark btn-xs text-light">{{data|length}}</button>
+                        <button class="btn btn-primary btn-xs" onclick="knightapi({'action':'dlogs'})">Delete logs</button>
                 			</div>
                 			<div class="inbox-message rounded">
                 				<ul>
@@ -316,7 +320,7 @@ swal("", `{{error}}`, "warning");
                 					<li>
                 						<a href="#">
                 							<div class="message-avatar">
-                              <button class="btn btn-danger btn-xs" style="margin-top:15px">x</button>
+                              <span class="fa fa-wrench text-dark"></span>
                 							</div>
                 							<div class="message-body">
                 								<div class="message-body-heading">

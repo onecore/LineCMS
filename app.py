@@ -67,7 +67,25 @@ def modupdate():
         return "KnightStudio Dashboard build ", version
 
 
-@app.route("/modules")
+@app.route("/knightclientapi", methods=['POST', 'GET'])
+def knightapi():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+
+            d = dataengine.knightclient()
+
+            if (d.knightclientapi(eval(request.data)['action'])):
+                return jsonify({'status': True})
+            else:
+                return jsonify({'status': False})
+
+        return "KnightStudio Dashboard build ", version
+
+    else:
+        return "KnightStudio Dashboard build ", version
+
+
+@ app.route("/modules")
 def modules():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
@@ -87,7 +105,7 @@ def modules():
     return render_template("dashboard/modules.html", data=dt, mod=dicts)
 
 
-@app.route("/delete/<table>/<id>")
+@ app.route("/delete/<table>/<id>")
 def delete(table, id):
     mid = id
     if 'authenticated' in session:
@@ -99,7 +117,7 @@ def delete(table, id):
     return jsonify({"status": False})
 
 
-@app.route("/inquire", methods=['POST'])
+@ app.route("/inquire", methods=['POST'])
 def messagerec():
     data = request.json
     json = data
@@ -120,12 +138,12 @@ def messagerec():
         return jsonify({'status': False})
 
 
-@app.route("/media/<file>")
+@ app.route("/media/<file>")
 def showuploaded(file):
     return send_from_directory("static/dashboard/uploads", file)
 
 
-@app.route('/upload', methods=['POST'])
+@ app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
         log("New Logo upload started")
@@ -156,7 +174,7 @@ def upload_file():
     return jsonify({"status": "success"})
 
 
-@app.route('/upload_fav', methods=['POST'])
+@ app.route('/upload_fav', methods=['POST'])
 def upload_fav():
     if request.method == 'POST':
         log("New Favicon file upload started")
@@ -187,7 +205,7 @@ def upload_fav():
     return jsonify({"status": "success"})
 
 
-@app.route("/dashboard", methods=['POST', 'GET'])
+@ app.route("/dashboard", methods=['POST', 'GET'])
 def dashboard_main():
     """
     main dashboard page
