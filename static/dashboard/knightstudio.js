@@ -62,6 +62,15 @@ function updateMod(which, OnOrOff) {
         } else {
             return false
         }
+    }else if (which == "custom") {
+        clss = document.getElementById('custom_code').value
+        if (clss) { // process here
+            data.module = which;
+            data.status = OnOrOff;
+            data.code = clss;
+        } else {
+            return false
+        }
     }
 
 

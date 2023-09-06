@@ -1,10 +1,11 @@
 # KnightSolutions Canada
-# www.KnightSolutions.ca - Client Files / Dashboard
+# www.KnightSolutions.ca - KnightStudio Dashboard / Client files
 # Aug 31,2023
-# MARP - Python 3
+# Developed by Mark Anthony Pequeras - Python 3.x.x
+# Database: Sqlite3
+
 import dataengine
 import os
-import sqlite3
 from flask import Flask, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -38,7 +39,19 @@ def main():
     """
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
-    return render_template("index.html", data=dt)
+
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    mod = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
+    }
+
+    return render_template("index.html", data=dt, mod=mod)
 
 
 @app.route("/module_update", methods=['POST', 'GET'])
@@ -67,6 +80,7 @@ def modules():
         "uparrow": eval(all_d[2]),
         "socialshare": eval(all_d[3]),
         "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
     }
 
     # print(dicts['popup']['enabled'])
@@ -324,11 +338,3 @@ def login():
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
     return render_template("dashboard/login.html", error=False)
-
-
-@app.route("/product/<product_name>")
-def product_show(product_name):
-    return product_name
-
-# End - Route functions
-# End - Route functions
