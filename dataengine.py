@@ -24,7 +24,6 @@ class knightclient:
         dt = d_[0]
         t = time.strftime("%I:%M %p")
         ts = dt + " " + t
-
         return ts
 
     def message(self, dicts):
@@ -90,9 +89,33 @@ class knightclient:
             print("update success")
             self.connection.commit()
             return True
-
         except Exception as e:
             print("update_wsettings() error ", e)
+            return False
+
+    def update_module(self, data):
+        """
+        Update module data
+        """
+        import json
+        try:
+            data = eval(data)
+            copy_data = data.copy()
+            del data['module']
+            se = json.dumps(data)
+
+            q = """UPDATE modules SET '{module}' = '{new}'""".format(
+                module=copy_data['module'], new=se)
+
+            self.cursor.execute(q)
+            self.connection.commit()
+            self.log("KSEngine Module update success "+copy_data['module'])
+            return True
+
+        except Exception as e:
+            print(e)
+            self.log("KSEngine Module update failed "
+                     + copy_data['module']+" "+str(e))
             return False
 
     def update_credential(self, uname, newpwd):
@@ -141,10 +164,8 @@ class knightclient:
         """
         self.fetch_control = self.cursor.execute("SELECT * FROM control")
         self.site_data = self.fetch_control.fetchall()
-
         self.fetch_msg = self.cursor.execute("SELECT * FROM messages")
         self.site_msgs = self.fetch_msg.fetchall()
-
         # site_type:
         # 0 - Restaurant (Single Menu)
         # 1 - Restaurant (Multi Menu)
@@ -152,7 +173,6 @@ class knightclient:
         # 3 - Shopping site
         # 4 - Business
         # 99 - Load ALL
-
         all_data = {  # 0 - Off, 1 - On
             "sitedescription": self.site_data[0][0],
             "sitename": self.site_data[0][1],
@@ -168,20 +188,15 @@ class knightclient:
             "site_type": self.site_data[0][11],
             "messages": len(self.site_msgs),
         }
-
         # adds menu_list in dict if either single, multi, otherwise False
         if "0" in all_data['site_type']:  # single
             self.menu = self.cursor.execute("SELECT * FROM menu_single")
             all_data['menu_list'] = self.menu.fetchall()
-
         elif "1" in all_data['site_type']:  # multi
             self.menu = self.cursor.execute("SELECT * FROM menu")
             all_data['menu_list'] = self.menu.fetchall()
-
         # Add more condition depends on site_type
-
         return all_data
 
     def insert_data(self, quer):
-        pass
         pass

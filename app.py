@@ -39,7 +39,6 @@ def main():
     """
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
-
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
@@ -51,7 +50,6 @@ def main():
         "custom": eval(all_d[5]),
         "extras": eval(all_d[6]),
     }
-
     return render_template("index.html", data=dt, mod=mod)
 
 
@@ -59,9 +57,12 @@ def main():
 def modupdate():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            print("data >>>", eval(request.data))
-            return jsonify({'status': True})
-
+            de = dataengine.knightclient()
+            print(">>>>>> ", request.data)
+            if (de.update_module(request.data)):
+                return jsonify({'status': True})
+            else:
+                return jsonify({'status': False})
         return "KnightStudio Dashboard build ", version
 
     else:
@@ -72,18 +73,14 @@ def modupdate():
 def knightapi():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-
             d = dataengine.knightclient()
-
             if (d.knightclientapi(eval(request.data)['action'])):
                 log("API Call success")
                 return jsonify({'status': True})
             else:
                 log("API Call failed")
                 return jsonify({'status': False})
-
         return "KnightStudio Dashboard build ", version
-
     else:
         return "KnightStudio Dashboard build ", version
 
@@ -105,7 +102,6 @@ def modules():
         "extras": eval(all_d[6]),
     }
     log("KSEngine Modules Loaded")
-
     # print(dicts['popup']['enabled'])
     return render_template("dashboard/modules.html", data=dt, mod=dicts)
 
@@ -136,7 +132,7 @@ def messagerec():
     _de = dataengine.knightclient()
 
     if (_de.message(dicts)):
-        log("New message from ", dicts['name'])
+        log("New message from received")
         return jsonify({'status': True})
     else:
         log("New message failed to process")

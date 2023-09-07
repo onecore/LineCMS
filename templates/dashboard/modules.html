@@ -233,10 +233,10 @@ swal("", `{{error}}`, "warning");
 
                 <h5 class="text-center text-muted">Social share</h5>
                 <p class="text-muted">Please do not include 'http://', e.g fb.com/mypagename</p>
-                <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link" id="socialshare_facebook" value="{{mod['socialshare']['facebook']}}"></input>
-                <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Twitter link" id="socialshare_twitter" value="{{mod['socialshare']['twitter']}}"></input>
-                <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Instagram link" id="socialshare_instagram" value="{{mod['socialshare']['instagram']}}"></input>
-                <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Google link" id="socialshare_google" value="{{mod['socialshare']['google']}}"></input>
+                <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link" id="socialshare_facebook" value="{{mod['socialshare']['fb']}}"></input>
+                <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Twitter link" id="socialshare_twitter" value="{{mod['socialshare']['tw']}}"></input>
+                <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Instagram link" id="socialshare_instagram" value="{{mod['socialshare']['ig']}}"></input>
+                <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Google link" id="socialshare_google" value="{{mod['socialshare']['gl']}}"></input>
                 {% if mod['socialshare']['enabled'] %}
                 <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="socialshare_btn" onclick="OnOff('socialshare')">On</button><br>
                 {% else %}
@@ -250,7 +250,7 @@ swal("", `{{error}}`, "warning");
 
                 <h5 class="text-center text-muted">Video embed</h5>
                 <p class="text-muted">Embed codes can be copied from Youtube, Vimeo or any Video sharing platform</p>
-                <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code" value="{{mod['videoembed']['embed']}}"></input>
+                <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code" value="{{mod['videoembed']['code']}}"></input>
                   {% if mod['videoembed']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="videoembed_btn" onclick="OnOff('videoembed')">On</button><br>
                   {% else %}

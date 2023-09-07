@@ -13,6 +13,7 @@ function knightapi(data){
         },
         body: JSON.stringify(data)
     }).then(res => {
+        swal("Logs deleted", 'Please refresh page', "success");
         //console.log("Request complete! response:", res);
     });
 }
@@ -25,8 +26,8 @@ function updateMod(which, OnOrOff) {
         v = document.getElementById('announcement_content').value
         if (v) { // process here
             data.module = which;
-            data.status = OnOrOff;
-            data.message = v
+            data.enabled = OnOrOff;
+            data.message = v;
         } else {
             return false
         }
@@ -35,7 +36,7 @@ function updateMod(which, OnOrOff) {
         ms = document.getElementById('popup_message').value
         if (im || ms) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.image = im;
             data.message = ms;
         } else {
@@ -45,7 +46,7 @@ function updateMod(which, OnOrOff) {
         cl = document.getElementById('uparrow_content').value
         if (cl) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.color = cl;
         } else {
             return false
@@ -57,7 +58,7 @@ function updateMod(which, OnOrOff) {
         gl = document.getElementById('socialshare_google').value;
         if (fb || ig || tw || gl) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.fb = fb;
             data.ig = ig;
             data.tw = tw;
@@ -69,7 +70,7 @@ function updateMod(which, OnOrOff) {
         cls = document.getElementById('videoembed_code').value
         if (cls) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.code = cls;
         } else {
             return false
@@ -78,7 +79,7 @@ function updateMod(which, OnOrOff) {
         clss = document.getElementById('custom_code').value
         if (clss) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.code = clss;
         } else {
             return false
@@ -90,7 +91,7 @@ function updateMod(which, OnOrOff) {
         extras_address = document.getElementById('extras_address').value
         if (extras_whatsapp || extras_number || extras_email || extras_address) { // process here
             data.module = which;
-            data.status = OnOrOff;
+            data.enabled = OnOrOff;
             data.whatsapp = extras_whatsapp;
             data.number = extras_number;
             data.email = extras_email;
@@ -108,6 +109,7 @@ function updateMod(which, OnOrOff) {
         },
         body: JSON.stringify(data)
     }).then(res => {
+      swal("", 'Module Updated', "success");
         //console.log("Request complete! response:", res);
     });
     return true

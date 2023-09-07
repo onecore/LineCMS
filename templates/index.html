@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Restoran - Bootstrap Restaurant Template</title>
+    <title>{{data['sitename']}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="{{data['meta_keywords']}}" name="keywords">
+    <meta content="{{data['meta_description']}}" name="description">
 
     <!-- Favicon -->
     <link href="media/{{data['favicon']}}" rel="icon">
@@ -57,21 +57,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="menu.html" class="nav-item nav-link">Menu</a>
-                        <div class="nav-item dropdown">
+                        <a href="/" class="nav-item nav-link active">Home</a>
+                        <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
                                 <a href="booking.html" class="dropdown-item">Booking</a>
                                 <a href="team.html" class="dropdown-item">Our Team</a>
                                 <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                             </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div> -->
+                        <a href="#sendusmessage2" class="nav-item nav-link">Contact</a>
                     </div>
-                    <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a>
+                    <!-- <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a> -->
                 </div>
             </nav>
 
@@ -142,7 +139,7 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Food Menu</h5>
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Our menu</h5>
                     <h1 class="mb-5">Most Popular Items</h1>
                 </div>
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -484,7 +481,7 @@
 
 
         <!-- Reservation Start -->
-        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s" id="sendusmessage2">
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="video">
@@ -495,9 +492,9 @@
                 </div>
                 <div class="col-md-6 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
-                        <h1 class="text-white mb-4">Send us a message!</h1>
-                        <form>
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Send us a message</h5>
+                        <!-- <h1 class="text-white mb-4">Send us a message!</h1> -->
+                        <form id="sendusmessage">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
