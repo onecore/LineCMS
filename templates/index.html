@@ -29,6 +29,20 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
+    <style>
+    .video {
+        position: relative;
+        height: 100%;
+        min-height: 500px;
+        {% if mod['videoembed']['enabled'] %}
+        background: linear-gradient(rgba(15, 23, 43, .1), rgba(15, 23, 43, .1)), url({{mod['videoembed']['thumbnail'] }});
+        {% endif %}
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    </style>
     <link href="css/style.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -485,15 +499,20 @@
 
 
         <!-- Reservation Start -->
+        {% if mod['videoembed']['enabled']%}
+          {% if mod['videoembed']['code'] %}
         <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s" id="sendusmessage2">
+
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="video">
-                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/UsD1MhKBmD4?si=iPyhM3t_7qSyiQIq" data-bs-target="#videoModal">
+                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="{{mod['videoembed']['code']}}" data-bs-target="#videoModal">
                             <span></span>
                         </button>
                     </div>
                 </div>
+          {% endif %}
+          {% endif %}
                 <div class="col-md-6 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Send us a message</h5>

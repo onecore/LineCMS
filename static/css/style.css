@@ -142,7 +142,7 @@
         z-index: 999;
         background: transparent !important;
     }
-    
+
     .sticky-top.navbar-dark {
         position: fixed;
         background: var(--dark) !important;
@@ -162,10 +162,10 @@
     animation: imgRotate 50s linear infinite;
 }
 
-@keyframes imgRotate { 
-    100% { 
-        transform: rotate(360deg); 
-    } 
+@keyframes imgRotate {
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
@@ -233,7 +233,7 @@
 
 
 /*** Youtube Video ***/
-.video {
+/* .video {
     position: relative;
     height: 100%;
     min-height: 500px;
@@ -241,7 +241,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
 
 .video .btn-play {
     position: absolute;

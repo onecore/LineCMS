@@ -68,10 +68,12 @@ function updateMod(which, OnOrOff) {
         }
     }else if (which == "videoembed") {
         cls = document.getElementById('videoembed_code').value
-        if (cls) { // process here
+        cls_t = document.getElementById('videoembed_thumbnail').value
+        if (cls && cls_t) { // process here
             data.module = which;
             data.enabled = OnOrOff;
             data.code = cls;
+            data.thumbnail = cls_t;
         } else {
             return false
         }

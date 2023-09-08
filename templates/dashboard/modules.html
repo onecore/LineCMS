@@ -251,6 +251,7 @@ swal("", `{{error}}`, "warning");
                 <h5 class="text-center text-muted">Video embed</h5>
                 <p class="text-muted">Embed codes can be copied from Youtube, Vimeo or any Video sharing platform</p>
                 <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code" value="{{mod['videoembed']['code']}}"></input>
+                <p>Thumbnail source</p><input class="flex rounded form-control" style="width:80%" placeholder="Direct link to image file as thumbnail" id="videoembed_thumbnail" value="{{mod['videoembed']['thumbnail']}}"></input>
                   {% if mod['videoembed']['enabled'] %}
                   <button class="btn btn-sm pull-left" style="margin-top:5px;background-color:mediumseagreen;color:white" id="videoembed_btn" onclick="OnOff('videoembed')">On</button><br>
                   {% else %}
