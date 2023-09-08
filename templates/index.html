@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- KnightStudio Engine -->
 <head>
     <meta charset="utf-8">
     <title>{{data['sitename']}}</title>
@@ -48,9 +48,8 @@
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-                <a href="" class="navbar-brand p-0">
-                    <!-- <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1> -->
-                  <img src="media/{{data['logo']}}" alt="Logo">
+                <a href="/" class="navbar-brand p-0">
+                  <img src="media/{{data['logo']}}" alt="Logo" class="flex"> SAMPLE RESTAURANT
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
@@ -75,14 +74,14 @@
             <div class="container-xxl py-5 bg-dark hero-header mb-5">
                 <div class="container my-5 py-5">
                     <div class="row align-items-center g-5">
-                        <div class="col-lg-6 text-center text-lg-start">
+                        <div class="col-lg-9 text-center text-lg-start">
                             <h1 class="display-3 text-white animated slideInLeft">Enjoy Our<br>Delicious Meal</h1>
                             <p class="text-white animated slideInLeft mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                            <a href="" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Menu</a>
+                            <a href="#menus" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Menu</a>
                         </div>
-                        <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                        <!-- <div class="col-lg-6 text-center text-lg-end overflow-hidden">
                             <img class="img-fluid" src="img/hero.png" alt="">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -113,7 +112,7 @@
                     </div>
                     <div class="col-lg-6">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Us</h5>
-                        <h1 class="mb-4">Welcome to <i class="fa fa-utensils text-primary me-2"></i>Sangkalan</h1>
+                        <h1 class="mb-4"><i class="fa fa-utensils text-primary me-2"></i>{{data['sitename']}}</h1>
                         <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos erat ipsum et lorem et sit, sed stet lorem sit.</p>
                         <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
                         <div class="row g-4 mb-4">
@@ -139,7 +138,7 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Our menu</h5>
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal" id="menus">Our menu</h5>
                     <h1 class="mb-5">Most Popular Items</h1>
                 </div>
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -485,7 +484,7 @@
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="video">
-                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
+                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/UsD1MhKBmD4?si=iPyhM3t_7qSyiQIq" data-bs-target="#videoModal">
                             <span></span>
                         </button>
                     </div>
@@ -550,22 +549,44 @@
         </div>
 
         <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container py-5">
+            <div class="container py-3">
                 <div class="row g-5">
-                    <div class="col-lg-3 col-md-6">
-<div style="width: 100%"><iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=100%25&amp;hl=en&amp;q=2607%20E%2049th%20Ave%20#106+(Sangkalan)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.maps.ie/population/">Calculate population in area</a></iframe></div>
+                    <div class="col-lg-6 col-md-4">
+<div style="width: 100%"><iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2606.262318812828!2d-123.09029242436087!3d49.21455207557749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867445f389ef7f%3A0xab5e2e2633dd98c6!2s7710%20Prince%20Albert%20St%2C%20Vancouver%2C%20BC%20V5X%203Z6!5e0!3m2!1sen!2sca!4v1693270858778!5m2!1sen!2sca">Calculate population in area</a></iframe></div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                      {% if mod['extras']['enabled'] %}
+                          <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                          {% if mod['extras']['address'] %}
+                          <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{mod['extras']['address']}}</p>
+                          {% endif %}
+
+                          {% if mod['extras']['number'] %}
+                          <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{mod['extras']['number']}}</p>
+                          {% endif %}
+
+                          {% if mod['extras']['email'] %}
+                          <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{mod['extras']['email']}}</p>
+                          {% endif %}
+                      {% endif %}
+
+                      {% if mod['socialshare']['enabled'] %}
                         <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                          {% if mod['socialshare']['tw'] %}
+                            <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['tw']}}" target="_blank"><i class="fab fa-twitter"></i></a>
+                          {% endif %}
+                          {% if mod['socialshare']['fb'] %}
+                            <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['fb']}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                          {% endif %}
+                          {% if mod['socialshare']['gl'] %}
+                            <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['gl']}}" target="_blank"><i class="fab fa-google"></i></a>
+                          {% endif %}
+                          {% if mod['socialshare']['ig'] %}
+                            <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['ig']}}" target="_blank"><i class="fab fa-instagram"></i></a>
+                          {% endif %}
+
                         </div>
+                      {% endif %}
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
@@ -573,14 +594,6 @@
                         <p>09AM - 09PM</p>
                         <h5 class="text-light fw-normal">Sunday</h5>
                         <p>10AM - 08PM</p>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -599,7 +612,7 @@
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background-color:{{mod['uparrow']['color']}}"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
