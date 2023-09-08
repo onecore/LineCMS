@@ -84,6 +84,10 @@
                         </div> -->
                     </div>
                 </div>
+                  {% if mod['announcement']['enabled'] %}
+                  <center><alert class="alert alert-primary">{{ mod['announcement']['message'] }}</alert></center>
+                  {% endif %}
+
             </div>
         </div>
         <!-- Navbar & Hero End -->
@@ -91,6 +95,7 @@
 
 
         <!-- About Start -->
+
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
