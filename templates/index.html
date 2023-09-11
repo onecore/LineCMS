@@ -36,16 +36,12 @@
       height: 100%;
       min-height: 500px;
 
-        {
-        % if mod['videoembed']['enabled'] %
-      }
+        {% if mod['videoembed']['enabled'] %}
 
       background: linear-gradient(rgba(15, 23, 43, .1), rgba(15, 23, 43, .1)),
-      url({{mod['videoembed']['thumbnail'] }});
+      url({{ mod['videoembed']['thumbnail'] }});
 
-        {
-        % endif %
-      }
+        {% endif %}
 
       background-position: center center;
       background-repeat: no-repeat;
