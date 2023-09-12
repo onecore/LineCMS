@@ -85,7 +85,7 @@ swal("", `{{error}}`, "warning");
 
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
+                <a href="{{data['domain']}}" target="_a" class="btn btn-sm btn-dark">Visit Website</a>
               </span>
           </li>
           <li class="nav-item d-none d-lg-block">
@@ -143,7 +143,7 @@ swal("", `{{error}}`, "warning");
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="dashboard">Website</a></li>
                   <li class="nav-item"> <a class="nav-link" href="account">Account</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="modules">Modules</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="modules"><b class="text-warning">Modules</b></a></li>
                 </ul>
               </div>
             </li>
@@ -180,11 +180,10 @@ swal("", `{{error}}`, "warning");
 
             <div class="card">
               <div class="card-body" style="padding-left:7%;padding-right:7%">
-                <h4 class="card-title">Website Modules Control</h4>
+                <!-- <h4 class="card-title">Website Modules Control</h4> -->
                 <p class="card-description">
 
                   </p>
-                  <br>
                   <div>
                   <h3><span class="badge bg-secondary text-white">Announcement</span></h3>
                   <p class="text-muted">Announcement message will show on the top of the page, please make the announcement as short as posible.</p>

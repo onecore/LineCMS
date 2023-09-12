@@ -84,7 +84,7 @@ swal("", `{{error}}`, "warning");
 
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
+                <a href="{{data['domain']}}" target="_a" class="btn btn-sm btn-dark">Visit Website</a>
               </span>
           </li>
           <li class="nav-item d-none d-lg-block">
@@ -140,7 +140,7 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="KnightStudio-webacc">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="dashboard">Website</a></li>
+                <li class="nav-item"> <a class="nav-link" href="dashboard"><b class="text-warning">Website</b></a></li>
                 <li class="nav-item"> <a class="nav-link" href="account">Account</a></li>
                 <li class="nav-item"> <a class="nav-link" href="modules">Modules</a></li>
               </ul>
@@ -180,23 +180,24 @@ swal("", `{{error}}`, "warning");
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Website Settings</h4>
+                  <!-- <h4 class="card-title">Website Settings</h4> -->
                   <p class="card-description">
                     Please do not leave any form blank
                   </p>
                   <form class="forms-sample" method="post">
                     <div class="form-group">
-                      <label for="exampleInputUsername1">Website name</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Website name</span></h3>
+
                       <input type="text" class="form-control" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}">
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Website description</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Website description</span></h3>
                       <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="{{data['sitedescription']}}">
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Meta description</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Meta description</span></h3>
                       <input type="text" class="form-control" id="meta_description" name="meta_description" placeholder="website description" value="{{data['meta_description']}}">
                       <p class="card-description">
                         For Search Engine Optimization (Improves online search)
@@ -204,7 +205,7 @@ swal("", `{{error}}`, "warning");
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Meta keywords</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Meta keywords</span></h3>
                       <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="keywords seperated by comma" value="{{data['meta_keywords']}}">
                       <p class="card-description">
                         For Search Engine Optimization (Improves online search)
@@ -212,13 +213,13 @@ swal("", `{{error}}`, "warning");
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Footer Copyright</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Footer copyright</span></h3>
                       <input type="text" class="form-control" id="footercopyright" name="footercopyright" placeholder="keywords seperated by comma" value="{{data['footercopyright']}}">
                     </div>
 
 
                     <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Domain (Secure Socket Layer Added)</label>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Assigned Domain</span></h3>
                       <input type="text" class="form-control" id="domain" placeholder="" disabled value="{{data['domain']}}">
                       <p class="card-description">
                         Contact us to update
@@ -233,12 +234,12 @@ swal("", `{{error}}`, "warning");
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Miscellaneous Settings</h4>
+                  <!-- <h4 class="card-title">Miscellaneous Settings</h4> -->
                   <p class="card-description">
                     Modules and other website functionality
                   </p>
                   <hr>
-                    <p class="text-center">Website Logo</p>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Website Logo</span></h3>
                     <center>
                     <img src="/media/{{data['logo']}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:60%;width:60%">
                     </center>
@@ -255,7 +256,7 @@ swal("", `{{error}}`, "warning");
 
 
                   <hr>
-                    <p class="text-center">Website Favicon</p>
+                      <h3><span class="badge bg-secondary text-white rounded-0">Website Favicon</span></h3>
                     <center>
                       <img src="/media/{{data['favicon']}}" alt="..." id="favview" name="favview" class="img-thumbnail" style="border:none;bottom:30px;width:10%;height:10%;">
                     </center>

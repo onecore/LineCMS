@@ -209,11 +209,6 @@ swal("", `{{error}}`, "warning");
 
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
-              </span>
-          </li>
-          <li class="nav-item d-none d-lg-block">
-              <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
               </span>
           </li>
@@ -282,7 +277,7 @@ swal("", `{{error}}`, "warning");
             <div class="collapse" id="KnightStudio-messages">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="messages">Customer Messages</a></li>
-                <li class="nav-item"> <a class="nav-link" href="mwebsite">Website Logging</a></li>
+                <li class="nav-item"> <a class="nav-link" href="mwebsite"><b class="text-warning">Website Logging</b></a></li>
               </ul>
             </div>
           </li>
@@ -307,9 +302,9 @@ swal("", `{{error}}`, "warning");
                 <div class="row">
                 <div class="col">
                 	<div class="chat_container">
-                		<div class="job-box">
-                			<div class="job-box-filter">
-                        Website logs <button class="btn btn-dark btn-xs text-light">{{data|length}}</button>
+                		<div class="job-box rounded">
+                			<div class="job-box-filter rounded">
+                        <button class="btn btn-dark btn-xs text-light">{{data|length}}</button>
                         <button class="btn btn-primary btn-xs" onclick="knightapi({'action':'dlogs'})">Delete logs</button>
                 			</div>
                 			<div class="inbox-message rounded">

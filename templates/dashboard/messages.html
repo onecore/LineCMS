@@ -63,11 +63,6 @@ swal("", `{{error}}`, "warning");
 
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
-                <a href="{{data['domain']}}" class="btn btn-sm btn-dark">Visit Website</a>
-              </span>
-          </li>
-          <li class="nav-item d-none d-lg-block">
-              <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
               </span>
           </li>
@@ -136,7 +131,7 @@ swal("", `{{error}}`, "warning");
                   </a>
                   <div class="collapse" id="KnightStudio-messages">
                     <ul class="nav flex-column sub-menu">
-                      <li class="nav-item"> <a class="nav-link" href="messages">Customer Messages</a></li>
+                      <li class="nav-item"> <a class="nav-link" href="messages"><b class="text-warning">Customer Messages</b></a></li>
                       <li class="nav-item"> <a class="nav-link" href="mwebsite">Website Logging</a></li>
                     </ul>
                   </div>
@@ -186,8 +181,8 @@ swal("", `{{error}}`, "warning");
 
         <div class="content-wrapper">
           <div class="row">
-            <h4>Customer Messages</h4>
-            <hr>
+            <!-- <h4>Customer Messages</h4> -->
+            <!-- <hr> -->
             <table class="table table-hover">
                           {% if data %}
 
@@ -206,7 +201,7 @@ swal("", `{{error}}`, "warning");
                               <button onclick="toggledeletebtn({{item[0]}})" class="btn fa fa-trash inline pull-right" style="margin:3px;padding:3px;background-color:black;color:white;"></button>
                               <button onclick="toggle({{item[0]}})" class="btn fa fa-angle-down inline pull-right" style="margin:3px;padding:3px;background-color:black;color:white;"></button>
                               <button onclick="deletenow({{item[0]}})" id="{{item[0]}}deletebtn" class="btn inline pull-right" style="margin:3px;padding:3px;background-color:red;color:white;display:none">Delete now</button>
-                              <h5 class="">Message from {{item[1]}}</h5>
+                              <h3><span class="badge bg-secondary text-white rounded">{{item[1]}}</span></h3>
                               <hr>
                               <p class="card-text"><h5>{{item[3]}}</h5></p>
                               <p>Received: {{item[5]}}
