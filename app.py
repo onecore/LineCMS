@@ -34,22 +34,22 @@ def allowed_file(filename):
 
 @app.route("/product-new", methods=['POST', 'GET'])
 def product_new():
-    pass
+    return render_template("/dashboard/product-new.html")
 
 
 @app.route("/product-manage", methods=['POST', 'GET'])
 def product_mng():
-    pass
+    return render_template("/dashboard/product-manage.html")
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
 def blog_new():
-    pass
+    return render_template("/dashboard/blog-new.html")
 
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
 def blog_mng():
-    pass
+    return render_template("/dashboard/blog-manage.html")
 
 
 @app.route("/")
