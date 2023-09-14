@@ -8,6 +8,30 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
+    def product_publish(self, data):
+        pass
+
+    def product_manage(self):
+        pass
+
+    def get_product_single(self, route):
+        pass
+
+    def get_product_listings(self, page=0, result=10):
+        pass
+
+    def blog_publish(self, data):
+        pass
+
+    def blog_manage(self):
+        pass
+
+    def get_blog_single(self, route):
+        pass
+
+    def get_blog_listings(self, page=0, result=10):
+        pass
+
     def knightclientapi(self, action):
         a = {
             "dlogs": """DELETE FROM logging""",
