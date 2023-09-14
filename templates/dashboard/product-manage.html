@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Help - KnightStudio Dashboard</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+.job-box-filter label {
+    width: 100%;
+}
+.job-box-filter select.input-sm {
+    display: inline-block;
+    max-width: 120px;
+    margin: 0 5px;
+    border: 1px solid #e8eef1;
+    border-radius: 2px;
+    height: 34px;
+    font-size: 15px;
+}
+.job-box-filter label input.form-control {
+    max-width: 200px;
+    display: inline-block;
+    border: 1px solid #e8eef1;
+    border-radius: 2px;
+    height: 34px;
+    margin-left:5px;
+    font-size: 15px;
+}
+.text-right{
+text-align:right;
+}
+.job-box-filter {
+    padding: 12px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e8eef1;
+    margin-bottom: 20px;
+}
+.job-box {
+    background: #ffffff;
+    display: inline-block;
+    width: 100%;
+    padding: 0 0px 40px 0px;
+    border: 1px solid #e8eef1;
+}
+.job-box-filter a.filtsec {
+    margin-top: 8px;
+    display: inline-block;
+    margin-right: 15px;
+    padding: 4px 10px;
+    font-family: 'Quicksand', sans-serif;
+	transition: all ease 0.4s;
+    background: #edf0f3;
+    border-radius: 50px;
+    font-size: 13px;
+    color: #81a0b1;
+    border: 1px solid #e2e8ef;
+}
+.job-box-filter a.filtsec.active {
+    color: #ffffff;
+    background: #16262c;
+	border-color:#16262c;
+}
+.job-box-filter a.filtsec i {
+    color: #03A9F4;
+    margin-right: 5px;
+}
+.job-box-filter a.filtsec:hover, .job-box-filter a.filtsec:focus {
+    color: #ffffff;
+    background: #07b107;
+    border-color: #07b107;
+}
+.job-box-filter a.filtsec:hover i, .job-box-filter a.filtsec:focus i{
+color:#ffffff;
+}
+.job-box-filter h4 i {
+    margin-right: 10px;
+}
+
+/*=====================================
+Inbox Message Style
+=======================================*/
+.inbox-message ul {
+    padding: 0;
+    margin: 0;
+}
+.inbox-message ul li {
+    list-style: none;
+    position: relative;
+    padding: 15px 20px;
+	border-bottom: 1px solid #e8eef1;
+}
+
+.inbox-message .message-avatar {
+    position: absolute;
+    left: 30px;
+    top: 20%;
+    transform: translateY(-50%);
+}
+.message-avatar img {
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
+.inbox-message .message-body {
+    margin-left: 85px;
+    font-size: 15px;
+    color:#62748F;
+}
+.message-body-heading h5 {
+    font-weight: 600;
+	display:inline-block;
+    color:#62748F;
+    margin: 0 0 7px 0;
+    padding: 0;
+}
+.message-body h5 span {
+    border-radius: 50px;
+    line-height: 14px;
+    font-size: 12px;
+    color: #fff;
+    font-style: normal;
+    padding: 4px 10px;
+    margin-left: 5px;
+    margin-top: -5px;
+}
+.message-body h5 span.unread{
+	background:#07b107;
+}
+.message-body h5 span.important{
+	background:#dd2027;
+}
+.message-body h5 span.pending{
+	background:#2196f3;
+}
+.message-body-heading span {
+    float: right;
+    color:#62748F;
+    font-size: 14px;
+}
+.messages-inbox .message-body p {
+    margin: 0;
+    padding: 0;
+    line-height: 27px;
+    font-size: 15px;
+}
+
+a:hover{
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body class="sidebar-dark">
+<script>
+{% if success %}
+swal("", 'Website information updated', "success");
+{% endif %}
+
+
+{% if error %}
+swal("", `{{error}}`, "warning");
+{% endif %}
+</script>
+
+  <div class="container-scroller">
+    <!-- partial:../../dashboard/partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+          <a class="navbar-brand brand-logo" href="/dashboard">
+            <img src="../../dashboard/img/knightstudio.png" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="/dashboard">
+            <img src="../../dashboard/img/knightstudio-s.png" alt="logo" />
+          </a>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-top">
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item d-none d-lg-block">
+              <span class="input-group-addon input-group-prepend border-right">
+                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
+              </span>
+          </li>
+          <!-- <li class="nav-item">
+            <form class="search-form" action="#">
+              <i class="icon-search"></i>
+              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+            </form>
+          </li> -->
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../dashboard/partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- partial -->
+      <!-- partial:../../dashboard/partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-category">Website & Account</li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-webacc" aria-expanded="false" aria-controls="KnightStudio-webacc">
+              <i class="menu-icon mdi mdi-database-settings"></i>
+              <span class="menu-title">Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-webacc">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="dashboard"><b class="text-warning">Website</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="account">Account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="modules">Modules</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item nav-category">Contents</li>
+          <li class="nav-item">
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-product" aria-expanded="false" aria-controls="KnightStudio-product">
+              <i class="menu-icon mdi mdi-rice"></i>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-product">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="product-new">New Product</a></li>
+                <li class="nav-item"> <a class="nav-link" href="product-manage">Manage Products</a></li>
+              </ul>
+            </div>
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false" aria-controls="KnightStudio-blog">
+              <i class="menu-icon mdi mdi-library-books"></i>
+              <span class="menu-title">Blog</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-blog">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="blog-new">New Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="blog-manage">Manage Posts</a></li>
+              </ul>
+            </div>
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-messages" aria-expanded="false" aria-controls="KnightStudio-messages">
+              <i class="menu-icon mdi mdi-message-processing"></i>
+              <span class="menu-title">Messages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-messages">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="messages">Customer Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="mwebsite">Website Logging</a></li>
+              </ul>
+            </div>
+          </li>
+
+
+          <li class="nav-item nav-category">Information</li>
+          <li class="nav-item">
+            <a class="nav-link" href="other">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Other Information</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="grid-margin stretch-card">
+              <div class="container">
+                <div class="row">
+                <center>
+                  <img src="../../dashboard/img/knightstudio-blacktest.png" alt="logo" /><sup class="text-small text-muted">Canada</sup>
+
+                  <hr>
+                  <p>For any modification or any website related help, please contact us thru email via <u>dashboard@knightstudio.ca</u></p>
+                  <p>You can also reach us by Whatsapp using this number <u>+1 778-200-1922</u></p>
+                  <p>7710 Prince Albert St, Vancouver British Columbia, Canada.</p>
+                  <p>www.KnightStudio.ca | KnightStudio Dashboard build  {{version}}</p>
+                  <hr>
+                  </center>
+
+                  </hr>
+
+                </div>
+                </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- content-wrapper ends -->
+        <!-- partial:../../dashboard/partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../dashboard/vendors/select2/select2.min.js"></script>
+  <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../dashboard/js/off-canvas.js"></script>
+  <script src="../../dashboard/js/hoverable-collapse.js"></script>
+  <script src="../../dashboard/js/template.js"></script>
+  <script src="../../dashboard/js/settings.js"></script>
+  <script src="../../dashboard/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../dashboard/js/file-upload.js"></script>
+  <script src="../../dashboard/js/typeahead.js"></script>
+  <script src="../../dashboard/js/select2.js"></script>
+  <!-- End custom js for this page-->
+
+</body>
+
+</html>
