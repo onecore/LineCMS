@@ -8,6 +8,8 @@ import dataengine
 import os
 from flask import Flask, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
+from flask_ckeditor import CKEditor
+ckeditor = CKEditor()
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 version = "1.4"
@@ -15,6 +17,8 @@ app = Flask(__name__,
             static_url_path='',
             static_folder='static',
             template_folder='templates')
+
+ckeditor.init_app(app)
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
@@ -44,6 +48,11 @@ def product_mng():
 
 @app.route("/blog-new", methods=['POST', 'GET'])
 def blog_new():
+    if request.method == 'POST':
+        data_body = request.form.get('ckeditor')  # <--
+        data_title = request.form.get('title')  # <--
+        print(data_title)
+
     return render_template("/dashboard/blog-new.html")
 
 
