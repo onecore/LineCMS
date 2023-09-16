@@ -219,7 +219,6 @@ swal("", `{{error}}`, "warning");
                 <button type="submit" class="btn btn-primary">Publish post</button>
               </form>
             </div>
-
           </div>
         </div>
         <br>
@@ -272,13 +271,14 @@ swal("", `{{error}}`, "warning");
     };
     // image_nm = fname(8);
     reader.readAsDataURL(event.target.files[0]);
-    image_nm = event.target.files[0].name;
-  };
+
+    };
 
 </script>
 
 <script>
 $("#form").submit( function(eventObj) {
+  var imgp = $('.img1 img').attr('src');
   var form_data = new FormData($('#upload-file')[0]);
   $.ajax({
       type: 'POST',
@@ -291,11 +291,12 @@ $("#form").submit( function(eventObj) {
           // $("#logoview").attr('src','/media/blog/'+data['status']);
           // swal("", '', "success");
           var tt = $("#title").val()
+          var mmi = imgp
           var cc = $("#categ").val()
-          
+
           $('#form').append('<input type="hidden" id="title" name="title" value="'+tt+'" />');
           $('#form').append('<input type="hidden" id="category" name="category" value="'+cc+'" />');
-          $('#form').append('<input type="hidden" id="image" name="image" value="'+image_nm+'" />');
+          $('#form').append('<input type="hidden" id="imag" name="imag" value="'+mmi+'" />');
           eventObj.preventDefault();
           return true;
       },

@@ -52,7 +52,7 @@ def blog_new():
         data_body = request.form.get('ckeditor')  # <--
         data_title = request.form.get('title')  # <--
         data_categ = request.form.get('category')  # <--
-        data_imgname = request.form.get('image')  # <--
+        data_imgname = request.form.get('imag')  # <--
 
         if not data_title:
             return jsonify({"status": 0})
@@ -63,7 +63,7 @@ def blog_new():
         else:
             data = {"title": data_title,
                     "body": data_body, "category": data_categ}
-            print (data_imgname)
+            print(data_imgname)
             if data_imgname:
                 data["image"] = data_imgname
             else:
