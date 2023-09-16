@@ -5,6 +5,18 @@ function AutoOff() {
 
 }
 
+
+function fname(len) {
+  var text = "";
+
+  var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < len; i++)
+    text += charset.charAt(Math.floor(Math.random() * charset.length));
+
+  return text;
+}
+
 function knightapi(data){
     fetch("/knightclientapi", {
         method: "POST",

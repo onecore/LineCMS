@@ -1,12 +1,16 @@
 import sqlite3
 import datetime
 import time
+import urllib
 
 
 class knightclient:
 
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
+
+    def url_gen(self, content):
+        return urllib.parse.quote_plus(content)
 
     def product_publish(self, data):
         pass
@@ -20,8 +24,18 @@ class knightclient:
     def get_product_listings(self, page=0, result=10):
         pass
 
-    def blog_publish(self, data):
-        pass
+    def blog_publish(self, dicts):
+        try:
+            ts = self.timestamp()
+            params = "INSERT INTO blog (title,message,image,timestamp,hidden,route,category) VALUES (?,?,?,?,?,?,?)"
+            vals = (dicts['title'], dicts['body'], dicts['image'],
+                    ts, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
+            self.cursor.execute(params, vals)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print("Error ", e)
+            return False
 
     def blog_manage(self):
         pass
@@ -223,4 +237,5 @@ class knightclient:
         return all_data
 
     def insert_data(self, quer):
+        pass
         pass

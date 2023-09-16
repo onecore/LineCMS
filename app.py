@@ -51,7 +51,26 @@ def blog_new():
     if request.method == 'POST':
         data_body = request.form.get('ckeditor')  # <--
         data_title = request.form.get('title')  # <--
-        print(data_title)
+        data_categ = request.form.get('category')  # <--
+        data_imgname = request.form.get('image')  # <--
+
+        if not data_title:
+            return jsonify({"status": 0})
+
+        if not data_body:
+            return jsonify({"status": 0})
+
+        else:
+            data = {"title": data_title,
+                    "body": data_body, "category": data_categ}
+            print (data_imgname)
+            if data_imgname:
+                data["image"] = data_imgname
+            else:
+                data['image'] = "no-image.jpeg"
+
+            de = dataengine.knightclient()
+            de.blog_publish(data)  # loads datas
 
     return render_template("/dashboard/blog-new.html")
 
@@ -175,6 +194,11 @@ def showuploaded(file):
     return send_from_directory("static/dashboard/uploads", file)
 
 
+@ app.route("/media/blog/<file>")
+def showuploaded_blog(file):
+    return send_from_directory("static/dashboard/uploads", file)
+
+
 @ app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -202,6 +226,39 @@ def upload_file():
                 d_e.update_data_uploads("control", "logo", 'sample.png',
                                         "owner", session['authenticated'][0])
                 filename = "sample.png"
+            return jsonify({"status": filename})
+    return jsonify({"status": "success"})
+
+
+@ app.route('/upload-blog', methods=['POST'])
+def upload_file_blog():
+    print("Blog thumbnail upload")
+    if request.method == 'POST':
+        log("New Logo upload started")
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            print("No selected file")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            print("success processing now")
+            filename = secure_filename(file.filename)
+
+            file.save(os.path.join(UPLOAD_FOLDER_BLOG, filename))
+            d_e = dataengine.knightclient()
+            try:
+                # d_e.update_data_uploads("control", "logo", filename,
+                #                         "owner", session['authenticated'][0])
+                log("Post thumbnail uploaded")
+            except Exception as e:
+                log("Post thumbnail failed, revert")
+                # if fails, revert to sample logo
+                # d_e.update_data_uploads("control", "logo", 'sample.png',
+                #                         "owner", session['authenticated'][0])
+                # filename = "sample.png"
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
 
@@ -389,4 +446,5 @@ def login():
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
+    return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)

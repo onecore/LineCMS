@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Help - KnightStudio Dashboard</title>
+  <title>Publish post - KnightStudio Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -41,6 +41,7 @@ input[type="file"] {
 
 <body class="sidebar-dark">
 <script>
+var image_nm = "";
 {% if success %}
 swal("", 'Website information updated', "success");
 {% endif %}
@@ -185,8 +186,30 @@ swal("", `{{error}}`, "warning");
       <div class="main-panel">
         <div class="container">
           <div class="row">
+            <div class="col-12 col-md-4">
+
+                <div class="form-group">
+                  <h3><span class="badge bg-secondary text-white rounded-0">Category</span></h3>
+                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category e.g news" value="">
+
+                </div>
+                <h3><span class="badge bg-secondary text-white rounded-0">Post thumbnail</span></h3>
+                  <center>
+                  <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
+                  </center>
+                  <center>
+                  <label class="custom-file-upload center">
+                    <form id="upload-file" name="upload-file">
+                      <input type="file" name="file" onchange="loadFile(event)"/>
+                      <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                    </form>
+                  </label>
+                </center>
+            </div>
+
+
             <div class="col-12 col-md-8">
-            <form method="post">
+            <form method="post" id="form" name="form">
               <div class="form-group">
                 <h3><span class="badge bg-secondary text-white rounded-0">Post title</span></h3>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="">
@@ -195,28 +218,6 @@ swal("", `{{error}}`, "warning");
                 <br>
                 <button type="submit" class="btn btn-primary">Publish post</button>
               </form>
-            </div>
-
-
-            <div class="col-12 col-md-4">
-              <div class="form-group">
-                <h3><span class="badge bg-secondary text-white rounded-0">Category</span></h3>
-                <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category" value="">
-
-              </div>
-              <h3><span class="badge bg-secondary text-white rounded-0">Post thumbnail</span></h3>
-                <center>
-                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
-                </center>
-                <center>
-                <label class="custom-file-upload center">
-                  <form id="upload-file" name="upload-file">
-                    <input type="file" name="file" onchange="loadFile(event)"/>
-                    <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
-                    <!-- <button class="btn btn-primary rounded" id="upload-file-btn" type="button">Upload</button> -->
-                  </form>
-                </label>
-              </center>
             </div>
 
           </div>
@@ -261,26 +262,7 @@ swal("", `{{error}}`, "warning");
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
   <!-- End custom js for this page-->
-  <script>
-$(function() {
-    $('#upload-file-btn').click(function() {
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                $("#logoview").attr('src','/media/blog/'+data['status']);
-                // swal("", '', "success");
 
-            },
-        });
-    });
-});
-</script>
 <script>
   var loadFile = function(event) {
     var reader = new FileReader();
@@ -288,8 +270,37 @@ $(function() {
       var output = document.getElementById('logoview');
       output.src = reader.result;
     };
+    // image_nm = fname(8);
     reader.readAsDataURL(event.target.files[0]);
+    image_nm = event.target.files[0].name;
   };
+
+</script>
+
+<script>
+$("#form").submit( function(eventObj) {
+  var form_data = new FormData($('#upload-file')[0]);
+  $.ajax({
+      type: 'POST',
+      url: '/upload-blog',
+      data: form_data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(data) {
+          // $("#logoview").attr('src','/media/blog/'+data['status']);
+          // swal("", '', "success");
+          var tt = $("#title").val()
+          var cc = $("#categ").val()
+          
+          $('#form').append('<input type="hidden" id="title" name="title" value="'+tt+'" />');
+          $('#form').append('<input type="hidden" id="category" name="category" value="'+cc+'" />');
+          $('#form').append('<input type="hidden" id="image" name="image" value="'+image_nm+'" />');
+          eventObj.preventDefault();
+          return true;
+      },
+  });
+});
 </script>
 </body>
 
