@@ -51,9 +51,9 @@ def blog_new():
     if request.method == 'POST':
         data_body = request.form.get('ckeditor')  # <--
         data_title = request.form.get('title')  # <--
-        data_categ = request.form.get('category')  # <--
-        data_imgname = request.form.get('imag')  # <--
-
+        data_categ = request.form.get('cat')  # <--
+        data_imgname = request.form.get('bimg')  # <--
+        print(request.form)
         if not data_title:
             return jsonify({"status": 0})
 

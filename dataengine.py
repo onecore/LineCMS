@@ -26,7 +26,7 @@ class knightclient:
 
     def blog_publish(self, dicts):
         try:
-            ts = self.timestamp()
+            ts = self.timestamp(routeStyle=1)
             params = "INSERT INTO blog (title,message,image,timestamp,hidden,route,category) VALUES (?,?,?,?,?,?,?)"
             vals = (dicts['title'], dicts['body'], dicts['image'],
                     ts, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
@@ -53,7 +53,7 @@ class knightclient:
         self.cursor.execute(a[action])
         return True
 
-    def timestamp(self):
+    def timestamp(self, routeStyle=False):
         """
         Returns timestamp
         """
@@ -62,6 +62,10 @@ class knightclient:
         dt = d_[0]
         t = time.strftime("%I:%M %p")
         ts = dt + " " + t
+
+        if routeStyle:
+            return dt
+
         return ts
 
     def message(self, dicts):
@@ -237,5 +241,4 @@ class knightclient:
         return all_data
 
     def insert_data(self, quer):
-        pass
         pass

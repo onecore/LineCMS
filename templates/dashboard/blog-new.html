@@ -213,6 +213,8 @@ swal("", `{{error}}`, "warning");
               <div class="form-group">
                 <h3><span class="badge bg-secondary text-white rounded-0">Post title</span></h3>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="">
+                <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
+                <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
               </div>
                   {{ ckeditor.create() }}
                 <br>
@@ -271,14 +273,16 @@ swal("", `{{error}}`, "warning");
     };
     // image_nm = fname(8);
     reader.readAsDataURL(event.target.files[0]);
-
+    document.getElementById("bimg").value = event.target.files[0].name;
     };
 
 </script>
 
 <script>
 $("#form").submit( function(eventObj) {
-  var imgp = $('.img1 img').attr('src');
+  var vv = $("#categ").val()
+  $("#cat").val(vv)
+
   var form_data = new FormData($('#upload-file')[0]);
   $.ajax({
       type: 'POST',
@@ -290,14 +294,6 @@ $("#form").submit( function(eventObj) {
       success: function(data) {
           // $("#logoview").attr('src','/media/blog/'+data['status']);
           // swal("", '', "success");
-          var tt = $("#title").val()
-          var mmi = imgp
-          var cc = $("#categ").val()
-
-          $('#form').append('<input type="hidden" id="title" name="title" value="'+tt+'" />');
-          $('#form').append('<input type="hidden" id="category" name="category" value="'+cc+'" />');
-          $('#form').append('<input type="hidden" id="imag" name="imag" value="'+mmi+'" />');
-          eventObj.preventDefault();
           return true;
       },
   });
