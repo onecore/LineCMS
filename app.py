@@ -46,6 +46,22 @@ def product_mng():
     return render_template("/dashboard/product-manage.html")
 
 
+@app.route("/blog-edit/<url>", methods=['POST', 'GET'])
+def blog_edit(url, is_new=False):
+    if url and is_new:  # just posted, now send to edit page
+        return render_template("/dashboard/blog-edit.html")
+    return render_template("/dashboard/blog-edit.html")
+
+
+@app.route("/blog-manage", methods=['POST', 'GET'])
+@app.route("/blog-manage/<is_new>", methods=['POST', 'GET'])
+def blog_manage(is_new=False):
+    print("isnew: ", is_new)
+    if is_new:  # just posted, now send to edit page
+        return render_template("/dashboard/blog-manage.html", is_new=True)
+    return render_template("/dashboard/blog-manage.html", is_new=False)
+
+
 @app.route("/blog-new", methods=['POST', 'GET'])
 def blog_new():
     if request.method == 'POST':
@@ -53,7 +69,6 @@ def blog_new():
         data_title = request.form.get('title')  # <--
         data_categ = request.form.get('cat')  # <--
         data_imgname = request.form.get('bimg')  # <--
-        print(request.form)
         if not data_title:
             return jsonify({"status": 0})
 
@@ -63,7 +78,6 @@ def blog_new():
         else:
             data = {"title": data_title,
                     "body": data_body, "category": data_categ}
-            print(data_imgname)
             if data_imgname:
                 data["image"] = data_imgname
             else:
@@ -74,7 +88,7 @@ def blog_new():
                 if (de.blog_publish(data)):
                     print("G>>>", g.new_blog_url)
 
-                    pass  # loads datas
+                    return redirect("/blog-manage/1")
                 else:
                     return jsonify({"status": 0})
             except Exception as e:
@@ -84,14 +98,9 @@ def blog_new():
     return render_template("/dashboard/blog-new.html")
 
 
-@app.route("/blog-manage", methods=['POST', 'GET'])
-def blog_mng():
-    return render_template("/dashboard/blog-manage.html")
-
-
-@app.route("/")
-@app.route("/index")
-@app.route("/main")
+@ app.route("/")
+@ app.route("/index")
+@ app.route("/main")
 def main():
     """
     main page
@@ -112,7 +121,7 @@ def main():
     return render_template("index.html", data=dt, mod=mod)
 
 
-@app.route("/module_update", methods=['POST', 'GET'])
+@ app.route("/module_update", methods=['POST', 'GET'])
 def modupdate():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
@@ -128,7 +137,7 @@ def modupdate():
         return "KnightStudio Dashboard build ", version
 
 
-@app.route("/knightclientapi", methods=['POST', 'GET'])
+@ app.route("/knightclientapi", methods=['POST', 'GET'])
 def knightapi():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
@@ -455,5 +464,7 @@ def login():
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
+    return render_template("dashboard/login.html", error=False)
+    return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
