@@ -2,6 +2,7 @@ import sqlite3
 import datetime
 import time
 import urllib
+from flask import g
 
 
 class knightclient:
@@ -10,7 +11,9 @@ class knightclient:
     cursor = connection.cursor()
 
     def url_gen(self, content):
-        return urllib.parse.quote_plus(content)
+        v = urllib.parse.quote_plus(content)
+        g.new_blog_url = v
+        return v
 
     def product_publish(self, data):
         pass
@@ -27,9 +30,10 @@ class knightclient:
     def blog_publish(self, dicts):
         try:
             ts = self.timestamp(routeStyle=1)
+            tso = self.timestamp(routeStyle=0)
             params = "INSERT INTO blog (title,message,image,timestamp,hidden,route,category) VALUES (?,?,?,?,?,?,?)"
             vals = (dicts['title'], dicts['body'], dicts['image'],
-                    ts, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
+                    tso, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
             self.cursor.execute(params, vals)
             self.connection.commit()
             return True

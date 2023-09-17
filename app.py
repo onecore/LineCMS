@@ -6,7 +6,7 @@
 
 import dataengine
 import os
-from flask import Flask, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
+from flask import Flask, g, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_ckeditor import CKEditor
 ckeditor = CKEditor()
@@ -70,7 +70,16 @@ def blog_new():
                 data['image'] = "no-image.jpeg"
 
             de = dataengine.knightclient()
-            de.blog_publish(data)  # loads datas
+            try:
+                if (de.blog_publish(data)):
+                    print("G>>>", g.new_blog_url)
+
+                    pass  # loads datas
+                else:
+                    return jsonify({"status": 0})
+            except Exception as e:
+                print(e)
+                return jsonify({"status": 0})
 
     return render_template("/dashboard/blog-new.html")
 
