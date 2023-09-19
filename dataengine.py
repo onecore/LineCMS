@@ -57,13 +57,16 @@ class knightclient:
         self.m_fetch = self.cursor.execute("SELECT category FROM blog")
         self.m_data = self.m_fetch.fetchall()
         cats = {}
-        for i in self.m_data:
-            if not i[0]:
+        for cat in self.m_data:
+            if not cat[0]:  # empty
                 pass
             else:
-                print(i)
-
-        return self.m_data
+                for itm in cat:
+                    if itm in cats:
+                        cats[itm] = cats[itm] + 1
+                    else:
+                        cats[itm] = 1
+        return cats
 
     def knightclientapi(self, action):
         a = {
