@@ -28,13 +28,14 @@ class knightclient:
         pass
 
     def blog_publish(self, dicts):
+        _c = self.connection.cursor()
         try:
             ts = self.timestamp(routeStyle=1)
             tso = self.timestamp(routeStyle=0)
             params = "INSERT INTO blog (title,message,image,timestamp,hidden,route,category) VALUES (?,?,?,?,?,?,?)"
             vals = (dicts['title'], dicts['body'], dicts['image'],
                     tso, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
-            self.cursor.execute(params, vals)
+            _c.execute(params, vals)
             self.connection.commit()
             return True
         except Exception as e:
@@ -45,7 +46,8 @@ class knightclient:
         pass
 
     def get_blog_single(self, route):
-        self.m_fetch = self.cursor.execute(
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute(
             "SELECT * FROM blog WHERE route='{m}'".format(m=route))
         self.m_data = self.m_fetch.fetchone()
         return self.m_data
@@ -54,7 +56,8 @@ class knightclient:
         pass
 
     def get_blog_cat_lists(self):
-        self.m_fetch = self.cursor.execute("SELECT category FROM blog")
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute("SELECT category FROM blog")
         self.m_data = self.m_fetch.fetchall()
         cats = {}
         for cat in self.m_data:
@@ -69,10 +72,11 @@ class knightclient:
         return cats
 
     def knightclientapi(self, action):
+        _c = self.connection.cursor()
         a = {
             "dlogs": """DELETE FROM logging""",
             }
-        self.cursor.execute(a[action])
+        _c.execute(a[action])
         return True
 
     def timestamp(self, routeStyle=False):
@@ -84,10 +88,8 @@ class knightclient:
         dt = d_[0]
         t = time.strftime("%I:%M %p")
         ts = dt + " " + t
-
         if routeStyle:
             return dt
-
         return ts
 
     def message(self, dicts):
@@ -95,7 +97,6 @@ class knightclient:
             params = "INSERT INTO messages (name,email,message,phone,timestamp) VALUES (?,?,?,?,?)"
             vals = (dicts['name'], dicts['email'],
                     dicts['message'], dicts['phone'], self.timestamp())
-            print(params, vals)
             self.cursor.execute(params, vals)
             self.connection.commit()
             return True
@@ -104,19 +105,21 @@ class knightclient:
             return False
 
     def delete(self, table, id):
+        _c = self.connection.cursor()
         try:
             q = "DELETE FROM {table} WHERE id = {id};".format(
                 table=table, id=id)
-            self.cursor.execute(q)
+            _c.execute(q)
             self.log("Message deleted #id "+id)
         except Exception as e:
             self.log("Unable to delete message, "+str(e))
 
     def log(self, message):
+        _c = self.connection.cursor()
         try:
             params = "INSERT INTO logging (log,timestamp) VALUES (?,?)"
             vals = (message, self.timestamp())
-            self.cursor.execute(params, vals)
+            _c.execute(params, vals)
             self.connection.commit()
             return True
         except Exception as e:
@@ -133,11 +136,11 @@ class knightclient:
         """
         Update existing data
         """
+        _c = self.connection.cursor()
         q = "UPDATE {table} SET {column} = '{value}' WHERE {where} = '{whereequal}';".format(
             table=table, column=column, value=newvalue, where=where, whereequal=whereequal
         )
-        print(q)
-        self.cursor.execute(q)
+        _c.execute(q)
         self.connection.commit()
         return {"status": "success"}
 
@@ -145,12 +148,11 @@ class knightclient:
         """
         Website settings
         """
+        _c = self.connection.cursor()
         try:
             q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}' WHERE owner = '{owner}';".format(
                 sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'], owner=owner)
-            print(q)
-            self.cursor.execute(q)
-            print("update success")
+            _c.execute(q)
             self.connection.commit()
             return True
         except Exception as e:
@@ -162,20 +164,18 @@ class knightclient:
         Update module data
         """
         import json
+        _c = self.connection.cursor()
         try:
             data = eval(data)
             copy_data = data.copy()
             del data['module']
             se = json.dumps(data)
-
             q = """UPDATE modules SET '{module}' = '{new}'""".format(
                 module=copy_data['module'], new=se)
-
-            self.cursor.execute(q)
+            _c.execute(q)
             self.connection.commit()
             self.log("KSEngine Module update success "+copy_data['module'])
             return True
-
         except Exception as e:
             print(e)
             self.log("KSEngine Module update failed "
@@ -186,12 +186,11 @@ class knightclient:
         """
         Only for Account password update
         """
+        _c = self.connection.cursor()
         try:
             q = "UPDATE users SET passw = '{value}' WHERE username = '{uname}';".format(
                 value=newpwd, uname=uname)
-            print(q)
-            self.cursor.execute(q)
-            print("update success")
+            _c.execute(q)
             self.connection.commit()
             return True
         except Exception as e:
@@ -199,26 +198,30 @@ class knightclient:
             return False
 
     def get_messages(self):
-        self.m_fetch = self.cursor.execute(
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute(
             "SELECT * FROM messages ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
         return self.m_data
 
     def get_logs(self):
-        self.m_fetch = self.cursor.execute(
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute(
             "SELECT * FROM logging ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
 
         return self.m_data
 
     def get_cred(self, username, passw):
-        self.gc_fetch = self.cursor.execute("SELECT * FROM users")
+        _c = self.connection.cursor()
+        self.gc_fetch = _c.execute("SELECT * FROM users")
         self.gc_data = self.gc_fetch.fetchall()
 
         return self.gc_data
 
     def load_modules_settings(self):
-        self.ld = self.cursor.execute("SELECT * FROM modules")
+        _c = self.connection.cursor()
+        self.ld = _c.execute("SELECT * FROM modules")
         self.ld_all = self.ld.fetchall()
         return self.ld_all
 
@@ -226,9 +229,10 @@ class knightclient:
         """
         Loads data from DB, function calls in main page
         """
-        self.fetch_control = self.cursor.execute("SELECT * FROM control")
+        _c = self.connection.cursor()
+        self.fetch_control = _c.execute("SELECT * FROM control")
         self.site_data = self.fetch_control.fetchall()
-        self.fetch_msg = self.cursor.execute("SELECT * FROM messages")
+        self.fetch_msg = _c.execute("SELECT * FROM messages")
         self.site_msgs = self.fetch_msg.fetchall()
         # site_type:
         # 0 - Restaurant (Single Menu)
@@ -254,10 +258,10 @@ class knightclient:
         }
         # adds menu_list in dict if either single, multi, otherwise False
         if "0" in all_data['site_type']:  # single
-            self.menu = self.cursor.execute("SELECT * FROM menu_single")
+            self.menu = _c.execute("SELECT * FROM menu_single")
             all_data['menu_list'] = self.menu.fetchall()
         elif "1" in all_data['site_type']:  # multi
-            self.menu = self.cursor.execute("SELECT * FROM menu")
+            self.menu = _c.execute("SELECT * FROM menu")
             all_data['menu_list'] = self.menu.fetchall()
         # Add more condition depends on site_type
         return all_data
