@@ -78,6 +78,8 @@ def blog_mainview(url=None):
             "extras": eval(all_d[6]),
         }
         blog = de.get_blog_single(url)
+        print(blog, "<<<<<<<<<")
+
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
         return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list)
@@ -92,10 +94,8 @@ def blog_new():
         data_imgname = request.form.get('bimg')  # <--
         if not data_title:
             return jsonify({"status": 0})
-
         if not data_body:
             return jsonify({"status": 0})
-
         else:
             data = {"title": data_title,
                     "body": data_body, "category": data_categ}
@@ -108,12 +108,10 @@ def blog_new():
                 data['category'] = data_categ
             else:
                 data['category'] = 'blog'
-
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
                     print("G>>>", g.new_blog_url)
-
                     # Redirect to POST PREVIEW
                     data = de.get_blog_single(g.new_blog_url)
                     return render_template("/dashboard/blog-preview.html", data=data)
@@ -122,7 +120,6 @@ def blog_new():
             except Exception as e:
                 print(e)
                 return jsonify({"status": 0})
-
     return render_template("/dashboard/blog-new.html")
 
 

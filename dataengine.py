@@ -2,6 +2,7 @@ import sqlite3
 import datetime
 import time
 import urllib
+import re
 from flask import g
 
 
@@ -11,7 +12,8 @@ class knightclient:
     cursor = connection.cursor()
 
     def url_gen(self, content):
-        v = urllib.parse.quote_plus(content)
+        remove_sym = re.sub(r'[^\w]', ' ', content)
+        v = urllib.parse.quote_plus(remove_sym)
         g.new_blog_url = v
         return v
 
