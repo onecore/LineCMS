@@ -79,8 +79,8 @@ def blog_mainview(url=None):
         }
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
-        de.get_blog_cat_lists()
-        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats)
+        cats_list = de.get_blog_cat_lists()
+        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])

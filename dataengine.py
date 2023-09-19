@@ -61,7 +61,7 @@ class knightclient:
             if not cat[0]:  # empty
                 pass
             else:
-                for itm in cat:
+                for itm in cat[0].split(","):
                     if itm in cats:
                         cats[itm] = cats[itm] + 1
                     else:
