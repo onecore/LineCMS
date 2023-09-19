@@ -45,7 +45,10 @@ class knightclient:
         pass
 
     def get_blog_single(self, route):
-        pass
+        self.m_fetch = self.cursor.execute(
+            "SELECT * FROM blog WHERE route='{m}'".format(m=route))
+        self.m_data = self.m_fetch.fetchone()
+        return self.m_data
 
     def get_blog_listings(self, page=0, result=10):
         pass

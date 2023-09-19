@@ -54,12 +54,27 @@ def blog_edit(url, is_new=False):
 
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
-@app.route("/blog-manage/<is_new>", methods=['POST', 'GET'])
-def blog_manage(is_new=False):
-    print("isnew: ", is_new)
-    if is_new:  # just posted, now send to edit page
-        return render_template("/dashboard/blog-manage.html", is_new=True)
-    return render_template("/dashboard/blog-manage.html", is_new=False)
+@app.route("/blog-manage/", methods=['POST', 'GET'])
+def blog_manage():
+    return render_template("/dashboard/blog-manage.html")
+
+
+@app.route("/blog/<url>", methods=['POST', 'GET'])
+def blog_mainview(url):
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    mod = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
+    }
+    return render_template("blog.html", data=dt, mod=mod)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -88,7 +103,9 @@ def blog_new():
                 if (de.blog_publish(data)):
                     print("G>>>", g.new_blog_url)
 
-                    return redirect("/blog-manage/1")
+                    # Redirect to POST PREVIEW
+                    data = de.get_blog_single(g.new_blog_url)
+                    return render_template("/dashboard/blog-preview.html", data=data)
                 else:
                     return jsonify({"status": 0})
             except Exception as e:
@@ -214,7 +231,7 @@ def showuploaded(file):
 
 @ app.route("/media/blog/<file>")
 def showuploaded_blog(file):
-    return send_from_directory("static/dashboard/uploads", file)
+    return send_from_directory("static/dashboard/uploads/blog", file)
 
 
 @ app.route('/upload', methods=['POST'])
@@ -464,6 +481,7 @@ def login():
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
+    return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
