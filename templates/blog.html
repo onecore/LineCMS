@@ -7,11 +7,10 @@
         <meta name="author" content="" />
         <title>{{ blog[1] }} - {{ data['sitename'] }}</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../../css/style.css" rel="stylesheet" />
     <!-- Favicon -->
-    <link href="media/{{data['favicon']}}" rel="icon">
+    <link href="/media/{{data['favicon']}}" rel="icon">
 
   <!-- Icon Font Stylesheet -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -63,8 +62,14 @@
           </nav>
 
             <div class="row">
+
                 <div class="col-lg-8">
                     <!-- Post content-->
+                    {% if new %}
+                    <div class="alert alert-success" role="alert">
+                      Blog post published and is now Live <a class="btn btn-primary btn-xs rounded" href="/blog-edit/{{blog[6]}}"> Edit or Manage post</a>
+                    </div>
+                    {% endif %}
                     <article>
                         <!-- Post header-->
                         <header class="mb-4">
@@ -106,8 +111,22 @@
                     </div>
                     <!-- Side widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                        <div class="card-header">Sharing is Caring</div>
+                        <div class="card-body">
+                          <!-- AddToAny BEGIN -->
+                          <center>
+                          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                          <a class="a2a_button_facebook"></a>
+                          <a class="a2a_button_twitter"></a>
+                          <a class="a2a_button_email"></a>
+                          <a class="a2a_button_facebook_messenger"></a>
+                          <a class="a2a_button_whatsapp"></a>
+                          </div>
+                          <script async src="https://static.addtoany.com/menu/page.js"></script>
+                        </center>
+                          <!-- AddToAny END -->
+                        </div>
                     </div>
                 </div>
             </div>

@@ -62,7 +62,8 @@ def blog_manage():
 @app.route("/blog", methods=['POST', 'GET'])
 @app.route("/blog/", methods=['POST', 'GET'])
 @app.route("/blog/<url>", methods=['POST', 'GET'])
-def blog_mainview(url=None):
+@app.route("/blog/<new>/<url>", methods=['POST', 'GET'])
+def blog_mainview(new=None, url=None):
     if url:
         de = dataengine.knightclient()
         dt = de.load_data_index(None)  # loads datas
@@ -78,11 +79,9 @@ def blog_mainview(url=None):
             "extras": eval(all_d[6]),
         }
         blog = de.get_blog_single(url)
-        print(blog, "<<<<<<<<<")
-
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
-        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list)
+        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -111,10 +110,8 @@ def blog_new():
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
-                    print("G>>>", g.new_blog_url)
                     # Redirect to POST PREVIEW
-                    data = de.get_blog_single(g.new_blog_url)
-                    return render_template("/dashboard/blog-preview.html", data=data)
+                    return redirect("/blog/1/"+g.new_blog_url)
                 else:
                     return jsonify({"status": 0})
             except Exception as e:
