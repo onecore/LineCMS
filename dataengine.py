@@ -53,6 +53,18 @@ class knightclient:
     def get_blog_listings(self, page=0, result=10):
         pass
 
+    def get_blog_cat_lists(self):
+        self.m_fetch = self.cursor.execute("SELECT category FROM blog")
+        self.m_data = self.m_fetch.fetchall()
+        cats = {}
+        for i in self.m_data:
+            if not i[0]:
+                pass
+            else:
+                print(i)
+
+        return self.m_data
+
     def knightclientapi(self, action):
         a = {
             "dlogs": """DELETE FROM logging""",

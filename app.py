@@ -59,22 +59,28 @@ def blog_manage():
     return render_template("/dashboard/blog-manage.html")
 
 
+@app.route("/blog", methods=['POST', 'GET'])
+@app.route("/blog/", methods=['POST', 'GET'])
 @app.route("/blog/<url>", methods=['POST', 'GET'])
-def blog_mainview(url):
-    de = dataengine.knightclient()
-    dt = de.load_data_index(None)  # loads datas
-    modules_settings = de.load_modules_settings()
-    all_d = modules_settings[0]
-    mod = {
-        "popup": eval(all_d[0]),
-        "announcement": eval(all_d[1]),
-        "uparrow": eval(all_d[2]),
-        "socialshare": eval(all_d[3]),
-        "videoembed": eval(all_d[4]),
-        "custom": eval(all_d[5]),
-        "extras": eval(all_d[6]),
-    }
-    return render_template("blog.html", data=dt, mod=mod)
+def blog_mainview(url=None):
+    if url:
+        de = dataengine.knightclient()
+        dt = de.load_data_index(None)  # loads datas
+        modules_settings = de.load_modules_settings()
+        all_d = modules_settings[0]
+        mod = {
+            "popup": eval(all_d[0]),
+            "announcement": eval(all_d[1]),
+            "uparrow": eval(all_d[2]),
+            "socialshare": eval(all_d[3]),
+            "videoembed": eval(all_d[4]),
+            "custom": eval(all_d[5]),
+            "extras": eval(all_d[6]),
+        }
+        blog = de.get_blog_single(url)
+        cats = blog[7].split(",")
+        de.get_blog_cat_lists()
+        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -97,6 +103,11 @@ def blog_new():
                 data["image"] = data_imgname
             else:
                 data['image'] = "no-image.jpeg"
+
+            if data_categ:
+                data['category'] = data_categ
+            else:
+                data['category'] = 'blog'
 
             de = dataengine.knightclient()
             try:

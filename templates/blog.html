@@ -5,30 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Blog Post - Start Bootstrap Template</title>
+        <title>{{ blog[1] }} - {{ data['sitename'] }}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/style.css" rel="stylesheet" />
+        <link href="../../css/style.css" rel="stylesheet" />
     <!-- Favicon -->
     <link href="media/{{data['favicon']}}" rel="icon">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
     </head>
     <body>
@@ -36,7 +31,7 @@
       <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
           <a href="/" class="navbar-brand p-0">
-            <img src="media/{{data['logo']}}" alt="Logo" class="flex"> SAMPLE RESTAURANT
+            <img src="/media/{{data['logo']}}" alt="Logo" class="flex"> SAMPLE RESTAURANT
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
@@ -57,30 +52,18 @@
             <!-- <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a> -->
           </div>
         </nav>
-
-        <div class="container-xxl py-5 bg-dark hero-header mb-5">
-          <div class="container my-5 py-5">
-            <div class="row align-items-center g-5">
-              <div class="col-lg-9 text-center text-lg-start">
-                <h1 class="display-3 text-white animated slideInLeft">Enjoy Our<br>Delicious Meal</h1>
-                <p class="text-white animated slideInLeft mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                <a href="#menus" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Menu</a>
-              </div>
-              <!-- <div class="col-lg-6 text-center text-lg-end overflow-hidden">
-                              <img class="img-fluid" src="img/hero.png" alt="">
-                          </div> -->
-            </div>
-          </div>
-          {% if mod['announcement']['enabled'] %}
-          <center>
-            <alert class="alert alert-primary">{{ mod['announcement']['message'] }}</alert>
-          </center>
-          {% endif %}
-
-        </div>
       </div>
         <!-- Page content-->
+
         <div class="container mt-5">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/blog">Blog posts</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{blog[1]}}</li>
+            </ol>
+          </nav>
+
             <div class="row">
                 <div class="col-lg-8">
                     <!-- Post content-->
@@ -88,15 +71,15 @@
                         <!-- Post header-->
                         <header class="mb-4">
                             <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                            <h1 class="fw-bolder mb-1">{{ blog[1] }}</h1>
                             <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-2">Posted on January 1, 2023 by Start Bootstrap</div>
+                            <div class="text-muted fst-italic mb-2">Posted on {{ blog[4] }}</div>
                             <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                            {% for cat in cats %}
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{cat}}</a>
+                            {% endfor %}
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
@@ -107,61 +90,10 @@
                             <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
                         </section>
                     </article>
-                    <!-- Comments section-->
-                    <section class="mb-5">
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <!-- Comment form-->
-                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                <!-- Comment with nested comments-->
-                                <div class="d-flex mb-4">
-                                    <!-- Parent comment-->
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                        <!-- Child comment 1-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                            </div>
-                                        </div>
-                                        <!-- Child comment 2-->
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commenter Name</div>
-                                                When you put money directly to a problem, it makes a good headline.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single comment-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
                         <div class="card-header">Categories</div>
@@ -193,12 +125,73 @@
             </div>
         </div>
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
+
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+      <div class="container py-3">
+        <div class="row g-5">
+          <div class="col-lg-6 col-md-4">
+            <div style="width: 100%"><iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2606.262318812828!2d-123.09029242436087!3d49.21455207557749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867445f389ef7f%3A0xab5e2e2633dd98c6!2s7710%20Prince%20Albert%20St%2C%20Vancouver%2C%20BC%20V5X%203Z6!5e0!3m2!1sen!2sca!4v1693270858778!5m2!1sen!2sca">Calculate population in area</a></iframe></div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            {% if mod['extras']['enabled'] %}
+            <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+            {% if mod['extras']['address'] %}
+            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{mod['extras']['address']}}</p>
+            {% endif %}
+
+            {% if mod['extras']['number'] %}
+            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{mod['extras']['number']}}</p>
+            {% endif %}
+
+            {% if mod['extras']['email'] %}
+            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{mod['extras']['email']}}</p>
+            {% endif %}
+            {% endif %}
+
+            {% if mod['socialshare']['enabled'] %}
+            <div class="d-flex pt-2">
+              {% if mod['socialshare']['tw'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['tw']}}" target="_blank"><i class="fab fa-twitter"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['fb'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['fb']}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['gl'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['gl']}}" target="_blank"><i class="fab fa-google"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['ig'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['ig']}}" target="_blank"><i class="fab fa-instagram"></i></a>
+              {% endif %}
+
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+            <h5 class="text-light fw-normal">Monday - Saturday</h5>
+            <p>09AM - 09PM</p>
+            <h5 class="text-light fw-normal">Sunday</h5>
+            <p>10AM - 08PM</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              {{data['sitename']}} &copy; <a class="border-bottom" href="#">{{data['footercopyright']}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>
