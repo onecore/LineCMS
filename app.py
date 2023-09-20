@@ -1,6 +1,9 @@
 # KnightSolutions Canada
+# Extendable Content Manage System for any Website template
 # www.KnightSolutions.ca - KnightStudio Dashboard / Client files
 # Aug 31,2023
+# www.sinsoro.com - SinsoroCMS / Client files
+# Sept 19, 2023
 # Developed by Mark Anthony Pequeras - Python 3.x.x
 # Database: Sqlite3
 

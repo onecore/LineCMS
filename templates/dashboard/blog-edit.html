@@ -74,9 +74,6 @@ swal("", `{{error}}`, "warning");
       <div class="navbar-menu-wrapper d-flex align-items-top">
 
         <ul class="navbar-nav ms-auto">
-          <div class="alert alert-success" role="alert" style="color:black">
-            This is a success alert—check it out!
-          </div>
           <li class="nav-item d-none d-sm-block">
               <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
@@ -194,12 +191,12 @@ swal("", `{{error}}`, "warning");
 
                 <div class="form-group">
                   <h3><span class="badge bg-secondary text-white rounded-0">Category</span></h3>
-                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category e.g news" value="">
+                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category e.g news" value="{{blog[7]}}">
 
                 </div>
                 <h3><span class="badge bg-secondary text-white rounded-0">Post thumbnail</span></h3>
                   <center>
-                  <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
+                  <img src="/media/blog/{{blog[3]}}" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
                   </center>
                   <center>
                   <label class="custom-file-upload center">
@@ -216,13 +213,13 @@ swal("", `{{error}}`, "warning");
             <form method="post" id="form" name="form">
               <div class="form-group">
                 <h3><span class="badge bg-secondary text-white rounded-0">Post title</span></h3>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{blog[1]}}">
                 <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                 <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
               </div>
                   {{ ckeditor.create() }}
                 <br>
-                <button type="submit" class="btn btn-primary">Publish post</button>
+                <button type="submit" class="btn btn-primary">Update post</button>
               </form>
             </div>
           </div>
@@ -283,6 +280,7 @@ swal("", `{{error}}`, "warning");
 </script>
 
 <script>
+$("#ckeditor").val({{blog[2]|safe}})
 $("#form").submit( function(eventObj) {
   var vv = $("#categ").val()
   $("#cat").val(vv)
