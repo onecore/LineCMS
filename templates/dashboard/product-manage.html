@@ -184,42 +184,74 @@ swal("", `{{error}}`, "warning");
 
   <div class="container-scroller">
     <!-- partial:../../dashboard/partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <div class="me-3">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
-        <div>
-          <a class="navbar-brand brand-logo" href="/dashboard">
-            <img src="../../dashboard/img/knightstudio.png" alt="logo" />
-          </a>
-          <a class="navbar-brand brand-logo-mini" href="/dashboard">
-            <img src="../../dashboard/img/knightstudio-s.png" alt="logo" />
-          </a>
-        </div>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top">
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-category">Website & Account</li>
 
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item d-none d-lg-block">
-              <span class="input-group-addon input-group-prepend border-right">
-                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
-              </span>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-webacc" aria-expanded="false" aria-controls="KnightStudio-webacc">
+              <i class="menu-icon mdi mdi-database-settings"></i>
+              <span class="menu-title">Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-webacc">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Website</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/account">Account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/modules">Modules</a></li>
+              </ul>
+            </div>
           </li>
-          <!-- <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li> -->
+
+          <li class="nav-item nav-category">Contents</li>
+          <li class="nav-item">
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-product" aria-expanded="false" aria-controls="KnightStudio-product">
+              <i class="menu-icon mdi mdi-rice"></i>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-product">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/product-new">New Product</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/product-manage">Manage Products</a></li>
+              </ul>
+            </div>
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false" aria-controls="KnightStudio-blog">
+              <i class="menu-icon mdi mdi-library-books"></i>
+              <span class="menu-title">Blog</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-blog">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/blog-new"><b class="text-warning">New Post</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
+              </ul>
+            </div>
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-messages" aria-expanded="false" aria-controls="KnightStudio-messages">
+              <i class="menu-icon mdi mdi-message-processing"></i>
+              <span class="menu-title">Messages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-messages">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/messages">Customer Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/mwebsite">Website Logging</a></li>
+              </ul>
+            </div>
+          </li>
+
+
+          <li class="nav-item nav-category">Information</li>
+          <li class="nav-item">
+            <a class="nav-link" href="/other">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Other Information</span>
+            </a>
+          </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
-          <span class="mdi mdi-menu"></span>
-        </button>
-      </div>
-    </nav>
+      </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../dashboard/partials/_settings-panel.html -->
