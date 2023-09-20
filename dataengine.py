@@ -112,7 +112,6 @@ class knightclient:
                 }
             _c.execute(a[str(_action)])
             self.connection.commit()
-
             return True
         except Exception as e:
             print(e)
