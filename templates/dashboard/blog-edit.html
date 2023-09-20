@@ -62,7 +62,6 @@ swal("", `{{error}}`, "warning");
           </button>
         </div>
         <div>
-
           <a class="navbar-brand brand-logo" href="/dashboard">
             <img src="../../dashboard/img/knightstudio.png" alt="logo" />
           </a>
@@ -72,8 +71,8 @@ swal("", `{{error}}`, "warning");
         </div>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
-
-        <ul class="navbar-nav ms-auto">
+        <h4 class="text-dark ms-auto">Edit blog post</h4>
+        <ul class="navbar-nav ms-auto float-start">
           <li class="nav-item d-none d-sm-block">
               <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
@@ -187,11 +186,12 @@ swal("", `{{error}}`, "warning");
       <div class="main-panel">
         <div class="container">
           <div class="row">
+
             <div class="col-12 col-md-4">
 
                 <div class="form-group">
                   <h3><span class="badge bg-secondary text-white rounded-0">Category</span></h3>
-                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category e.g news" value="{{blog[7]}}">
+                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Seperate categories by comma if multiple." value="{{blog[7]}}">
 
                 </div>
                 <h3><span class="badge bg-secondary text-white rounded-0">Post thumbnail</span></h3>
@@ -217,11 +217,14 @@ swal("", `{{error}}`, "warning");
                 <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                 <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
               </div>
-                  {{ ckeditor.create() }}
+                  {{ ckeditor.create(value=blog[2]) }}
                 <br>
+                <button type="submit" class="btn btn-danger">Delete post</button>
                 <button type="submit" class="btn btn-primary">Update post</button>
+
               </form>
             </div>
+
           </div>
         </div>
         <br>
@@ -280,7 +283,6 @@ swal("", `{{error}}`, "warning");
 </script>
 
 <script>
-$("#ckeditor").val({{blog[2]|safe}})
 $("#form").submit( function(eventObj) {
   var vv = $("#categ").val()
   $("#cat").val(vv)

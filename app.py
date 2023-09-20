@@ -102,9 +102,9 @@ def blog_new():
         data_categ = request.form.get('cat')  # <--
         data_imgname = request.form.get('bimg')  # <--
         if not data_title:
-            return jsonify({"status": 0})
+            return render_template("/dashboard/blog-new.html", error="Blog title required")
         if not data_body:
-            return jsonify({"status": 0})
+            return render_template("/dashboard/blog-new.html", error="Blog content required")
         else:
             data = {"title": data_title,
                     "body": data_body, "category": data_categ}
