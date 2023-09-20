@@ -47,10 +47,17 @@ def product_mng():
 
 
 @app.route("/blog-edit/<url>", methods=['POST', 'GET'])
-def blog_edit(url, is_new=False):
-    if url and is_new:  # just posted, now send to edit page
-        return render_template("/dashboard/blog-edit.html")
-    return render_template("/dashboard/blog-edit.html")
+def blog_edit(url):
+    de = dataengine.knightclient()
+
+    if request.method == 'POST':
+        data_body = request.form.get('ckeditor')  # <--
+        data_title = request.form.get('title')  # <--
+        data_categ = request.form.get('cat')  # <--
+        data_imgname = request.form.get('bimg')  # <--
+
+    blog = de.get_blog_single(url)
+    return render_template("/dashboard/blog-edit.html", blog=blog)
 
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
@@ -102,7 +109,6 @@ def blog_new():
                 data["image"] = data_imgname
             else:
                 data['image'] = "no-image.jpeg"
-
             if data_categ:
                 data['category'] = data_categ
             else:
@@ -110,7 +116,6 @@ def blog_new():
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
-                    # Redirect to POST PREVIEW
                     return redirect("/blog/1/"+g.new_blog_url)
                 else:
                     return jsonify({"status": 0})
