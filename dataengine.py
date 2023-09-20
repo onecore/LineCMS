@@ -3,6 +3,7 @@ import datetime
 import time
 import urllib
 import re
+import random
 from flask import g
 
 
@@ -13,9 +14,10 @@ class knightclient:
 
     def url_gen(self, content):
         remove_sym = re.sub(r'[^\w]', ' ', content)
-        v = urllib.parse.quote_plus(remove_sym)
-        g.new_blog_url = v
-        return v
+        v = urllib.parse.quote_plus(str(random.randint(10, 50))+remove_sym)
+        _v = str(v).replace("+", "-")
+        g.new_blog_url = _v
+        return _v
 
     def product_publish(self, data):
         pass
