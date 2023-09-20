@@ -189,6 +189,7 @@ def knightapi2():
         if 'authenticated' in session:  # Logged in
             d = dataengine.knightclient()
             if (d.knightclientapiv2(eval(request.data))):
+                print(request.data)
                 log("API Call success")
                 return jsonify({'status': True})
             else:

@@ -30,6 +30,39 @@ function knightapi(data){
     });
 }
 
+function knightapi2(data){
+    var hb = document.getElementById("hb2")
+    if (hb.innerText == 'Hide post'){
+      hb.innerText = 'Unhide post';
+      data = {"action":"blog_1","where":data}
+      fetch("/knightclientapiv2", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      }).then(res => {
+
+          swal("Updated", 'Blog post updated', "success");
+          //console.log("Request complete! response:", res);
+      });
+    }else{
+      hb.innerText = 'Hide post';
+      data = {"action":"blog_0","where":data}
+      fetch("/knightclientapiv2", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      }).then(res => {
+
+          swal("Updated", 'Blog post updated', "success");
+          //console.log("Request complete! response:", res);
+      });
+    }
+}
+
 function updateMod(which, OnOrOff) {
 
     let data = {};

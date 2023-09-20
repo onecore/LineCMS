@@ -219,7 +219,11 @@ swal("", `{{error}}`, "warning");
               </div>
                   {{ ckeditor.create(value=blog[2]) }}
                 <br>
-                <button type="submit" class="btn btn-danger">Delete post</button>
+                {% if blog[5] == '0' %}
+                <button type="button" class="btn btn-dark" id='hb2' onclick="knightapi2('{{blog[6]}}')">Hide post</button>
+                {% else %}
+                <button type="button" class="btn btn-dark" id='hb2' onclick="knightapi2('{{blog[6]}}')">Unhide post</button>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">Update post</button>
 
               </form>

@@ -101,16 +101,21 @@ class knightclient:
 
     def knightclientapiv2(self, action):
         _c = self.connection.cursor()
+        print(action)
         _where = action['where']
         _action = action['action']
+
         try:
             a = {
-                "blog_0": """DELETE FROM logging""",
-                "blog_1": """DELETE FROM logging""",
+                "blog_0": """UPDATE blog SET hidden = '0' WHERE route = '{r}';""".format(r=_where),
+                "blog_1": """UPDATE blog SET hidden = '1' WHERE route = '{r}';""".format(r=_where),
                 }
-            _c.execute(a[action])
+            _c.execute(a[str(_action)])
+            self.connection.commit()
+
             return True
         except Exception as e:
+            print(e)
             self.log("API DB Update failed")
             return False
 
