@@ -183,6 +183,22 @@ def knightapi():
         return "KnightStudio Dashboard build ", version
 
 
+@ app.route("/knightclientapiv2", methods=['POST', 'GET'])
+def knightapi2():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+            d = dataengine.knightclient()
+            if (d.knightclientapiv2(eval(request.data))):
+                log("API Call success")
+                return jsonify({'status': True})
+            else:
+                log("API Call failed")
+                return jsonify({'status': False})
+        return "KnightStudio Dashboard build ", version
+    else:
+        return "KnightStudio Dashboard build ", version
+
+
 @ app.route("/modules")
 def modules():
     de = dataengine.knightclient()

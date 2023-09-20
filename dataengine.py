@@ -89,12 +89,30 @@ class knightclient:
         return cats
 
     def knightclientapi(self, action):
+        try:
+            _c = self.connection.cursor()
+            a = {
+                "dlogs": """DELETE FROM logging""",
+                }
+            _c.execute(a[action])
+            return True
+        except:
+            return False
+
+    def knightclientapiv2(self, action):
         _c = self.connection.cursor()
-        a = {
-            "dlogs": """DELETE FROM logging""",
-            }
-        _c.execute(a[action])
-        return True
+        _where = action['where']
+        _action = action['action']
+        try:
+            a = {
+                "blog_0": """DELETE FROM logging""",
+                "blog_1": """DELETE FROM logging""",
+                }
+            _c.execute(a[action])
+            return True
+        except Exception as e:
+            self.log("API DB Update failed")
+            return False
 
     def timestamp(self, routeStyle=False):
         """
