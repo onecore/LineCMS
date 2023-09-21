@@ -216,6 +216,7 @@ swal("", `{{error}}`, "warning");
                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{blog[1]}}">
                 <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                 <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
+                <input type="hidden" class="form-control" id="ishidden" name="ishidden" placeholder="" value="{{blog[5]}}">
               </div>
                   {{ ckeditor.create(value=blog[2]) }}
                 <br>

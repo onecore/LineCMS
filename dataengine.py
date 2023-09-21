@@ -49,12 +49,9 @@ class knightclient:
     def blog_update(self, dicts):
         _c = self.connection.cursor()
         try:
-            ts = self.timestamp(routeStyle=1)
-            tso = self.timestamp(routeStyle=0)
-            params = "INSERT INTO blog (title,message,image,timestamp,hidden,route,category) VALUES (?,?,?,?,?,?,?)"
-            vals = (dicts['title'], dicts['body'], dicts['image'],
-                    tso, "0", self.url_gen(ts+" "+dicts['title']), dicts['category'])
-            _c.execute(params, vals)
+            q = "UPDATE blog SET title = '{title}',message = '{message}', image = '{image}',hidden = '{hidden}', category = '{category}' WHERE route = '{route}';".format(
+                title=dicts['title'], message=dicts['body'], image=dicts['image'], hidden=dicts['hidden'], category=dicts['category'], route=dicts['route'])
+            _c.execute(q)
             self.connection.commit()
             return True
         except Exception as e:

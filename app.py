@@ -52,14 +52,41 @@ def product_mng():
 @app.route("/blog-edit/<url>", methods=['POST', 'GET'])
 def blog_edit(url):
     de = dataengine.knightclient()
+    blog = de.get_blog_single(url)
 
     if request.method == 'POST':
         data_body = request.form.get('ckeditor')  # <--
         data_title = request.form.get('title')  # <--
         data_categ = request.form.get('cat')  # <--
         data_imgname = request.form.get('bimg')  # <--
+        data_hidden = request.form.get('ishidden')  # <--
+        if not data_title:
+            return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog title can't be empty")
+        if not data_body:
+            return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog content can't be empty")
 
-    blog = de.get_blog_single(url)
+        else:
+            data = {"title": data_title, "body": data_body,
+                    "category": data_categ, "hidden": data_hidden, "route": blog[6]}
+
+            if data_imgname:
+                data["image"] = data_imgname
+            else:
+                data['image'] = "no-image.jpeg"
+            if data_categ:
+                data['category'] = data_categ
+            else:
+                data['category'] = 'blog'
+
+            try:
+                if (de.blog_update(data)):
+                    return redirect("/blog/1/"+data['route'])
+                else:
+                    return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
+            except Exception as e:
+                print(e)
+                return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
+
     return render_template("/dashboard/blog-edit.html", blog=blog)
 
 
@@ -120,10 +147,10 @@ def blog_new():
                 if (de.blog_publish(data)):
                     return redirect("/blog/1/"+g.new_blog_url)
                 else:
-                    return jsonify({"status": 0})
+                    return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
             except Exception as e:
                 print(e)
-                return jsonify({"status": 0})
+                return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
     return render_template("/dashboard/blog-new.html")
 
 

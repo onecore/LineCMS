@@ -44,6 +44,7 @@ function knightapi2(data){
       }).then(res => {
 
           swal("Updated", 'Blog post updated', "success");
+          document.getElementById("ishidden").value = "1"
           //console.log("Request complete! response:", res);
       });
     }else{
@@ -58,6 +59,8 @@ function knightapi2(data){
       }).then(res => {
 
           swal("Updated", 'Blog post updated', "success");
+          document.getElementById("ishidden").value = "0"
+
           //console.log("Request complete! response:", res);
       });
     }
