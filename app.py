@@ -64,7 +64,6 @@ def blog_edit(url):
 
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
-@app.route("/blog-manage/", methods=['POST', 'GET'])
 def blog_manage():
     return render_template("/dashboard/blog-manage.html")
 
