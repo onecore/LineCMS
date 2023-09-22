@@ -220,13 +220,15 @@ swal("", `{{error}}`, "warning");
               </div>
                   {{ ckeditor.create(value=blog[2]) }}
                 <br>
+
+                <button type="submit" class="btn btn-primary">Update post</button>
                 {% if blog[5] == '0' %}
                 <button type="button" class="btn btn-dark" id='hb2' onclick="knightapi2('{{blog[6]}}')">Hide post</button>
                 {% else %}
                 <button type="button" class="btn btn-dark" id='hb2' onclick="knightapi2('{{blog[6]}}')">Unhide post</button>
                 {% endif %}
-                <button type="button" class="btn btn-danger" onclick="deleapi('1','{{blog[6]}}')">Delete</button>
-                <button type="submit" class="btn btn-primary">Update post</button>
+                <button type="button" class="btn btn-danger" onclick="confirm_dedit('1','{{blog[6]}}')">Delete</button>
+                <button type="button" class="btn btn-danger mdi mdi-check" onclick="deleapi('1','{{blog[6]}}','0')" style="display:none;" id="finald"></button>
 
               </form>
             </div>

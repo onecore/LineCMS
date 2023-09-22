@@ -68,6 +68,17 @@ function knightapi2(data){
     }
 }
 
+function confirm_dedit(key,route){
+  var id = "finald"
+  var d = document.getElementById(id).style.display;
+  if (d == "none"){
+    document.getElementById(id).style.display = "inline-block";
+  }else{
+    document.getElementById(id).style.display = "none";
+  }
+}
+
+
 function confirm_d(key,route,id){
   var d = document.getElementById(id).style.display;
   if (d == "none"){
@@ -92,6 +103,7 @@ function deleapi(d,b,id){
         //console.log("Request complete! response:", res);
     });
 }
+
 
 
 function updateMod(which, OnOrOff) {
