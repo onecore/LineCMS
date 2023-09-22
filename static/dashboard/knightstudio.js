@@ -30,6 +30,7 @@ function knightapi(data){
     });
 }
 
+
 function knightapi2(data){
     var hb = document.getElementById("hb2")
     if (hb.innerText == 'Hide post'){

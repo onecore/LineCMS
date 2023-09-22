@@ -64,11 +64,9 @@ def blog_edit(url):
             return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog title can't be empty")
         if not data_body:
             return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog content can't be empty")
-
         else:
             data = {"title": data_title, "body": data_body,
                     "category": data_categ, "hidden": data_hidden, "route": blog[6]}
-
             if data_imgname:
                 data["image"] = data_imgname
             else:
@@ -77,7 +75,6 @@ def blog_edit(url):
                 data['category'] = data_categ
             else:
                 data['category'] = 'blog'
-
             try:
                 if (de.blog_update(data)):
                     return redirect("/blog/1/"+data['route'])
@@ -86,7 +83,6 @@ def blog_edit(url):
             except Exception as e:
                 print(e)
                 return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
-
     return render_template("/dashboard/blog-edit.html", blog=blog)
 
 
@@ -188,7 +184,6 @@ def modupdate():
             else:
                 return jsonify({'status': False})
         return "KnightStudio Dashboard build ", version
-
     else:
         return "KnightStudio Dashboard build ", version
 

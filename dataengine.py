@@ -142,6 +142,15 @@ class knightclient:
             print("Error ", e)
             return False
 
+    def delete_blog(self, route):
+        _c = self.connection.cursor()
+        try:
+            q = "DELETE FROM blog WHERE route = {id};".format(id=route)
+            _c.execute(q)
+            self.log("Blog post deleted #id "+id)
+        except Exception as e:
+            self.log("Unable to delete blog post, "+str(e))
+
     def delete(self, table, id):
         _c = self.connection.cursor()
         try:
