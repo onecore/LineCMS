@@ -20,7 +20,8 @@ class knightclient:
         return _v
 
     def delete_api(self, table, column, value):
-        q = """DELETE FROM {tb} WHERE {column} = {value};""".format(
+        print(table, column, value)
+        q = """DELETE FROM {tb} WHERE route = '{value}';""".format(
             tb=table, column=column, value=value)
         _c = self.connection.cursor()
 

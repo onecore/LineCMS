@@ -69,9 +69,9 @@ function knightapi2(data){
 }
 
 function deleapi(d,b){
-    fetch("/deleapi", {
-        o = {"1":{"table":"blog","column":"route","value":b}}
+    var o = {"1":{"table":"blog","column":"route","value":b}}
 
+    fetch("/deleapi", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

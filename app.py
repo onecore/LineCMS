@@ -222,9 +222,9 @@ def knightapi():
 def delete_api():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            table = request.form.get("table")
-            column = request.form.get("column")
-            value = request.form.get("value")
+            table = request.json['table']
+            column = request.json['column']
+            value = request.json['value']
             de = dataengine.knightclient()
             if (de.delete_api(table, column, value)):
                 return jsonify({"status": 1, "message": "Blog post has been deleted"})
