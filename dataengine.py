@@ -69,7 +69,10 @@ class knightclient:
         return self.m_data
 
     def get_blog_listings(self, page=0, result=10):
-        pass
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute("SELECT * FROM blog")
+        self.m_data = self.m_fetch.fetchall()
+        return self.m_data
 
     def get_blog_cat_lists(self):
         _c = self.connection.cursor()

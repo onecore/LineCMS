@@ -9,9 +9,11 @@
 
 import dataengine
 import os
-from flask import Flask, g, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
+from flask import Flask, Blueprint, g, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_ckeditor import CKEditor
+from flask_paginate import Pagination, get_page_parameter
+
 ckeditor = CKEditor()
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
@@ -88,7 +90,19 @@ def blog_edit(url):
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
 def blog_manage():
-    return render_template("/dashboard/blog-manage.html")
+    de = dataengine.knightclient()
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    blog = de.get_blog_listings()
+    tt = len(blog)
+    for i in blog:
+        print(i[0]),
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='blog', css_framework="bootstrap5")
+    return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination,)
 
 
 @app.route("/blog", methods=['POST', 'GET'])
