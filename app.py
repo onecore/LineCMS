@@ -152,6 +152,7 @@ def blog_new():
                 data['category'] = data_categ
             else:
                 data['category'] = 'blog'
+
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
