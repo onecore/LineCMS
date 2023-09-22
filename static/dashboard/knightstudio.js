@@ -68,9 +68,17 @@ function knightapi2(data){
     }
 }
 
-function deleapi(d,b){
-    var o = {"1":{"table":"blog","column":"route","value":b}}
+function confirm_d(key,route,id){
+  var d = document.getElementById(id).style.display;
+  if (d == "none"){
+    document.getElementById(id).style.display = "block";
+  }else{
+    document.getElementById(id).style.display = "none";
+  }
+}
 
+function deleapi(d,b,id){
+    var o = {"1":{"table":"blog","column":"route","value":b}}
     fetch("/deleapi", {
         method: "POST",
         headers: {
@@ -78,10 +86,13 @@ function deleapi(d,b){
         },
         body: JSON.stringify(o[d])
     }).then(res => {
-        swal("Logs deleted", 'Please refresh page', "success");
+        document.getElementById('tr-'+id).remove();
+        swal("Blog manager", 'Blog post deleted', "success");
+
         //console.log("Request complete! response:", res);
     });
 }
+
 
 function updateMod(which, OnOrOff) {
 

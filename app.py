@@ -231,7 +231,7 @@ def delete_api():
             else:
                 return jsonify({"status": 1, "message": "Blog post cannot delete right now"})
     else:
-        return ""
+        return jsonify({"status":0})
 
 
 @ app.route("/knightclientapiv2", methods=['POST', 'GET'])
