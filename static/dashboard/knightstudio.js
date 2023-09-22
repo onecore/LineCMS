@@ -98,7 +98,7 @@ function deleapi(d,b,id){
         body: JSON.stringify(o[d])
     }).then(res => {
       if (id === "9999"){
-         location.href = "/blog-manage";
+         location.href = "/blog-manage/1";
       }else{
           document.getElementById('tr-'+id).remove();
           swal("Blog manager", 'Blog post deleted', "success");

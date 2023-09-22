@@ -458,9 +458,10 @@ swal("", `{{error}}`, "warning");
             </div>
             {% endif %}
           <a class="btn btn-primary mdi mdi-pencil" href="/blog-new"> Publish blog</a>
-
+            {% if blog %}
             {{ pagination.info }}
-              {{ pagination.links }}
+            {{ pagination.links }}
+            {% endif %}
 
             <table class="table table-striped table-hover">
                 <thead>
@@ -498,11 +499,12 @@ swal("", `{{error}}`, "warning");
                         </td>
                     </tr>
                   {% endfor %}
-
                 </tbody>
-
             </table>
-
+            {% if not blog %}
+            <br>
+            <center><p>You don't have any post yet, <a href="/blog-new">Write a blog now</a></p> </center>
+            {% endif %}
           </div>
 
         </div>
