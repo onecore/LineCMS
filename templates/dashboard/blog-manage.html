@@ -24,6 +24,8 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../dashboard/knightstudio.js"></script>
+
 <style>
 <style>
 body {
@@ -460,7 +462,7 @@ swal("", `{{error}}`, "warning");
                         <th>Timestamp</th>
                         <th>Status</th>
                         <th>Category</th>
-                        <th>Action</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -481,7 +483,7 @@ swal("", `{{error}}`, "warning");
                           <div class="btn-group">
                           <a href="/blog/{{i[6]}}" target="_blank" class="btn btn-xs bg-dark text-white mdi rounded mdi mdi-eye" style="margin-right:3px;"> Preview</a>
                           <a href="/blog-edit/{{i[6]}}" target="_blank" class="btn btn-xs bg-dark text-white rounded ml-1 mdi mdi-tooltip-edit" style="margin-right:3px"> Update</a>
-                          <a class="btn btn-xs bg-danger text-white rounded mr-1 mdi mdi-delete" style="margin-right:3px"> Delete</a>
+                          <button class="btn btn-xs bg-danger text-white rounded mr-1 mdi mdi-delete" style="margin-right:3px" type="button" onclick="deleapi('1','{{i[6]}}')"> Delete</button>
                         </div>
                         </td>
                     </tr>
@@ -534,6 +536,7 @@ swal("", `{{error}}`, "warning");
   <script src="../../dashboard/js/file-upload.js"></script>
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
+
   <!-- End custom js for this page-->
 
 </body>

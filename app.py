@@ -127,7 +127,7 @@ def blog_mainview(new=None, url=None):
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
-        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template("dashboard/blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -152,7 +152,6 @@ def blog_new():
                 data['category'] = data_categ
             else:
                 data['category'] = 'blog'
-
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
@@ -217,6 +216,22 @@ def knightapi():
         return "KnightStudio Dashboard build ", version
     else:
         return "KnightStudio Dashboard build ", version
+
+
+@app.route("/deleapi", methods=['POST', 'GET'])
+def delete_api():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+            table = request.form.get("table")
+            column = request.form.get("column")
+            value = request.form.get("value")
+            de = dataengine.knightclient()
+            if (de.delete_api(table, column, value)):
+                return jsonify({"status": 1, "message": "Blog post has been deleted"})
+            else:
+                return jsonify({"status": 1, "message": "Blog post cannot delete right now"})
+    else:
+        return ""
 
 
 @ app.route("/knightclientapiv2", methods=['POST', 'GET'])

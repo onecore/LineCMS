@@ -19,6 +19,20 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def delete_api(self, table, column, value):
+        q = """DELETE FROM {tb} WHERE {column} = {value};""".format(
+            tb=table, column=column, value=value)
+        _c = self.connection.cursor()
+
+        try:
+            _c.execute(q)
+            self.connection.commit()
+            self.log("Blog deleted")
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def product_publish(self, data):
         pass
 
@@ -70,7 +84,7 @@ class knightclient:
 
     def get_blog_listings(self, page=0, result=10):
         _c = self.connection.cursor()
-        self.m_fetch = _c.execute("SELECT * FROM blog")
+        self.m_fetch = _c.execute("SELECT * FROM blog ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
         return self.m_data
 

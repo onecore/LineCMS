@@ -66,9 +66,12 @@
                 <div class="col-lg-8">
                     <!-- Post content-->
                     {% if new %}
+                    <center>
                     <div class="alert alert-success" role="alert">
-                      Blog post published and is now Live <a class="btn btn-primary btn-xs rounded" href="/blog-edit/{{blog[6]}}"> Edit or Manage post</a>
+                      Blog post published and is now Live
+                      <br><a class="btn btn-primary btn-xs rounded" href="/blog-edit/{{blog[6]}}"> Update post</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/blog-manage"> View all posts</a>
                     </div>
+                  </center>
                     {% endif %}
                     <article>
                         <!-- Post header-->

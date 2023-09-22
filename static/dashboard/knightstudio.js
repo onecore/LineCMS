@@ -17,6 +17,7 @@ function fname(len) {
   return text;
 }
 
+
 function knightapi(data){
     fetch("/knightclientapi", {
         method: "POST",
@@ -65,6 +66,21 @@ function knightapi2(data){
           //console.log("Request complete! response:", res);
       });
     }
+}
+
+function deleapi(d,b){
+    fetch("/deleapi", {
+        o = {"1":{"table":"blog","column":"route","value":b}}
+
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(o[d])
+    }).then(res => {
+        swal("Logs deleted", 'Please refresh page', "success");
+        //console.log("Request complete! response:", res);
+    });
 }
 
 function updateMod(which, OnOrOff) {
