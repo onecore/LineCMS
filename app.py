@@ -89,7 +89,8 @@ def blog_edit(url):
 
 
 @app.route("/blog-manage", methods=['POST', 'GET'])
-def blog_manage():
+@app.route("/blog-manage/<alert>", methods=['POST', 'GET'])
+def blog_manage(alert=None):
     de = dataengine.knightclient()
     search = False
     q = request.args.get('q')
@@ -102,7 +103,8 @@ def blog_manage():
         print(i[0]),
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blog', css_framework="bootstrap5")
-    return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination,)
+
+    return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination, alert=alert)
 
 
 @app.route("/blog", methods=['POST', 'GET'])

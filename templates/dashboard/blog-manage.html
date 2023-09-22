@@ -274,7 +274,6 @@ swal("", `{{error}}`, "warning");
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <h4 class="text-dark ms-auto">Blog manager</h4>
-
         <ul class="navbar-nav ms-auto">
           <li class="nav-item d-none d-lg-block">
               <span class="input-group-addon input-group-prepend border-right">
@@ -294,6 +293,7 @@ swal("", `{{error}}`, "warning");
       </div>
     </nav>
     <!-- partial -->
+
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../dashboard/partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
@@ -388,6 +388,7 @@ swal("", `{{error}}`, "warning");
       </nav>
       <!-- partial -->
       <div class="main-panel">
+
         <div class="content-wrapper">
 
 <div class="container">
@@ -450,6 +451,14 @@ swal("", `{{error}}`, "warning");
                     </div>
                 </div>
             </div> -->
+            {% if alert == "1" %}
+            <div class="alert alert-success alert-dismissible fade show text-muted" role="alert">
+              <strong>Blog post deleted!</strong> Don't forget to write more content!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+          <a class="btn btn-primary mdi mdi-pencil" href="/blog-new"> Publish blog</a>
+
             {{ pagination.info }}
               {{ pagination.links }}
 

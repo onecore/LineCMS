@@ -97,8 +97,13 @@ function deleapi(d,b,id){
         },
         body: JSON.stringify(o[d])
     }).then(res => {
-        document.getElementById('tr-'+id).remove();
-        swal("Blog manager", 'Blog post deleted', "success");
+      if (id === "9999"){
+         location.href = "/blog-manage";
+      }else{
+          document.getElementById('tr-'+id).remove();
+          swal("Blog manager", 'Blog post deleted', "success");
+      }
+
 
         //console.log("Request complete! response:", res);
     });
