@@ -13,7 +13,7 @@ from flask import Flask, Blueprint, g, flash, render_template, request, jsonify,
 from werkzeug.utils import secure_filename
 from flask_ckeditor import CKEditor
 from flask_paginate import Pagination, get_page_parameter
-
+import templater as temple
 ckeditor = CKEditor()
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
@@ -34,6 +34,31 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 _logger = dataengine.knightclient()
 log = _logger.log
+
+#~~~~~~~~~~~~ Templating Funcs Start ~~~~~~~~~~~~~#
+
+
+def ks_include_adminbutton():
+    c = temple.ks_admin_button
+    v = "&nbsp&nbsp<a href='"+temple.href_dashboard+"' class='btn " + \
+        c+"'"+"style='color:white'"+">Owner Dashboard</a>"
+    print(v, "<<<")
+    return v
+
+
+def ks_badge_insert(v):
+    q = ""
+    if v:
+        i = str(v).split(",")
+        for cat in i:
+            q += "<badge class='badge {c}'>".format(
+                c=temple.ks_badge_insert)+cat+"</badge>&nbsp"
+    return q
+
+
+app.jinja_env.globals.update(blog_list_badge_category=ks_badge_insert)
+app.jinja_env.globals.update(admin_button=ks_include_adminbutton)
+#~~~~~~~~~~~~ Templating Funcs End ~~~~~~~~~~~~~#
 
 
 def allowed_file(filename):
@@ -99,12 +124,37 @@ def blog_manage(alert=None):
     page = request.args.get(get_page_parameter(), type=int, default=1)
     blog = de.get_blog_listings()
     tt = len(blog)
-    for i in blog:
-        print(i[0]),
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blog', css_framework="bootstrap5")
 
     return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination, alert=alert)
+
+
+@app.route("/blog-list", methods=['GET'])
+def blog_list():
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    mod = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
+    }
+    blogs = de.get_blog_listings()
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    tt = len(blogs)
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='blogs', css_framework="bootstrap5")
+    return render_template("dashboard/blog-list.html", data=dt, mod=mod, blogs=blogs)
 
 
 @app.route("/blog", methods=['POST', 'GET'])
@@ -130,6 +180,8 @@ def blog_mainview(new=None, url=None):
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
         return render_template("dashboard/blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+    else:
+        return redirect("/blog-list")
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -569,3 +621,14 @@ def login():
     return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
     return render_template("dashboard/login.html", error=False)
+    return render_template("dashboard/login.html", error=False)
+    return render_template("dashboard/login.html", error=False)
+    return render_template("dashboard/login.html", error=True)
+    if 'authenticated' in session:
+        if len(session['authenticated']):
+            return redirect(url_for("dashboard_main"))
+            return render_template("dashboard/login.html", error=False)
+            return render_template("dashboard/login.html", error=False)
+            return render_template("dashboard/login.html", error=False)
+            return render_template("dashboard/login.html", error=False)
+            return render_template("dashboard/login.html", error=False)
