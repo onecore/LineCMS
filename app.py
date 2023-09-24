@@ -179,7 +179,7 @@ def blog_mainview(new=None, url=None):
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
-        return render_template("dashboard/blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
     else:
         return redirect("/blog-list")
 
