@@ -10,7 +10,7 @@ render_product_single = "product.html"
 render_product_list = "product-list.html"
 
 render_blog_single = "blog.html"
-render_product_list = "blog-list.html"
+render_blog_list = "blog-list.html"
 
 
 route_product = "/product"

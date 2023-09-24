@@ -14,6 +14,8 @@ from werkzeug.utils import secure_filename
 from flask_ckeditor import CKEditor
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+import renderfunc as rf
+
 ckeditor = CKEditor()
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
@@ -34,31 +36,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 _logger = dataengine.knightclient()
 log = _logger.log
-
-#~~~~~~~~~~~~ Templating Funcs Start ~~~~~~~~~~~~~#
-
-
-def ks_include_adminbutton():
-    c = temple.ks_admin_button
-    v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
-        c+"'"+"style='color:white'"+">Owner Dashboard</a>"
-    print(v, "<<<")
-    return v
-
-
-def ks_badge_insert(v):
-    q = ""
-    if v:
-        i = str(v).split(",")
-        for cat in i:
-            q += "<badge class='badge {c}'>".format(
-                c=temple.ks_badge_insert)+cat+"</badge>&nbsp"
-    return q
-
-
-app.jinja_env.globals.update(blog_list_badge_category=ks_badge_insert)
-app.jinja_env.globals.update(admin_button=ks_include_adminbutton)
-#~~~~~~~~~~~~ Templating Funcs End ~~~~~~~~~~~~~#
 
 
 def allowed_file(filename):
@@ -154,7 +131,7 @@ def blog_list():
     tt = len(blogs)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blogs', css_framework="bootstrap5")
-    return render_template(temple.route_blog_list, data=dt, mod=mod, blogs=blogs)
+    return render_template(temple.render_blog_list, data=dt, mod=mod, blogs=blogs)
 
 
 @app.route(temple.route_blog, methods=['POST', 'GET'])
@@ -179,7 +156,7 @@ def blog_mainview(new=None, url=None):
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
-        return render_template(temple.route_blog, data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template(temple.render_blog_single, data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
     else:
         return redirect(temple.route_blog_list)
 
@@ -618,3 +595,9 @@ def login():
             return redirect(url_for("dashboard_main"))
     else:
         return render_template("dashboard/login.html", error=False)
+
+
+#~~~~~~~~~~~~ Templating Funcs Start ~~~~~~~~~~~~~#
+app.jinja_env.globals.update(blog_list_badge_category=rf.ks_badge_insert)
+app.jinja_env.globals.update(admin_button=rf.ks_include_adminbutton)
+#~~~~~~~~~~~~ Templating Funcs End ~~~~~~~~~~~~~#
