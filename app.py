@@ -40,7 +40,7 @@ log = _logger.log
 
 def ks_include_adminbutton():
     c = temple.ks_admin_button
-    v = "&nbsp&nbsp<a href='"+temple.href_dashboard+"' class='btn " + \
+    v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
         c+"'"+"style='color:white'"+">Owner Dashboard</a>"
     print(v, "<<<")
     return v
@@ -104,7 +104,7 @@ def blog_edit(url):
                 data['category'] = 'blog'
             try:
                 if (de.blog_update(data)):
-                    return redirect("/blog/1/"+data['route'])
+                    return redirect(temple.route_blog+"/1/"+data['route'])
                 else:
                     return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
             except Exception as e:
@@ -130,7 +130,7 @@ def blog_manage(alert=None):
     return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination, alert=alert)
 
 
-@app.route("/blog-list", methods=['GET'])
+@app.route(temple.route_blog_list, methods=['GET'])
 def blog_list():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
@@ -154,13 +154,13 @@ def blog_list():
     tt = len(blogs)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blogs', css_framework="bootstrap5")
-    return render_template("dashboard/blog-list.html", data=dt, mod=mod, blogs=blogs)
+    return render_template(temple.route_blog_list, data=dt, mod=mod, blogs=blogs)
 
 
-@app.route("/blog", methods=['POST', 'GET'])
-@app.route("/blog/", methods=['POST', 'GET'])
-@app.route("/blog/<url>", methods=['POST', 'GET'])
-@app.route("/blog/<new>/<url>", methods=['POST', 'GET'])
+@app.route(temple.route_blog, methods=['POST', 'GET'])
+@app.route(temple.route_blog+"/", methods=['POST', 'GET'])
+@app.route(temple.route_blog+"/<url>", methods=['POST', 'GET'])
+@app.route(temple.route_blog+"/<new>/<url>", methods=['POST', 'GET'])
 def blog_mainview(new=None, url=None):
     if url:
         de = dataengine.knightclient()
@@ -179,9 +179,9 @@ def blog_mainview(new=None, url=None):
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
         cats_list = de.get_blog_cat_lists()
-        return render_template("blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template(temple.route_blog, data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
     else:
-        return redirect("/blog-list")
+        return redirect(temple.route_blog_list)
 
 
 @app.route("/blog-new", methods=['POST', 'GET'])
@@ -209,7 +209,7 @@ def blog_new():
             de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
-                    return redirect("/blog/1/"+g.new_blog_url)
+                    return redirect(temple.route_blog+"/1/"+g.new_blog_url)
                 else:
                     return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
             except Exception as e:
@@ -488,7 +488,7 @@ def dashboard_main():
                     "meta_description": u_metadescription,
                     "meta_keywords": u_metakeywords,
                     "footercopyright": u_footercopyright
-                        }
+                }
                 for k, v in dicts.items():
                     if len(v) < 5:
                         error = "Some information must be 5 characters or more"
@@ -616,19 +616,5 @@ def login():
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect(url_for("dashboard_main"))
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=False)
-    return render_template("dashboard/login.html", error=True)
-    if 'authenticated' in session:
-        if len(session['authenticated']):
-            return redirect(url_for("dashboard_main"))
-            return render_template("dashboard/login.html", error=False)
-            return render_template("dashboard/login.html", error=False)
-            return render_template("dashboard/login.html", error=False)
-            return render_template("dashboard/login.html", error=False)
-            return render_template("dashboard/login.html", error=False)
+    else:
+        return render_template("dashboard/login.html", error=False)
