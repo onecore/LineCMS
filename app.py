@@ -131,7 +131,7 @@ def blog_list():
     tt = len(blogs)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blogs', css_framework="bootstrap5")
-    return render_template(temple.render_blog_list, data=dt, mod=mod, blogs=blogs)
+    return render_template(temple.render_blog_list, data=dt, mod=mod, blogs=blogs, pagination=pagination)
 
 
 @app.route(temple.route_blog, methods=['POST', 'GET'])
@@ -549,11 +549,6 @@ def help():
 
 @app.route("/messages")
 def messages():
-    # con = sqlite3.connect("knightstudiomsg")
-    # cur = con.cursor()
-    # ret = cur.execute("SELECT * FROM MESSAGES")
-    # data = ret.fetchall()
-    # con.close()
     _m = dataengine.knightclient()
     data = _m.get_messages()
     return render_template("dashboard/messages.html", data=data)
@@ -600,4 +595,5 @@ def login():
 #~~~~~~~~~~~~ Templating Funcs Start ~~~~~~~~~~~~~#
 app.jinja_env.globals.update(blog_list_badge_category=rf.ks_badge_insert)
 app.jinja_env.globals.update(admin_button=rf.ks_include_adminbutton)
+app.jinja_env.globals.update(khtml2text=rf.ks_html2text)
 #~~~~~~~~~~~~ Templating Funcs End ~~~~~~~~~~~~~#

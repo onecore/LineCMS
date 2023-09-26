@@ -71,62 +71,33 @@
               <li class="breadcrumb-item"><a href="/blog-list">Blog list</a></li>
             </ol>
           </nav>
+          <div class="row">
+            <br>
+            {{ pagination.info }}
+            {{ pagination.links }}
+            {% for blog in blogs %}
+              {% if blog[5] == '0' %}
 
-            <div class="row">
-                <div class="col col">
-
-                  {% for blog in blogs %}
-                  <div class="card" style="width: 18rem;height:25rem">
-                    <a href="/blog/{{blog[6]}}"><img src="/media/blog/{{blog[3]}}" class="card-img-top" alt="{{blog[1]}}" style="padding-top:5px"></a>
+                <div class="col-md-3  pt-3">
+                  <div class="card pt-0">
+                    <a href="/blog/{{blog[6]}}"><img src="/media/blog/{{blog[3]}}" class="card-img-top img-fluid" alt="{{blog[1]}}" style="padding-top:5px;"></a>
                     <div class="card-body">
                       <h5 class="card-title text-truncate" style="max-width: 200px";>{{blog[1]}}</h5>
+                      <p class="text-truncate" style="max-width: 400px">{{khtml2text(blog[2])}}</p>
+
                       <p class="text-truncate text-mute" style="max-width: 200px;font-size:14px;margin-top:-5px;color:grey";>Posted: {{blog[4][:11]}}</p>
                       <p class="text-truncate text-mute p-0" style="max-width: 200px;font-size:14px;margin-top:-15px;color:grey";>Categories: {{blog_list_badge_category(blog[7])|safe}}</p>
                       <a href="/blog/{{blog[6]}}" class="btn btn-primary float-right">Read more</a>
                     </div>
                   </div>
-                  {% endfor %}
-
                 </div>
+              {% endif %}
+              {% endfor %}
                 <!-- Side widgets-->
-                <div class="col">
-                    <!-- Search widget-->
-                    <!-- Categories widget-->
-                    <div class="card mb-2">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-9 flex">
-                                    <ul class="list-unstyled mb-0">
-                                      <!-- {% for cat in catslist %}
-                                        <li><a href="/blog/category/{{cat}}">{{ cat }}</a></li>
-                                      {% endfor %} -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Sharing is Caring</div>
-                        <div class="card-body">
-                          <!-- AddToAny BEGIN -->
-                          <center>
-                          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-                          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                          <a class="a2a_button_facebook"></a>
-                          <a class="a2a_button_twitter"></a>
-                          <a class="a2a_button_email"></a>
-                          <a class="a2a_button_facebook_messenger"></a>
-                          <a class="a2a_button_whatsapp"></a>
-                          </div>
-                          <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        </center>
-                          <!-- AddToAny END -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
+            <br>
+            {{ pagination.info }}
+            {{ pagination.links }}
         </div>
         <!-- Footer-->
 

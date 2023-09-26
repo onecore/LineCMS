@@ -61,6 +61,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item"><a href="/blog-list">Blog</a></li>
+
             </ol>
           </nav>
 
@@ -72,7 +73,7 @@
                     <center>
                     <div class="alert alert-success" role="alert">
                       Blog post published and is now Live
-                      <br><a class="btn btn-primary btn-xs rounded" href="/blog-edit/{{blog[6]}}"> Update post</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/blog-manage"> View all posts</a>
+                      <br><a class="btn btn-primary btn-xs rounded" href="/blog-edit/{{blog[6]}}"> Update post</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/blog-new"> Write blog</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/blog-manage"> View all posts</a>
                     </div>
                   </center>
                     {% endif %}
@@ -96,6 +97,10 @@
                           {{ blog[2] | safe }}
                         </section>
                     </article>
+                    {% if 'authenticated' in session %}
+                    <center><a class="btn btn-primary" href="/blog-edit/{{blog[6]}}">Edit this blog</a></center>
+                    {% endif %}
+
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
