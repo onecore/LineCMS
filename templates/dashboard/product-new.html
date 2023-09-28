@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Help - KnightStudio Dashboard</title>
+  <title>Publish post - KnightStudio Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -23,12 +23,25 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+<style>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 13px 13px 13px 13px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top:10px;
+    cursor: pointer;
+}
+</style>
 </head>
 
 <body class="sidebar-dark">
 <script>
+var image_nm = "";
 {% if success %}
 swal("", 'Website information updated', "success");
 {% endif %}
@@ -58,9 +71,9 @@ swal("", `{{error}}`, "warning");
         </div>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
-        <h4 class="text-dark ms-auto">Create product post</h4>
+        <h4 class="text-dark ms-auto">Create blog post</h4>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item d-none d-lg-block">
+          <li class="nav-item d-none d-sm-block">
               <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
               </span>
@@ -113,7 +126,7 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="KnightStudio-webacc">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/dashboard"><b class="text-warning">Website</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Website</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/account">Account</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/modules">Modules</a></li>
               </ul>
@@ -130,7 +143,7 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="KnightStudio-product">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/product-new"><b class="text-warning">New Product</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="/product-new">New Product</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/product-manage">Manage Products</a></li>
               </ul>
             </div>
@@ -141,7 +154,7 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="KnightStudio-blog">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/blog-new">New Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-new"><b class="text-warning">New Post</b></a></li>
                 <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
               </ul>
             </div>
@@ -171,24 +184,66 @@ swal("", `{{error}}`, "warning");
       </nav>
       <!-- partial -->
       <div class="main-panel">
-        <div class="content-wrapper">
+        <div class="container">
           <div class="row">
+            <div class="col-12 col-md-4 p-3">
 
-            <div class="grid-margin stretch-card">
-              <div class="container">
-                <div class="row">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-dark text-white">Blog Category</span>
+                    </div>
+                    <input type="text" class="form-control" id="categ" aria-label="" placeholder="use ',' for multiple categories">
+                  </div>
+                </div>
 
-<form method="post">
-    {{ ckeditor.create() }}
-    <input type="submit">
-</form>
-                </div>
-                </div>
+                <h3><span class="badge btn-dark text-white rounded-0">Product Images</span></h3>
+                  <center>
+                  <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
+                  </center>
+                  <center>
+                  <label class="custom-file-upload center">
+                    <form id="upload-file" name="upload-file">
+                      <input type="file" name="file" onchange="loadFile(event)"/>
+                      <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                    </form>
+                  </label>
+                </center>
             </div>
 
-          </div>
 
+            <div class="col-12 col-md-8 p-3">
+            <form method="post" id="form" name="form">
+              <div class="form-group">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-dark text-white">Product Name</span>
+                    </div>
+                    <input type="text" class="form-control" id="title" aria-label="" placeholder="Product name">
+                  </div>
+                </div>                <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
+                <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
+              </div>
+                  {{ ckeditor.create() }}
+                <br>
+
+                <div class="border p-2" style="background:#F7F7F7">
+                  <center><p class="text-mute">Add variant to your product</p></center>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-dark text-white">Variant Name</span>
+                    </div>
+                    <input type="text" class="form-control" id="title" aria-label="" placeholder="Unique variant name e.g 'Color Pink'">
+                  </div>
+              </div>
+
+                <button type="submit" class="btn btn-primary">Publish post</button>
+              </form>
+            </div>
+          </div>
         </div>
+        <br>
 
         <!-- content-wrapper ends -->
         <!-- partial:../../dashboard/partials/_footer.html -->
@@ -224,8 +279,46 @@ swal("", `{{error}}`, "warning");
   <script src="../../dashboard/js/file-upload.js"></script>
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
+  <script src="../../dashboard/knightstudio.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+
   <!-- End custom js for this page-->
 
+<script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('logoview');
+      output.src = reader.result;
+    };
+    // image_nm = fname(8);
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("bimg").value = event.target.files[0].name;
+    };
+
+</script>
+
+<script>
+$("#form").submit( function(eventObj) {
+  var vv = $("#categ").val()
+  $("#cat").val(vv)
+
+  var form_data = new FormData($('#upload-file')[0]);
+  $.ajax({
+      type: 'POST',
+      url: '/upload-blog',
+      data: form_data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(data) {
+          // $("#logoview").attr('src','/media/blog/'+data['status']);
+          // swal("", '', "success");
+          return true;
+      },
+  });
+});
+</script>
 </body>
 
 </html>

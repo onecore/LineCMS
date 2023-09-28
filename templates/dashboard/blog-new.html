@@ -186,14 +186,17 @@ swal("", `{{error}}`, "warning");
       <div class="main-panel">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 p-3">
 
                 <div class="form-group">
-                  <h3><span class="badge bg-secondary text-white rounded-0">Category</span></h3>
-                  <input type="text" class="form-control" id="categ" name="categ" placeholder="Post category e.g news" value="">
-
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-dark text-white">Blog category</span>
+                    </div>
+                    <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','">
+                  </div>
                 </div>
-                <h3><span class="badge bg-secondary text-white rounded-0">Post thumbnail</span></h3>
+                <h3><span class="badge btn-dark text-white rounded-0">Post thumbnail</span></h3>
                   <center>
                   <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
                   </center>
@@ -208,11 +211,15 @@ swal("", `{{error}}`, "warning");
             </div>
 
 
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8 p-3">
             <form method="post" id="form" name="form">
               <div class="form-group">
-                <h3><span class="badge bg-secondary text-white rounded-0">Post title</span></h3>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-dark text-white">Blog title</span>
+                    </div>
+                    <input type="text" class="form-control" id="title" aria-label="" placeholder="Post title">
+                  </div>
                 <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                 <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
               </div>
