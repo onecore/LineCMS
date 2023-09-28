@@ -9,8 +9,8 @@ from flask import g
 
 class knightclient:
 
-    connection = sqlite3.connect("knightstudio", check_same_thread=False)
-    cursor = connection.cursor()
+    connection = sqlite3.connect("db/knightstudio", check_same_thread=False)
+    # cursor = connection.cursor()
 
     def url_gen(self, content) -> str:
         remove_sym = re.sub(r'[^\w]', ' ', content)

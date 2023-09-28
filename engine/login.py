@@ -3,13 +3,13 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 
-login = Blueprint("login", __name__)
+logins = Blueprint("logins", __name__)
 
 _logger = dataengine.knightclient()
 log = _logger.log
 
 
-@login.route("/login", methods=['GET', 'POST'])
+@logins.route("/login", methods=['GET', 'POST'])
 def login():
     """
     authenticator for dashboad route

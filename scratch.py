@@ -1,23 +1,5 @@
-class Base(object):
-
-    v = 123
-
-    def __init__(self):
-        print("Base init'ed")
+val = 'Geeks'
+x = f"{val}for{val} is a portal for {val}."
 
 
-class ChildA(Base):
-    def __init__(self):
-        print("ChildA init'ed")
-        Base.__init__(self)
-        print v
-
-
-class ChildB(Base):
-    def __init__(self):
-        print("ChildB init'ed")
-        super().__init__(self)
-
-
-x = ChildB()
-x()
+print(x)

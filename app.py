@@ -27,6 +27,7 @@ from engine.modules import module
 from engine.dashboard import dashboard
 from engine.account import account
 from engine.message import message
+from engine.login import logins
 from engine.other import other
 
 ckeditor = CKEditor()
@@ -46,6 +47,9 @@ UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+"""
+Blueprinted routes
+"""
 app.register_blueprint(blog)
 app.register_blueprint(api)
 app.register_blueprint(uploader)
@@ -55,9 +59,13 @@ app.register_blueprint(module)
 app.register_blueprint(dashboard)
 app.register_blueprint(account)
 app.register_blueprint(message)
+app.register_blueprint(logins)
 app.register_blueprint(other)
 
 
+"""
+functions for Jinja templating
+"""
 app.jinja_env.globals.update(blog_list_badge_category=rf.ks_badge_insert)
 app.jinja_env.globals.update(admin_button=rf.ks_include_adminbutton)
 app.jinja_env.globals.update(khtml2text=rf.ks_html2text)
