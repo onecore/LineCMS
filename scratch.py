@@ -16,4 +16,8 @@ class ChildA(Base):
 class ChildB(Base):
     def __init__(self):
         print("ChildB init'ed")
-        super().__init__()
+        super().__init__(self)
+
+
+x = ChildB()
+x()

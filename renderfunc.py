@@ -1,3 +1,6 @@
+"""
+Inline functions for Jinja
+"""
 import templater as temple
 
 
