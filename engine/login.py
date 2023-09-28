@@ -26,7 +26,7 @@ def login():
                 log("Login success adding to session")
                 # Set session
                 session['authenticated'] = (_u, _p)
-                return redirect(url_for("dashboard_main"))
+                return redirect("/dashboard")
             else:
                 log("Login failed, session deleted")
                 return render_template("dashboard/login.html", error=True)
@@ -35,6 +35,6 @@ def login():
             return render_template("dashboard/login.html", error=True)
     if 'authenticated' in session:
         if len(session['authenticated']):
-            return redirect(url_for("dashboard_main"))
+            return redirect("/dashboard")
     else:
         return render_template("dashboard/login.html", error=False)

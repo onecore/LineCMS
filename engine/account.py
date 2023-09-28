@@ -48,4 +48,4 @@ def dashboard_account():
         _cred_data = _cred[0]
         return render_template("dashboard/account.html", data=_cred_data, error=error, success=success)
     except Exception as e:
-        return redirect(url_for("logout"))
+        return redirect("/logoff")

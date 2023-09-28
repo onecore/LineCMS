@@ -17,7 +17,7 @@ def logout():
         del session['authenticated']
     except Exception as e:
         pass
-    return redirect(url_for("main"))
+    return redirect("/")
 
 
 @other.route("/other")
