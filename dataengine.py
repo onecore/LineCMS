@@ -12,14 +12,14 @@ class knightclient:
     connection = sqlite3.connect("knightstudio", check_same_thread=False)
     cursor = connection.cursor()
 
-    def url_gen(self, content):
+    def url_gen(self, content) -> str:
         remove_sym = re.sub(r'[^\w]', ' ', content)
         v = urllib.parse.quote_plus(str(random.randint(10, 50))+remove_sym)
         _v = str(v).replace("+", "-")
         g.new_blog_url = _v
         return _v
 
-    def delete_api(self, table, column, value):
+    def delete_api(self, table, column, value) -> bool:
         print(table, column, value)
         q = """DELETE FROM {tb} WHERE route = '{value}';""".format(
             tb=table, column=column, value=value)
@@ -46,7 +46,7 @@ class knightclient:
     def get_product_listings(self, page=0, result=10):
         pass
 
-    def blog_publish(self, dicts):
+    def blog_publish(self, dicts) -> bool:
         _c = self.connection.cursor()
         try:
             ts = self.timestamp(routeStyle=1)
@@ -61,7 +61,7 @@ class knightclient:
             print("Error ", e)
             return False
 
-    def blog_update(self, dicts):
+    def blog_update(self, dicts) -> bool:
         _c = self.connection.cursor()
         try:
             q = "UPDATE blog SET title = '{title}',message = '{message}', image = '{image}',hidden = '{hidden}', category = '{category}' WHERE route = '{route}';".format(
@@ -76,20 +76,20 @@ class knightclient:
     def blog_manage(self):
         pass
 
-    def get_blog_single(self, route):
+    def get_blog_single(self, route) -> tuple:
         _c = self.connection.cursor()
         self.m_fetch = _c.execute(
             "SELECT * FROM blog WHERE route='{m}'".format(m=route))
         self.m_data = self.m_fetch.fetchone()
         return self.m_data
 
-    def get_blog_listings(self, page=0, result=10):
+    def get_blog_listings(self, page=0, result=10) -> list:
         _c = self.connection.cursor()
         self.m_fetch = _c.execute("SELECT * FROM blog ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
         return self.m_data
 
-    def get_blog_cat_lists(self):
+    def get_blog_cat_lists(self) -> list:
         _c = self.connection.cursor()
         self.m_fetch = _c.execute("SELECT category FROM blog")
         self.m_data = self.m_fetch.fetchall()
@@ -105,7 +105,7 @@ class knightclient:
                         cats[itm] = 1
         return cats
 
-    def knightclientapi(self, action):
+    def knightclientapi(self, action) -> bool:
         try:
             _c = self.connection.cursor()
             a = {
@@ -116,7 +116,7 @@ class knightclient:
         except:
             return False
 
-    def knightclientapiv2(self, action):
+    def knightclientapiv2(self, action) -> bool:
         _c = self.connection.cursor()
         print(action)
         _where = action['where']
@@ -135,7 +135,7 @@ class knightclient:
             self.log("API DB Update failed")
             return False
 
-    def timestamp(self, routeStyle=False):
+    def timestamp(self, routeStyle=False) -> str:
         """
         Returns timestamp
         """
@@ -148,7 +148,7 @@ class knightclient:
             return dt
         return ts
 
-    def message(self, dicts):
+    def message(self, dicts) -> bool:
         try:
             params = "INSERT INTO messages (name,email,message,phone,timestamp) VALUES (?,?,?,?,?)"
             vals = (dicts['name'], dicts['email'],
@@ -179,7 +179,7 @@ class knightclient:
         except Exception as e:
             self.log("Unable to delete message, "+str(e))
 
-    def log(self, message):
+    def log(self, message) -> bool:
         _c = self.connection.cursor()
         try:
             params = "INSERT INTO logging (log,timestamp) VALUES (?,?)"
@@ -209,7 +209,7 @@ class knightclient:
         self.connection.commit()
         return {"status": "success"}
 
-    def update_websitesettings(self, dicts, owner):
+    def update_websitesettings(self, dicts, owner) -> bool:
         """
         Website settings
         """
@@ -224,7 +224,7 @@ class knightclient:
             print("update_wsettings() error ", e)
             return False
 
-    def update_module(self, data):
+    def update_module(self, data) -> bool:
         """
         Update module data
         """
@@ -247,7 +247,7 @@ class knightclient:
                      + copy_data['module']+" "+str(e))
             return False
 
-    def update_credential(self, uname, newpwd):
+    def update_credential(self, uname, newpwd) -> bool:
         """
         Only for Account password update
         """
@@ -262,14 +262,14 @@ class knightclient:
             print("update_credential() error ", e)
             return False
 
-    def get_messages(self):
+    def get_messages(self) -> tuple:
         _c = self.connection.cursor()
         self.m_fetch = _c.execute(
             "SELECT * FROM messages ORDER BY id DESC")
         self.m_data = self.m_fetch.fetchall()
         return self.m_data
 
-    def get_logs(self):
+    def get_logs(self) -> tuple:
         _c = self.connection.cursor()
         self.m_fetch = _c.execute(
             "SELECT * FROM logging ORDER BY id DESC")
@@ -277,20 +277,20 @@ class knightclient:
 
         return self.m_data
 
-    def get_cred(self, username, passw):
+    def get_cred(self, username, passw) -> tuple:
         _c = self.connection.cursor()
         self.gc_fetch = _c.execute("SELECT * FROM users")
         self.gc_data = self.gc_fetch.fetchall()
 
         return self.gc_data
 
-    def load_modules_settings(self):
+    def load_modules_settings(self) -> tuple:
         _c = self.connection.cursor()
         self.ld = _c.execute("SELECT * FROM modules")
         self.ld_all = self.ld.fetchall()
         return self.ld_all
 
-    def load_data_index(self, which):
+    def load_data_index(self, which) -> tuple:
         """
         Loads data from DB, function calls in main page
         """

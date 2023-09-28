@@ -9,7 +9,7 @@ def ks_include_adminbutton() -> str:
     return v
 
 
-def ks_badge_insert(v) -> list:
+def ks_badge_insert(v) -> str:
     "bootstrap badge inserter (single/multi)"
     q = ""
     if v:
