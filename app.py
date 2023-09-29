@@ -18,6 +18,7 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import renderfunc as rf
 
+
 from engine.blog import blog
 from engine.api import api
 from engine.uploader import uploader
@@ -29,6 +30,7 @@ from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
+# from helpers import robotmap
 
 ckeditor = CKEditor()
 
@@ -61,6 +63,20 @@ app.register_blueprint(account)
 app.register_blueprint(message)
 app.register_blueprint(logins)
 app.register_blueprint(other)
+
+
+# @app.route("/<file>.txt")
+# @app.route("/<file>.xml")
+# def robot_map_generator(file):
+#     pass
+#     # match fil: # needs python 3.11
+#     #    case 'robots':
+#     #         return robotmap.robot()
+#     #     case 'robot':
+#     #         return robotmap.robot()
+#     #     case 'sitemap':
+#     #         return robotmap.sitemap()
+#     # return which
 
 
 """

@@ -53,7 +53,9 @@ swal("", 'Website information updated', "success");
 swal("", `{{error}}`, "warning");
 {% endif %}
 </script>
-
+<script>
+localStorage.clear();
+</script>
   <div class="container-scroller">
     <!-- partial:../../dashboard/partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -231,7 +233,7 @@ swal("", `{{error}}`, "warning");
                   {{ ckeditor.create() }}
                 <br>
 
-                <div class="border p-2" style="background:#F7F7F7">
+                <div class="border p-2 rounded">
                   <br>
                   <center><h4 class="text-mute badge badge-dark ">Add variant to your product</h4></center>
                   <br>
@@ -243,11 +245,26 @@ swal("", `{{error}}`, "warning");
                     <button type="button" class="border" onclick="p_variant_add(this)"> Add variant</button>
                   </div>
                   <div id="variantcontainer">
-                      <table class="table">
-                        <center><p class="text-muted">This product has no variant</p></center>
+                      <table class="table" id="variant-table">
+                        <thead>
+                          <tr>
+                            <th>Variant name</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tbody/>
                       </table>
+
+                      <br>
+                      <center><p class="text-muted" id="variant-notice">This product has no variant</p></center>
+
                   </div>
-                  <hr>
+                </div>
+                <br>
+                <div class="border p-2 rounded">
                   <center><h4 class="badge badge-dark text-mute">Search Engine Optimization</h4></center>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -273,7 +290,8 @@ swal("", `{{error}}`, "warning");
                     <input type="text" class="form-control" id="p-url" aria-label="" placeholder="Leave blank to let the system create URL for this product">
                     <button type="button" class="border" onclick="p_set_settings('p-url')"> Set URL</button>
                   </div>
-              </div>
+                </div>
+
                 <br>
                 <button type="submit" class="btn btn-primary">Publish product</button>
               </form>

@@ -1,5 +1,6 @@
-let on = 'margin-top:5px;background-color:mediumseagreen;color:white'
-let off = 'margin-top:5px;background-color:black;color:white'
+let on = 'margin-top:5px;background-color:mediumseagreen;color:white';
+let off = 'margin-top:5px;background-color:black;color:white';
+var product_data = {};
 
 function AutoOff() {
 
@@ -239,15 +240,26 @@ function OnOff(which) {
 
 }
 
+function p_update(v){
+  alert(v)
+}
 
-
+function p_variant_add(){
+    var cont_v=document.getElementById('v-title').value;
+    var newRow=document.getElementById('variant-table').insertRow();
+    document.getElementById('variant-notice').style.display = "none";
+    newRow.innerHTML = "<td id="+cont_v+"><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td>No Image</td> <td>No Description</td><td><button class='badge bg-danger border-0'>Remove</button>&nbsp&nbsp<button class='badge bg-success border-0'>Update</button></td>";
+    document.getElementById('v-title').value = "";
+}
 function p_set_settings(dom){
   let n = document.getElementById(dom).value;
   if (!n){
       swal("", 'Variant name required', "error");
     }else{
-      alert(n)
+      localStorage.setItem(dom,n)
     }
+
+  console.log(product_data)
 }
 
 function p_publish(data){
