@@ -248,7 +248,7 @@ function p_variant_add(){
     var cont_v=document.getElementById('v-title').value;
     var newRow=document.getElementById('variant-table').insertRow();
     document.getElementById('variant-notice').style.display = "none";
-    newRow.innerHTML = "<td id="+cont_v+"><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td>No Image</td> <td>No Description</td><td><button class='badge bg-danger border-0'>Remove</button>&nbsp&nbsp<button class='badge bg-success border-0'>Update</button></td>";
+    newRow.innerHTML = "<td id="+cont_v+"><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td>No Image</td> <td>No Description</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border'>Update</button></td>";
     document.getElementById('v-title').value = "";
 }
 function p_set_settings(dom){
