@@ -212,6 +212,13 @@ localStorage.clear();
                     </form>
                   </label>
                 </center>
+                <br>
+                <div class="border rounded">
+                  <br>
+                  <center><h4 class="badge badge-dark text-mute">Page settings</h4></center>
+                  <br>
+                  <center><p class="text-muted">No additional settings</p></center>
+                </div>
             </div>
 
 
@@ -241,20 +248,19 @@ localStorage.clear();
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Variant Name</span>
                     </div>
                     <input type="text" class="form-control" id="v-title" aria-label="" placeholder="Unique variant name e.g 'XL size'">
-                    <button type="button" class="border" onclick="p_variant_add(this)"> Add variant</button>
+                    <button type="button" class="border" onclick="p_variant_add(this)" style="background:white;border-radius:0 8px 8px 0px"> Add variant</button>
                   </div>
-                  <div id="variantcontainer">
+                  <div id="variantcontainer" class="row">
                       <table class="table" id="variant-table">
                         <thead>
                           <tr>
                             <th>Variant name</th>
                             <th>Price</th>
                             <th>Image</th>
-                            <th>Description</th>
+                            <!-- <th>Description</th> -->
                           </tr>
                         </thead>
-                        <tbody>
-                        <tbody/>
+
                       </table>
 
                       <br>
@@ -270,14 +276,14 @@ localStorage.clear();
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Short Description</span>
                     </div>
                     <input type="text" class="form-control" id="p-desc" aria-label="" placeholder="Detailed meta description about the product">
-                    <button type="button" class="border" onclick="p_set_settings('p-desc')"> Apply</button>
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-desc')"> Apply</button>
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Keywords</span>
                     </div>
                     <input type="text" class="form-control" id="p-keywords" aria-label="" placeholder="Keywords seperated by comma ','">
-                    <button type="button" class="border" onclick="p_set_settings('p-keywords')"> Apply</button>
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-keywords')"> Apply</button>
                   </div>
                   <hr>
                   <center><h4 class="badge badge-dark text-mute">Product URL</h4></center>
@@ -287,18 +293,54 @@ localStorage.clear();
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">/product/category/</span>
                     </div>
                     <input type="text" class="form-control" id="p-url" aria-label="" placeholder="Leave blank to let the system create URL for this product">
-                    <button type="button" class="border" onclick="p_set_settings('p-url')"> Set URL</button>
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-url')"> Set URL</button>
                   </div>
                 </div>
 
                 <br>
                 <button type="submit" class="btn btn-primary">Publish product</button>
+
               </form>
             </div>
           </div>
         </div>
         <br>
+        <div class="modal fade pt-0 mt-0" id="varmodal" tabindex="-1" aria-labelledby="varmodal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="topModalLabel">Update Variant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <center>
+                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
+                </center>
+                <center>
+                <center>
+                <label class="custom-file-upload center">
+                  <form id="upload-file" name="upload-file">
+                    <input type="file" name="file" onchange="loadFile(event)"/>
+                    <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                  </form>
+                </label>
+              </center>
+              <hr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price</span>
+                </div>
+                <input type="text" class="form-control" id="p-url" aria-label="" placeholder="This variant's price">
+              </div>
 
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../dashboard/partials/_footer.html -->
         <footer class="footer">

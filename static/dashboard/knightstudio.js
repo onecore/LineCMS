@@ -246,11 +246,18 @@ function p_update(v){
 
 function p_variant_add(){
     var cont_v=document.getElementById('v-title').value;
+    var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
     var newRow=document.getElementById('variant-table').insertRow();
     document.getElementById('variant-notice').style.display = "none";
-    newRow.innerHTML = "<td id="+cont_v+"><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td>No Image</td> <td>No Description</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border'>Update</button></td>";
+    newRow.innerHTML = "<tbody>\
+    <tr>\
+    <td id="+cont_v+"><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td id='im-"+cont_vid+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' onclick='openvarmodal("+cont_v+")'>Update</button></td>\
+    </tr>\
+    </tbody><br>";
     document.getElementById('v-title').value = "";
 }
+
+
 function p_set_settings(dom){
   let n = document.getElementById(dom).value;
   if (!n){
@@ -258,10 +265,16 @@ function p_set_settings(dom){
     }else{
       localStorage.setItem(dom,n)
     }
-
-  console.log(product_data)
 }
 
 function p_publish(data){
+
+}
+
+
+function openvarmodal(e){
+
+  var myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
+  myModal.show();
 
 }
