@@ -24,6 +24,8 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+  <script src="../../dashboard/knightstudio.js"></script>
+
 <style>
 input[type="file"] {
     display: none;
@@ -263,15 +265,15 @@ localStorage.clear();
 
                       </table>
 
-                      <br>
-                      <center><p class="text-muted" id="variant-notice">This product has no variant</p></center>
+
+                      <center><p class="text-muted pt-3" id="variant-notice">This product has no variant</p></center>
 
                   </div>
                 </div>
                 <br>
                 <div class="border p-2 rounded">
                   <center><h4 class="badge badge-dark text-mute">Search Engine Optimization</h4></center>
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-3 pt-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Short Description</span>
                     </div>
@@ -288,7 +290,7 @@ localStorage.clear();
                   <hr>
                   <center><h4 class="badge badge-dark text-mute">Product URL</h4></center>
 
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-3 pt-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">/product/category/</span>
                     </div>
@@ -328,15 +330,16 @@ localStorage.clear();
               <hr>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price</span>
+                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price $</span>
                 </div>
-                <input type="text" class="form-control" id="p-url" aria-label="" placeholder="This variant's price">
+                <input type="text" class="form-control" id="p-pricemodal" aria-label="" placeholder="This variant's price">
               </div>
 
               </div>
               <div class="modal-footer">
+                <input id='current-variant-input' style="display:none"></input>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="p_updatevariant()">Save changes</button>
               </div>
             </div>
           </div>
@@ -375,7 +378,7 @@ localStorage.clear();
   <script src="../../dashboard/js/file-upload.js"></script>
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
-  <script src="../../dashboard/knightstudio.js"></script>
+  <!-- <script src="../../dashboard/knightstudio.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
   <!-- End custom js for this page-->

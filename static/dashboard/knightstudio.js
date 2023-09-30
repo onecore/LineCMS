@@ -1,14 +1,14 @@
 let on = 'margin-top:5px;background-color:mediumseagreen;color:white';
 let off = 'margin-top:5px;background-color:black;color:white';
 var product_data = {};
-
+var variant_data = {};
 function AutoOff() {
 
 }
 
 
 function fname(len) {
-  var text = "";
+  let text = "";
 
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -241,25 +241,50 @@ function OnOff(which) {
 }
 
 function p_update(v){
-  alert(v)
+    swal("", 'Variant name required', "error");
 }
+//
+// function icheck(id,maxl){
+//     let ids = document.getElementById(id).value;
+//     if (ids.lenght < maxl){
+//         swal("", 'Variant name required', "error");
+//         return false;
+//     }
+//     return true;
+// }
 
-function p_variant_add(){
+function p_variant_add(e){
     var cont_v=document.getElementById('v-title').value;
-    localStorage.setItem("current-variant",cont_v)
+    document.getElementById("current-var")
+
+    if (cont_v in localStorage){
+      swal("", 'Variant name Exists', "error");
+      return false;
+    }else{
+      localStorage.setItem(cont_v,JSON.stringify({'price':'0.00','image':''}))
+    }
+
     var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
     var newRow=document.getElementById('variant-table').insertRow();
     document.getElementById('variant-notice').style.display = "none";
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td id='im-"+cont_vid+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' onclick='openvarmodal()'>Update</button></td>\
+    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td id='im-"+cont_vid+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";
 }
 
-function p_processvariantlocal(){
-      
+function p_processvariantlocal(id){
+
+    // let em = {data['key']={"price":data['price']}};
+    // localStorage.setItem(data['key'],em);
+}
+
+
+function p_updatevariant(){
+    let v = document.getElementById("current-variant-input").value;
+    console.log(v)
 }
 
 function p_set_settings(dom){
@@ -275,10 +300,13 @@ function p_publish(data){
 }
 
 
-function openvarmodal(){
-  var cvar = localStorage.getItem("current-variant");
-  document.getElementById("topModalLabel").textContent = "Update Variant for "+cvar;
-  var myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
+function openvarmodal(id){
+  let cleared = id.replace("btn-","")
+  let cvar = localStorage.getItem(cleared);
+  document.getElementById("topModalLabel").textContent = "Update Variant for "+cleared;
+  document.getElementById("p-pricemodal").value = JSON.parse(cvar)['price']
+  document.getElementById("current-variant-input").value = cleared;
+  let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
   myModal.show();
 
 }
