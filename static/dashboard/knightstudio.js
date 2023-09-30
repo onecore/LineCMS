@@ -269,22 +269,23 @@ function p_variant_add(e){
     document.getElementById('variant-notice').style.display = "none";
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td>$0.00</td> <td id='im-"+cont_vid+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
+    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";
 }
 
-function p_processvariantlocal(id){
-
-    // let em = {data['key']={"price":data['price']}};
-    // localStorage.setItem(data['key'],em);
-}
-
 
 function p_updatevariant(){
     let v = document.getElementById("current-variant-input").value;
-    console.log(v)
+    let pr = document.getElementById("p-pricemodal").value;
+    let ls = JSON.parse(localStorage.getItem(v));
+    ls['price'] = pr;
+    document.getElementById("price-"+v).textContent = pr;
+    localStorage.setItem(v,JSON.stringify(ls))
+
+
+    // image update add
 }
 
 function p_set_settings(dom){
