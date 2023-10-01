@@ -284,7 +284,7 @@ function p_updatevariant(){
     document.getElementById("price-"+v).textContent = pr;
     let regex = /^\d*(\.\d{2})?$/;
     let r = regex.test(pr);   //Boolean
-    
+
     if (r){
       localStorage.setItem(v,JSON.stringify(ls))
     }else{
