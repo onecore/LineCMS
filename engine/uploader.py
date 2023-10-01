@@ -38,20 +38,25 @@ def showuploaded_products(file) -> str:
 
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product():
-    _id = None
-    _iddc = dict(request.form)
-    fd = dict(_iddc)['file']
-    _iddc = (json.loads(fd))
-    try:
-        if _iddc['p_id']:
-            _id = _iddc['p_id']
-        else:
-            return False
-    except:
-        return False
 
     if request.method == 'POST':
-        print(_id)
+        _id = None
+        _iddc = dict(request.form)
+        fd = dict(_iddc)['file']
+        _iddc = (json.loads(fd))  # js to py dict
+        try:
+            if _iddc['p_id']:
+                _id = _iddc['p_id']
+            else:
+                return False
+        except:
+            return False
+        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
+        try:
+            os.mkdir(custom_folder)
+        except:
+            pass
+
         log("New Logo upload started")
         if 'file' not in request.files:
             flash('No file part')
@@ -64,8 +69,8 @@ def upload_file_product():
         if file and allowed_file(file.filename):
             print("success processing now")
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS, filename))
-            r = UPLOAD_FOLDER_PRODUCTS+"/"+filename
+            file.save(os.path.join(custom_folder, filename))
+            r = custom_folder+"/"+filename
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
