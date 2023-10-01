@@ -291,7 +291,8 @@ function p_updatevariant(){
       swal("", 'Price value not accepted', "error");
     }
 
-
+  let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
+  myModal.hide();
     // image update add
 }
 

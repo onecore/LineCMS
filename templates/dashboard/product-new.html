@@ -316,13 +316,14 @@ localStorage.clear();
               </div>
               <div class="modal-body">
                 <center>
-                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
+                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoviewmodal" name="logoviewmpdal" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
                 </center>
                 <center>
                 <center>
+                <input id='bimg-modal' style='display:none'></input>
                 <label class="custom-file-upload center">
-                  <form id="upload-file" name="upload-file">
-                    <input type="file" name="file" onchange="loadFile(event)"/>
+                  <form id="upload-file-modal" name="upload-file">
+                    <input type="file" name="filemodal" onchange="loadFileModal(event)"/>
                     <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
                   </form>
                 </label>
@@ -339,7 +340,7 @@ localStorage.clear();
               <div class="modal-footer">
                 <input id='current-variant-input' style="display:none"></input>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="p_updatevariant()">Save changes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss='modal' onclick="p_updatevariant()">Save changes</button>
               </div>
             </div>
           </div>
@@ -393,6 +394,17 @@ localStorage.clear();
     // image_nm = fname(8);
     reader.readAsDataURL(event.target.files[0]);
     document.getElementById("bimg").value = event.target.files[0].name;
+    };
+
+  var loadFileModal = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('logoviewmodal');
+      output.src = reader.result;
+    };
+    // image_nm = fname(8);
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("bimg-modal").value = event.target.files[0].name;
     };
 
 </script>
