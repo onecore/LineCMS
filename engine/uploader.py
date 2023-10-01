@@ -11,7 +11,7 @@ _logger = dataengine.knightclient()
 log = _logger.log
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 UPLOAD_FOLDER = 'static/dashboard/uploads'
-UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
+UPLOAD_FOLDER_PRODUCTS_TMP = 'static/dashboard/uploads/products/tmp'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
@@ -50,7 +50,7 @@ def upload_file_product():
         if file and allowed_file(file.filename):
             print("success processing now")
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS, filename))
+            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS_TMP, filename))
             return jsonify({"status": filename})
     return jsonify({"status": "success"})
 

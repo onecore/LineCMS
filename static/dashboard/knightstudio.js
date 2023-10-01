@@ -275,7 +275,7 @@ function p_variant_add(e){
     document.getElementById('variant-notice').style.display = "none";
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'>No Image</td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
+    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'><input type='file'></input></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";

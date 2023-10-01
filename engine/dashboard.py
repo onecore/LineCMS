@@ -51,4 +51,4 @@ def dashboard_main():
                             return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
     log("Authenticate failed, returning to login")
-    return redirect(url_for("login"))
+    return redirect("/login")
