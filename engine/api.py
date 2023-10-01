@@ -10,6 +10,11 @@ api = Blueprint("api", __name__)
 version = "1.4"
 
 
+@api.route("/product-api-partial/<data>", methods=['POST', 'GET'])
+def productpartial(data):
+    pass
+
+
 @api.route("/module_update", methods=['POST', 'GET'])
 def modupdate():
     if request.method == "POST":

@@ -30,6 +30,11 @@ def showuploaded_blog(file) -> str:
     return send_from_directory("static/dashboard/uploads/blog", file)
 
 
+@uploader.route("/media/products/<file>")
+def showuploaded_products(file) -> str:
+    return send_from_directory("static/dashboard/uploads/products", file)
+
+
 @uploader.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':

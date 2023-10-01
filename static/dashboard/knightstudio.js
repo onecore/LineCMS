@@ -1,11 +1,14 @@
 let on = 'margin-top:5px;background-color:mediumseagreen;color:white';
 let off = 'margin-top:5px;background-color:black;color:white';
-var product_data = {};
+var product_data = {"id":GenID(),"title":"","category":"","variants":null,"product_url":"","seo_description":"","seo_keywords":"","images":[]};
 var variant_data = {};
 function AutoOff() {
 
 }
 
+function GenID() {
+  return Math.floor(Math.random() * Date.now())
+}
 
 function fname(len) {
   let text = "";
@@ -256,7 +259,10 @@ function p_update(v){
 function p_variant_add(e){
     var cont_v=document.getElementById('v-title').value;
     document.getElementById("current-var")
-
+    if (cont_v.length === 0){
+      swal("", 'Variant title characters not enough', "error");
+      return false;
+    }
     if (cont_v in localStorage){
       swal("", 'Variant name Exists', "error");
       return false;
@@ -281,7 +287,7 @@ function p_updatevariant(){
     let pr = document.getElementById("p-pricemodal").value;
     let ls = JSON.parse(localStorage.getItem(v));
     ls['price'] = pr;
-    document.getElementById("price-"+v).textContent = pr;
+    document.getElementById("price-"+v).textContent = "$"+pr;
     let regex = /^\d*(\.\d{2})?$/;
     let r = regex.test(pr);   //Boolean
 
@@ -329,4 +335,7 @@ function openvarmodal(id){
   let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
   myModal.show();
 
+  console.log(product_data)
 }
+
+console.log(product_data)
