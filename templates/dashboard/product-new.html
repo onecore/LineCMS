@@ -426,13 +426,20 @@ $("#form").submit( function(eventObj) {
   });
 });
 </script>
+<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview);
+    FilePond.registerPlugin(FilePondPluginFileMetadata);
 
     FilePond.setOptions({
     server: './upload-p-main',
+    credits: false,
+    fileMetadataObject: {
+        p_id: product_data['id'],
+    },
+
 });
     // Get a reference to the file input element
     const inputElement = document.querySelector('input[type="file"]');

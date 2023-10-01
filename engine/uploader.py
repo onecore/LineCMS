@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+import json
 
 uploader = Blueprint("uploader", __name__)
 
@@ -11,7 +12,7 @@ _logger = dataengine.knightclient()
 log = _logger.log
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 UPLOAD_FOLDER = 'static/dashboard/uploads'
-UPLOAD_FOLDER_PRODUCTS_TMP = 'static/dashboard/uploads/products/tmp'
+UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
@@ -37,7 +38,20 @@ def showuploaded_products(file) -> str:
 
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product():
+    _id = None
+    _iddc = dict(request.form)
+    fd = dict(_iddc)['file']
+    _iddc = (json.loads(fd))
+    try:
+        if _iddc['p_id']:
+            _id = _iddc['p_id']
+        else:
+            return False
+    except:
+        return False
+
     if request.method == 'POST':
+        print(_id)
         log("New Logo upload started")
         if 'file' not in request.files:
             flash('No file part')
@@ -50,9 +64,8 @@ def upload_file_product():
         if file and allowed_file(file.filename):
             print("success processing now")
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS_TMP, filename))
-            r = UPLOAD_FOLDER_PRODUCTS_TMP+"/"+filename
-            print(r)
+            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS, filename))
+            r = UPLOAD_FOLDER_PRODUCTS+"/"+filename
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
