@@ -269,7 +269,7 @@ function p_variant_add(e){
     document.getElementById('variant-notice').style.display = "none";
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'>No Image</td><td><button class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
+    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'>No Image</td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";
@@ -282,7 +282,14 @@ function p_updatevariant(){
     let ls = JSON.parse(localStorage.getItem(v));
     ls['price'] = pr;
     document.getElementById("price-"+v).textContent = pr;
-    localStorage.setItem(v,JSON.stringify(ls))
+    let regex = /^\d*(\.\d{2})?$/;
+    let r = regex.test(pr);   //Boolean
+    
+    if (r){
+      localStorage.setItem(v,JSON.stringify(ls))
+    }else{
+      swal("", 'Price value not accepted', "error");
+    }
 
 
     // image update add
@@ -298,6 +305,17 @@ function p_set_settings(dom){
 }
 
 function p_publish(data){
+}
+
+function p_del(r) {
+  let i = r.parentNode.parentNode.rowIndex;
+  let l = document.getElementById("variant-table").rows.length;
+  let b = r.id.replace("btnd-","")
+  document.getElementById("variant-table").deleteRow(i);
+  localStorage.removeItem(b)
+  if (localStorage.length === 0){
+      document.getElementById('variant-notice').style.display = "block";
+  }
 }
 
 
