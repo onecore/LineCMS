@@ -35,7 +35,27 @@ def showuploaded_products(file) -> str:
     return send_from_directory("static/dashboard/uploads/products", file)
 
 
-@uploader.route('/upload', methods=['POST'])
+@uploader.route('/uploadp', methods=['POST', 'GET'])
+def upload_file_product():
+    if request.method == 'POST':
+        log("New Logo upload started")
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            print("No selected file")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            print("success processing now")
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS, filename))
+            return jsonify({"status": filename})
+    return jsonify({"status": "success"})
+
+
+@uploader.route('/upload', methods=['POST', 'GET'])
 def upload_file():
     if request.method == 'POST':
         log("New Logo upload started")

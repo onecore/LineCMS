@@ -25,6 +25,7 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
   <script src="../../dashboard/knightstudio.js"></script>
+  <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 
 <style>
 input[type="file"] {
@@ -204,16 +205,11 @@ localStorage.clear();
                 </div>
 
                   <center>
-                  <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
-                  </center>
-                  <center>
-                  <label class="custom-file-upload center">
-                    <form id="upload-file" name="upload-file">
-                      <input type="file" name="file" onchange="loadFile(event)"/>
-                      <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                    <form enctype="multipart/form-data">
+                      <input type="file" name="file"/ multiple>
                     </form>
-                  </label>
-                </center>
+                  </center>
+
                 <br>
                 <div class="border rounded">
                   <br>
@@ -428,6 +424,18 @@ $("#form").submit( function(eventObj) {
           return true;
       },
   });
+});
+</script>
+
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script>
+    // Get a reference to the file input element
+    const inputElement = document.querySelector('input[type="file"]');
+
+    // Create a FilePond instance
+    const pond = FilePond.create(inputElement);
+    FilePond.setOptions({
+    server: './uploadp',
 });
 </script>
 </body>
