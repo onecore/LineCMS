@@ -35,7 +35,7 @@ def showuploaded_products(file) -> str:
     return send_from_directory("static/dashboard/uploads/products", file)
 
 
-@uploader.route('/uploadp', methods=['POST', 'GET'])
+@uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product():
     if request.method == 'POST':
         log("New Logo upload started")
@@ -51,7 +51,12 @@ def upload_file_product():
             print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER_PRODUCTS_TMP, filename))
-            return jsonify({"status": filename})
+            r = UPLOAD_FOLDER_PRODUCTS_TMP+"/"+filename
+            print(r)
+            return r
+    elif request.method == 'DELETE':
+        os.remove(os.path.join(request.data))
+        return "true"
     return jsonify({"status": "success"})
 
 
