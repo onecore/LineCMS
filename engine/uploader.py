@@ -36,6 +36,53 @@ def showuploaded_products(file) -> str:
     return send_from_directory("static/dashboard/uploads/products", file)
 
 
+@uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
+def upload_file_product_variant():
+
+    if request.method == 'POST':
+        _id = None
+        _iddc = dict(request.form)
+        fd = dict(_iddc)['varfile']
+        _iddc = (json.loads(fd))  # js to py dict
+        try:
+            if _iddc['p_id']:
+                _id = _iddc['p_id']
+            else:
+                return False
+        except:
+            return False
+        custom_folder = os.path.join(
+            UPLOAD_FOLDER_PRODUCTS, str(_id)+"/variants")
+
+        try:
+            if not os.path.exists(custom_folder):
+                os.makedirs(custom_folder)
+        except Exception as e:
+            print("Error: ", e)
+            pass
+
+        log("New Logo upload started")
+        if 'varfile' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['varfile']
+        if file.filename == '':
+            flash('No selected file')
+            print("No selected file")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            print("success processing now")
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(custom_folder, filename))
+            r = custom_folder+"/"+filename
+            print(r)
+            return r
+    elif request.method == 'DELETE':
+        os.remove(os.path.join(request.data))
+        return "true"
+    return jsonify({"status": "success"})
+
+
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product():
 
@@ -53,8 +100,10 @@ def upload_file_product():
             return False
         custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
         try:
-            os.mkdir(custom_folder)
-        except:
+            if not os.path.exists(custom_folder):
+                os.makedirs(custom_folder)
+        except Exception as e:
+            print("Error: ", e)
             pass
 
         log("New Logo upload started")

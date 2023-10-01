@@ -206,7 +206,7 @@ localStorage.clear();
 
                   <center>
                     <form enctype="multipart/form-data">
-                      <input type="file" name="file" id='file' multiple>
+                      <input type="file" name="file" id='mainfile' multiple>
                     </form>
                   </center>
 
@@ -442,7 +442,7 @@ $("#form").submit( function(eventObj) {
 
 });
     // Get a reference to the file input element
-    const inputElement = document.querySelector('input[type="file"]');
+    const inputElement = document.querySelector(`#mainfile`);
 
     // Create a FilePond instance
     const pond = FilePond.create(inputElement);
