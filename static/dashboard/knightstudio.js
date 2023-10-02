@@ -325,6 +325,14 @@ function p_updatevariant(ids) {
 
 }
 
+//   "id": GenID(),
+//   "title": "",
+//   "category": "",
+//   "variants": null,
+//   "product_url": "",
+//   "seo_description": "",
+//   "seo_keywords": "",
+//   "images": []
 function p_set_settings(dom) {
   let n = document.getElementById(dom).value;
   if (!n) {
@@ -333,11 +341,13 @@ function p_set_settings(dom) {
   } else {
 
     if (dom === 'p-desc') {
-
+      product_data['seo_description'] = n;
     } else {
-
+      product_data['seo_keywords'] = n;
     }
   }
+
+  console.log(product_data)
 }
 
 
