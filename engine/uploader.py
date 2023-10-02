@@ -96,8 +96,11 @@ def upload_file_product_variant():
             print("Error ", e)
 
         if not stop:
-            os.remove(os.path.join(request.data))
-            return "true"
+            try:
+                os.remove(os.path.join(request.data))
+                return "true"
+            except:
+                return "true"
     return jsonify({"status": "success"})
 
 

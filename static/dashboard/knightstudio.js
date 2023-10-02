@@ -341,9 +341,9 @@ function p_del(r) {
   try{
   const dt = { data: { fid : product_data['id'], filev : variant_data_history[b+"-ivar"]}};
   const request = axios.delete("/upload-p-variant", dt);
-}catch{
-  console.log("unable to delete on backend")
-}
+      }catch{
+        console.log("unable to delete on backend")
+      }
 
 
   // server side del

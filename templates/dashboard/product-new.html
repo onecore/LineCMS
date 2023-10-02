@@ -466,6 +466,9 @@ $("#form").submit( function(eventObj) {
           fileMetadataObject: {
               p_id: product_data['id'],
           },
+          fileRenameFunction: (file) => {
+      return fname(19)+`${file.extension}`;
+          },
     });
 
     const pond = FilePond.create(inputElement, {
@@ -474,6 +477,9 @@ $("#form").submit( function(eventObj) {
           credits: false,
           fileMetadataObject: {
               p_id: product_data['id'],
+          },
+          fileRenameFunction: (file) => {
+      return fname(19)+`${file.extension}`;
           },
     });
 
