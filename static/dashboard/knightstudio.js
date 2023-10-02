@@ -12,6 +12,7 @@ var product_data = {
   "mainimage": "",
   "body":"",
   "price":"",
+  "variant_details":{},
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -381,13 +382,16 @@ function grabvariantdata(){
           swal("", 'Stocks not accepted, unable to validate', "error");
           return false;
       }
-      vardata[variant_data[i]] = {'price':1 , 'instock':1}
+
+      vardata[variant_data[i]] = {'price':_p , 'instock':_s};
+      product_data['variant_details'] = vardata;
   }
 }
 
 function grabinputs(){
   product_data['images'] = images;
   product_data['title'] = document.getElementById("title").value;
+  product_data['price'] = document.getElementById("m-price").value;
   product_data['category'] = document.getElementById("categ").value;
   product_data['product_url'] = document.getElementById("p-url").value;
   product_data['seo_description'] = document.getElementById("p-desc").value;
@@ -399,13 +403,22 @@ function grabinputs(){
       swal("", 'Failed validating title, must contain 5 or more characters', "error");
       return false;
   }
-  if (product_data['product_url'].length <= 4 ){
-      swal("", 'URL must contain 10 or more characters, or leave blank', "error");
-      return false;
-  }
+  // if (product_data['product_url'].length <= 4 ){
+  //     swal("", 'URL must contain 10 or more characters, or leave blank', "error");
+  //     return false;
+  // }
   if (product_data['body'].length <= 4 ){
       swal("", 'Product description must have 5 or more characters', "error");
       return false;
+  }
+  if (product_data['price'].length <= 0 ){
+          swal("", 'Price not accepted, unable to validate', "error");
+      return false;
+  }
+  if (!validatePrice(product_data['price'])){
+      swal("", 'Price not accepted, unable to validate', "error");
+      return false;
+
   }
   grabvariantdata()
 }
@@ -423,16 +436,16 @@ function p_publish() {
   // document.getElementById("loading").style = 'display:block';
   // document.getElementById("publishb").style = 'display:none';
   build_variants()
-  // fetch("/product-publish", {
-  //   method: "POST",
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify(product_data)
-  //   }).then(res => {
-  //   // swal("", 'Module Updated', "success");
-  //   //console.log("Request complete! response:", res);
-  // });
+  fetch("/product-publish", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(product_data)
+    }).then(res => {
+    // swal("", 'Module Updated', "success");
+    //console.log("Request complete! response:", res);
+  });
 
 }
 window.onbeforeunload = function() {
