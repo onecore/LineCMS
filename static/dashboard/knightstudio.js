@@ -9,7 +9,7 @@ var product_data = {
   "seo_description": "",
   "seo_keywords": "",
   "images": [],
-  "thumbnail":"",
+  "thumbnail": "",
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -268,7 +268,7 @@ function p_variant_add(e) {
     return false;
   }
 
-  if (variant_data.includes(cont_v+"-ivar")) {
+  if (variant_data.includes(cont_v + "-ivar")) {
     swal("", 'Variant name Exists', "error");
     return false;
   }
@@ -284,7 +284,6 @@ function p_variant_add(e) {
     </tbody><br>";
   document.getElementById('v-title').value = "";
   const inputElementvar = document.querySelector(`#` + varid);
-
   p = FilePond.create(inputElementvar, {
     server: './upload-p-variant',
     credits: false,
@@ -293,13 +292,18 @@ function p_variant_add(e) {
       p_id: product_data['id'],
       p_variant: cont_v,
     },
+    fileRenameFunction: (file) => {
+      return fname(19)+`${file.extension}`;
+    }
+
 
   }); //pondvar ends
 
   variant_data.push(varid);
   p.on('addfile', (error, file) => {
     // this object contains the file info
-  variant_data_history[cont_v+"-ivar"] = file.file.name
+    // variant_data_history[cont_v + "-ivar"] = file.file.name
+    // file.file.filename = "asdasdasd"
   })
 }
 
@@ -332,21 +336,24 @@ function p_del(r) {
   let l = document.getElementById("variant-table").rows.length;
   let b = r.id.replace("btnd-", "")
   document.getElementById("variant-table").deleteRow(i);
-  if (variant_data.length - 1  <= 0) {
+  if (variant_data.length - 1 <= 0) {
     document.getElementById('variant-notice').style.display = "block";
   }
   variant_data = variant_data.filter(v => v !== b + "-ivar");
-  if (b+"-ivar" in variant_data_dict){
-    delete variant_data_dict[b+"-ivar"];
+  if (b + "-ivar" in variant_data_dict) {
+    delete variant_data_dict[b + "-ivar"];
   }
 
   // server side del
+  axios.delete('/upload-p-variant', product_data['id'], {
+  headers: { 'Content-Type': 'text/plain' }
+});
   // server side del
 
 }
 
-function build_variants(){
-  for (let i = 0; i < variant_data.length; i++){
+function build_variants() {
+  for (let i = 0; i < variant_data.length; i++) {
     variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
   }
 }

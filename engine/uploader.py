@@ -81,8 +81,10 @@ def upload_file_product_variant():
 
             return r
     elif request.method == 'DELETE':
-        if "/uploads/products/" not in request.data: # partial delete 
-            pass
+        if "/uploads/products/" not in str(request.data):  # partial delete
+            print(request.form)
+            print(request.data)
+            print(request.args)
         else:
             os.remove(os.path.join(request.data))
             return "true"
