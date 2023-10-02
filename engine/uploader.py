@@ -81,8 +81,11 @@ def upload_file_product_variant():
 
             return r
     elif request.method == 'DELETE':
-        os.remove(os.path.join(request.data))
-        return "true"
+        if "/uploads/products/" not in request.data: # partial delete 
+            pass
+        else:
+            os.remove(os.path.join(request.data))
+            return "true"
     return jsonify({"status": "success"})
 
 

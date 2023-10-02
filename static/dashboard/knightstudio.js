@@ -12,7 +12,8 @@ var product_data = {
   "thumbnail":"",
 };
 var variant_data = [];
-var variant_data_dict = {}
+var variant_data_dict = {};
+var variant_data_history = {};
 
 function AutoOff() {
 
@@ -284,7 +285,7 @@ function p_variant_add(e) {
   document.getElementById('v-title').value = "";
   const inputElementvar = document.querySelector(`#` + varid);
 
-  FilePond.create(inputElementvar, {
+  p = FilePond.create(inputElementvar, {
     server: './upload-p-variant',
     credits: false,
     labelIdle: "Drop or Browse..",
@@ -295,7 +296,11 @@ function p_variant_add(e) {
 
   }); //pondvar ends
 
-  variant_data.push(varid)
+  variant_data.push(varid);
+  p.on('addfile', (error, file) => {
+    // this object contains the file info
+  variant_data_history[cont_v+"-ivar"] = file.file.name
+  })
 }
 
 
@@ -334,6 +339,10 @@ function p_del(r) {
   if (b+"-ivar" in variant_data_dict){
     delete variant_data_dict[b+"-ivar"];
   }
+
+  // server side del
+  // server side del
+
 }
 
 function build_variants(){
@@ -347,7 +356,9 @@ function p_publish() {
   // document.getElementById("publishb").style = 'display:none';
   build_variants()
   console.log(variant_data_dict)
+  console.log(variant_data_history)
 
+}
 window.onbeforeunload = function() {
   return "Leaving this page will not save your product information.";
 }
