@@ -487,12 +487,12 @@ $("#form").submit( function(eventObj) {
           },
     });
 
-  // pond.on('removefile', (error, file) => {
-  //   // this object contains the file info
-  //
-  //   images = images.filter(v => v !== file.filename);
-  //   // file.file.filename = "asdasdasd"
-  // })
+  pond.on('removefile', (error, file) => {
+    // this object contains the file info
+
+    product_data['mainimage'] = "";
+    // file.file.filename = "asdasdasd"
+  })
 
   pondimages.on('removefile', (error, file) => {
     // this object contains the file info

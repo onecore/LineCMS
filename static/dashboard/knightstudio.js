@@ -372,6 +372,7 @@ function p_del(r) {
 //   "mainimage": "",
 // };
 function grabinputs(){
+  product_data['images'] = images;
   product_data['title'] = document.getElementById("title").value;
   product_data['category'] = document.getElementById("categ").value;
   product_data['product_url'] = document.getElementById("p-url").value;
@@ -382,13 +383,9 @@ function grabinputs(){
 
 }
 
-function grabimages(){
-
-}
 
 function build_variants() {
   grabinputs();
-  grabimages();
   for (let i = 0; i < variant_data.length; i++) {
     variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
   }
