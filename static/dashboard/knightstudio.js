@@ -277,7 +277,7 @@ function p_variant_add(e){
     var varid = cont_v+"-ivar"
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='"+cont_v+"-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-"+cont_v+"' class='col-4'><form enctype='multipart/form-data'><input type='file' name='"+varid+"' id='"+varid+"'></form></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
+    <td id='td-"+cont_v+"'><b><center><p class='text-dark rounded'>"+cont_v+"</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='"+cont_v+"-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-"+cont_v+"' class='col-4'><form enctype='multipart/form-data'><input type='file' name='"+varid+"' id='"+varid+"'></form></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";
