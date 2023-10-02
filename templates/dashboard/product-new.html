@@ -25,6 +25,8 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
   <script src="../../dashboard/knightstudio.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
 <style>
@@ -300,8 +302,11 @@ localStorage.clear();
                 </div>
 
                 <br>
-                <button type="button" class="btn btn-primary" onclick="p_publish()">Publish product</button>
-
+                <button type="button" class="btn btn-primary" onclick="p_publish()" id='publishb'>Publish product</button>
+                <button class="btn btn-primary" type="button" disabled style="display:none" id='loading'>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span class="visually-hidden">Loading...</span>
+                </button>
               </form>
             </div>
           </div>

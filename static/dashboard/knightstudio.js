@@ -4,11 +4,12 @@ var product_data = {
   "id": GenID(),
   "title": "",
   "category": "",
-  "variants": null,
+  "variants": {},
   "product_url": "",
   "seo_description": "",
   "seo_keywords": "",
-  "images": []
+  "images": [],
+  "thumbnail":"",
 };
 var variant_data = [];
 var variant_data_dict = {}
@@ -361,12 +362,24 @@ function p_del(r) {
     document.getElementById('variant-notice').style.display = "block";
   }
   variant_data = variant_data.filter(v => v !== b + "-ivar");
-  console.log(variant_data)
+  if (b+"-ivar" in variant_data_dict){
+    delete variant_data_dict[b+"-ivar"];
+  }
 }
 
+function build_variants(){
+  for (let i = 0; i < variant_data.length; i++){
+    variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
+  }
+}
 function p_publish() {
-  console.log(variant_data) //contains variant image name/ not id
-  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
+  // document.getElementById("loading").style = 'display:block';
+  // document.getElementById("publishb").style = 'display:none';
+  build_variants()
+  console.log(variant_data_dict)
+
+  // console.log(variant_data) //contains variant image name/ not id
+//  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
 }
 //
 // function openvarmodal(id){
