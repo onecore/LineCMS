@@ -81,11 +81,21 @@ def upload_file_product_variant():
 
             return r
     elif request.method == 'DELETE':
-        if "/uploads/products/" not in str(request.data):  # partial delete
-            print(request.form)
-            print(request.data)
-            print(request.args)
-        else:
+        # 2 requests sends to this method (one in plain text & one in json obj)
+        stop = 0
+        try:
+            jsobj = json.loads(request.data)
+            if 'filev' in jsobj:
+                _rf = UPLOAD_FOLDER_PRODUCTS+"/" + \
+                    str(jsobj['fid'])+"/variants/"+jsobj['filev']
+                os.remove(os.path.join(_rf))
+                stop = 1
+                return "true"
+
+        except Exception as e:
+            print("Error ", e)
+
+        if not stop:
             os.remove(os.path.join(request.data))
             return "true"
     return jsonify({"status": "success"})

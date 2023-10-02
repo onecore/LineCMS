@@ -302,7 +302,7 @@ function p_variant_add(e) {
   variant_data.push(varid);
   p.on('addfile', (error, file) => {
     // this object contains the file info
-    // variant_data_history[cont_v + "-ivar"] = file.file.name
+    variant_data_history[cont_v + "-ivar"] = file.file.name
     // file.file.filename = "asdasdasd"
   })
 }
@@ -336,19 +336,26 @@ function p_del(r) {
   let l = document.getElementById("variant-table").rows.length;
   let b = r.id.replace("btnd-", "")
   document.getElementById("variant-table").deleteRow(i);
+
+  // server side del
+  try{
+  const dt = { data: { fid : product_data['id'], filev : variant_data_history[b+"-ivar"]}};
+  const request = axios.delete("/upload-p-variant", dt);
+}catch{
+  console.log("unable to delete on backend")
+}
+
+
+  // server side del
+
   if (variant_data.length - 1 <= 0) {
     document.getElementById('variant-notice').style.display = "block";
   }
   variant_data = variant_data.filter(v => v !== b + "-ivar");
+
   if (b + "-ivar" in variant_data_dict) {
     delete variant_data_dict[b + "-ivar"];
   }
-
-  // server side del
-  axios.delete('/upload-p-variant', product_data['id'], {
-  headers: { 'Content-Type': 'text/plain' }
-});
-  // server side del
 
 }
 
