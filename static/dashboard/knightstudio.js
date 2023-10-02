@@ -351,3 +351,7 @@ function openvarmodal(id){
 
   console.log(product_data)
 }
+
+window.onbeforeunload = function() {
+  return "Leaving this page will not save your product information.";
+}
