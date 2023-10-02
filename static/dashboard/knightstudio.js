@@ -9,7 +9,7 @@ var product_data = {
   "seo_description": "",
   "seo_keywords": "",
   "images": [],
-  "thumbnail": "",
+  "mainimage": "",
 };
 var variant_data = [];
 var variant_data_dict = {};
