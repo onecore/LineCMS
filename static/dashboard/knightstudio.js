@@ -1,7 +1,8 @@
 let on = 'margin-top:5px;background-color:mediumseagreen;color:white';
 let off = 'margin-top:5px;background-color:black;color:white';
 var product_data = {"id":GenID(),"title":"","category":"","variants":null,"product_url":"","seo_description":"","seo_keywords":"","images":[]};
-var variant_data = {};
+var variant_data = [];
+var variant_data_dict = {}
 function AutoOff() {
 
 }
@@ -273,46 +274,42 @@ function p_variant_add(e){
     var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
     var newRow=document.getElementById('variant-table').insertRow();
     document.getElementById('variant-notice').style.display = "none";
+    var varid = cont_v+"-ivar"
     newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td id='price-"+cont_v+"'>$0.00</td> <td id='img-"+cont_v+"'><form enctype='multipart/form-data'><input type='file' name='varfile' id='varfile'></form></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border'>Remove</button>&nbsp&nbsp<button class='btn btn-xs border' type='button' id='btn-"+cont_v+"' onclick='openvarmodal(this.id)'>Update</button></td>\
+    <td id='td-"+cont_v+"'><b><center><p class='btn-primary text-white rounded'>"+cont_v+"</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='"+cont_v+"-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-"+cont_v+"' class='col-4'><form enctype='multipart/form-data'><input type='file' name='"+varid+"' id='"+varid+"'></form></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
     </tr>\
     </tbody><br>";
     document.getElementById('v-title').value = "";
+    const inputElementvar = document.querySelector(`#`+varid);
 
-    const inputElementvar = document.querySelector(`#varfile`);
-
-    // Create a FilePond instance
-    const pondvar = FilePond.create(inputElementvar,{
+    FilePond.create(inputElementvar,{
     server: './upload-p-variant',
     credits: false,
     labelIdle: "Browse..",
     fileMetadataObject: {
         p_id: product_data['id'],
+        p_variant: cont_v,
     },
-  });
 
+  });  //pondvar ends
+
+  variant_data.push(varid)
 }
 
 
-function p_updatevariant(){
-    let v = document.getElementById("current-variant-input").value;
-    let pr = document.getElementById("p-pricemodal").value;
-    let ls = JSON.parse(localStorage.getItem(v));
-    ls['price'] = pr;
-    document.getElementById("price-"+v).textContent = "$"+pr;
-    let regex = /^\d*(\.\d{2})?$/;
-    let r = regex.test(pr);   //Boolean
 
-    if (r){
-      localStorage.setItem(v,JSON.stringify(ls))
-    }else{
-      swal("", 'Price value not accepted', "error");
-    }
+function p_updatevariant(ids){
+    let pr = document.getElementById(ids+"-price").value;
 
-  let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
-  myModal.hide();
-    // image update add
+    // let regex = /^\d*(\.\d{2})?$/;
+    // let r = regex.test(pr);   //Boolean
+    //
+    // if (r){
+    // }else{
+    //   swal("", 'Price value not accepted', "error");
+    // }
+
 }
 
 function p_set_settings(dom){
@@ -324,7 +321,9 @@ function p_set_settings(dom){
     }
 }
 
-function p_publish(data){
+function p_publish(){
+  console.log(variant_data) //contains variant image name/ not id
+  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
 }
 
 function p_del(r) {
@@ -350,5 +349,3 @@ function openvarmodal(id){
 
   console.log(product_data)
 }
-
-console.log(product_data)

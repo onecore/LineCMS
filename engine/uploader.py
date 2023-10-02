@@ -5,7 +5,7 @@ import os
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import json
-
+uploads_data = {}
 uploader = Blueprint("uploader", __name__)
 
 _logger = dataengine.knightclient()
@@ -40,10 +40,12 @@ def showuploaded_products(file) -> str:
 def upload_file_product_variant():
 
     if request.method == 'POST':
-        _id = None
         _iddc = dict(request.form)
-        fd = dict(_iddc)['varfile']
+        _id = None
+        keys = list(_iddc.keys())[0]
+        fd = dict(_iddc)[keys]
         _iddc = (json.loads(fd))  # js to py dict
+
         try:
             if _iddc['p_id']:
                 _id = _iddc['p_id']
@@ -51,6 +53,7 @@ def upload_file_product_variant():
                 return False
         except:
             return False
+
         custom_folder = os.path.join(
             UPLOAD_FOLDER_PRODUCTS, str(_id)+"/variants")
 
@@ -62,10 +65,10 @@ def upload_file_product_variant():
             pass
 
         log("New Logo upload started")
-        if 'varfile' not in request.files:
+        if keys not in request.files:
             flash('No file part')
             return redirect(request.url)
-        file = request.files['varfile']
+        file = request.files[keys]
         if file.filename == '':
             flash('No selected file')
             print("No selected file")
@@ -75,7 +78,7 @@ def upload_file_product_variant():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            print(r)
+
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
