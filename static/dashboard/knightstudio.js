@@ -444,7 +444,7 @@ function p_publish() {
     body: JSON.stringify(product_data)
     }).then(res => {
     // swal("", 'Module Updated', "success");
-    //console.log("Request complete! response:", res);
+    console.log("Request complete! response:", res);
   });
 
 }

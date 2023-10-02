@@ -41,8 +41,8 @@ class knightclient:
             tso = self.timestamp(routeStyle=0)
             ugen = self.url_gen(ts+" "+d['title'])
             params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
-            vals = (d['title'], d['category'], d['variants'], d['product_url'], ugen,
-                    d['seo_description'], d['seo_keywords'], d['images'], d['mainimage'], d['variant_details'], ts, "0")
+            vals = (d['title'], d['category'], str(d['variants']), d['product_url'], ugen,
+                    d['seo_description'], d['seo_keywords'], str(d['images']), d['mainimage'], str(d['variant_details']), ts, "0")
             _c.execute(params, vals)
             self.connection.commit()
             return ugen

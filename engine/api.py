@@ -30,12 +30,12 @@ def productpub():
     _de = dataengine.knightclient()
 
     if _d['id']:
-        rs = _de.blog_publish(_d)
+        rs = _de.product_publish(_d)
         if rs:
             return jsonify({"status": 1, "url": rs})
         else:
             return jsonify({"status": 0})
-    return jsonify({"status":0})
+    return jsonify({"status": 0})
 
 
 @api.route("/module_update", methods=['POST', 'GET'])
