@@ -11,6 +11,7 @@ var product_data = {
   "images": [],
   "mainimage": "",
   "body":"",
+  "price":"",
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -281,7 +282,7 @@ function p_variant_add(e) {
   var varid = cont_v + "-ivar"
   newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
+    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></input></td><td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-stock' placeholder='How much stock you have' value='1000' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
     </tr>\
     </tbody><br>";
   document.getElementById('v-title').value = "";
@@ -360,18 +361,30 @@ function p_del(r) {
   }
 
 }
-//
-// var product_data = {
-//   "id": GenID(),
-//   "title": "",
-//   "category": "",
-//   "variants": {},
-//   "product_url": "",
-//   "seo_description": "",
-//   "seo_keywords": "",
-//   "images": [],
-//   "mainimage": "",
-// };
+
+function validatePrice(input) {
+  const regex = new RegExp(/^\$?(?:(?:\d+(?:,\d+)?(?:\.\d+)?)|(?:\.\d+))$/);
+  return regex.test(input);
+}
+
+function grabvariantdata(){
+  var vardata = {};
+  for (let i = 0; i < variant_data.length; i++) {
+      var _p = document.getElementById(variant_data[i].replace("-ivar","")+"-price").value
+      var _s = document.getElementById(variant_data[i].replace("-ivar","")+"-stock").value
+
+      if (!validatePrice(_p)){
+          swal("", 'Price not accepted, unable to validate', "error");
+          return false;
+      }
+      if (!validatePrice(_s)){
+          swal("", 'Stocks not accepted, unable to validate', "error");
+          return false;
+      }
+      vardata[variant_data[i]] = {'price':1 , 'instock':1}
+  }
+}
+
 function grabinputs(){
   product_data['images'] = images;
   product_data['title'] = document.getElementById("title").value;
@@ -394,6 +407,7 @@ function grabinputs(){
       swal("", 'Product description must have 5 or more characters', "error");
       return false;
   }
+  grabvariantdata()
 }
 
 

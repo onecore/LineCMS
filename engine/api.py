@@ -11,6 +11,19 @@ api = Blueprint("api", __name__)
 version = "1.4"
 
 
+# //
+# // var product_data = {
+# //   "id": GenID(),
+# //   "title": "",
+# //   "category": "",
+# //   "variants": {},
+# //   "product_url": "",
+# //   "seo_description": "",
+# //   "seo_keywords": "",
+# //   "images": [],
+# //   "mainimage": "",
+# // };
+
 @api.route("/product-publish", methods=['POST', 'GET'])
 def productpub():
     print(json.loads(request.data))
