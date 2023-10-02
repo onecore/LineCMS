@@ -85,3 +85,4 @@ functions for Jinja templating
 app.jinja_env.globals.update(blog_list_badge_category=rf.ks_badge_insert)
 app.jinja_env.globals.update(admin_button=rf.ks_include_adminbutton)
 app.jinja_env.globals.update(khtml2text=rf.ks_html2text)
+app.jinja_env.globals.update(ks_tolist=rf.ks_tolist)

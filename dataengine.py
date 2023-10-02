@@ -40,9 +40,9 @@ class knightclient:
             ts = self.timestamp(routeStyle=1)
             tso = self.timestamp(routeStyle=0)
             ugen = self.url_gen(ts+" "+d['title'])
-            params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+            params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden,product_id,body,price) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             vals = (d['title'], d['category'], str(d['variants']), d['product_url'], ugen,
-                    d['seo_description'], d['seo_keywords'], str(d['images']), d['mainimage'], str(d['variant_details']), ts, "0")
+                    d['seo_description'], d['seo_keywords'], str(d['images']), d['mainimage'], str(d['variant_details']), ts, "0", d['id'], d['body'], d['price'])
             _c.execute(params, vals)
             self.connection.commit()
             return ugen
@@ -57,7 +57,10 @@ class knightclient:
         pass
 
     def get_product_listings(self, page=0, result=10):
-        pass
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute("SELECT * FROM products ORDER BY id DESC")
+        self.m_data = self.m_fetch.fetchall()
+        return self.m_data
 
     def blog_publish(self, dicts) -> bool:
         _c = self.connection.cursor()

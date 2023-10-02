@@ -13,4 +13,16 @@ def product_new():
 
 @product.route("/product-manage", methods=['POST', 'GET'])
 def product_mng():
-    return render_template("/dashboard/product-manage.html")
+    alert = ""
+    de = dataengine.knightclient()
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pr = de.get_product_listings()
+    tt = len(pr)
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='product', css_framework="bootstrap5")
+
+    return render_template("/dashboard/product-manage.html", blog=pr, pagination=pagination, alert=alert)

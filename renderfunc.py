@@ -26,3 +26,7 @@ def ks_badge_insert(v) -> str:
 def ks_html2text(v) -> str:
     from lxml import html
     return html.fromstring(v).text_content()
+
+
+def ks_tolist(v) -> list:
+    return eval(v)

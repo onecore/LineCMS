@@ -31,9 +31,14 @@ def showuploaded_blog(file) -> str:
     return send_from_directory("static/dashboard/uploads/blog", file)
 
 
-@uploader.route("/media/products/<file>")
-def showuploaded_products(file) -> str:
-    return send_from_directory("static/dashboard/uploads/products", file)
+@uploader.route("/media/products/<folderid>/<file>")
+def showuploaded_products(folderid, file) -> str:
+    return send_from_directory("static/dashboard/uploads/products/"+folderid, file)
+
+
+@uploader.route("/media/products/<folderid>/<file>")
+def showuploaded_products_variant(folderid, file) -> str:
+    return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
 
 
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
