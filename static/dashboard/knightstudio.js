@@ -380,7 +380,14 @@ function grabinputs(){
   product_data['seo_keywords'] = document.getElementById("p-keywords").value;
   // product_data['images'] = categorydocument.getElementById("categ").value;
   // product_data['mainimage'] = categorydocument.getElementById("categ").value;
-
+  if (product_data['title'].length <= 4 ){
+      swal("", 'Failed validating title, must contain 5 or more characters', "error");
+      return false;
+  }
+  if (product_data['product_url'].length <= 4 ){
+      swal("", 'URL must contain 10 or more characters, or leave blank', "error");
+      return false;
+  }
 }
 
 
