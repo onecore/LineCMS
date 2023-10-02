@@ -10,6 +10,7 @@ var product_data = {
   "seo_keywords": "",
   "images": [],
   "mainimage": "",
+  "body":"",
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -378,6 +379,7 @@ function grabinputs(){
   product_data['product_url'] = document.getElementById("p-url").value;
   product_data['seo_description'] = document.getElementById("p-desc").value;
   product_data['seo_keywords'] = document.getElementById("p-keywords").value;
+  product_data['body'] = CKEDITOR.instances['ckeditor'].getData();
   // product_data['images'] = categorydocument.getElementById("categ").value;
   // product_data['mainimage'] = categorydocument.getElementById("categ").value;
   if (product_data['title'].length <= 4 ){
@@ -386,6 +388,10 @@ function grabinputs(){
   }
   if (product_data['product_url'].length <= 4 ){
       swal("", 'URL must contain 10 or more characters, or leave blank', "error");
+      return false;
+  }
+  if (product_data['body'].length <= 4 ){
+      swal("", 'Product description must have 5 or more characters', "error");
       return false;
   }
 }

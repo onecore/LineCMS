@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, g, session, jso
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+import json
 
 _logger = dataengine.knightclient()
 log = _logger.log
@@ -11,8 +12,8 @@ version = "1.4"
 
 
 @api.route("/product-publish", methods=['POST', 'GET'])
-def productpub(data):
-    pass
+def productpub():
+    print(json.loads(request.data))
 
 
 @api.route("/module_update", methods=['POST', 'GET'])
