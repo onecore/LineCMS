@@ -275,14 +275,10 @@ function p_variant_add(e) {
     swal("", 'Variant title characters not enough', "error");
     return false;
   }
-  if (cont_v in localStorage) {
+
+  if (variant_data.includes(cont_v+"-ivar")) {
     swal("", 'Variant name Exists', "error");
     return false;
-  } else {
-    localStorage.setItem(cont_v, JSON.stringify({
-      'price': '0.00',
-      'image': ''
-    }))
   }
 
   var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
@@ -309,31 +305,15 @@ function p_variant_add(e) {
   }); //pondvar ends
 
   variant_data.push(varid)
+  console.log(variant_data)
 }
 
 
 
 function p_updatevariant(ids) {
   let pr = document.getElementById(ids + "-price").value;
-
-  // let regex = /^\d*(\.\d{2})?$/;
-  // let r = regex.test(pr);   //Boolean
-  //
-  // if (r){
-  // }else{
-  //   swal("", 'Price value not accepted', "error");
-  // }
-
 }
 
-//   "id": GenID(),
-//   "title": "",
-//   "category": "",
-//   "variants": null,
-//   "product_url": "",
-//   "seo_description": "",
-//   "seo_keywords": "",
-//   "images": []
 function p_set_settings(dom) {
   let n = document.getElementById(dom).value;
   if (!n) {
@@ -357,8 +337,7 @@ function p_del(r) {
   let l = document.getElementById("variant-table").rows.length;
   let b = r.id.replace("btnd-", "")
   document.getElementById("variant-table").deleteRow(i);
-  localStorage.removeItem(b)
-  if (localStorage.length === 0) {
+  if (variant_data.length - 1  <= 0) {
     document.getElementById('variant-notice').style.display = "block";
   }
   variant_data = variant_data.filter(v => v !== b + "-ivar");
