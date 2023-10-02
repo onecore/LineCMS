@@ -26,7 +26,16 @@ version = "1.4"
 
 @api.route("/product-publish", methods=['POST', 'GET'])
 def productpub():
-    print(json.loads(request.data))
+    _d = json.loads(request.data)
+    _de = dataengine.knightclient()
+
+    if _d['id']:
+        rs = _de.blog_publish(_d)
+        if rs:
+            return jsonify({"status": 1, "url": rs})
+        else:
+            return jsonify({"status": 0})
+    return jsonify({"status":0})
 
 
 @api.route("/module_update", methods=['POST', 'GET'])

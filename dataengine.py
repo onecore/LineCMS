@@ -34,8 +34,21 @@ class knightclient:
             print(e)
             return False
 
-    def product_publish(self, data):
-        pass
+    def product_publish(self, d) -> bool:
+        _c = self.connection.cursor()
+        try:
+            ts = self.timestamp(routeStyle=1)
+            tso = self.timestamp(routeStyle=0)
+            ugen = self.url_gen(ts+" "+d['title'])
+            params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+            vals = (d['title'], d['category'], d['variants'], d['product_url'], ugen,
+                    d['seo_description'], d['seo_keywords'], d['images'], d['mainimage'], d['variant_details'], ts, "0")
+            _c.execute(params, vals)
+            self.connection.commit()
+            return ugen
+        except Exception as e:
+            print("Error ", e)
+            return False
 
     def product_manage(self):
         pass
