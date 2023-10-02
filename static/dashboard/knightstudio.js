@@ -14,6 +14,7 @@ var product_data = {
 var variant_data = [];
 var variant_data_dict = {};
 var variant_data_history = {};
+var images = [];
 
 function AutoOff() {
 
@@ -358,19 +359,58 @@ function p_del(r) {
   }
 
 }
+//
+// var product_data = {
+//   "id": GenID(),
+//   "title": "",
+//   "category": "",
+//   "variants": {},
+//   "product_url": "",
+//   "seo_description": "",
+//   "seo_keywords": "",
+//   "images": [],
+//   "mainimage": "",
+// };
+function grabinputs(){
+  product_data['title'] = document.getElementById("title").value;
+  product_data['category'] = document.getElementById("categ").value;
+  product_data['product_url'] = document.getElementById("p-url").value;
+  product_data['seo_description'] = document.getElementById("p-desc").value;
+  product_data['seo_keywords'] = document.getElementById("p-keywords").value;
+  // product_data['images'] = categorydocument.getElementById("categ").value;
+  // product_data['mainimage'] = categorydocument.getElementById("categ").value;
+
+}
+
+function grabimages(){
+
+}
 
 function build_variants() {
+  grabinputs();
+  grabimages();
   for (let i = 0; i < variant_data.length; i++) {
     variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
   }
+  product_data['variants'] = variant_data_dict
 }
 
 function p_publish() {
   // document.getElementById("loading").style = 'display:block';
   // document.getElementById("publishb").style = 'display:none';
   build_variants()
-  console.log(variant_data_dict)
-  console.log(variant_data_history)
+
+  console.log(product_data)
+  // fetch("/product-publish", {
+  //   method: "POST",
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify(product_data)
+  //   }).then(res => {
+  //   // swal("", 'Module Updated', "success");
+  //   //console.log("Request complete! response:", res);
+  // });
 
 }
 window.onbeforeunload = function() {

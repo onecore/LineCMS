@@ -467,7 +467,9 @@ $("#form").submit( function(eventObj) {
               p_id: product_data['id'],
           },
           fileRenameFunction: (file) => {
-              return fname(19)+`${file.extension}`;
+              let _st = fname(19);
+              images.push(_st+`${file.extension}`)
+              return _st+`${file.extension}`;
           },
     });
 
@@ -480,7 +482,7 @@ $("#form").submit( function(eventObj) {
           },
           fileRenameFunction: (file) => {
               let _st = fname(19);
-              product_data['mainimage'] = _st;
+              product_data['mainimage'] = _st+`${file.extension}`;
               return _st+`${file.extension}`;
           },
     });

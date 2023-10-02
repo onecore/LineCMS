@@ -10,8 +10,8 @@ api = Blueprint("api", __name__)
 version = "1.4"
 
 
-@api.route("/product-api-partial/<data>", methods=['POST', 'GET'])
-def productpartial(data):
+@api.route("/product-publish", methods=['POST', 'GET'])
+def productpub(data):
     pass
 
 
