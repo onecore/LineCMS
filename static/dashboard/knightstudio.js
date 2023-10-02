@@ -399,8 +399,6 @@ function p_publish() {
   // document.getElementById("loading").style = 'display:block';
   // document.getElementById("publishb").style = 'display:none';
   build_variants()
-
-  console.log(product_data)
   // fetch("/product-publish", {
   //   method: "POST",
   //   headers: {
