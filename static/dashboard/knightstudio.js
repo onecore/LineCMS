@@ -1,8 +1,18 @@
 let on = 'margin-top:5px;background-color:mediumseagreen;color:white';
 let off = 'margin-top:5px;background-color:black;color:white';
-var product_data = {"id":GenID(),"title":"","category":"","variants":null,"product_url":"","seo_description":"","seo_keywords":"","images":[]};
+var product_data = {
+  "id": GenID(),
+  "title": "",
+  "category": "",
+  "variants": null,
+  "product_url": "",
+  "seo_description": "",
+  "seo_keywords": "",
+  "images": []
+};
 var variant_data = [];
 var variant_data_dict = {}
+
 function AutoOff() {
 
 }
@@ -244,8 +254,8 @@ function OnOff(which) {
 
 }
 
-function p_update(v){
-    swal("", 'Variant name required', "error");
+function p_update(v) {
+  swal("", 'Variant name required', "error");
 }
 //
 // function icheck(id,maxl){
@@ -257,100 +267,122 @@ function p_update(v){
 //     return true;
 // }
 
-function p_variant_add(e){
-    var cont_v=document.getElementById('v-title').value;
-    document.getElementById("current-var")
-    if (cont_v.length === 0){
-      swal("", 'Variant title characters not enough', "error");
-      return false;
-    }
-    if (cont_v in localStorage){
-      swal("", 'Variant name Exists', "error");
-      return false;
-    }else{
-      localStorage.setItem(cont_v,JSON.stringify({'price':'0.00','image':''}))
-    }
+function p_variant_add(e) {
+  var cont_v = document.getElementById('v-title').value;
+  document.getElementById("current-var")
+  if (cont_v.length === 0) {
+    swal("", 'Variant title characters not enough', "error");
+    return false;
+  }
+  if (cont_v in localStorage) {
+    swal("", 'Variant name Exists', "error");
+    return false;
+  } else {
+    localStorage.setItem(cont_v, JSON.stringify({
+      'price': '0.00',
+      'image': ''
+    }))
+  }
 
-    var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
-    var newRow=document.getElementById('variant-table').insertRow();
-    document.getElementById('variant-notice').style.display = "none";
-    var varid = cont_v+"-ivar"
-    newRow.innerHTML = "<tbody>\
+  var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
+  var newRow = document.getElementById('variant-table').insertRow();
+  document.getElementById('variant-notice').style.display = "none";
+  var varid = cont_v + "-ivar"
+  newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-"+cont_v+"'><b><center><p class='text-dark rounded'>"+cont_v+"</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='"+cont_v+"-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-"+cont_v+"' class='col-4'><form enctype='multipart/form-data'><input type='file' name='"+varid+"' id='"+varid+"'></form></td><td><button id='btnd-"+cont_v+"' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
+    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
     </tr>\
     </tbody><br>";
-    document.getElementById('v-title').value = "";
-    const inputElementvar = document.querySelector(`#`+varid);
+  document.getElementById('v-title').value = "";
+  const inputElementvar = document.querySelector(`#` + varid);
 
-    FilePond.create(inputElementvar,{
+  FilePond.create(inputElementvar, {
     server: './upload-p-variant',
     credits: false,
-    labelIdle: "Browse..",
+    labelIdle: "Drop or Browse..",
     fileMetadataObject: {
-        p_id: product_data['id'],
-        p_variant: cont_v,
+      p_id: product_data['id'],
+      p_variant: cont_v,
     },
 
-  });  //pondvar ends
+  }); //pondvar ends
 
   variant_data.push(varid)
 }
 
 
 
-function p_updatevariant(ids){
-    let pr = document.getElementById(ids+"-price").value;
+function p_updatevariant(ids) {
+  let pr = document.getElementById(ids + "-price").value;
 
-    // let regex = /^\d*(\.\d{2})?$/;
-    // let r = regex.test(pr);   //Boolean
-    //
-    // if (r){
-    // }else{
-    //   swal("", 'Price value not accepted', "error");
-    // }
+  // let regex = /^\d*(\.\d{2})?$/;
+  // let r = regex.test(pr);   //Boolean
+  //
+  // if (r){
+  // }else{
+  //   swal("", 'Price value not accepted', "error");
+  // }
 
 }
 
-function p_set_settings(dom){
+function p_set_settings(dom) {
   let n = document.getElementById(dom).value;
-  if (!n){
-      swal("", 'Variant name required', "error");
-    }else{
-      localStorage.setItem(dom,n)
+  if (!n) {
+    swal("", 'Value required', "error");
+    return false;
+  } else {
+
+    if (dom === 'p-desc') {
+
+    } else {
+
     }
+  }
 }
 
-function p_publish(){
-  console.log(variant_data) //contains variant image name/ not id
-  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
-}
 
 function p_del(r) {
   let i = r.parentNode.parentNode.rowIndex;
   let l = document.getElementById("variant-table").rows.length;
-  let b = r.id.replace("btnd-","")
+  let b = r.id.replace("btnd-", "")
   document.getElementById("variant-table").deleteRow(i);
   localStorage.removeItem(b)
-  if (localStorage.length === 0){
-      document.getElementById('variant-notice').style.display = "block";
+  if (localStorage.length === 0) {
+    document.getElementById('variant-notice').style.display = "block";
   }
-  variant_data = variant_data.filter(v => v !== b+"-ivar");
+  variant_data = variant_data.filter(v => v !== b + "-ivar");
   console.log(variant_data)
 }
 
-
-function openvarmodal(id){
-  let cleared = id.replace("btn-","")
-  let cvar = localStorage.getItem(cleared);
-  document.getElementById("topModalLabel").textContent = "Update Variant for "+cleared;
-  document.getElementById("p-pricemodal").value = JSON.parse(cvar)['price']
-  document.getElementById("current-variant-input").value = cleared;
-  let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
-  myModal.show();
-
-  console.log(product_data)
+function p_publish() {
+  console.log(variant_data) //contains variant image name/ not id
+  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
 }
+//
+// function openvarmodal(id){
+//   let cleared = id.replace("btn-","")
+//   let cvar = localStorage.getItem(cleared);
+//   document.getElementById("topModalLabel").textContent = "Update Variant for "+cleared;
+//   document.getElementById("p-pricemodal").value = JSON.parse(cvar)['price']
+//   document.getElementById("current-variant-input").value = cleared;
+//   let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
+//   myModal.show();
+//
+//   console.log(product_data)
+// }
+// Listeners
+// var input = document.getElementById("myInput");
+//
+// // Execute a function when the user presses a key on the keyboard
+// input.addEventListener("keypress", function(event) {
+//   // If the user presses the "Enter" key on the keyboard
+//   if (event.key === "Enter") {
+//     // Cancel the default action, if needed
+//     event.preventDefault();
+//     // Trigger the button element with a click
+//     document.getElementById("myBtn").click();
+//   }
+// });
 
 window.onbeforeunload = function() {
   return "Leaving this page will not save your product information.";
