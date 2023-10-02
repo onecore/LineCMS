@@ -335,6 +335,8 @@ function p_del(r) {
   if (localStorage.length === 0){
       document.getElementById('variant-notice').style.display = "block";
   }
+  variant_data = variant_data.filter(v => v !== b+"-ivar");
+  console.log(variant_data)
 }
 
 
