@@ -258,21 +258,12 @@ function OnOff(which) {
 function p_update(v) {
   swal("", 'Variant name required', "error");
 }
-//
-// function icheck(id,maxl){
-//     let ids = document.getElementById(id).value;
-//     if (ids.lenght < maxl){
-//         swal("", 'Variant name required', "error");
-//         return false;
-//     }
-//     return true;
-// }
 
 function p_variant_add(e) {
   var cont_v = document.getElementById('v-title').value;
   document.getElementById("current-var")
   if (cont_v.length === 0) {
-    swal("", 'Variant title characters not enough', "error");
+    swal("", 'Variant name characters not enough', "error");
     return false;
   }
 
@@ -305,7 +296,6 @@ function p_variant_add(e) {
   }); //pondvar ends
 
   variant_data.push(varid)
-  console.log(variant_data)
 }
 
 
@@ -351,40 +341,12 @@ function build_variants(){
     variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
   }
 }
+
 function p_publish() {
   // document.getElementById("loading").style = 'display:block';
   // document.getElementById("publishb").style = 'display:none';
   build_variants()
   console.log(variant_data_dict)
-
-  // console.log(variant_data) //contains variant image name/ not id
-//  console.log(document.getElementsByName(variant_data[0])[0].value) // run in for loop to get all variant images
-}
-//
-// function openvarmodal(id){
-//   let cleared = id.replace("btn-","")
-//   let cvar = localStorage.getItem(cleared);
-//   document.getElementById("topModalLabel").textContent = "Update Variant for "+cleared;
-//   document.getElementById("p-pricemodal").value = JSON.parse(cvar)['price']
-//   document.getElementById("current-variant-input").value = cleared;
-//   let myModal = new bootstrap.Modal(document.getElementById('varmodal'), {  keyboard: false });
-//   myModal.show();
-//
-//   console.log(product_data)
-// }
-// Listeners
-// var input = document.getElementById("myInput");
-//
-// // Execute a function when the user presses a key on the keyboard
-// input.addEventListener("keypress", function(event) {
-//   // If the user presses the "Enter" key on the keyboard
-//   if (event.key === "Enter") {
-//     // Cancel the default action, if needed
-//     event.preventDefault();
-//     // Trigger the button element with a click
-//     document.getElementById("myBtn").click();
-//   }
-// });
 
 window.onbeforeunload = function() {
   return "Leaving this page will not save your product information.";
