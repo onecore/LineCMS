@@ -207,11 +207,21 @@ localStorage.clear();
                     <input type="text" class="form-control" id="categ" aria-label="" placeholder="use ',' for multiple categories">
                   </div>
                 </div>
+
+                <fieldset class="border p-2 text-muted">
+                  <legend class="float-none w-auto text-muted" style="font-size:15px">Product Main Image</legend>
+                  <center>
+                    <form enctype="multipart/form-data">
+                      <input type="file" name="file" id='mainfile' multiple>
+                    </form>
+                  </center>
+                </fieldset>
+                <br>
                 <fieldset class="border p-2 text-muted">
                   <legend class="float-none w-auto text-muted" style="font-size:15px">Product Images</legend>
                   <center>
                     <form enctype="multipart/form-data">
-                      <input type="file" name="file" id='mainfile' multiple>
+                      <input type="file" name="file" id='mainfileimages' multiple>
                     </form>
                   </center>
                 </fieldset>
@@ -444,19 +454,28 @@ $("#form").submit( function(eventObj) {
     FilePond.registerPlugin(FilePondPluginFileMetadata);
     FilePond.registerPlugin(FilePondPluginFileRename);
 
-    FilePond.setOptions({
-    server: './upload-p-main',
-    credits: false,
-    fileMetadataObject: {
-        p_id: product_data['id'],
-    },
-
-});
     // Get a reference to the file input element
+    const inputElements = document.querySelector(`#mainfileimages`);
     const inputElement = document.querySelector(`#mainfile`);
 
     // Create a FilePond instance
-    const pond = FilePond.create(inputElement);
+    const pondimages = FilePond.create(inputElements,{
+          server: './upload-p-main',
+          credits: false,
+          labelIdle: "Drop or Browse images",
+          fileMetadataObject: {
+              p_id: product_data['id'],
+          },
+    });
+
+    const pond = FilePond.create(inputElement, {
+          server: './upload-p-main',
+          labelIdle: "Main image",
+          credits: false,
+          fileMetadataObject: {
+              p_id: product_data['id'],
+          },
+    });
 
 </script>
 </body>
