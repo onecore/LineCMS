@@ -485,19 +485,15 @@ $("#form").submit( function(eventObj) {
           fileMetadataObject: {
               p_id: product_data['id'],
           },
-          // fileRenameFunction: (file) => {
-          //     let _st = fname(19);
-          //     images.push(_st+`${file.extension}`)
-          //     return _st+`${file.extension}`;
-          // },
     });
     var fl = {{d[8]|safe}}
     var locs = []
     for (i=0; i < fl.length; i++){
       locs.push("/media/products/"+product_data['id']+"/"+fl[i])
     }
+    {% if d[8] %}
     pondimages.addFiles(locs)
-
+    {% endif %}
     const pond = FilePond.create(inputElement, {
           server: './upload-p-main',
           labelIdle: "Main image",
@@ -505,14 +501,10 @@ $("#form").submit( function(eventObj) {
           fileMetadataObject: {
               p_id: product_data['id'],
           },
-          // fileRenameFunction: (file) => {
-          //     let _st = fname(19);
-          //     product_data['mainimage'] = _st+`${file.extension}`;
-          //     return _st+`${file.extension}`;
-          // },
     });
-
-    pond.addFile(["/media/products/"+product_data['id']+"/"+"{{d[9]}}"])
+    {% if d[9] %}
+        pond.addFile(["/media/products/"+product_data['id']+"/"+"{{d[9]}}"]);
+    {% endif %}
 
 
   pond.on('removefile', (error, file) => {
