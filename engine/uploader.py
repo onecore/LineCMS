@@ -36,7 +36,7 @@ def showuploaded_products(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid, file)
 
 
-@uploader.route("/media/products/<folderid>/<file>")
+@uploader.route("/media/variant/<folderid>/<file>")
 def showuploaded_products_variant(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
 
@@ -109,6 +109,7 @@ def upload_file_product_variant():
     return jsonify({"status": "success"})
 
 
+@uploader.route('/product-edit/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product():
 

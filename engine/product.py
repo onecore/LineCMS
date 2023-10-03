@@ -6,6 +6,11 @@ import templater as temple
 product = Blueprint("product", __name__)
 
 
+@product.route("/load", methods=['POST', 'GET'])
+def loaduploaded():
+    pass
+
+
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
     de = dataengine.knightclient()

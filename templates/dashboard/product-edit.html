@@ -27,7 +27,7 @@
   <script src="../../dashboard/knightstudio.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
 <style>
 input[type="file"] {
@@ -50,6 +50,8 @@ fieldset {
 
 <body class="sidebar-dark">
 <script>
+
+
 product_data['id'] = {{d[13]}}
 
 var image_nm = "";
@@ -477,17 +479,24 @@ $("#form").submit( function(eventObj) {
     // Create a FilePond instance
     const pondimages = FilePond.create(inputElements,{
           server: './upload-p-main',
+          // remove: './upload-p-main',
           credits: false,
           labelIdle: "Drop or Browse images",
           fileMetadataObject: {
               p_id: product_data['id'],
           },
-          fileRenameFunction: (file) => {
-              let _st = fname(19);
-              images.push(_st+`${file.extension}`)
-              return _st+`${file.extension}`;
-          },
+          // fileRenameFunction: (file) => {
+          //     let _st = fname(19);
+          //     images.push(_st+`${file.extension}`)
+          //     return _st+`${file.extension}`;
+          // },
     });
+    var fl = {{d[8]|safe}}
+    var locs = []
+    for (i=0; i < fl.length; i++){
+      locs.push("/media/products/"+product_data['id']+"/"+fl[i])
+    }
+    pondimages.addFiles(locs)
 
     const pond = FilePond.create(inputElement, {
           server: './upload-p-main',
@@ -496,12 +505,15 @@ $("#form").submit( function(eventObj) {
           fileMetadataObject: {
               p_id: product_data['id'],
           },
-          fileRenameFunction: (file) => {
-              let _st = fname(19);
-              product_data['mainimage'] = _st+`${file.extension}`;
-              return _st+`${file.extension}`;
-          },
+          // fileRenameFunction: (file) => {
+          //     let _st = fname(19);
+          //     product_data['mainimage'] = _st+`${file.extension}`;
+          //     return _st+`${file.extension}`;
+          // },
     });
+
+    pond.addFile(["/media/products/"+product_data['id']+"/"+"{{d[9]}}"])
+
 
   pond.on('removefile', (error, file) => {
     // this object contains the file info
