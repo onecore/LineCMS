@@ -2,7 +2,8 @@
 Inline functions for Jinja
 """
 import templater as temple
-
+import json
+from flask import jsonify
 
 def ks_include_adminbutton() -> str:
     "Includes Admin button if session exists"
@@ -30,3 +31,11 @@ def ks_html2text(v) -> str:
 
 def ks_tolist(v) -> list:
     return eval(v)
+
+
+def ks_getdictkeys(v) -> list:
+    o = []
+    p = jsonify(v)
+    for k, v in p.items():
+        o.append(k)
+    return eval(o)

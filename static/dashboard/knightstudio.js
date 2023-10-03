@@ -477,6 +477,55 @@ function p_publish() {
   });
 
 }
+
+
+function p_variant_add_exists(e) {
+  var cont_v = e; //document.getElementById('v-title').value;
+
+  if (cont_v.length === 0) {
+    swal("", 'Variant name characters not enough', "error");
+    return false;
+  }
+
+  if (variant_data.includes(cont_v + "-ivar")) {
+    swal("", 'Variant name Exists', "error");
+    return false;
+  }
+
+  var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
+  var newRow = document.getElementById('variant-table').insertRow();
+  document.getElementById('variant-notice').style.display = "none";
+  var varid = cont_v + "-ivar"
+  newRow.innerHTML = "<tbody>\
+    <tr>\
+    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></input></td><td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-stock' placeholder='How much stock you have' value='1000' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
+    </tr>\
+    </tbody><br>";
+  document.getElementById('v-title').value = "";
+  const inputElementvar = document.querySelector(`#` + varid);
+  p = FilePond.create(inputElementvar, {
+    server: './upload-p-variant',
+    credits: false,
+    labelIdle: "Drop or Browse..",
+    fileMetadataObject: {
+      p_id: product_data['id'],
+      p_variant: cont_v,
+    },
+    // fileRenameFunction: (file) => {
+    //   return fname(19)+`${file.extension}`;
+    // }
+  }); //pondvar ends
+
+
+  variant_data.push(varid);
+
+  p.on('addfile', (error, file) => {
+    // this object contains the file info
+    variant_data_history[cont_v + "-ivar"] = file.file.name
+    // file.file.filename = "asdasdasd"
+  })
+}
+
 window.onbeforeunload = function() {
   return "Leaving this page will not save your product information.";
 }

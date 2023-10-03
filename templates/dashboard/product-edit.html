@@ -527,6 +527,17 @@ $("#form").submit( function(eventObj) {
     images = images.filter(v => v !== file.filename);
     // file.file.filename = "asdasdasd"
   })
+
+
+  // loads existed
+  // variant_data_history = {{d[3]|safe}};
+  var vars = {{d[3]|safe}}
+  const _k = Object.keys(vars);
+  for (i=0; i < _k.length; i++){
+    p_variant_add_exists(_k[i])
+    // locs.push("/media/products/"+product_data['id']+"/"+fl[i])
+  }
+  //p_variant_add_exists()
 </script>
 </body>
 
