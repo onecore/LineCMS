@@ -330,7 +330,7 @@ localStorage.clear();
 
                 <br>
                 <button type="button" class="btn btn-primary" onclick="p_publish()" id='publishb'>Update product</button>
-                <button type="button" class="btn btn-danger" onclick="p_publish()" id='publishb'>Delete product</button>
+                <button type="button" class="btn btn-danger" onclick="p_dele()" id='publishb'>Delete product</button>
                 <button class="btn btn-primary" type="button" disabled style="display:none" id='loading'>
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span class="visually-hidden">Loading...</span>
@@ -534,7 +534,7 @@ $("#form").submit( function(eventObj) {
   var vars = {{d[3]|safe}}
   const _k = Object.keys(vars);
   for (i=0; i < _k.length; i++){
-    p_variant_add_exists(_k[i])
+    p_variant_add_exists(_k[i].replace("-ivar",""))
     // locs.push("/media/products/"+product_data['id']+"/"+fl[i])
   }
   //p_variant_add_exists()

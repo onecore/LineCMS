@@ -18,7 +18,7 @@ var variant_data = [];
 var variant_data_dict = {};
 var variant_data_history = {};
 var images = [];
-
+var run_once = true;
 function AutoOff() {
 
 }
@@ -511,19 +511,54 @@ function p_variant_add_exists(e) {
       p_id: product_data['id'],
       p_variant: cont_v,
     },
-    // fileRenameFunction: (file) => {
-    //   return fname(19)+`${file.extension}`;
-    // }
+
   }); //pondvar ends
 
+  // Run function once to load images on Init()
+  // Run function once to load images on Init()
 
   variant_data.push(varid);
-
+  //
   p.on('addfile', (error, file) => {
-    // this object contains the file info
     variant_data_history[cont_v + "-ivar"] = file.file.name
-    // file.file.filename = "asdasdasd"
   })
+
+  init_variant_imgs(p,varid) // Load variant imgs here
+}
+
+
+function init_variant_imgs(p,v){
+  if (run_once){
+    let fp = p; // filepond OBJ
+    let varid = v;
+    console.log("IM RUN ONCE")
+  }
+  run_once = false;
+}
+// var product_data = {
+//   "id": GenID(),
+//   "title": "",
+//   "category": "",
+//   "variants": {},
+//   "product_url": "",
+//   "seo_description": "",
+//   "seo_keywords": "",
+//   "images": [],
+//   "mainimage": "",
+//   "body":"",
+//   "price":"",
+//   "variant_details":{},
+// };
+// var variant_data = [];
+// var variant_data_dict = {};
+// var variant_data_history = {};
+// var images = [];
+
+function p_dele(){
+  console.log("variant_data >>>",variant_data)
+  console.log("variant_data_dict >>>",variant_data_dict)
+  console.log("variant_data_history",variant_data_history)
+
 }
 
 window.onbeforeunload = function() {
