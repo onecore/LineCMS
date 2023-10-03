@@ -6,6 +6,11 @@ import templater as temple
 product = Blueprint("product", __name__)
 
 
+@product.route("/product-edit/<route>", methods=['POST', 'GET'])
+def product_edt(route):
+    return render_template("/dashboard/product-new.html")
+
+
 @product.route("/product-new", methods=['POST', 'GET'])
 def product_new():
     return render_template("/dashboard/product-new.html")
