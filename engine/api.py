@@ -69,6 +69,22 @@ def knightapi():
         return "KnightStudio Dashboard build ", version
 
 
+@api.route("/deleapip", methods=['POST', 'GET'])
+def delete_apip():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+            table = request.json['table']
+            column = request.json['column']
+            value = request.json['value']
+            de = dataengine.knightclient()
+            if (de.delete_apip(table, column, value)):
+                return jsonify({"status": 1, "message": "Blog post has been deleted"})
+            else:
+                return jsonify({"status": 1, "message": "Blog post cannot delete right now"})
+    else:
+        return jsonify({"status": 0})
+
+
 @api.route("/deleapi", methods=['POST', 'GET'])
 def delete_api():
     if request.method == "POST":

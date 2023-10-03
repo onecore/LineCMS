@@ -115,6 +115,35 @@ function confirm_d(key, route, id) {
   }
 }
 
+function deleapip(d, b, id) {
+  var o = {
+    "1": {
+      "table": "products",
+      "column": "product_urlsystem",
+      "value": b
+    }
+  }
+
+  fetch("/deleapip", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(o[d])
+  }).then(res => {
+    if (id === "9999") {
+      location.href = "/product-manage/1";
+    } else {
+      document.getElementById('tr-' + id).remove();
+      swal("Product manager", 'Product deleted', "success");
+    }
+
+
+    //console.log("Request complete! response:", res);
+  });
+}
+
+
 function deleapi(d, b, id) {
   var o = {
     "1": {

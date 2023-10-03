@@ -19,6 +19,21 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def delete_apip(self, table, column, value) -> bool:
+        print(table, column, value)
+        q = """DELETE FROM {tb} WHERE product_urlsystem = '{value}';""".format(
+            tb=table, column=column, value=value)
+        _c = self.connection.cursor()
+
+        try:
+            _c.execute(q)
+            self.connection.commit()
+            self.log("Product deleted")
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def delete_api(self, table, column, value) -> bool:
         print(table, column, value)
         q = """DELETE FROM {tb} WHERE route = '{value}';""".format(
