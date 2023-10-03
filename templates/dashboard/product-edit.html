@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Update Product - KnightStudio Dashboard</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+  <script src="../../dashboard/knightstudio.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+<style>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 13px 13px 13px 13px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top:10px;
+    cursor: pointer;
+}
+fieldset {
+    border: 1px solid #000;
+}
+
+</style>
+</head>
+
+<body class="sidebar-dark">
+<script>
+product_data['id'] = {{d[13]}}
+
+var image_nm = "";
+{% if success %}
+swal("", 'Website information updated', "success");
+{% endif %}
+
+
+{% if error %}
+swal("", `{{error}}`, "warning");
+{% endif %}
+</script>
+<script>
+localStorage.clear();
+</script>
+  <div class="container-scroller">
+    <!-- partial:../../dashboard/partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+          <a class="navbar-brand brand-logo" href="/dashboard">
+            <img src="../../dashboard/img/knightstudio.png" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="/dashboard">
+            <img src="../../dashboard/img/knightstudio-s.png" alt="logo" />
+          </a>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-top">
+        <h4 class="text-dark ms-auto">Update product</h4>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item d-none d-sm-block">
+              <span class="input-group-addon input-group-prepend border-right">
+                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
+              </span>
+          </li>
+          <!-- <li class="nav-item">
+            <form class="search-form" action="#">
+              <i class="icon-search"></i>
+              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+            </form>
+          </li> -->
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../dashboard/partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- partial -->
+      <!-- partial:../../dashboard/partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-category">Website & Account</li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-webacc" aria-expanded="false" aria-controls="KnightStudio-webacc">
+              <i class="menu-icon mdi mdi-database-settings"></i>
+              <span class="menu-title">Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-webacc">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/dashboard">Website</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/account">Account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/modules">Modules</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item nav-category">Contents</li>
+          <li class="nav-item">
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-product" aria-expanded="false" aria-controls="KnightStudio-product">
+              <i class="menu-icon mdi mdi-rice"></i>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-product">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/product-new"><b class="text-warning">New Product</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="/product-manage">Manage Products</a></li>
+              </ul>
+            </div>
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false" aria-controls="KnightStudio-blog">
+              <i class="menu-icon mdi mdi-library-books"></i>
+              <span class="menu-title">Blog</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-blog">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/blog-new">New Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
+              </ul>
+            </div>
+
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-messages" aria-expanded="false" aria-controls="KnightStudio-messages">
+              <i class="menu-icon mdi mdi-message-processing"></i>
+              <span class="menu-title">Messages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="KnightStudio-messages">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/messages">Customer Messages</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/mwebsite">Website Logging</a></li>
+              </ul>
+            </div>
+          </li>
+
+
+          <li class="nav-item nav-category">Information</li>
+          <li class="nav-item">
+            <a class="nav-link" href="/other">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Other Information</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-4 p-3">
+
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Product Category</span>
+                    </div>
+                    <input type="text" class="form-control" id="categ" aria-label="" placeholder="use ',' for multiple categories" value="{{d[2]}}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Product Price</span>
+                    </div>
+                    <input type="text" class="form-control" id="m-price" aria-label="" placeholder="Please use a valid price" value="{{d[15]}}">
+                  </div>
+                </div>
+                <fieldset class="border p-2 text-muted">
+                  <legend class="float-none w-auto text-muted" style="font-size:15px">Product Main Image</legend>
+                  <center>
+                    <form enctype="multipart/form-data">
+                      <input type="file" name="file" id='mainfile'>
+                    </form>
+                  </center>
+                </fieldset>
+                <br>
+                <fieldset class="border p-2 text-muted">
+                  <legend class="float-none w-auto text-muted" style="font-size:15px">Product Images</legend>
+                  <center>
+                    <form enctype="multipart/form-data">
+                      <input type="file" name="file" id='mainfileimages' multiple>
+                    </form>
+                  </center>
+                </fieldset>
+
+                <br>
+                <div class="border rounded">
+                  <br>
+                  <center><h4 class="badge badge-dark text-mute">Page settings</h4></center>
+                  <br>
+                  <center><p class="text-muted">No additional settings</p></center>
+                  <hr>
+                  <center><h4 class="badge badge-dark text-mute">Information</h4></center>
+                  <center><p class="text-muted p-0">Timestamp: {{d[11]}}</p></center>
+                  <center><p class="text-muted p-0">Sys. URL: {{d[5]}}</p></center>
+                  <center><p class="text-muted p-0">Product UID: {{d[13]}}</p></center>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-8 p-3">
+            <form method="post" id="form" name="form">
+              <div class="form-group">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Product Name</span>
+                    </div>
+                    <input type="text" class="form-control" id="title" aria-label="" placeholder="Product name" value="{{d[1]}}">
+                  </div>
+                </div>
+                <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
+                <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
+              </div>
+                  {{ ckeditor.create(value=d[14]) }}
+                <br>
+
+                <div class="border p-2 rounded">
+                  <br>
+                  <center><h4 class="text-mute badge badge-dark ">Add variant to your product</h4></center>
+                  <br>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Variant Name</span>
+                    </div>
+                    <input type="text" class="form-control" id="v-title" aria-label="" placeholder="Unique variant name e.g 'XL size'">
+                    <button type="button" class="border" onclick="p_variant_add(this)" style="background:white;border-radius:0 8px 8px 0px"> Add variant</button>
+                  </div>
+                  <div id="variantcontainer" class="row">
+                      <table class="table" id="variant-table">
+                        <thead>
+                          <tr>
+                            <th>Variant name</th>
+                            <th>Price</th>
+                            <th>In-stock</th>
+                            <th>Image</th>
+                            <!-- <th>Description</th> -->
+                          </tr>
+                        </thead>
+
+                      </table>
+
+
+                      <center><p class="text-muted pt-3" id="variant-notice">This product has no variant</p></center>
+
+                  </div>
+                </div>
+                <br>
+                <div class="border p-2 rounded">
+                  <center><h4 class="badge badge-dark text-mute">Search Engine Optimization</h4></center>
+                  <div class="input-group mb-3 pt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Short Description</span>
+                    </div>
+                    <input type="text" class="form-control" id="p-desc" aria-label="" placeholder="Detailed meta description about the product" value="{{d[6]}}">
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-desc')"> Apply</button>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Keywords</span>
+                    </div>
+                    <input type="text" class="form-control" id="p-keywords" aria-label="" placeholder="Keywords seperated by comma ','" value="{{d[7]}}">
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-keywords')"> Apply</button>
+                  </div>
+                  <hr>
+                  <center><h4 class="badge badge-dark text-mute">Product URL</h4></center>
+
+                  <div class="input-group mb-3 pt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">/products/</span>
+                    </div>
+                    <input type="text" class="form-control" id="p-url" aria-label="" placeholder="Leave blank to let the system create URL for this product" value="{{d[4]}}">
+                    <button type="button" class="btn btn-xs border" onclick="p_set_settings('p-url')"> Set URL</button>
+                  </div>
+                </div>
+
+                <br>
+                <button type="button" class="btn btn-primary" onclick="p_publish()" id='publishb'>Update product</button>
+                <button type="button" class="btn btn-danger" onclick="p_publish()" id='publishb'>Delete product</button>
+                <button class="btn btn-primary" type="button" disabled style="display:none" id='loading'>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span class="visually-hidden">Loading...</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <br>
+        <!-- <div class="modal fade pt-0 mt-0" id="varmodal" tabindex="-1" aria-labelledby="varmodal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="topModalLabel">Update Variant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <center>
+                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoviewmodal" name="logoviewmpdal" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
+                </center>
+                <center>
+                <center>
+                <input id='bimg-modal' style='display:none'></input>
+                <label class="custom-file-upload center">
+                  <form id="upload-file-modal" name="upload-file">
+                    <input type="file" name="filemodal" onchange="loadFileModal(event)"/>
+                    <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                  </form>
+                </label>
+              </center>
+              <hr>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price $</span>
+                </div>
+                <input type="text" class="form-control" id="p-pricemodal" aria-label="" placeholder="This variant's price">
+              </div>
+
+              </div>
+              <div class="modal-footer">
+                <input id='current-variant-input' style="display:none"></input>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss='modal' onclick="p_updatevariant()">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- content-wrapper ends -->
+        <!-- partial:../../dashboard/partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="../../dashboard/vendors/select2/select2.min.js"></script>
+  <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../dashboard/js/off-canvas.js"></script>
+  <script src="../../dashboard/js/hoverable-collapse.js"></script>
+  <script src="../../dashboard/js/template.js"></script>
+  <script src="../../dashboard/js/settings.js"></script>
+  <script src="../../dashboard/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../dashboard/js/file-upload.js"></script>
+  <script src="../../dashboard/js/typeahead.js"></script>
+  <script src="../../dashboard/js/select2.js"></script>
+  <!-- <script src="../../dashboard/knightstudio.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+
+  <!-- End custom js for this page-->
+
+<script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('logoview');
+      output.src = reader.result;
+    };
+    // image_nm = fname(8);
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("bimg").value = event.target.files[0].name;
+    };
+
+  var loadFileModal = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('logoviewmodal');
+      output.src = reader.result;
+    };
+    // image_nm = fname(8);
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("bimg-modal").value = event.target.files[0].name;
+    };
+
+</script>
+
+<script>
+$("#form").submit( function(eventObj) {
+  var vv = $("#categ").val()
+  $("#cat").val(vv)
+
+  var form_data = new FormData($('#upload-file')[0]);
+  $.ajax({
+      type: 'POST',
+      url: '/upload-blog',
+      data: form_data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(data) {
+          // $("#logoview").attr('src','/media/blog/'+data['status']);
+          // swal("", '', "success");
+          return true;
+      },
+  });
+});
+</script>
+<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    FilePond.registerPlugin(FilePondPluginFileMetadata);
+    FilePond.registerPlugin(FilePondPluginFileRename);
+
+    // Get a reference to the file input element
+    const inputElements = document.querySelector(`#mainfileimages`);
+    const inputElement = document.querySelector(`#mainfile`);
+
+    // Create a FilePond instance
+    const pondimages = FilePond.create(inputElements,{
+          server: './upload-p-main',
+          credits: false,
+          labelIdle: "Drop or Browse images",
+          fileMetadataObject: {
+              p_id: product_data['id'],
+          },
+          fileRenameFunction: (file) => {
+              let _st = fname(19);
+              images.push(_st+`${file.extension}`)
+              return _st+`${file.extension}`;
+          },
+    });
+
+    const pond = FilePond.create(inputElement, {
+          server: './upload-p-main',
+          labelIdle: "Main image",
+          credits: false,
+          fileMetadataObject: {
+              p_id: product_data['id'],
+          },
+          fileRenameFunction: (file) => {
+              let _st = fname(19);
+              product_data['mainimage'] = _st+`${file.extension}`;
+              return _st+`${file.extension}`;
+          },
+    });
+
+  pond.on('removefile', (error, file) => {
+    // this object contains the file info
+
+    product_data['mainimage'] = "";
+    // file.file.filename = "asdasdasd"
+  })
+
+  pondimages.on('removefile', (error, file) => {
+    // this object contains the file info
+    images = images.filter(v => v !== file.filename);
+    // file.file.filename = "asdasdasd"
+  })
+</script>
+</body>
+
+</html>
