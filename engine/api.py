@@ -23,6 +23,15 @@ version = "1.4"
 # //   "images": [],
 # //   "mainimage": "",
 # // };
+@api.route("/api/removeimg/variant/<folder>/<file>", methods=['POST','GET'])
+def api_removeimg_variant(folder,file):
+    pass
+
+@api.route("/api/removeimg/image/<folder>/<file>", methods=['POST','GET'])
+def api_removeimg_image(folder,file):
+    pass
+
+    
 
 @api.route("/product-publish", methods=['POST', 'GET'])
 def productpub():
