@@ -19,6 +19,28 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def product_remove_image(self, column, product_id, file) -> bool:
+        _c = self.connection.cursor()
+
+        def remove_variant():
+            m_fetch = _c.execute(
+                "SELECT variants FROM products WHERE product_id='{m}'".format(m=product_id))
+            m_data = self.m_fetch.fetchone()
+
+        def remove_image():
+            m_fetch = _c.execute(
+                "SELECT images FROM products WHERE product_id='{m}'".format(m=product_id))
+            m_data = self.m_fetch.fetchone()
+
+        def remove_mainimage():
+            m_fetch = _c.execute(
+                "SELECT mainimage FROM products WHERE product_id='{m}'".format(m=product_id))
+            m_data = self.m_fetch.fetchone()
+
+        a = {"variants": remove_variant,
+             "mainimage": remove_mainimage, "image": remove_image}
+        return a[column]()
+
     def delete_apip(self, table, column, value) -> bool:
         print(table, column, value)
         q = """DELETE FROM {tb} WHERE product_urlsystem = '{value}';""".format(
