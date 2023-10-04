@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, g
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+import json
 
 product = Blueprint("product", __name__)
 
@@ -15,6 +16,8 @@ def loaduploaded():
 def product_edt(route):
     de = dataengine.knightclient()
     d = de.get_product_single(route)
+    if route == "upload-p-variant" or route == "upload-p-variant":
+        return ""
     if not d:
         return redirect("/product-manage")
 

@@ -52,7 +52,22 @@ fieldset {
 <script>
 
 
-product_data['id'] = {{d[13]}}
+product_data['id'] = {{d[13]}};
+product_data['title'] = "{{d[1]}}";
+product_data['category'] = "{{d[2]}}";
+product_data['variants'] = {{d[3]|safe}};
+product_data['product_url'] = "{{d[4]}}";
+product_data['product_urlsystem'] = "{{d[5]}}";
+product_data['seo_description'] = "{{d[6]}}";
+product_data['seo_keywords'] = "{{d[7]}}";
+product_data['images'] = {{d[8]|safe}};
+product_data['mainimage'] = "{{d[9]}}";
+// product_data['body']
+product_data['price'] = "{{d[15]}}";
+product_data['variant_details'] = {{d[10]|safe}};
+
+
+
 
 var image_nm = "";
 {% if success %}
@@ -246,6 +261,11 @@ localStorage.clear();
                   <hr>
                   <center><h4 class="badge badge-dark text-mute">Information</h4></center>
                   <center><p class="text-muted p-0">Timestamp: {{d[11]}}</p></center>
+                  {% if d[12] == '1'%}
+                  <center><p class="text-muted p-0">Live: Product is Live</p></center>
+                  {% else %}
+                  <center><p class="text-muted p-0">Live: Product is Hidden</p></center>
+                  {% endif %}
                   <center><p class="text-muted p-0">Sys. URL: {{d[5]}}</p></center>
                   <center><p class="text-muted p-0">Product UID: {{d[13]}}</p></center>
                 </div>
@@ -458,20 +478,16 @@ localStorage.clear();
     });
     {% if d[9] %}
         pond.addFile(["/media/products/"+product_data['id']+"/"+"{{d[9]}}"]);
+        product_data['mainimage'] = {{d[9]}};
     {% endif %}
 
 
   pond.on('removefile', (error, file) => {
-    // this object contains the file info
-
     product_data['mainimage'] = "";
-    // file.file.filename = "asdasdasd"
   })
 
   pondimages.on('removefile', (error, file) => {
-    // this object contains the file info
     images = images.filter(v => v !== file.filename);
-    // file.file.filename = "asdasdasd"
   })
 
 
@@ -486,7 +502,6 @@ localStorage.clear();
     p_variant_add_exists(_k[i].replace("-ivar",""),_c)
     // locs.push("/media/products/"+product_data['id']+"/"+fl[i])
   }
-  var xxx = "/media/variant/"+"{{d[13]}}"+"/"+"{{d[9]}}"
   //p_variant_add_exists()
 </script>
 </body>

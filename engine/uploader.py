@@ -41,6 +41,7 @@ def showuploaded_products_variant(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
 
 
+@uploader.route('/product-edit/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_variant():
 

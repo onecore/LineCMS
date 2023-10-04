@@ -10,15 +10,16 @@ var product_data = {
   "seo_keywords": "",
   "images": [],
   "mainimage": "",
-  "body":"",
-  "price":"",
-  "variant_details":{},
+  "body": "",
+  "price": "",
+  "variant_details": {},
 };
 var variant_data = [];
 var variant_data_dict = {};
 var variant_data_history = {};
 var images = [];
 var run_once = true;
+
 function AutoOff() {
 
 }
@@ -326,7 +327,7 @@ function p_variant_add(e) {
       p_variant: cont_v,
     },
     fileRenameFunction: (file) => {
-      return fname(19)+`${file.extension}`;
+      return fname(19) + `${file.extension}`;
     }
 
 
@@ -371,12 +372,17 @@ function p_del(r) {
   document.getElementById("variant-table").deleteRow(i);
 
   // server side del
-  try{
-  const dt = { data: { fid : product_data['id'], filev : variant_data_history[b+"-ivar"]}};
-  const request = axios.delete("/upload-p-variant", dt);
-      }catch{
-        console.log("unable to delete on backend")
+  try {
+    const dt = {
+      data: {
+        fid: product_data['id'],
+        filev: variant_data_history[b + "-ivar"]
       }
+    };
+    const request = axios.delete("/upload-p-variant", dt);
+  } catch {
+    console.log("unable to delete on backend")
+  }
 
 
   // server side del
@@ -397,27 +403,30 @@ function validatePrice(input) {
   return regex.test(input);
 }
 
-function grabvariantdata(){
+function grabvariantdata() {
   var vardata = {};
   for (let i = 0; i < variant_data.length; i++) {
-      var _p = document.getElementById(variant_data[i].replace("-ivar","")+"-price").value
-      var _s = document.getElementById(variant_data[i].replace("-ivar","")+"-stock").value
+    var _p = document.getElementById(variant_data[i].replace("-ivar", "") + "-price").value
+    var _s = document.getElementById(variant_data[i].replace("-ivar", "") + "-stock").value
 
-      if (!validatePrice(_p)){
-          swal("", 'Price not accepted, unable to validate', "error");
-          return false;
-      }
-      if (!validatePrice(_s)){
-          swal("", 'Stocks not accepted, unable to validate', "error");
-          return false;
-      }
+    if (!validatePrice(_p)) {
+      swal("", 'Price not accepted, unable to validate', "error");
+      return false;
+    }
+    if (!validatePrice(_s)) {
+      swal("", 'Stocks not accepted, unable to validate', "error");
+      return false;
+    }
 
-      vardata[variant_data[i]] = {'price':_p , 'instock':_s};
-      product_data['variant_details'] = vardata;
+    vardata[variant_data[i]] = {
+      'price': _p,
+      'instock': _s
+    };
+    product_data['variant_details'] = vardata;
   }
 }
 
-function grabinputs(){
+function grabinputs() {
   product_data['images'] = images;
   product_data['title'] = document.getElementById("title").value;
   product_data['price'] = document.getElementById("m-price").value;
@@ -428,25 +437,25 @@ function grabinputs(){
   product_data['body'] = CKEDITOR.instances['ckeditor'].getData();
   // product_data['images'] = categorydocument.getElementById("categ").value;
   // product_data['mainimage'] = categorydocument.getElementById("categ").value;
-  if (product_data['title'].length <= 4 ){
-      swal("", 'Failed validating title, must contain 5 or more characters', "error");
-      return false;
+  if (product_data['title'].length <= 4) {
+    swal("", 'Failed validating title, must contain 5 or more characters', "error");
+    return false;
   }
   // if (product_data['product_url'].length <= 4 ){
   //     swal("", 'URL must contain 10 or more characters, or leave blank', "error");
   //     return false;
   // }
-  if (product_data['body'].length <= 4 ){
-      swal("", 'Product description must have 5 or more characters', "error");
-      return false;
+  if (product_data['body'].length <= 4) {
+    swal("", 'Product description must have 5 or more characters', "error");
+    return false;
   }
-  if (product_data['price'].length <= 0 ){
-          swal("", 'Price not accepted, unable to validate', "error");
-      return false;
+  if (product_data['price'].length <= 0) {
+    swal("", 'Price not accepted, unable to validate', "error");
+    return false;
   }
-  if (!validatePrice(product_data['price'])){
-      swal("", 'Price not accepted, unable to validate', "error");
-      return false;
+  if (!validatePrice(product_data['price'])) {
+    swal("", 'Price not accepted, unable to validate', "error");
+    return false;
 
   }
   grabvariantdata()
@@ -471,7 +480,7 @@ function p_publish() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(product_data)
-    }).then(res => {
+  }).then(res => {
     // swal("", 'Module Updated', "success");
     console.log("Request complete! response:", res);
   });
@@ -479,7 +488,7 @@ function p_publish() {
 }
 
 
-function p_variant_add_exists(e,loadimage=null) {
+function p_variant_add_exists(e, loadimage = null) {
   var cont_v = e; //document.getElementById('v-title').value;
 
   if (cont_v.length === 0) {
@@ -512,26 +521,21 @@ function p_variant_add_exists(e,loadimage=null) {
       p_variant: cont_v,
     },
 
-  }); //pondvar ends
+  });
 
 
   variant_data.push(varid);
-  const frm = "/media/variant/"+product_data['id']+"/"+loadimage;
-  console.log(frm)
+
+  const frm = "/media/variant/" + product_data['id'] + "/" + loadimage;
   //
-  console.log(loadimage,"<<<<<< loadig")
   p.on('addfile', (error, file) => {
     variant_data_history[cont_v + "-ivar"] = file.file.name
   })
 
-  if (loadimage){
-    console.log(frm);
+  if (loadimage) {
     p.addFile(frm);
   }
-  // var jobj = JSON.parse("{{d[3]}}");
-  // if (varid in jobj){
-  //   alert("asdasd")
-  // }
+
 
 }
 
@@ -563,11 +567,16 @@ function p_variant_add_exists(e,loadimage=null) {
 // var variant_data_history = {};
 // var images = [];
 
-function p_dele(){
-  console.log("variant_data >>>",variant_data)
-  console.log("variant_data_dict >>>",variant_data_dict)
-  console.log("variant_data_history",variant_data_history)
+function p_apidel(fname,idobj){}
 
+function p_apidel_variants(fname,idobj){}
+
+function p_dele() {
+  console.log("variant_data >>>", variant_data)
+  console.log("variant_data_dict >>>", variant_data_dict)
+  console.log("variant_data_history", variant_data_history)
+  console.log("images", images)
+  console.log("mainimage",product_data['mainimage'])
 }
 
 window.onbeforeunload = function() {
