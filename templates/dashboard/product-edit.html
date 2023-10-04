@@ -417,52 +417,6 @@ localStorage.clear();
 
   <!-- End custom js for this page-->
 
-<script>
-  var loadFile = function(event) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById('logoview');
-      output.src = reader.result;
-    };
-    // image_nm = fname(8);
-    reader.readAsDataURL(event.target.files[0]);
-    document.getElementById("bimg").value = event.target.files[0].name;
-    };
-
-  var loadFileModal = function(event) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById('logoviewmodal');
-      output.src = reader.result;
-    };
-    // image_nm = fname(8);
-    reader.readAsDataURL(event.target.files[0]);
-    document.getElementById("bimg-modal").value = event.target.files[0].name;
-    };
-
-</script>
-
-<script>
-$("#form").submit( function(eventObj) {
-  var vv = $("#categ").val()
-  $("#cat").val(vv)
-
-  var form_data = new FormData($('#upload-file')[0]);
-  $.ajax({
-      type: 'POST',
-      url: '/upload-blog',
-      data: form_data,
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function(data) {
-          // $("#logoview").attr('src','/media/blog/'+data['status']);
-          // swal("", '', "success");
-          return true;
-      },
-  });
-});
-</script>
 <script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
@@ -525,10 +479,14 @@ $("#form").submit( function(eventObj) {
   // variant_data_history = {{d[3]|safe}};
   var vars = {{d[3]|safe}}
   const _k = Object.keys(vars);
+
   for (i=0; i < _k.length; i++){
-    p_variant_add_exists(_k[i].replace("-ivar",""))
+    console.log(vars[_k[i]])
+    let _c = vars[_k[i]].split("/")[6]
+    p_variant_add_exists(_k[i].replace("-ivar",""),_c)
     // locs.push("/media/products/"+product_data['id']+"/"+fl[i])
   }
+  var xxx = "/media/variant/"+"{{d[13]}}"+"/"+"{{d[9]}}"
   //p_variant_add_exists()
 </script>
 </body>

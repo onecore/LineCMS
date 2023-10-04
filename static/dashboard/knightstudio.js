@@ -479,7 +479,7 @@ function p_publish() {
 }
 
 
-function p_variant_add_exists(e) {
+function p_variant_add_exists(e,loadimage=null) {
   var cont_v = e; //document.getElementById('v-title').value;
 
   if (cont_v.length === 0) {
@@ -514,27 +514,36 @@ function p_variant_add_exists(e) {
 
   }); //pondvar ends
 
-  // Run function once to load images on Init()
-  // Run function once to load images on Init()
 
   variant_data.push(varid);
+  const frm = "/media/variant/"+product_data['id']+"/"+loadimage;
+  console.log(frm)
   //
+  console.log(loadimage,"<<<<<< loadig")
   p.on('addfile', (error, file) => {
     variant_data_history[cont_v + "-ivar"] = file.file.name
   })
 
-  init_variant_imgs(p,varid) // Load variant imgs here
-}
-
-
-function init_variant_imgs(p,v){
-  if (run_once){
-    let fp = p; // filepond OBJ
-    let varid = v;
-    console.log("IM RUN ONCE")
+  if (loadimage){
+    console.log(frm);
+    p.addFile(frm);
   }
-  run_once = false;
+  // var jobj = JSON.parse("{{d[3]}}");
+  // if (varid in jobj){
+  //   alert("asdasd")
+  // }
+
 }
+
+
+// function init_variant_imgs(p,v){
+//   if (run_once){
+//     let fp = p; // filepond OBJ
+//     let varid = v;
+//     console.log("IM RUN ONCE")
+//   }
+//   run_once = false;
+// }
 // var product_data = {
 //   "id": GenID(),
 //   "title": "",

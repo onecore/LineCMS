@@ -5,6 +5,7 @@ import templater as temple
 import json
 from flask import jsonify
 
+
 def ks_include_adminbutton() -> str:
     "Includes Admin button if session exists"
     c = temple.ks_admin_button
@@ -39,3 +40,7 @@ def ks_getdictkeys(v) -> list:
     for k, v in p.items():
         o.append(k)
     return eval(o)
+
+
+def ks_tojson(v) -> dict:
+    return json.dumps(v)
