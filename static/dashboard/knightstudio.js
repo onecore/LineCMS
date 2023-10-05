@@ -535,6 +535,7 @@ function p_variant_add_exists(e, loadimage = null) {
 
   p.on('removefile', (error, file) => {
     // variant_data_history[cont_v + "-ivar"] = file.file.name
+    alert("adadsasd")
     p_editdeleteimg("variants",product_id['id'],file.file.name)
   })
 
@@ -604,7 +605,7 @@ function p_dele() {
   console.log("images", images)
   console.log("mainimage",product_data['mainimage'])
 
-  p_editdeleteimg("variants",product_id['id'],file.file.name)
+  p_editdeleteimg("variants",product_data['id'],file.file.name)
 
 }
 
