@@ -65,7 +65,7 @@ product_data['mainimage'] = "{{d[9]}}";
 // product_data['body']
 product_data['price'] = "{{d[15]}}";
 product_data['variant_details'] = {{d[10]|safe}};
-
+images = product_data['images']
 
 
 
@@ -491,8 +491,7 @@ localStorage.clear();
   })
 
 
-  // loads existed
-  // variant_data_history = {{d[3]|safe}};
+
   var vars = {{d[3]|safe}}
   const _k = Object.keys(vars);
 
@@ -500,9 +499,7 @@ localStorage.clear();
     console.log(vars[_k[i]])
     let _c = vars[_k[i]].split("/")[6]
     p_variant_add_exists(_k[i].replace("-ivar",""),_c)
-    // locs.push("/media/products/"+product_data['id']+"/"+fl[i])
   }
-  //p_variant_add_exists()
 </script>
 </body>
 
