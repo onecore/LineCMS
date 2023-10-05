@@ -27,8 +27,8 @@
   <script src="../../dashboard/knightstudio.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+<link href="../../dashboard/ks-js/filepond.css" rel="stylesheet" />
+<link href="../../dashboard/ks-js/filepond-plugin-image-preview.min.css" rel="stylesheet"/>
 <style>
 input[type="file"] {
     display: none;
@@ -437,10 +437,10 @@ localStorage.clear();
 
   <!-- End custom js for this page-->
 
-<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script src="../../dashboard/ks-js/filepond-plugin-file-metadata.min.js"></script>
+<script src="../../dashboard/ks-js/filepond-plugin-image-preview.min.js"></script>
+<script src="../../dashboard/ks-js/filepond-plugin-file-rename.min.js"></script>
+<script src="../../dashboard/ks-js/filepond.min.js"></script>
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileMetadata);
@@ -478,7 +478,7 @@ localStorage.clear();
     });
     {% if d[9] %}
         pond.addFile(["/media/products/"+product_data['id']+"/"+"{{d[9]}}"]);
-        product_data['mainimage'] = {{d[9]}};
+        product_data['mainimage'] = "{{d[9]}}";
     {% endif %}
 
 

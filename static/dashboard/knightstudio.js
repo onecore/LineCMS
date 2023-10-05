@@ -503,8 +503,9 @@ function p_variant_add_exists(e, loadimage = null) {
 
   var cont_vid = cont_v.replace(/[^A-Z0-9]+/ig, "-");
   var newRow = document.getElementById('variant-table').insertRow();
-  document.getElementById('variant-notice').style.display = "none";
   var varid = cont_v + "-ivar"
+
+  document.getElementById('variant-notice').style.display = "none";
   newRow.innerHTML = "<tbody>\
     <tr>\
     <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></input></td><td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-stock' placeholder='How much stock you have' value='1000' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
@@ -530,6 +531,11 @@ function p_variant_add_exists(e, loadimage = null) {
   //
   p.on('addfile', (error, file) => {
     variant_data_history[cont_v + "-ivar"] = file.file.name
+  })
+
+  p.on('removefile', (error, file) => {
+    // variant_data_history[cont_v + "-ivar"] = file.file.name
+    p_editdeleteimg("variants",product_id['id'],file.file.name)
   })
 
   if (loadimage) {
@@ -567,9 +573,29 @@ function p_variant_add_exists(e, loadimage = null) {
 // var variant_data_history = {};
 // var images = [];
 
-function p_apidel(fname,idobj){}
+function p_apidel(fname,idobj){
+
+}
 
 function p_apidel_variants(fname,idobj){}
+
+function p_editdeleteimg(calltype,product_id,file) {
+  //"/api/removeimg/<calltype>/<product_id>/<file>"
+  d = {"calltype":calltype,"product_id":product_id['id'],"file":file}
+  console.log(d)
+  fetch("/api/removeimg-product", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(d)
+  }).then(res => {
+    // swal("", 'Module Updated', "success");
+    console.log("Request complete! response:", res);
+  });
+
+}
+
 
 function p_dele() {
   console.log("variant_data >>>", variant_data)
@@ -577,6 +603,9 @@ function p_dele() {
   console.log("variant_data_history", variant_data_history)
   console.log("images", images)
   console.log("mainimage",product_data['mainimage'])
+
+  p_editdeleteimg("variants",product_id['id'],file.file.name)
+
 }
 
 window.onbeforeunload = function() {

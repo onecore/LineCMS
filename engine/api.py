@@ -23,14 +23,21 @@ version = "1.4"
 # //   "images": [],
 # //   "mainimage": "",
 # // };
-@api.route("/api/removeimg/variant/<folder>/<file>", methods=['POST', 'GET'])
-def api_removeimg_variant(folder, file):
-    pass
+@api.route("/api/removeimg-product/<calltype>/<product_id>/<file>", methods=['POST', 'GET'])
+def api_removeimg_product(calltype, product_id, file):
+    """
+    calltype: variant/image/mainimage
+    product_id:  product_id, img file
+    file: image file
+    calls dataengine to remove file and update fb
+    """
 
-
-@api.route("/api/removeimg/image/<folder>/<file>", methods=['POST', 'GET'])
-def api_removeimg_image(folder, file):
-    pass
+    _de = dataengine.knightclient()
+    ret = _de.product_remove_image(calltype, product_id, file)
+    if ret:
+        return jsonify({"status": 1})
+    else:
+        return jsonify({"status": 0})
 
 
 @api.route("/product-publish", methods=['POST', 'GET'])

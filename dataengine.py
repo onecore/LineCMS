@@ -13,13 +13,22 @@ class knightclient:
     # cursor = connection.cursor()
 
     def url_gen(self, content) -> str:
+        """
+        content: string format url
+        Generates encoded friendly url (removes whitespaces and some symbols)
+        """
         remove_sym = re.sub(r'[^\w]', ' ', content)
         v = urllib.parse.quote_plus(str(random.randint(10, 50))+remove_sym)
         _v = str(v).replace("+", "-")
         g.new_blog_url = _v
         return _v
 
-    def product_remove_image(self, column, product_id, file) -> bool:
+    def product_remove_image(self, calltype, product_id, file) -> bool:
+        """
+        (variants/images/mainimage, product_id, img file)
+        Deletes image file from uploads then update db contents (product table)
+        """
+
         _c = self.connection.cursor()
 
         def remove_variant():
@@ -39,7 +48,7 @@ class knightclient:
 
         a = {"variants": remove_variant,
              "mainimage": remove_mainimage, "image": remove_image}
-        return a[column]()
+        return a[calltype]()
 
     def delete_apip(self, table, column, value) -> bool:
         print(table, column, value)
