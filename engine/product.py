@@ -14,10 +14,10 @@ def loaduploaded():
 
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
-    de = dataengine.knightclient()
-    d = de.get_product_single(route)
     if route == "upload-p-variant" or route == "upload-p-variant":
         return ""
+    de = dataengine.knightclient()
+    d = de.get_product_single(route)
     if not d:
         return redirect("/product-manage")
 

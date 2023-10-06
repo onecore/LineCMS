@@ -534,56 +534,9 @@ function p_variant_add_exists(e, loadimage = null) {
   })
 
 
-  p.on('removefile', (error, file) => {
-    // variant_data_history[cont_v + "-ivar"] = file.file.name
-    alert("asdasdasd");
-    p_editdeleteimg("variants",product_data['id'],file.file.name)
-  })
-
-  if (loadimage) {
-    p.addFile(frm);
-  }
-
-
-}
-
-
-// function init_variant_imgs(p,v){
-//   if (run_once){
-//     let fp = p; // filepond OBJ
-//     let varid = v;
-//     console.log("IM RUN ONCE")
-//   }
-//   run_once = false;
-// }
-// var product_data = {
-//   "id": GenID(),
-//   "title": "",
-//   "category": "",
-//   "variants": {},
-//   "product_url": "",
-//   "seo_description": "",
-//   "seo_keywords": "",
-//   "images": [],
-//   "mainimage": "",
-//   "body":"",
-//   "price":"",
-//   "variant_details":{},
-// };
-// var variant_data = [];
-// var variant_data_dict = {};
-// var variant_data_history = {};
-// var images = [];
-
-function p_apidel(fname,idobj){
-
-}
-
-function p_apidel_variants(fname,idobj){}
-
-function p_editdeleteimg(calltype,product_id,file) {
+function p_editdeleteimg(calltype,product_id:,file) {
   //"/api/removeimg/<calltype>/<product_id>/<file>"
-  d = {"calltype":calltype,"product_id":product_id['id'],"file":file}
+  d = {"calltype":calltype,"product_id":product_data['id'],"file":file}
   console.log(d)
   fetch("/api/removeimg-product", {
     method: "POST",
@@ -597,6 +550,16 @@ function p_editdeleteimg(calltype,product_id,file) {
   });
 
 }
+  p.on('removefile', (error, file) => {
+    p_editdeleteimg("variants",product_data['id'],file.file.name);
+  })
+
+  if (loadimage) {
+    p.addFile(frm);
+  }
+
+
+}
 
 
 function p_dele() {
@@ -605,8 +568,6 @@ function p_dele() {
   console.log("variant_data_history", variant_data_history)
   console.log("images", images)
   console.log("mainimage",product_data['mainimage'])
-
-  p_editdeleteimg("variants",product_data['id'],file.file.name)
 
 }
 

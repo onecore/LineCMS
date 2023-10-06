@@ -5,6 +5,9 @@ import urllib
 import re
 import random
 from flask import g
+import json
+import os
+UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 
 class knightclient:
@@ -23,28 +26,45 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
-    def product_remove_image(self, calltype, product_id, file) -> bool:
+    def product_remove_image(self, calltype: str, product_id: str, file: str) -> bool:
         """
         (variants/images/mainimage, product_id, img file)
         Deletes image file from uploads then update db contents (product table)
         """
-
+        product_id = str(product_id)
         _c = self.connection.cursor()
 
         def remove_variant():
             m_fetch = _c.execute(
                 "SELECT variants FROM products WHERE product_id='{m}'".format(m=product_id))
-            m_data = self.m_fetch.fetchone()
+            m_data = m_fetch.fetchone()
+            data = eval(m_data[0])
+            try:  # remove from dict
+                data.pop(file)
+            except Exception as e:
+                print("Error product_remove_image ", e)
+
+            try:
+                _inserts = ""
+            except Exception as e:
+                print("Error product_remove_image ", e)
+
+            try:  # remove local file
+                _rf = UPLOAD_FOLDER_PRODUCTS+"/" + product_id + "/variants/"+file
+                os.remove(os.path.join(_rf))
+            except Exception as e:
+                print("Error product_remove_image ", e)
+            return True
 
         def remove_image():
             m_fetch = _c.execute(
                 "SELECT images FROM products WHERE product_id='{m}'".format(m=product_id))
-            m_data = self.m_fetch.fetchone()
+            m_data = m_fetch.fetchone()
 
         def remove_mainimage():
             m_fetch = _c.execute(
                 "SELECT mainimage FROM products WHERE product_id='{m}'".format(m=product_id))
-            m_data = self.m_fetch.fetchone()
+            m_data = m_fetch.fetchone()
 
         a = {"variants": remove_variant,
              "mainimage": remove_mainimage, "image": remove_image}

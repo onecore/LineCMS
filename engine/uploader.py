@@ -70,7 +70,6 @@ def upload_file_product_variant():
             print("Error: ", e)
             pass
 
-        log("New Logo upload started")
         if keys not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -99,7 +98,7 @@ def upload_file_product_variant():
                 return "true"
 
         except Exception as e:
-            print("Error ", e)
+            print("Error File could be deleted already ", e)
 
         if not stop:
             try:
