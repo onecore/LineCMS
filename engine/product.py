@@ -9,6 +9,39 @@ UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 product = Blueprint("product", __name__)
 
 
+def variantimagemodifier(d: bytes) -> 'json':
+    """
+    tuple->list->tuple, checks if file exists, else modify db data to avoid loading file that doesn't exists
+    - Front-end Modifier no db connection
+    """
+    d = list(d)
+    _variants = eval(d[3])
+    _variants_new = {}
+    _images = list(d[8])
+    _images_new = []
+
+    # mainimage
+    if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{d[9]}"):
+        d[9] = ""
+
+    for variant_name, image_path in _variants.items():  # variants
+        if not os.path.isfile(image_path):
+            _variants_new[variant_name] = ""
+        else:
+            _variants_new[variant_name] = image_path
+
+    for imgs in _images:
+        # images
+        if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{imgs}"):
+            _images.remove(imgs)
+        else:
+            _images.append(imgs)
+
+    d[3] = _variants_new
+    d[8] = _images_new
+    return tuple(d)
+
+
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
     if route == "upload-p-variant" or route == "upload-p-variant":
@@ -18,7 +51,7 @@ def product_edt(route):
     if not d:
         return redirect("/product-manage")
 
-    return render_template("/dashboard/product-edit.html", d=d)
+    return render_template("/dashboard/product-edit.html", d=variantimagemodifier(d))
 
 
 @product.route("/product-new", methods=['POST', 'GET'])

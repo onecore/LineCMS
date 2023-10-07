@@ -371,7 +371,7 @@ function p_del(r) {
   let b = r.id.replace("btnd-", "")
   document.getElementById("variant-table").deleteRow(i);
 
-  // server side del
+  // server side del >>>
   try {
     const dt = {
       data: {
@@ -385,7 +385,7 @@ function p_del(r) {
   }
 
 
-  // server side del
+  // server side del <<<
 
   if (variant_data.length - 1 <= 0) {
     document.getElementById('variant-notice').style.display = "block";
