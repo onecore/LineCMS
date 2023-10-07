@@ -23,23 +23,6 @@ version = "1.4"
 # //   "images": [],
 # //   "mainimage": "",
 # // };
-@api.route("/api/removeimg-product", methods=['POST', 'GET'])
-def api_removeimg_product():
-    """
-    calltype: variant/image/mainimage
-    product_id:  product_id, img file
-    file: image file
-    calls dataengine to remove file and update fb
-    """
-    _dta = json.loads(request.data)
-
-    _de = dataengine.knightclient()
-    ret = _de.product_remove_image(
-        _dta["calltype"], _dta["product_id"], _dta["file"])
-    if ret:
-        return jsonify({"status": 1})
-    else:
-        return jsonify({"status": 0})
 
 
 @api.route("/product-publish", methods=['POST', 'GET'])

@@ -375,8 +375,8 @@ function p_del(r) {
   try {
     const dt = {
       data: {
-        fid: product_data['id'],
-        filev: variant_data_history[b + "-ivar"]
+        "fid": product_data['id'],
+        "filev": variant_data_history[b + "-ivar"]
       }
     };
     const request = axios.delete("/upload-p-variant", dt);
@@ -533,26 +533,26 @@ function p_variant_add_exists(e, loadimage = null) {
     variant_data_history[cont_v + "-ivar"] = file.file.name
   })
 
-
-function p_editdeleteimg(calltype,product_id:,file) {
-  //"/api/removeimg/<calltype>/<product_id>/<file>"
-  d = {"calltype":calltype,"product_id":product_data['id'],"file":file}
-  console.log(d)
-  fetch("/api/removeimg-product", {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(d)
-  }).then(res => {
-    // swal("", 'Module Updated', "success");
-    console.log("Request complete! response:", res);
-  });
-
-}
-  p.on('removefile', (error, file) => {
-    p_editdeleteimg("variants",product_data['id'],file.file.name);
-  })
+//
+// function p_editdeleteimg(calltype,product_id,file, variant) {
+//   //"/api/removeimg/<calltype>/<product_id>/<file>"
+//   d = {"calltype":calltype,"product_id":product_data['id'],"file":file,"variant":variant}
+//   console.log(d)
+//   fetch("/api/removeimg-product", {
+//     method: "POST",
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(d)
+//   }).then(res => {
+//     // swal("", 'Module Updated', "success");
+//     console.log("Request complete! response:", res);
+//   });
+//
+// }
+//   // p.on('removefile', (error, file) => {
+//   //   p_editdeleteimg("variants",product_data['id'],file.file.name,);
+//   // })
 
   if (loadimage) {
     p.addFile(frm);

@@ -85,9 +85,13 @@ def upload_file_product_variant():
             r = custom_folder+"/"+filename
 
             return r
+
     elif request.method == 'DELETE':
+        print(request.data, "<<<<<<< data")
+
         # 2 requests sends to this method (one in plain text & one in json obj)
         stop = 0
+        ############# REMOVE VARIANT DOM (contains json)
         try:
             jsobj = json.loads(request.data)
             if 'filev' in jsobj:
@@ -95,17 +99,19 @@ def upload_file_product_variant():
                     str(jsobj['fid'])+"/variants/"+jsobj['filev']
                 os.remove(os.path.join(_rf))
                 stop = 1
-                return "true"
+                return ""
 
         except Exception as e:
             print("Error File could be deleted already ", e)
 
+        ############# FILEPOND DELETE (contains PATH ONLY)
         if not stop:
             try:
                 os.remove(os.path.join(request.data))
                 return "true"
             except:
-                return "true"
+                return ""
+
     return jsonify({"status": "success"})
 
 
@@ -148,8 +154,10 @@ def upload_file_product():
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
             return r
+
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
+
         return "true"
     return jsonify({"status": "success"})
 

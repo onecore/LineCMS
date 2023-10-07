@@ -3,13 +3,10 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import json
+import os
+UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 product = Blueprint("product", __name__)
-
-
-@product.route("/load", methods=['POST', 'GET'])
-def loaduploaded():
-    pass
 
 
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
