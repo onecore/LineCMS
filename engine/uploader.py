@@ -89,7 +89,7 @@ def upload_file_product_variant():
     elif request.method == 'DELETE':
         print(request.data, "<<<<<<< data")
 
-        # 2 requests sends to this method (one in plain text & one in json obj)
+        # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug)
         stop = 0
         ############# REMOVE VARIANT DOM (contains json)
         try:

@@ -26,61 +26,16 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
-    # hard to maintain in the future / buggy
-    # def product_remove_image(self, calltype: str, product_id: str, file: str, variant: str) -> bool:
-    #     """
-    #     (variants/images/mainimage, product_id, img file)
-    #     Deletes image file from uploads then update db contents (product table)
-    #     """
-    #     product_id = str(product_id)
-    #     _c = self.connection.cursor()
-    #
-    #     def remove_variant():
-    #         m_fetch = _c.execute(
-    #             "SELECT variants FROM products WHERE product_id='{m}'".format(m=product_id))
-    #         m_data = m_fetch.fetchone()
-    #         data = eval(m_data[0])
-    #
-    #         try:  # remove from dict
-    #             data.pop(file)
-    #             print("#1 -> file from dict removed")
-    #
-    #         except Exception as e:
-    #             print("#1 Error product_remove_image ", e)
-    #
-    #         print(">>>DATA:   ", data)
-    #         try:  # insert revised dict
-    #             _inserts = "UPDATE products SET variants = '{v}' WHERE product_id = '{p}';".format(
-    #                 v=json.dumps(data), p=product_id)
-    #             _c.execute(_inserts)
-    #             _c.connection.commit()
-    #             print("#2 -> new dict data inserted")
-    #
-    #         except Exception as e:
-    #             print("#2 -> Error product_remove_image ", e)
-    #         #
-    #         # try:  # remove local file
-    #         #     _rf = UPLOAD_FOLDER_PRODUCTS+"/" + product_id + "/variants/"+file
-    #         #     os.remove(os.path.join(_rf))
-    #         #     print("#3 -> file removed from uploads folder")
-    #         # except Exception as e:
-    #         #     print("#3 -> Error product_remove_image ", e)
-    #
-    #         return True
-    #
-    #     def remove_image():
-    #         m_fetch = _c.execute(
-    #             "SELECT images FROM products WHERE product_id='{m}'".format(m=product_id))
-    #         m_data = m_fetch.fetchone()
-    #
-    #     def remove_mainimage():
-    #         m_fetch = _c.execute(
-    #             "SELECT mainimage FROM products WHERE product_id='{m}'".format(m=product_id))
-    #         m_data = m_fetch.fetchone()
-    #
-    #     a = {"variants": remove_variant,
-    #          "mainimage": remove_mainimage, "image": remove_image}
-    #     return a[calltype]()
+    def productimagesmod(self, variants: dict, images: list, mainimage: str, product_id: str) -> bool:
+        try:
+            variants = json.dumps(variants)
+            _c = self.connection.cursor()
+            _inserts = f"UPDATE products SET variants = '{variants}',images = '{images}', mainimage = '{mainimage}' WHERE product_id = '{product_id}';"
+            _c.execute(_inserts)
+            _c.connection.commit()
+            return True
+        except:
+            return False
 
     def delete_apip(self, table, column, value) -> bool:
         print(table, column, value)

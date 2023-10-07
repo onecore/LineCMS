@@ -12,7 +12,6 @@ product = Blueprint("product", __name__)
 def variantimagemodifier(d: bytes) -> 'json':
     """
     tuple->list->tuple, checks if file exists, else modify db data to avoid loading file that doesn't exists
-    - Front-end Modifier no db connection
     """
     d = list(d)
     _variants = eval(d[3])
@@ -33,12 +32,17 @@ def variantimagemodifier(d: bytes) -> 'json':
     for imgs in _images:
         # images
         if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{imgs}"):
-            _images.remove(imgs)
+            pass
         else:
-            _images.append(imgs)
+            _images_new.append(imgs)
 
     d[3] = _variants_new
     d[8] = _images_new
+
+    de = dataengine.knightclient()
+    modifierinsert = de.productimagesmod(
+        _variants_new, _images_new, d[9], d[13])
+    print(modifierinsert)
     return tuple(d)
 
 
