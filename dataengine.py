@@ -42,7 +42,6 @@ class knightclient:
         try:
             _old = m_fetch.fetchone()
             _dblist_ = eval(_old[0])
-
             if filename not in _dblist_:  # new file add to db
                 ic("not in list adding now")
                 ic("old: ", _dblist_)
@@ -52,7 +51,6 @@ class knightclient:
                 ic("new ", _dblist_)
                 _c.execute(_inserts)
                 self.connection.commit()
-
             return True
         except Exception as e:
             print(e)
@@ -95,9 +93,6 @@ class knightclient:
         try:
             _old = m_fetch.fetchone()
             _new_ = eval(_old[0])
-
-            # {'p_id': 1000258260474, 'p_variant': 'werwer', 'color': None}
-
             _new_[variant_name] = newimage
             variants = json.dumps(_new_)
             _inserts = """UPDATE products SET variants = '{variants}' WHERE product_id = '{product_id}'""".format(
@@ -154,6 +149,18 @@ class knightclient:
             return True
         except Exception as e:
             print(e)
+            return False
+
+    def product_update(self, d) -> bool:
+        _c = self.connection.cursor()
+        params = f"""UPDATE products SET body = "{d['body']}",category = "{d['category']}",images = "{d['images']}", mainimage = "{d['mainimage']}", price = "{d['price']}", product_url = "{d['product_url']}", product_urlsystem = "{d['product_urlsystem']}",  seo_description = "{d['seo_description']}", seo_keywords = "{d['seo_keywords']}",  title = "{d['title']}",  variant_details = "{d['variant_details']}", variants = "{d['variants']}" WHERE product_id = "{d['id']}";"""
+        ic(params)
+        try:
+            _c.execute(params)
+            self.connection.commit()
+            # return ugen
+        except Exception as e:
+            print("Error ", e)
             return False
 
     def product_publish(self, d) -> bool:

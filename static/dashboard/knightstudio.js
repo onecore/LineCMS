@@ -19,7 +19,7 @@ var variant_data_dict = {};
 var variant_data_history = {};
 var images = [];
 var run_once = true;
-
+var err = 0;
 function AutoOff() {
 
 }
@@ -458,16 +458,17 @@ function grabinputs() {
     return false;
 
   }
-  grabvariantdata()
+  return grabvariantdata()
 }
 
 
 function build_variants() {
-  grabinputs();
   for (let i = 0; i < variant_data.length; i++) {
     variant_data_dict[variant_data[i]] = document.getElementsByName(variant_data[i])[0].value
   }
   product_data['variants'] = variant_data_dict
+  return grabinputs();
+
 }
 
 function p_publish() {
@@ -487,6 +488,26 @@ function p_publish() {
 
 }
 
+function p_update() {
+
+  // document.getElementById("loading").style = 'display:block';
+  // document.getElementById("publishb").style = 'display:none';
+  if (build_variants() == false){
+    swal("", 'Please check for any missing information.', "error");
+  }else{
+
+  fetch("/product-update", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(product_data)
+  }).then(res => {
+    // swal("", 'Module Updated', "success");
+    console.log("Request complete! response:", res);
+  });
+
+}}
 
 function p_variant_add_exists(e, loadimage = null) {
   var cont_v = e; //document.getElementById('v-title').value;

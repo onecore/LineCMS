@@ -3,7 +3,7 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import json
-
+from icecream import ic
 _logger = dataengine.knightclient()
 log = _logger.log
 
@@ -23,6 +23,19 @@ version = "1.4"
 # //   "images": [],
 # //   "mainimage": "",
 # // };
+
+@api.route("/product-update", methods=['POST', 'GET'])
+def productupd():
+    _d = json.loads(request.data)
+    _de = dataengine.knightclient()
+    ic(_d)
+    if _d['id']:
+        rs = _de.product_update(_d)
+        if rs:
+            return jsonify({"status": 1, "url": rs})
+        else:
+            return jsonify({"status": 0})
+    return jsonify({"status": 0})
 
 
 @api.route("/product-publish", methods=['POST', 'GET'])

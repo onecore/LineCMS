@@ -5,3 +5,4 @@ werkzeug
 flask_ckeditor
 wtforms
 flask_paginate
+icecream
