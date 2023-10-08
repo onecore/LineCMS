@@ -13,6 +13,7 @@ var product_data = {
   "body": "",
   "price": "",
   "variant_details": {},
+  "hidden":"0",
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -554,28 +555,6 @@ function p_variant_add_exists(e, loadimage = null) {
     variant_data_history[cont_v + "-ivar"] = file.file.name
   })
 
-
-//
-// function p_editdeleteimg(calltype,product_id,file, variant) {
-//   //"/api/removeimg/<calltype>/<product_id>/<file>"
-//   d = {"calltype":calltype,"product_id":product_data['id'],"file":file,"variant":variant}
-//   console.log(d)
-//   fetch("/api/removeimg-product", {
-//     method: "POST",
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(d)
-//   }).then(res => {
-//     // swal("", 'Module Updated', "success");
-//     console.log("Request complete! response:", res);
-//   });
-//
-// }
-//   // p.on('removefile', (error, file) => {
-//   //   p_editdeleteimg("variants",product_data['id'],file.file.name,);
-//   // })
-
   if (loadimage) {
     p.addFile(frm);
   }
@@ -583,13 +562,39 @@ function p_variant_add_exists(e, loadimage = null) {
 
 }
 
-
 function p_dele() {
   console.log("variant_data >>>", variant_data)
   console.log("variant_data_dict >>>", variant_data_dict)
   console.log("variant_data_history", variant_data_history)
   console.log("images", images)
   console.log("mainimage",product_data['mainimage'])
+
+}
+
+function p_showdel(){
+  swal({
+      title: "Are you sure?",
+      text: "Product files and data will be deleted",
+      icon: "warning",
+      buttons: [
+        'Cancel',
+        'Delete'
+      ],
+      dangerMode: true,
+    }).then(function(isConfirm) {
+      if (isConfirm) {
+      }
+    })
+}
+
+function p_showhid(){
+  if (product_data['hidden'] === "0"){
+    product_data['hidden'] = "1";
+    let x = document.getElementById("btnh").textContent = "Unhide product"
+  }else{
+    product_data['hidden'] = "0";
+    let x = document.getElementById("btnh").textContent = "Hide product"
+  }
 
 }
 

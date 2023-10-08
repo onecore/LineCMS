@@ -65,6 +65,7 @@ product_data['mainimage'] = "{{d[9]}}";
 // product_data['body']
 product_data['price'] = "{{d[15]}}";
 product_data['variant_details'] = {{d[10]|safe}};
+product_data['hidden'] = "{{d[12]}}";
 images = product_data['images']
 
 
@@ -271,6 +272,9 @@ localStorage.clear();
                   {% endif %}
                   <center><p class="text-muted p-0">Sys. URL: {{d[5]}}</p></center>
                   <center><p class="text-muted p-0">Product UID: {{d[13]}}</p></center>
+                  <hr>
+                  <center><button type="button" class="btn btn-muted btn-xs border" onclick="p_showhid()" id='btnh'>Hide product</button>&nbsp&nbsp<button type="button" class="btn btn-muted btn-xs border" onclick="p_showdel()" id='btnd'>Delete product</button><br><br></center>
+                  <br>
                 </div>
             </div>
 
@@ -353,7 +357,6 @@ localStorage.clear();
 
                 <br>
                 <button type="button" class="btn btn-primary" onclick="p_update()" id='publishb'>Update product</button>
-                <button type="button" class="btn btn-danger" onclick="p_dele()" id='publishb'>Delete product</button>
                 <button class="btn btn-primary" type="button" disabled style="display:none" id='loading'>
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span class="visually-hidden">Loading...</span>
