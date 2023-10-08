@@ -81,7 +81,7 @@ def upload_file_product_variant():
             r = custom_folder+"/"+filename
             # insert in database (append or replace value)
             de = dataengine.knightclient()
-            d = de.productimagesupdater("variants", _iddc, r)
+            d = de.productvariantsupdater("variants", _iddc, r)
             return r
 
     elif request.method == 'DELETE':
@@ -144,8 +144,9 @@ def upload_file_product():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
+            de = dataengine.knightclient()
+            d = de.productimagesupdater("images", _iddc, r)
             return r
-
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
         print(f"DELETED IMAGE FILE: {request.data}")

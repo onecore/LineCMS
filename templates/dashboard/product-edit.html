@@ -461,6 +461,7 @@ localStorage.clear();
           labelIdle: "Drop or Browse images",
           fileMetadataObject: {
               p_id: product_data['id'],
+              p_type: "images",
           },
     });
     var fl = {{d[8]|safe}}
@@ -477,6 +478,7 @@ localStorage.clear();
           credits: false,
           fileMetadataObject: {
               p_id: product_data['id'],
+              p_type: "main",
           },
     });
     {% if d[9] %}
