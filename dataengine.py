@@ -158,7 +158,7 @@ class knightclient:
         try:
             _c.execute(params)
             self.connection.commit()
-            # return ugen
+            return d['product_urlsystem']
         except Exception as e:
             print("Error ", e)
             return False
