@@ -44,14 +44,12 @@ def showuploaded_products_variant(folderid, file) -> str:
 @uploader.route('/product-edit/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_variant():
-
     if request.method == 'POST':
         _iddc = dict(request.form)
         _id = None
         keys = list(_iddc.keys())[0]
         fd = dict(_iddc)[keys]
         _iddc = (json.loads(fd))  # js to py dict
-
         try:
             if _iddc['p_id']:
                 _id = _iddc['p_id']
@@ -59,10 +57,8 @@ def upload_file_product_variant():
                 return False
         except:
             return False
-
         custom_folder = os.path.join(
             UPLOAD_FOLDER_PRODUCTS, str(_id)+"/variants")
-
         try:
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
@@ -71,15 +67,11 @@ def upload_file_product_variant():
             pass
 
         if keys not in request.files:
-            flash('No file part')
             return redirect(request.url)
         file = request.files[keys]
         if file.filename == '':
-            flash('No selected file')
-            print("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
@@ -87,8 +79,6 @@ def upload_file_product_variant():
             return r
 
     elif request.method == 'DELETE':
-        print(request.data, "<<<<<<< data")
-
         # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug)
         stop = 0
         ############# REMOVE VARIANT DOM (contains json)
@@ -100,18 +90,17 @@ def upload_file_product_variant():
                 os.remove(os.path.join(_rf))
                 stop = 1
                 return ""
-
         except Exception as e:
-            print("Error File could be deleted already ", e)
+            print("Cant delete", e)
 
         ############# FILEPOND DELETE (contains PATH ONLY)
         if not stop:
             try:
                 os.remove(os.path.join(request.data))
+                print(f"DELETED IMAGE FILE: {request.data}")
                 return "true"
             except:
                 return ""
-
     return jsonify({"status": "success"})
 
 
@@ -141,15 +130,11 @@ def upload_file_product():
 
         log("New Logo upload started")
         if 'file' not in request.files:
-            flash('No file part')
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
-            flash('No selected file')
-            print("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
@@ -157,7 +142,7 @@ def upload_file_product():
 
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
-
+        print(f"DELETED IMAGE FILE: {request.data}")
         return "true"
     return jsonify({"status": "success"})
 

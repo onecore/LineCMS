@@ -16,7 +16,7 @@ def variantimagemodifier(d: bytes) -> 'json':
     d = list(d)
     _variants = eval(d[3])
     _variants_new = {}
-    _images = list(d[8])
+    _images = eval(d[8])
     _images_new = []
 
     # mainimage
@@ -30,19 +30,17 @@ def variantimagemodifier(d: bytes) -> 'json':
             _variants_new[variant_name] = image_path
 
     for imgs in _images:
-        # images
         if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{imgs}"):
             pass
         else:
             _images_new.append(imgs)
 
     d[3] = _variants_new
-    d[8] = _images_new
+    d[8] = json.dumps(_images_new)
 
     de = dataengine.knightclient()
     modifierinsert = de.productimagesmod(
         _variants_new, _images_new, d[9], d[13])
-    print(modifierinsert)
     return tuple(d)
 
 

@@ -27,14 +27,20 @@ class knightclient:
         return _v
 
     def productimagesmod(self, variants: dict, images: list, mainimage: str, product_id: str) -> bool:
+        """
+        called from @product-edit to update file-not-found as empty and updates db
+        """
         try:
             variants = json.dumps(variants)
             _c = self.connection.cursor()
-            _inserts = f"UPDATE products SET variants = '{variants}',images = '{images}', mainimage = '{mainimage}' WHERE product_id = '{product_id}';"
+            _inserts = """UPDATE products SET variants = '{variants}',images = "{images}", mainimage = '{mainimage}' WHERE product_id = '{product_id}'""".format(
+                variants=variants, images=images, mainimage=mainimage, product_id=product_id)
+            print(_inserts)
             _c.execute(_inserts)
-            _c.connection.commit()
+            self.connection.commit()
             return True
-        except:
+        except Exception as e:
+            print(f"productimagesmod() error: {e}")
             return False
 
     def delete_apip(self, table, column, value) -> bool:
