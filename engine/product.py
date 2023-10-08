@@ -62,8 +62,8 @@ def product_new():
 
 
 @product.route("/product-manage", methods=['POST', 'GET'])
-def product_mng():
-    alert = ""
+@product.route("/product-manage/<alert>", methods=['POST', 'GET'])
+def product_mng(alert=None):
     de = dataengine.knightclient()
     search = False
     q = request.args.get('q')

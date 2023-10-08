@@ -583,6 +583,18 @@ function p_showdel(){
       dangerMode: true,
     }).then(function(isConfirm) {
       if (isConfirm) {
+          fetch("/product-d", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"id":product_data['id']})
+          }).then(res => {
+            // swal("", 'Module Updated', "success");
+            if (res['status']){
+              location.href = "/product-manage/1"
+            };
+          });
       }
     })
 }
@@ -598,6 +610,6 @@ function p_showhid(){
 
 }
 
-window.onbeforeunload = function() {
-  return "Leaving this page will not save your product information.";
-}
+// window.onbeforeunload = function() {
+//   return "Leaving this page will not save your product information.";
+// }

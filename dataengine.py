@@ -121,6 +121,20 @@ class knightclient:
             print(f"productimagesmod() error: {e}")
             return False
 
+    def delete_pr(self, value) -> bool:
+        q = """DELETE FROM products WHERE product_id = '{value}';""".format(
+            value=value)
+        _c = self.connection.cursor()
+
+        try:
+            _c.execute(q)
+            self.connection.commit()
+            self.log("Product deleted")
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def delete_apip(self, table, column, value) -> bool:
         print(table, column, value)
         q = """DELETE FROM {tb} WHERE product_urlsystem = '{value}';""".format(
@@ -153,7 +167,7 @@ class knightclient:
 
     def product_update(self, d) -> bool:
         _c = self.connection.cursor()
-        params = f"""UPDATE products SET body = "{d['body']}",category = "{d['category']}",images = "{d['images']}", mainimage = "{d['mainimage']}", price = "{d['price']}", product_url = "{d['product_url']}", product_urlsystem = "{d['product_urlsystem']}",  seo_description = "{d['seo_description']}", seo_keywords = "{d['seo_keywords']}",  title = "{d['title']}",  variant_details = "{d['variant_details']}", variants = "{d['variants']}" WHERE product_id = "{d['id']}";"""
+        params = f"""UPDATE products SET body = "{d['body']}",category = "{d['category']}",images = "{d['images']}", mainimage = "{d['mainimage']}", price = "{d['price']}", product_url = "{d['product_url']}", product_urlsystem = "{d['product_urlsystem']}",  seo_description = "{d['seo_description']}", seo_keywords = "{d['seo_keywords']}",  title = "{d['title']}",  variant_details = "{d['variant_details']}", variants = "{d['variants']}", hidden = "{d['hidden']}" WHERE product_id = "{d['id']}";"""
         ic(params)
         try:
             _c.execute(params)

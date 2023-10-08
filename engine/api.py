@@ -38,6 +38,20 @@ def productupd():
     return jsonify({"status": 0})
 
 
+@api.route("/product-d", methods=['POST', 'GET'])
+def productdel():
+    _d = json.loads(request.data)
+    _de = dataengine.knightclient()
+    ic(_d)
+    if _d['id']:
+        rs = _de.delete_pr(_d['id'])
+        if rs:
+            return jsonify({"status": 1, "url": rs})
+        else:
+            return jsonify({"status": 0})
+    return jsonify({"status": 0})
+
+
 @api.route("/product-publish", methods=['POST', 'GET'])
 def productpub():
     _d = json.loads(request.data)

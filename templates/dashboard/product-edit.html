@@ -273,7 +273,13 @@ localStorage.clear();
                   <center><p class="text-muted p-0">Sys. URL: {{d[5]}}</p></center>
                   <center><p class="text-muted p-0">Product UID: {{d[13]}}</p></center>
                   <hr>
-                  <center><button type="button" class="btn btn-muted btn-xs border" onclick="p_showhid()" id='btnh'>Hide product</button>&nbsp&nbsp<button type="button" class="btn btn-muted btn-xs border" onclick="p_showdel()" id='btnd'>Delete product</button><br><br></center>
+                  <center>
+                  {% if d[12] == '0'%}
+                  <button type="button" class="btn btn-muted btn-xs border" onclick="p_showhid()" id='btnh'>Hide product</button>
+                  {% else %}
+                  <button type="button" class="btn btn-muted btn-xs border" onclick="p_showhid()" id='btnh'>Unhide product</button>
+                  {% endif %}
+                    &nbsp&nbsp<button type="button" class="btn btn-muted btn-xs border" onclick="p_showdel()" id='btnd'>Delete product</button><br><br></center>
                   <br>
                 </div>
             </div>
