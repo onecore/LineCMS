@@ -123,8 +123,8 @@ def upload_file_product_images():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            # de = dataengine.knightclient()
-            # d = de.productimagesupdater("images", _iddc, r)
+            de = dataengine.knightclient()
+            d = de.productimagesupdater("images", _iddc, r, filename)
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))

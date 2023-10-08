@@ -28,6 +28,36 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def productimagesupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
+        """
+        Loads data from product table
+        pars: variants, images, mainimage
+        trigger: uploader (images)
+        """
+        _c = self.connection.cursor()
+        m_fetch = _c.execute(
+            "SELECT {sel} FROM products WHERE product_id='{m}'".format(
+                sel=imgcat, m=data['p_id'])
+            )
+        try:
+            _old = m_fetch.fetchone()
+            _dblist_ = eval(_old[0])
+
+            if filename not in _dblist_:  # new file add to db
+                ic("not in list adding now")
+                ic("old: ", _dblist_)
+                _dblist_.append(filename)
+                _inserts = """UPDATE products SET images = "{i}" WHERE product_id = '{product_id}'""".format(
+                    i=_dblist_, product_id=data['p_id'])
+                ic("new ", _dblist_)
+                _c.execute(_inserts)
+                self.connection.commit()
+
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def productmainupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
         """
         Loads data from product table
@@ -45,35 +75,6 @@ class knightclient:
                 mainm=filename, product_id=data['p_id'])
             _c.execute(_inserts)
             self.connection.commit()
-            return True
-        except Exception as e:
-            print(e)
-            return False
-
-    def productimagesupdater(self, imgcat: str, data: dict, newimage: str) -> tuple:
-        """
-        Loads data from product table
-        pars: variants, images, mainimage
-        trigger: uploader (images)
-        """
-        variant_name = data['p_variant']+"-ivar"
-        _c = self.connection.cursor()
-        m_fetch = _c.execute(
-            "SELECT {sel} FROM products WHERE product_id='{m}'".format(
-                sel=imgcat, m=data['p_id'])
-            )
-        try:
-            _old = m_fetch.fetchone()
-            _new_ = eval(_old[0])
-
-            # {'p_id': 1000258260474, 'p_variant': 'werwer', 'color': None}
-
-            _new_[variant_name] = newimage
-            # variants = json.dumps(_new_)
-            # _inserts = """UPDATE products SET images = "{variants}" WHERE product_id = '{product_id}'""".format(
-            #     variants=variants, product_id=data['p_id'])
-            # _c.execute(_inserts)
-            # self.connection.commit()
             return True
         except Exception as e:
             print(e)
