@@ -41,6 +41,98 @@ def showuploaded_products_variant(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
 
 
+@uploader.route('/product-edit/upload-p-main', methods=['POST', 'GET', 'DELETE'])
+@uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
+def upload_file_product_main():
+    """
+    Main image file uploade
+    """
+    if request.method == 'POST':
+        _id = None
+        _iddc = dict(request.form)
+        fd = dict(_iddc)['file']
+        _iddc = (json.loads(fd))  # js to py dict
+        try:
+            if _iddc['p_id']:
+                _id = _iddc['p_id']
+            else:
+                return False
+        except:
+            return False
+        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
+        try:
+            if not os.path.exists(custom_folder):
+                os.makedirs(custom_folder)
+        except Exception as e:
+            print("Error: ", e)
+            pass
+
+        log("New Logo upload started")
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(custom_folder, filename))
+            r = custom_folder+"/"+filename
+            de = dataengine.knightclient()
+            d = de.productmainupdater("mainimage", _iddc, r, filename=filename)
+            return r
+    elif request.method == 'DELETE':
+        os.remove(os.path.join(request.data))
+        print(f"DELETED IMAGE FILE: {request.data}")
+        return "true"
+    return jsonify({"status": "success"})
+
+
+@uploader.route('/product-edit/upload-p-images', methods=['POST', 'GET', 'DELETE'])
+@uploader.route('/upload-p-images', methods=['POST', 'GET', 'DELETE'])
+def upload_file_product_images():
+    """
+    Images files upload
+    """
+    if request.method == 'POST':
+        _id = None
+        _iddc = dict(request.form)
+        fd = dict(_iddc)['file']
+        _iddc = (json.loads(fd))  # js to py dict
+        try:
+            if _iddc['p_id']:
+                _id = _iddc['p_id']
+            else:
+                return False
+        except:
+            return False
+        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
+        try:
+            if not os.path.exists(custom_folder):
+                os.makedirs(custom_folder)
+        except Exception as e:
+            print("Error: ", e)
+            pass
+
+        log("New Logo upload started")
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(custom_folder, filename))
+            r = custom_folder+"/"+filename
+            # de = dataengine.knightclient()
+            # d = de.productimagesupdater("images", _iddc, r)
+            return r
+    elif request.method == 'DELETE':
+        os.remove(os.path.join(request.data))
+        print(f"DELETED IMAGE FILE: {request.data}")
+        return "true"
+    return jsonify({"status": "success"})
+
+
 @uploader.route('/product-edit/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_variant():
@@ -107,50 +199,6 @@ def upload_file_product_variant():
                 return "true"
             except:
                 return ""
-    return jsonify({"status": "success"})
-
-
-@uploader.route('/product-edit/upload-p-main', methods=['POST', 'GET', 'DELETE'])
-@uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
-def upload_file_product():
-
-    if request.method == 'POST':
-        _id = None
-        _iddc = dict(request.form)
-        fd = dict(_iddc)['file']
-        _iddc = (json.loads(fd))  # js to py dict
-        try:
-            if _iddc['p_id']:
-                _id = _iddc['p_id']
-            else:
-                return False
-        except:
-            return False
-        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
-        try:
-            if not os.path.exists(custom_folder):
-                os.makedirs(custom_folder)
-        except Exception as e:
-            print("Error: ", e)
-            pass
-
-        log("New Logo upload started")
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(custom_folder, filename))
-            r = custom_folder+"/"+filename
-            de = dataengine.knightclient()
-            d = de.productimagesupdater("images", _iddc, r)
-            return r
-    elif request.method == 'DELETE':
-        os.remove(os.path.join(request.data))
-        print(f"DELETED IMAGE FILE: {request.data}")
-        return "true"
     return jsonify({"status": "success"})
 
 

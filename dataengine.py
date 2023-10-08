@@ -7,6 +7,8 @@ import random
 from flask import g
 import json
 import os
+from icecream import ic
+
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 
@@ -26,30 +28,23 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
-    def productmainimageupdater(self, imgcat: str, data: dict, newimage: str) -> tuple:
+    def productmainupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
         """
         Loads data from product table
         pars: variants, images, mainimage
-        trigger: uploader (variant & main)
+        trigger: uploader (main)
         """
-        variant_name = data['p_variant']+"-ivar"
         _c = self.connection.cursor()
         m_fetch = _c.execute(
             "SELECT {sel} FROM products WHERE product_id='{m}'".format(
                 sel=imgcat, m=data['p_id'])
             )
+        _old = m_fetch.fetchone()
         try:
-            _old = m_fetch.fetchone()
-            _new_ = eval(_old[0])
-
-            # {'p_id': 1000258260474, 'p_variant': 'werwer', 'color': None}
-
-            _new_[variant_name] = newimage
-            # variants = json.dumps(_new_)
-            # _inserts = """UPDATE products SET images = "{variants}" WHERE product_id = '{product_id}'""".format(
-            #     variants=variants, product_id=data['p_id'])
-            # _c.execute(_inserts)
-            # self.connection.commit()
+            _inserts = """UPDATE products SET mainimage = "{mainm}" WHERE product_id = '{product_id}'""".format(
+                mainm=filename, product_id=data['p_id'])
+            _c.execute(_inserts)
+            self.connection.commit()
             return True
         except Exception as e:
             print(e)
@@ -59,7 +54,7 @@ class knightclient:
         """
         Loads data from product table
         pars: variants, images, mainimage
-        trigger: uploader (variant & main)
+        trigger: uploader (images)
         """
         variant_name = data['p_variant']+"-ivar"
         _c = self.connection.cursor()
@@ -88,7 +83,7 @@ class knightclient:
         """
         Loads data from product table
         pars: variants, images, mainimage
-        trigger: uploader (variant & main)
+        trigger: uploader (variant)
         """
         variant_name = data['p_variant']+"-ivar"
         _c = self.connection.cursor()
