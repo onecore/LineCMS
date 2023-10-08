@@ -101,7 +101,7 @@ localStorage.clear();
         </div>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
-        <h4 class="text-dark ms-auto">Update product</h4>
+        <h4 class="text-dark ms-auto">Update product</h4><br>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item d-none d-sm-block">
               <span class="input-group-addon input-group-prepend border-right">
@@ -215,6 +215,9 @@ localStorage.clear();
       <!-- partial -->
       <div class="main-panel">
         <div class="container">
+          <div class="alert alert-warning text-muted" role="alert">
+            Please be advised, Deleting any image from Main image, Images list and Variant's are not revertable.
+          </div>
           <div class="row">
             <div class="col-12 col-md-4 p-3">
 
@@ -261,7 +264,7 @@ localStorage.clear();
                   <hr>
                   <center><h4 class="badge badge-dark text-mute">Information</h4></center>
                   <center><p class="text-muted p-0">Timestamp: {{d[11]}}</p></center>
-                  {% if d[12] == '1'%}
+                  {% if d[12] == '0'%}
                   <center><p class="text-muted p-0">Live: Product is Live</p></center>
                   {% else %}
                   <center><p class="text-muted p-0">Live: Product is Hidden</p></center>

@@ -71,27 +71,30 @@ def upload_file_product_variant():
         file = request.files[keys]
         if file.filename == '':
             return redirect(request.url)
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-
+            # insert in database (append or replace value)
+            de = dataengine.knightclient()
+            d = de.productimagesupdater("variants", _iddc, r)
             return r
 
     elif request.method == 'DELETE':
         # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug)
         stop = 0
         ############# REMOVE VARIANT DOM (contains json)
-        try:
-            jsobj = json.loads(request.data)
-            if 'filev' in jsobj:
-                _rf = UPLOAD_FOLDER_PRODUCTS+"/" + \
-                    str(jsobj['fid'])+"/variants/"+jsobj['filev']
-                os.remove(os.path.join(_rf))
-                stop = 1
-                return ""
-        except Exception as e:
-            print("Cant delete", e)
+        # try:
+        #     jsobj = json.loads(request.data)
+        #     if 'filev' in jsobj:
+        #         _rf = UPLOAD_FOLDER_PRODUCTS+"/" + \
+        #             str(jsobj['fid'])+"/variants/"+jsobj['filev']
+        #         os.remove(os.path.join(_rf))
+        #         stop = 1
+        #         return ""
+        # except Exception as e:
+        #     print("Cant delete", e)
 
         ############# FILEPOND DELETE (contains PATH ONLY)
         if not stop:

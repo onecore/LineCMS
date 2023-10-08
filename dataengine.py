@@ -26,16 +26,45 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def productimagesupdater(self, imgcat: str, data: dict, newimage: str) -> tuple:
+        """
+        Loads data from product table
+        pars: variants, images, mainimage
+        trigger: uploader (variant & main)
+        """
+        variant_name = data['p_variant']+"-ivar"
+        _c = self.connection.cursor()
+        m_fetch = _c.execute(
+            "SELECT {sel} FROM products WHERE product_id='{m}'".format(
+                sel=imgcat, m=data['p_id'])
+            )
+        try:
+            _old = m_fetch.fetchone()
+            _new_ = eval(_old[0])
+
+            # {'p_id': 1000258260474, 'p_variant': 'werwer', 'color': None}
+
+            _new_[variant_name] = newimage
+            variants = json.dumps(_new_)
+            _inserts = """UPDATE products SET variants = '{variants}' WHERE product_id = '{product_id}'""".format(
+                variants=variants, product_id=data['p_id'])
+            _c.execute(_inserts)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def productimagesmod(self, variants: dict, images: list, mainimage: str, product_id: str) -> bool:
         """
-        called from @product-edit to update file-not-found as empty and updates db
+        Update file-not-found as empty and updates db
+        trigger: product.variantimagemodifier
         """
         try:
             variants = json.dumps(variants)
             _c = self.connection.cursor()
             _inserts = """UPDATE products SET variants = '{variants}',images = "{images}", mainimage = '{mainimage}' WHERE product_id = '{product_id}'""".format(
                 variants=variants, images=images, mainimage=mainimage, product_id=product_id)
-            print(_inserts)
             _c.execute(_inserts)
             self.connection.commit()
             return True

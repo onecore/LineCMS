@@ -533,6 +533,7 @@ function p_variant_add_exists(e, loadimage = null) {
     variant_data_history[cont_v + "-ivar"] = file.file.name
   })
 
+
 //
 // function p_editdeleteimg(calltype,product_id,file, variant) {
 //   //"/api/removeimg/<calltype>/<product_id>/<file>"
