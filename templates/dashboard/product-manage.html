@@ -332,8 +332,6 @@ swal("", `{{error}}`, "warning");
                 <li class="nav-item"> <a class="nav-link" href="/dashboard">Website</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/account">Account</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/modules">Modules</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/productsetting">Product settings</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/blogsetting">Blog settings</a></li>
               </ul>
             </div>
           </li>
@@ -350,6 +348,8 @@ swal("", `{{error}}`, "warning");
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/product-new">New Product</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/product-manage"><b class="text-warning">Manage Products</b></a></li>
+                <li class="nav-item"> <a class="nav-link" href="/product-settings">Settings</a></li>
+
               </ul>
             </div>
             <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false" aria-controls="KnightStudio-blog">
@@ -361,6 +361,7 @@ swal("", `{{error}}`, "warning");
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/blog-new">New Post</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-settings">Settings</a></li>
               </ul>
             </div>
 
@@ -512,7 +513,7 @@ swal("", `{{error}}`, "warning");
                   {% endfor %}
                 </tbody>
             </table>
-            {% if not blog %}
+            {% if not product %}
             <br>
             <center><p>You don't have any post yet, <a href="/blog-new">Write a blog now</a></p> </center>
             {% endif %}
