@@ -44,6 +44,9 @@ def showuploaded_products_variant(folderid, file) -> str:
 @uploader.route('/product-edit/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_variant():
+    """
+    File upload for variants
+    """
     if request.method == 'POST':
         _iddc = dict(request.form)
         _id = None
