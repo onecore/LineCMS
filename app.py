@@ -17,6 +17,7 @@ from flask_ckeditor import CKEditor
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import renderfunc as rf
+from enginepublic import loaders
 
 # Dashboard imports/views
 from engine.blog import blog
@@ -88,7 +89,7 @@ app.register_blueprint(mains)
 
 
 """
-functions for Jinja templating
+functions for Jinja templating (Dashboard)
 """
 app.jinja_env.globals.update(blog_list_badge_category=rf.ks_badge_insert)
 app.jinja_env.globals.update(admin_button=rf.ks_include_adminbutton)
@@ -96,3 +97,9 @@ app.jinja_env.globals.update(khtml2text=rf.ks_html2text)
 app.jinja_env.globals.update(ks_tolist=rf.ks_tolist)
 app.jinja_env.globals.update(ks_getdictkeys=rf.ks_getdictkeys)
 app.jinja_env.globals.update(ks_tojson=rf.ks_tojson)
+
+"""
+functions for Jinja templating (Public)
+"""
+app.jinja_env.globals.update(loadblogs=loaders.loadblogs)
+app.jinja_env.globals.update(loadproducts=loaders.loadproducts)
