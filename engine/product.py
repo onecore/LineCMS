@@ -4,9 +4,49 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import json
 import os
+from icecream import ic
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 product = Blueprint("product", __name__)
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
+
+
+def allowed_file(filename) -> str:
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def getimages(ids):
+    res = []
+
+    # Iterate directory
+    dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
+    for file_path in os.listdir(dir_path):
+        # check if current file_path is a file
+        if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
+            # add filename to list
+            res.append(file_path)
+    if res:
+        return res
+    else:
+        return []
+
+
+def getmainimage(ids):
+    res = []
+
+    # Iterate directory
+    dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}/mainimage"
+    for file_path in os.listdir(dir_path):
+        # check if current file_path is a file
+        if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
+            # add filename to list
+            res.append(file_path)
+    if res:
+        return res[0]
+    else:
+        return ""
 
 
 def variantimagemodifier(d: bytes) -> 'json':
@@ -16,12 +56,8 @@ def variantimagemodifier(d: bytes) -> 'json':
     d = list(d)
     _variants = eval(d[3])
     _variants_new = {}
-    _images = eval(d[8])
-    _images_new = []
 
     # mainimage
-    if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{d[9]}"):
-        d[9] = ""
 
     for variant_name, image_path in _variants.items():  # variants
         if not os.path.isfile(image_path):
@@ -29,18 +65,14 @@ def variantimagemodifier(d: bytes) -> 'json':
         else:
             _variants_new[variant_name] = image_path
 
-    for imgs in _images:
-        if not os.path.isfile(f"{UPLOAD_FOLDER_PRODUCTS}/{d[13]}/{imgs}"):
-            pass
-        else:
-            _images_new.append(imgs)
-
     d[3] = _variants_new
-    d[8] = json.dumps(_images_new)
+    d[8] = json.dumps(getimages(d[13]))
+    d[9] = getmainimage(d[13])
 
     de = dataengine.knightclient()
     modifierinsert = de.productimagesmod(
-        _variants_new, _images_new, d[9], d[13])
+        _variants_new, d[13])
+
     return tuple(d)
 
 

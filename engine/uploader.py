@@ -36,6 +36,11 @@ def showuploaded_products(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid, file)
 
 
+@uploader.route("/media/mainimage/<folderid>/<file>")
+def showuploaded_productsmainimage(folderid, file) -> str:
+    return send_from_directory("static/dashboard/uploads/products/"+folderid+"/mainimage", file)
+
+
 @uploader.route("/media/variant/<folderid>/<file>")
 def showuploaded_products_variant(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
@@ -59,7 +64,8 @@ def upload_file_product_main():
                 return False
         except:
             return False
-        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
+        custom_folder = os.path.join(
+            UPLOAD_FOLDER_PRODUCTS, str(_id)+"/mainimage")
         try:
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
@@ -77,8 +83,8 @@ def upload_file_product_main():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            de = dataengine.knightclient()
-            d = de.productmainupdater("mainimage", _iddc, r, filename=filename)
+            # de = dataengine.knightclient()
+            # d = de.productmainupdater("mainimage", _iddc, r, filename=filename)
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
@@ -123,8 +129,8 @@ def upload_file_product_images():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            de = dataengine.knightclient()
-            d = de.productimagesupdater("images", _iddc, r, filename)
+            # de = dataengine.knightclient()
+            # d = de.productimagesupdater("images", _iddc, r, filename)
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))

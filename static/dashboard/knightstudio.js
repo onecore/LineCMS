@@ -563,6 +563,7 @@ function p_variant_add_exists(e, loadimage = null) {
 }
 
 function p_dele() {
+  build_variants()
   console.log("variant_data >>>", variant_data)
   console.log("variant_data_dict >>>", variant_data_dict)
   console.log("variant_data_history", variant_data_history)

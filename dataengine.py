@@ -104,7 +104,7 @@ class knightclient:
             print(e)
             return False
 
-    def productimagesmod(self, variants: dict, images: list, mainimage: str, product_id: str) -> bool:
+    def productimagesmod(self, variants: dict, product_id: str) -> bool:
         """
         Update file-not-found as empty and updates db
         trigger: product.variantimagemodifier
@@ -112,8 +112,8 @@ class knightclient:
         try:
             variants = json.dumps(variants)
             _c = self.connection.cursor()
-            _inserts = """UPDATE products SET variants = '{variants}',images = "{images}", mainimage = '{mainimage}' WHERE product_id = '{product_id}'""".format(
-                variants=variants, images=images, mainimage=mainimage, product_id=product_id)
+            _inserts = """UPDATE products SET variants = '{variants}' WHERE product_id = '{product_id}'""".format(
+                variants=variants, product_id=product_id)
             _c.execute(_inserts)
             self.connection.commit()
             return True
@@ -172,6 +172,7 @@ class knightclient:
         try:
             _c.execute(params)
             self.connection.commit()
+            ic("Product Update success")
             return d['product_urlsystem']
         except Exception as e:
             print("Error ", e)
