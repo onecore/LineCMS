@@ -8,13 +8,15 @@ mains = Blueprint("mains", __name__)
 _logger = dataengine.knightclient()
 log = _logger.log
 
+themes = "default"
+
 
 @mains.route("/")
 @mains.route("/index")
 @mains.route("/main")
 def main():
     """
-    main page
+    main page / index
     """
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
@@ -29,4 +31,4 @@ def main():
         "custom": eval(all_d[5]),
         "extras": eval(all_d[6]),
     }
-    return render_template("index.html", data=dt, mod=mod)
+    return render_template(f"/SYSTEM/{themes}/index.html", data=dt, mod=mod)

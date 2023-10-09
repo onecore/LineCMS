@@ -1,7 +1,7 @@
 """
 KnightSolutions Canada
 Extendable Content Manage System for any Website template
-www.KnightSolutions.ca - KnightStudio Dashboard / Client files
+www.KnightStudio.ca - KnightStudio Dashboard / Client files
 Aug 31,2023
 www.sinsoro.com - SinsoroCMS / Client files
 Sept 19, 2023
@@ -18,20 +18,24 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import renderfunc as rf
 
-
+# Dashboard imports/views
 from engine.blog import blog
 from engine.api import api
 from engine.uploader import uploader
 from engine.product import product
-from engine.main import mains
 from engine.modules import module
 from engine.dashboard import dashboard
 from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
-from engine.productuser import productuser
-# from helpers import robotmap
+# Dashboard imports/views
+
+# Public views
+from enginepublic.product import productuser
+from enginepublic.blog import bloguser
+from enginepublic.main import mains
+# Public views
 
 ckeditor = CKEditor()
 
@@ -57,14 +61,16 @@ app.register_blueprint(blog)
 app.register_blueprint(api)
 app.register_blueprint(uploader)
 app.register_blueprint(product)
-app.register_blueprint(mains)
 app.register_blueprint(module)
 app.register_blueprint(dashboard)
 app.register_blueprint(account)
 app.register_blueprint(message)
 app.register_blueprint(logins)
 app.register_blueprint(other)
+
 app.register_blueprint(productuser)
+app.register_blueprint(bloguser)
+app.register_blueprint(mains)
 
 
 # @app.route("/<file>.txt")

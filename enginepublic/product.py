@@ -13,11 +13,12 @@ productuser = Blueprint(
                         )
 
 
+@productuser.route("/product", methods=['GET', 'POST'])
+def publicproductpage(pid=None):
+    return render_template(f"/SYSTEM/{themes}/product.html")
+
+
 @productuser.route("/ks/<folder>/<file>")
 def staticgetter(folder: str, file: str) -> str:
     return send_from_directory(f"static/SYSTEM/default/{folder}", file)
-
-
-@productuser.route("/product", methods=['GET', 'POST'])
-def publicproductpage(pid=None):
-    return render_template(f"/SYSTEM/{themes}/index.html")
+    return send_from_directory(f"static/SYSTEM/default/{folder}", file)
