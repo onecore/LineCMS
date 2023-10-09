@@ -30,6 +30,7 @@ from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
+from engine.productuser import productuser
 # from helpers import robotmap
 
 ckeditor = CKEditor()
@@ -63,6 +64,7 @@ app.register_blueprint(account)
 app.register_blueprint(message)
 app.register_blueprint(logins)
 app.register_blueprint(other)
+app.register_blueprint(productuser)
 
 
 # @app.route("/<file>.txt")

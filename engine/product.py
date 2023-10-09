@@ -76,9 +76,3 @@ def product_mng(alert=None):
                             search=search, record_name='product', css_framework="bootstrap5")
 
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
-
-
-@product.route("/product/<id>")
-@product.route("/product/")
-def mainproductview(pid=None):
-    return render_template("/product.html")
