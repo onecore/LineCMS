@@ -72,13 +72,21 @@
                     {% if new %}
                     <center>
                     <div class="alert alert-success" role="alert">
-                      Blog post published and is now Live
+                      Product is now live!
                       <br><a class="btn btn-primary btn-xs rounded" href="/product-edit/{{product[5]}}"> Update product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-new"> Create new product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-manage"> View all products</a>
                     </div>
                   </center>
                     {% endif %}
                     <article>
+                    <div class="row">
+                    <img src="/media/mainimage/{{product[13]}}/{{product[9]}}" class="img-fluid" alt="Responsive image">
+                    </div>
+                      {% for image in images %}
+                      <div class="col col-sm-3">
+                      <img src="/media/products/{{product[13]}}/{{image}}">
+                      </div>
 
+                      {% endfor %}
                     </article>
                     {% if 'authenticated' in session %}
                     <center><a class="btn btn-primary" href="/product-edit/{{product[5]}}">Edit this product</a></center>

@@ -4,6 +4,8 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import json
 import os
+from icecream import ic
+from engine.product import getimages, getmainimage
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 themes = "default"
@@ -30,7 +32,8 @@ def publicproductpage(new=None, pid=None):
         "extras": eval(all_d[6]),
     }
     product = de.get_product_single(pid)
-    return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt, new=new)
+    ic(product)
+    return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt, new=new, images=getimages(product[13]))
 
 
 @productuser.route("/ks/<folder>/<file>")
