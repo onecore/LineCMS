@@ -489,7 +489,7 @@ function p_publish() {
 
 }
 
-function p_update() {
+function p_updatepost() {
 
   // document.getElementById("loading").style = 'display:block';
   // document.getElementById("publishb").style = 'display:none';
@@ -505,7 +505,7 @@ function p_update() {
     body: JSON.stringify(product_data)
   }).then(res => {
     // swal("", 'Module Updated', "success");
-    console.log("Request complete! response:", res);
+     location.href = "/product/1/"+product_data['product_urlsystem']
   });
 
 }}
