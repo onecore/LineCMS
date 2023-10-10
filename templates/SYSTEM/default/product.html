@@ -23,9 +23,12 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/ks/css/bootstrap.min.css" rel="stylesheet">
-
+    <link type="text/css" rel="stylesheet" href="/ks/css/lightslider.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/ks/js/lightslider.js"></script>
     </head>
     <body>
+
         <!-- Responsive navbar-->
       <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -59,15 +62,14 @@
         <div class="container mt-5">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/product-list">Product</a></li>
+
 
             </ol>
           </nav>
 
             <div class="row">
 
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <!-- Post content-->
                     {% if new %}
                     <center>
@@ -78,55 +80,69 @@
                   </center>
                     {% endif %}
                     <article>
-                    <div class="row">
-                    <img src="/media/mainimage/{{product[13]}}/{{product[9]}}" class="img-fluid" alt="Responsive image">
-                    </div>
-                      {% for image in images %}
-                      <div class="col col-sm-3">
-                      <img src="/media/products/{{product[13]}}/{{image}}">
-                      </div>
+                    <div class="demo">
+                        <ul id="lightSlider">
+                          {% for img in images %}
+                          asdasd
+                            <li data-thumb="/media/products/{{product[13]}}/{{img}}"/>
+                                <img class="img-fluid" src="/media/products/{{product[13]}}/{{img}}" style="width:100%"/>
+                            </li>
+                          {% endfor %}
 
-                      {% endfor %}
+                        </ul>
+                    </div>
+
                     </article>
+                    <br>
                     {% if 'authenticated' in session %}
                     <center><a class="btn btn-primary" href="/product-edit/{{product[5]}}">Edit this product</a></center>
                     {% endif %}
 
                 </div>
                 <!-- Side widgets-->
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <!-- Search widget-->
                     <!-- Categories widget-->
-                    <div class="card mb-2">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-9 flex">
-                                    <ul class="list-unstyled mb-0">
-                                      catlist etc.
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Sharing is Caring</div>
-                        <div class="card-body">
-                          <!-- AddToAny BEGIN -->
-                          <center>
-                          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-                          <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                          <a class="a2a_button_facebook"></a>
-                          <a class="a2a_button_twitter"></a>
-                          <a class="a2a_button_email"></a>
-                          <a class="a2a_button_facebook_messenger"></a>
-                          <a class="a2a_button_whatsapp"></a>
+                    <center><h2>{{product[1]}}</h2></center>
+                    <div class="container">
+                      <div class="row border">
+
+                      <div class="card" style="background:none;border:0">
+                        <div class="row mt-3 mb-0">
+                          <div class="col" style="padding-left:4%">
+                            <h5><badge class="badge bg-dark rounded">Price: $100</badge></h5>
                           </div>
-                          <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        </center>
-                          <!-- AddToAny END -->
+                          <div class="col">
+                          <p>Available in stock: 1000</p>
                         </div>
+                        </div>
+                          <h6 class="mt-0 text-muted" style="word-break: break-word;">{{product[14]|safe}}</h6>
+                      </div>
+
+                      <div class="row m-2">
+                        <div class="col-lg-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Quantity</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="1">
+                          </div>
+                        </div>
+                        <div class="col-lg-8">
+                          <select class="form-select form-select-md" aria-label=".form-select-lg example">
+                            <option selected>Available variants</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                          </select>
+                        </div>
+                      </div>
+
+                        <div class="row m-2">
+                            <button class="btn btn-lg btn-dark center">ADD TO CART</button>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -188,13 +204,20 @@
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
               {{data['sitename']}} &copy; <a class="border-bottom" href="#">{{data['footercopyright']}}
             </div>
-
           </div>
         </div>
       </div>
     </div>
     <!-- Footer End -->
-
+<script type="text/javascript">
+$('#lightSlider').lightSlider({
+    gallery: true,
+    item:  2,
+    loop: true,
+    slideMargin: 0,
+    thumbItem: 9
+});
+</script>
 
     <!-- Back to Top -->
         <!-- Bootstrap core JS-->
