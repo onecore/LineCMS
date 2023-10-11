@@ -33,7 +33,14 @@ def publicproductpage(new=None, pid=None):
     }
     product = de.get_product_single(pid)
     ic(product)
-    return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt, new=new, images=getimages(product[13]))
+    variants = eval(product[3])
+    productinfo = eval(product[10])
+    jvariants = json.dumps(variants)
+    jproductinfo = json.dumps(productinfo)
+    return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt,
+                           new=new, images=getimages(product[13]),
+                           variants=variants, productinfo=productinfo,
+                           jvariants=jvariants, jproductinfo=jproductinfo)
 
 
 @productuser.route("/ks/<folder>/<file>")
