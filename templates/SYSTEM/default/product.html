@@ -110,7 +110,7 @@
                       <div class="card" style="background:none;border:0">
                         <div class="row mt-3 mb-0">
                           <div class="col" style="padding-left:3%">
-                            <h5><p class="badge bg-muted rounded border text-dark" id="price">Price: ${{product[15]}}</p></h5>
+                            <h5><p class="badge bg-muted rounded border text-dark" id="pricep">Price: ${{product[15]}}</p></h5>
                           </div>
                           <div class="col-8">
                           <p id="stock" style=""></p>
@@ -221,7 +221,7 @@ $('#lightSlider').lightSlider({
 // js objects
 var variants = {{jvariants|safe}};
 var productinfo = {{jproductinfo|safe}};
-
+var mainprice = '{{product[15]}}';
 </script>
     <!-- Back to Top -->
         <!-- Bootstrap core JS-->
