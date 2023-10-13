@@ -1,6 +1,7 @@
 // product.js - KnightStudio Dashboard
 // prices and other datas has server-side checks
-
+var cartcount = 0;
+var cartcopy = {};
 const varselect = document.querySelector('select');
 varselect.addEventListener('change', function (e) {
     let vvalue = e.target.value;
@@ -19,35 +20,56 @@ varselect.addEventListener('change', function (e) {
           pricep.innerText = `Price: \$${productinfo[seloption+"-ivar"]['price']}`;
     }
 });
-function isLS(pid){
-  if (localStorage.getItem(pid) === null){
-    return false;
+function isLS(){
+  if (pid in localStorage){
+    return true
   }
-  return true;
+  return false;
 }
 
+
+function refreshLS(){
+  cartcopy = {};
+  cartcount = 0;
+  for (let i = 0; i < localStorage.length; i++){
+      var key = localStorage.key(i);
+      if (localStorage.getItem(key) > 0){
+        cartcount = cartcount + 1
+      };
+   }
+  cartcopy = {...localStorage}
+
+}
 
 function init(){
-    if (isLS(pid)){
-      document.getElementById('cart').textContent = localStorage.length - 1;
+    refreshLS()
+    var varatci = document.getElementById('addtocart');
+    if (isLS()){
+          let getobj = localStorage.getItem(pid);
+          if (parseInt(getobj) === 1){
+              varatci.textContent = "REMOVE FROM CART";
+          }else{
+              varatci.textContent = "ADD TO CART";
+            }
     }else{
-      document.getElementById('cart').textContent = localStorage.length;
+        varatci.textContent = "ADD TO CART";
     }
+    document.getElementById('cart').value = cartcount;
 }
-init()
 
 function addls(){
       localStorage.setItem(pid,1);
-      if (isLS(pid)){
-          document.getElementById('cart').textContent = localStorage.length - 1;
+      refreshLS()
+      if (isLS()){
+          document.getElementById('cart').value = cartcount;
       }else{
-          document.getElementById('cart').textContent = localStorage.length;
+          document.getElementById('cart').value = cartcount;
       }
 }
 
 function removels(){
     localStorage.setItem(pid,0)
-    document.getElementById('cart').textContent = localStorage.length-1;
+    document.getElementById('cart').value = localStorage.length-1;
 
 }
 
@@ -61,6 +83,6 @@ varatc.addEventListener('click', function (e) {
       varatc.textContent = "ADD TO CART";
       removels()
     }
-
-
 });
+
+init()

@@ -8,7 +8,7 @@
         <title>{{ product[1] }} - {{ data['sitename'] }}</title>
         <!-- Favicon-->
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="ks/css/style.css" rel="stylesheet" />
+        <link href="/ks/css/style.css" rel="stylesheet" />
     <!-- Favicon -->
     <link href="/media/{{data['favicon']}}" rel="icon">
 
@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/ks/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="/ks/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/ks/css/lightslider.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/ks/js/lightslider.js"></script>
@@ -55,11 +55,11 @@
                           </div> -->
             </div>
             <div>
-              <button class="btn bg-white text-dark">Liked <span class="badge bg-dark text-white rounded border">1</span></button>
+              <button class="btn bg-white text-dark">Liked <span class="badge bg-dark text-white rounded-3 border">1</span></button>
             </div>
             &nbsp&nbsp
             <div>
-              <button class="btn bg-white text-dark">Checkout <span class="badge bg-dark text-white rounded border kscart" id="cart">0</span></button>
+              <button class="btn bg-white text-dark rounded-0">Checkout</button><input type="button" class="btn bg-dark text-white border" id="cart" style="margin-left:-2px;" value="0" disabled></input>
             </div>
 
               {% if 'authenticated' in session %}
