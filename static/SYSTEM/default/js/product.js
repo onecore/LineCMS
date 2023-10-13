@@ -2,6 +2,7 @@
 // prices and other datas has server-side checks
 var cartcount = 0;
 var cartcopy = {};
+var productid = pid;
 const varselect = document.querySelector('select');
 varselect.addEventListener('change', function (e) {
     let vvalue = e.target.value;
@@ -20,6 +21,8 @@ varselect.addEventListener('change', function (e) {
           pricep.innerText = `Price: \$${productinfo[seloption+"-ivar"]['price']}`;
     }
 });
+
+
 function isLS(){
   if (pid in localStorage){
     return true
@@ -27,24 +30,61 @@ function isLS(){
   return false;
 }
 
-
 function refreshLS(){
   // refresh localStorage objects
   cartcopy = {}; // local use
   cartcount = 0; // local use
   for (let i = 0; i < localStorage.length; i++){
       var key = localStorage.key(i);
-      if (localStorage.getItem(key) > 0){
+      if (localStorage.getItem(key) > 0 && key != "likes"){
         cartcount = cartcount + 1
       };
    }
   cartcopy = {...localStorage}
+}
+
+function likesele(addrem){
+  if (addrem){
+    // add
+  }else{
+    //remove
+  }
+}
+function likes(e){
+        console.log(productid);
+
+    if ("likes" in localStorage){ // already in LS
+      var lls = localStorage.getItem("likes");
+      if (lls[pid] === 1){
+          lls[pid] = 0;
+          likesele(0);
+          localStorage.setItem('likes',lls)
+      }else{
+        lls[pid] = 1;
+        likesele(1);
+          localStorage.setItem('likes',lls)
+
+      }
+    }else{
+      likesele(1);
+      let ini = {}
+      ini[productid] = 1
+      localStorage.setItem("likes",JSON.stringify(ini))
+
+    }
+    console.log(localStorage['likes'])
+}
+
+function initLikes(){
+  // initialize likes objs
 
 }
 
+
 function init(){
     // initialize button and localStorage
-    refreshLS()
+    initLikes();
+    refreshLS();
     var varatci = document.getElementById('addtocart');
     if (isLS()){
           let getobj = localStorage.getItem(pid);
@@ -78,6 +118,8 @@ function removels(){
 }
 
 const varatc = document.getElementById('addtocart');
+const ladd = document.getElementById('addtolike');
+
 varatc.addEventListener('click', function (e) {
     let vvalue = document.getElementById('addtocart').textContent;
     if (vvalue.includes("AD")){
@@ -87,6 +129,11 @@ varatc.addEventListener('click', function (e) {
       varatc.textContent = "ADD TO CART";
       removels()
     }
+});
+
+
+ladd.addEventListener('click', function (e) {
+    likes(e);
 });
 
 init()
