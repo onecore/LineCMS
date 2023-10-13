@@ -29,8 +29,9 @@ function isLS(){
 
 
 function refreshLS(){
-  cartcopy = {};
-  cartcount = 0;
+  // refresh localStorage objects
+  cartcopy = {}; // local use
+  cartcount = 0; // local use
   for (let i = 0; i < localStorage.length; i++){
       var key = localStorage.key(i);
       if (localStorage.getItem(key) > 0){
@@ -42,6 +43,7 @@ function refreshLS(){
 }
 
 function init(){
+    // initialize button and localStorage
     refreshLS()
     var varatci = document.getElementById('addtocart');
     if (isLS()){
@@ -58,6 +60,7 @@ function init(){
 }
 
 function addls(){
+      // 1 for added
       localStorage.setItem(pid,1);
       refreshLS()
       if (isLS()){
@@ -68,6 +71,7 @@ function addls(){
 }
 
 function removels(){
+    // 0 for not added
     localStorage.setItem(pid,0)
     document.getElementById('cart').value = localStorage.length-1;
 
