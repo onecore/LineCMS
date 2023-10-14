@@ -44,26 +44,31 @@ function refreshLS(){
 }
 
 function likesele(addrem){
+  let atlele = document.getElementById("addtolike");
   if (addrem){
-    // add
+      atlele.style.background = "red";
+      atlele.style.color = "white";
   }else{
-    //remove
+      atlele.style.background = "white";
+      atlele.style.color = "black";
+
   }
 }
+
 function likes(e){
         console.log(productid);
 
     if ("likes" in localStorage){ // already in LS
       var lls = localStorage.getItem("likes");
+      var lls = JSON.parse(lls)
       if (lls[pid] === 1){
           lls[pid] = 0;
           likesele(0);
-          localStorage.setItem('likes',lls)
+          localStorage.setItem('likes',JSON.stringify(lls))
       }else{
         lls[pid] = 1;
         likesele(1);
-          localStorage.setItem('likes',lls)
-
+          localStorage.setItem('likes',JSON.stringify(lls))
       }
     }else{
       likesele(1);
@@ -72,11 +77,19 @@ function likes(e){
       localStorage.setItem("likes",JSON.stringify(ini))
 
     }
-    console.log(localStorage['likes'])
 }
 
 function initLikes(){
   // initialize likes objs
+  let likesobj = JSON.parse(localStorage.getItem("likes"));
+  if (pid in likesobj){
+      let likecont = likesobj[pid];
+      if (parseInt(likecont)){
+          likesele(1);
+      }else{
+          likesele(0);
+      }
+  }
 
 }
 
