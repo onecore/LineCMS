@@ -8,7 +8,6 @@ varselect.addEventListener('change', function (e) {
     let vvalue = e.target.value;
     let varbox = document.getElementById('varsel');
     let seloption = varbox.options[varbox.selectedIndex].text;
-
     let stockp = document.getElementById('stock');
     let pricep = document.getElementById('pricep');
 
@@ -16,7 +15,6 @@ varselect.addEventListener('change', function (e) {
           stockp.innerText = "";
           pricep.innerText = `Price: \$${mainprice}`;
     }else{
-    console.log(seloption)
           stockp.innerText = `Variant: ${seloption} - Available in stock: ${productinfo[seloption+"-ivar"]['instock']}`;
           pricep.innerText = `Price: \$${productinfo[seloption+"-ivar"]['price']}`;
     }
@@ -51,13 +49,10 @@ function likesele(addrem){
   }else{
       atlele.style.background = "white";
       atlele.style.color = "black";
-
   }
 }
 
 function likes(e){
-        console.log(productid);
-
     if ("likes" in localStorage){ // already in LS
       var lls = localStorage.getItem("likes");
       var lls = JSON.parse(lls)
@@ -77,10 +72,28 @@ function likes(e){
       localStorage.setItem("likes",JSON.stringify(ini))
 
     }
+    reloadLikes()
+}
+
+function reloadLikes(){
+  let likesc = 0;
+  if ("likes" in localStorage){
+      var likesobj = JSON.parse(localStorage.getItem("likes"));
+      var likesobjkey = Object.keys(likesobj)
+      var likesobjlen = Object.keys(likesobj).length
+      for (x = 0; x < likesobjlen; x++){
+          var v = likesobj[likesobjkey[x]]
+          if (v === 1){
+            likesc = likesc + 1
+          }
+      }
+  }
+  document.getElementById("likescount").textContent = likesc;
 }
 
 function initLikes(){
   // initialize likes objs
+
   let likesobj = JSON.parse(localStorage.getItem("likes"));
   if (pid in likesobj){
       let likecont = likesobj[pid];
@@ -90,7 +103,7 @@ function initLikes(){
           likesele(0);
       }
   }
-
+  reloadLikes();
 }
 
 
@@ -127,7 +140,6 @@ function removels(){
     // 0 for not added
     localStorage.setItem(pid,0)
     document.getElementById('cart').value = localStorage.length-1;
-
 }
 
 const varatc = document.getElementById('addtocart');
