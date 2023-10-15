@@ -41,6 +41,7 @@ def showuploaded_productsmainimage(folderid, file) -> str:
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/mainimage", file)
 
 
+# added for lightslider images / variants
 @uploader.route("/<folderid>/variants/<file>")
 @uploader.route("/media/variant/<folderid>/<file>")
 def showuploaded_products_variant(folderid, file) -> str:

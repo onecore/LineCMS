@@ -23,7 +23,7 @@ varselect.addEventListener('change', function (e) {
 });
 
 function variantim(option){
-    
+
 }
 
 function isLS(){
@@ -98,16 +98,21 @@ function reloadLikes(){
 
 function initLikes(){
   // initialize likes objs
-
-  let likesobj = JSON.parse(localStorage.getItem("likes"));
-  if (pid in likesobj){
-      let likecont = likesobj[pid];
-      if (parseInt(likecont)){
-          likesele(1);
-      }else{
-          likesele(0);
-      }
+  let likesobj = null;
+  if ("likes" in localStorage){
+      let likesobj = JSON.parse(localStorage.getItem("likes"));
   }
+
+  if (likesobj){
+      if (pid in likesobj){
+          let likecont = likesobj[pid];
+          if (parseInt(likecont)){
+              likesele(1);
+          }else{
+              likesele(0);
+          }
+      }
+}
   reloadLikes();
 }
 

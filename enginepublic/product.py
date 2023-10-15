@@ -52,7 +52,7 @@ def publicproductpage(new=None, pid=None):
         "extras": eval(all_d[6]),
     }
     product = de.get_product_single(pid)
-    ic(product)
+    # ic(product)
     variants = eval(product[3])
     productinfo = eval(product[10])
     jvariants = json.dumps(variants)
