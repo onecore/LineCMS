@@ -26,7 +26,9 @@ function variantim(option){
   // main function makes variant to slide to it's photo
   let x = variants[option+"-ivar"];
   let cur = (vardict[x])
-  lslide.goToSlide(cur);
+  if (x){
+    lslide.goToSlide(cur);
+  }
 }
 
 function isLS(){
