@@ -100,7 +100,7 @@ function initLikes(){
   // initialize likes objs
   let likesobj = null;
   if ("likes" in localStorage){
-      let likesobj = JSON.parse(localStorage.getItem("likes"));
+      likesobj = JSON.parse(localStorage.getItem("likes"));
   }
 
   if (likesobj){
