@@ -44,7 +44,7 @@ function refreshLS(){
   cartcount = 0; // local use
   for (let i = 0; i < localStorage.length; i++){
       var key = localStorage.key(i);
-      if (localStorage.getItem(key) > 0 && key != "likes"){
+      if (localStorage.getItem(key) > 0 && key != "likes" && key != "likesall"){
         cartcount = cartcount + 1
       };
    }
@@ -189,8 +189,37 @@ ladd.addEventListener('click', function (e) {
 });
 
 
+function prepele(){
+    let el = document.getElementById("likedrow");
+
+    if ("likes" in localStorage && "likesall" in localStorage){
+        let likesobj = JSON.parse(localStorage.getItem("likes"));
+        let likesobjkey = Object.keys(likesobj)
+        let likesobjlen = Object.keys(likesobj).length
+        let infolikes = JSON.parse(localStorage.getItem("likesall"))
+        el.innerHTML = "";
+        let shouldstop = 0;
+        for (i=0; i < likesobjlen; i++){
+            let d = likesobjkey[i];
+            if (likesobj[d] === 1){
+                shouldstop++
+                el.innerHTML += `<div class='row'><div class='col-sm'><p class='text-truncate pt-2'>${infolikes[d][1]}</p></div><div class='col-sm'><a type='button' class='btn btn-primary rounded border float-right' href='/product/${infolikes[d][0]}'>View product</a></div></div><hr>`;
+            }
+        }
+        if (!shouldstop){
+          return false;
+        }
+        return true;
+    }else{
+      return false;
+    }
+    return false;
+}
+
 function openlikes(e=null){
-  $("#likeModal").modal('show')
+  if (prepele()){
+      $("#likeModal").modal('show')
+  }
 }
 
 init()
