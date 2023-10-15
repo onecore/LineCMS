@@ -23,11 +23,10 @@ varselect.addEventListener('change', function (e) {
 });
 
 function variantim(option){
-  console.log("here")
-  const st = "static/dashboard/uploads/products"
-  let curim = $('#lightSlider').find(".active").find("img").attr("src");
-  let _index = vardict[st+curim]
-  lslide.goToSlide(_index);
+  // main function makes variant to slide to it's photo
+  let x = variants[option+"-ivar"];
+  let cur = (vardict[x])
+  lslide.goToSlide(cur);
 }
 
 function isLS(){
