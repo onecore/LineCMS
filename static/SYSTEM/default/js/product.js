@@ -63,23 +63,36 @@ function likesele(addrem){
 }
 
 function likes(e){
-    if ("likes" in localStorage){ // already in LS
+  console.log(productinfo)
+    if ("likes" in localStorage && "likesall" in localStorage){ // already in LS
       var lls = localStorage.getItem("likes");
       var lls = JSON.parse(lls)
-      if (lls[pid] === 1){
+
+      var llsall = localStorage.getItem("likesall");
+      var llsall = JSON.parse(llsall)
+
+      if (lls[pid] === 1){ //remove
           lls[pid] = 0;
+          llsall[pid] = []
           likesele(0);
           localStorage.setItem('likes',JSON.stringify(lls))
-      }else{
+          localStorage.setItem('likesall',JSON.stringify(llsall))
+
+      }else{              //add
         lls[pid] = 1;
+        llsall[pid] = [product_url,product_title]
         likesele(1);
-          localStorage.setItem('likes',JSON.stringify(lls))
+        localStorage.setItem('likes',JSON.stringify(lls))
+        localStorage.setItem('likesall',JSON.stringify(llsall))
       }
     }else{
       likesele(1);
       let ini = {}
+      let iniall = {}
       ini[productid] = 1
+      iniall[productid] = []
       localStorage.setItem("likes",JSON.stringify(ini))
+      localStorage.setItem("likesall",JSON.stringify(iniall))
 
     }
     reloadLikes()
@@ -174,5 +187,10 @@ varatc.addEventListener('click', function (e) {
 ladd.addEventListener('click', function (e) {
     likes(e);
 });
+
+
+function openlikes(e=null){
+  $("#likeModal").modal('show')
+}
 
 init()

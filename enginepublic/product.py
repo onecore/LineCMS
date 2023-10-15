@@ -61,7 +61,8 @@ def publicproductpage(new=None, pid=None):
                            variants=variants, productinfo=productinfo,
                            jvariants=jvariants, jproductinfo=jproductinfo,
                            jslides=variantpush(variants, imags, js=True),
-                           jslidespy=variantpush(variants, imags, js=False))
+                           jslidespy=variantpush(variants, imags, js=False),
+                           )
 
 
 @productuser.route("/ks/<folder>/<file>")
