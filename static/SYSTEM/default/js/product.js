@@ -102,7 +102,6 @@ function initLikes(){
   if ("likes" in localStorage){
       likesobj = JSON.parse(localStorage.getItem("likes"));
   }
-
   if (likesobj){
       if (pid in likesobj){
           let likecont = likesobj[pid];
@@ -111,8 +110,8 @@ function initLikes(){
           }else{
               likesele(0);
           }
+        }
       }
-}
   reloadLikes();
 }
 
