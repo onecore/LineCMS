@@ -23,7 +23,11 @@ varselect.addEventListener('change', function (e) {
 });
 
 function variantim(option){
-
+  console.log("here")
+  const st = "static/dashboard/uploads/products"
+  let curim = $('#lightSlider').find(".active").find("img").attr("src");
+  let _index = vardict[st+curim]
+  lslide.goToSlide(_index);
 }
 
 function isLS(){
