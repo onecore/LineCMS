@@ -1,8 +1,9 @@
 // product.js - KnightStudio Dashboard
-// prices and other datas has server-side checks
+// prices and other datas has server-side sec. checks (modifed data will be refused by the server)
 var cartcount = 0;
 var cartcopy = {};
 var productid = pid;
+
 const varselect = document.querySelector('select');
 varselect.addEventListener('change', function (e) {
     let vvalue = e.target.value;
@@ -18,8 +19,12 @@ varselect.addEventListener('change', function (e) {
           stockp.innerText = `Variant: ${seloption} - Available in stock: ${productinfo[seloption+"-ivar"]['instock']}`;
           pricep.innerText = `Price: \$${productinfo[seloption+"-ivar"]['price']}`;
     }
+    variantim(seloption)
 });
 
+function variantim(option){
+    
+}
 
 function isLS(){
   if (pid in localStorage){

@@ -15,6 +15,26 @@ productuser = Blueprint(
                         )
 
 
+def variantpush(v, i, js=False):
+    """
+    function to change images into a dictionary with index,
+    purpose to show image in lightslider when variant changed, actual variant image will show
+    """
+    c, d = 0, {}
+    for im in i:  # images
+        d[im] = c
+        c = c + 1
+    for key, val in v.items():  # variants
+        if v[key]:
+            d[val] = c
+            c = c + 1
+            print(val)
+    if js:
+        return json.dumps(d)
+    else:
+        return d
+
+
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
 def publicproductpage(new=None, pid=None):
@@ -37,10 +57,13 @@ def publicproductpage(new=None, pid=None):
     productinfo = eval(product[10])
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
+    imags = getimages(product[13])
     return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt,
-                           new=new, images=getimages(product[13]),
+                           new=new, images=imags,
                            variants=variants, productinfo=productinfo,
-                           jvariants=jvariants, jproductinfo=jproductinfo)
+                           jvariants=jvariants, jproductinfo=jproductinfo,
+                           jslides=variantpush(variants, imags, js=True),
+                           jslidespy=variantpush(variants, imags, js=False))
 
 
 @productuser.route("/ks/<folder>/<file>")

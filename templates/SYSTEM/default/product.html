@@ -94,11 +94,18 @@
                     <article>
                     <div class="demo">
                         <ul id="lightSlider">
-                          {% for img in images %}
-                            <li data-thumb="/media/products/{{product[13]}}/{{img}}"/>
-                                <img class="img-fluid" src="/media/products/{{product[13]}}/{{img}}" style="width:100%"/>
-                            </li>
+                          {% for ke ,val in jslidespy.items() %}
+                              {% if "/variants/" in ke %}
+                              <li data-thumb="/{{ke.replace('static/dashboard/uploads/products/','')}}"/>
+                                  <img class="img-fluid" src="/{{ke.replace('static/dashboard/uploads/products/','')}}" style="width:100%"/>
+                              </li>
+                              {% else %}
+                              <li data-thumb="/media/products/{{product[13]}}/{{ke}}"/>
+                                  <img class="img-fluid" src="/media/products/{{product[13]}}/{{ke}}" style="width:100%"/>
+                              </li>
+                              {% endif %}
                           {% endfor %}
+
 
                         </ul>
                     </div>
@@ -240,7 +247,7 @@ $('#lightSlider').lightSlider({
     item:  2,
     loop: true,
     slideMargin: 0,
-    thumbItem: 9
+    thumbItem: 10
 });
 </script>
 <script>
@@ -249,6 +256,7 @@ var variants = {{jvariants|safe}};
 var productinfo = {{jproductinfo|safe}};
 var mainprice = '{{product[15]}}';
 var pid = '{{product[13]}}';
+var vardict = {{jslides|safe}};
 </script>
     <!-- Back to Top -->
         <!-- Bootstrap core JS-->
