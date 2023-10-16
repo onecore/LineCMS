@@ -8,6 +8,7 @@ from flask import g
 import json
 import os
 from icecream import ic
+import random
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
@@ -103,6 +104,32 @@ class knightclient:
         except Exception as e:
             print(e)
             return False
+
+    def productsimilar(self, count=5, category=0):
+        """
+        Loads similar products, adds random
+        if category length is not enough to given count
+        """
+        categ_split = category.split(",")
+        category = random.choice(categ_split)
+        count = count
+        pr = []
+        _c = self.connection.cursor()
+        self.m_fetch = _c.execute(
+            "SELECT * FROM products WHERE category='{m}' LIMIT {l};".format(m=category, l=count))
+        self.m_data = self.m_fetch.fetchall()
+        for d in self.m_data:
+            pr.append(d)
+            count = count - 1
+
+        if len(pr) < count:
+            self.mr_fetch = _c.execute(
+                "SELECT * FROM products ORDER BY random() LIMIT {l};".format(l=count))
+            self.mr_data = self.mr_fetch.fetchall()
+            for i in self.mr_data:
+                pr.append(i)
+
+        return pr
 
     def productimagesmod(self, variants: dict, product_id: str) -> bool:
         """
@@ -496,4 +523,5 @@ class knightclient:
         return all_data
 
     def insert_data(self, quer):
+        pass
         pass
