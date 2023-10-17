@@ -37,9 +37,17 @@ def ks_tolist(v) -> list:
 def ks_getdictkeys(v) -> list:
     o = []
     p = jsonify(v)
+
     for k, v in p.items():
         o.append(k)
     return eval(o)
+
+
+def ks_variantcount(v) -> int:
+    if len(v) > 2:
+        p = eval(v)
+        return len(p.keys())
+    return 0
 
 
 def ks_tojson(v) -> dict:

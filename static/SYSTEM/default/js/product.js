@@ -216,6 +216,10 @@ function prepele(){
     return false;
 }
 
+function checkout(){
+
+}
+
 function openlikes(e=null){
   if (prepele()){
       $("#likeModal").modal('show')

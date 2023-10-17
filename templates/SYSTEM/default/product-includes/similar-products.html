@@ -3,19 +3,29 @@
     <div class="d-flex justify-content-center row">
         <div class="col" style="max-width:100%">
             {% for similar in similarproducts %}
+                  {% set vars = ks_variantcount(similar[10]) %}
+
                   <div class="row p-2 bg-white border rounded">
-                      <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="http://127.0.0.1:5000/media/products/1466759637843/donmtk8uqsm0nhgjudg.jpg"></div>
-                      <div class="col-md-6 mt-3">
-                          <h5>{{similar[1]}}</h5>
-                          <div class="d-flex flex-row">
-                              <div class="ratings mr-2"></div><span></span>
-                          </div>
+                      {% if similar[9] %}
+                      <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image rounded border" src="/media/mainimage/{{similar[13]}}/{{similar[9]}}" style='width:250px;height:150px'></div>
+                      {% elif similar[8] %}
+                      <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image rounded border" src="/media/products/{{similar[13]}}/{{similar[8][0]}}" style='width:250px;height:150px'></div>
+                      {% else %}
+                      <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image  rounded border" src="/media/ni.jpeg" style='width:250px;height:150px'></div>
+                      {% endif %}
+                      <div class="col-md-6 mt-1">
+                          <h5 class="pt-3">{{similar[1]}}</h5>
+                          <hr>
+
+                          <p class="text-truncate" style='max-width: 100px'>{{similar[14]|safe}}</p><br><br>
                       </div>
-                      <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                          <div class="d-flex flex-row align-items-right">
-                              <h4 class="ml-3 pl-3">${{similar[15]}}</h4>
-                          </div>
-                          <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Details</button></div>
+                      <div class="align-items-center align-content-right col-md-3 border-left mt-4">
+                          <div class="d-flex flex-column mt-4"><center><h4 class="border rounded">$123.00</h4></center></div>
+                          <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">View product</button></div>
+                          {% if vars %}
+                          <div class="d-flex flex-column mt-4"><p class="badge badge-muted text-dark rounded">Available in {{vars}} variants</p></div>
+                          {% endif %}
+
                       </div>
                   </div>
               {% endfor %}
