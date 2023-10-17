@@ -27,7 +27,20 @@ def ks_badge_insert(v) -> str:
 
 def ks_html2text(v) -> str:
     from lxml import html
-    return html.fromstring(v).text_content()
+    if v:
+        return html.fromstring(v).text_content()
+    else:
+        return ""
+
+
+def ks_html2text_truncate(v) -> str:
+    from lxml import html
+    if v:
+        ret = html.fromstring(v).text_content()
+        trunc = ret[:210] + (ret[210:] and '..')
+        return trunc
+    else:
+        return ""
 
 
 def ks_tolist(v) -> list:
