@@ -63,6 +63,7 @@ def publicproductpage(new=None, pid=None):
                            jslides=variantpush(variants, imags, js=True),
                            jslidespy=variantpush(variants, imags, js=False),
                            similarproducts=de.productsimilar(6, product[2]),
+                           mainimage=product[9],
                            )
 
 

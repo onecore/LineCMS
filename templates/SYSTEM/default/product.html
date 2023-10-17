@@ -91,6 +91,12 @@
                     <article>
                     <div class="demo">
                         <ul id="lightSlider">
+                              {% if mainimage %}
+                              <li data-thumb="/media/mainimage/{{product[13]}}/{{mainimage}}"/>
+                                  <img class="img-fluid" src="/media/mainimage/{{product[13]}}/{{mainimage}}" style="width:100%"/>
+                              </li>
+                              {% endif %}
+
                           {% for ke ,val in jslidespy.items() %}
                               {% if "/variants/" in ke %}
                               <li data-thumb="/{{ke.replace('static/dashboard/uploads/products/','')}}"/>
