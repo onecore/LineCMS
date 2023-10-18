@@ -190,14 +190,14 @@ swal("", `{{error}}`, "warning");
           <div class="row">
             <div class="col-12 col-md-4 p-3">
 
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text btn-dark text-white">Blog category</span>
-                    </div>
-                    <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','">
-                  </div>
+              <div class="input-group mb-3 pt-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Blog category</span>
                 </div>
+                  <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','">
+              </div>
+
+
                 <h3><span class="badge btn-dark text-white rounded-0">Post thumbnail</span></h3>
                   <center>
                   <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
@@ -215,16 +215,16 @@ swal("", `{{error}}`, "warning");
 
             <div class="col-12 col-md-8 p-3">
             <form method="post" id="form" name="form">
-              <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text btn-dark text-white">Blog title</span>
-                    </div>
+              <div class="input-group mb-3 pt-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Blog title</span>
+                </div>
                     <input type="text" class="form-control" id="title" aria-label="" placeholder="Post title">
-                  </div>
-                <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
-                <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
+                    <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
+                    <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
               </div>
+
+
                   {{ ckeditor.create() }}
                 <br>
                 <button type="submit" class="btn btn-primary">Publish post</button>
