@@ -76,6 +76,12 @@ def variantimagemodifier(d: bytes) -> 'json':
     return tuple(d)
 
 
+@product.route("/product-settings", methods=['GET', 'POST'])
+def product_sett():
+    error = None
+    return render_template("/dashboard/product-settings.html", error=error)
+
+
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
     if route == "upload-p-variant" or route == "upload-p-variant":

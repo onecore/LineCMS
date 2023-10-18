@@ -26,6 +26,7 @@ def ks_badge_insert(v) -> str:
 
 
 def ks_html2text(v) -> str:
+    """parses html to text"""
     from lxml import html
     if v:
         return html.fromstring(v).text_content()
@@ -34,6 +35,7 @@ def ks_html2text(v) -> str:
 
 
 def ks_html2text_truncate(v) -> str:
+    "parses html to text with truncation"
     from lxml import html
     if v:
         ret = html.fromstring(v).text_content()
@@ -44,10 +46,12 @@ def ks_html2text_truncate(v) -> str:
 
 
 def ks_tolist(v) -> list:
+    "evaluate parsed string to python list type"
     return eval(v)
 
 
 def ks_getdictkeys(v) -> list:
+    "returns list of keys from string dict"
     o = []
     p = jsonify(v)
 
@@ -57,6 +61,7 @@ def ks_getdictkeys(v) -> list:
 
 
 def ks_variantcount(v) -> int:
+    "return variant's length"
     if len(v) > 2:
         p = eval(v)
         return len(p.keys())
@@ -64,4 +69,5 @@ def ks_variantcount(v) -> int:
 
 
 def ks_tojson(v) -> dict:
+    "python dict obj to json"
     return json.dumps(v)

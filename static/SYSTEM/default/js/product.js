@@ -38,7 +38,7 @@ function isLS(){
   return false;
 }
 
-function refreshLS(){
+function refreshLS(get=false){
   // refresh localStorage objects
   cartcopy = {}; // local use
   cartcount = 0; // local use
@@ -49,6 +49,9 @@ function refreshLS(){
       };
    }
   cartcopy = {...localStorage}
+  if (get){
+    return cartcount;
+  }
 }
 
 function likesele(addrem){
@@ -217,7 +220,9 @@ function prepele(){
 }
 
 function checkout(){
-
+  if (refreshLS(true)){
+    location.href = "/product-checkout"
+  }
 }
 
 function openlikes(e=null){

@@ -56,7 +56,8 @@ def publicproductpage(new=None, pid=None):
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
     imags = getimages(product[13])
-    return render_template(f"/SYSTEM/{themes}/product.html", product=product, mod=mod, data=dt,
+    return render_template(f"/SYSTEM/{themes}/product.html",
+                           product=product, mod=mod, data=dt,
                            new=new, images=imags,
                            variants=variants, productinfo=productinfo,
                            jvariants=jvariants, jproductinfo=jproductinfo,
