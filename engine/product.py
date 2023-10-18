@@ -19,7 +19,6 @@ def allowed_file(filename) -> str:
 
 def getimages(ids):
     res = []
-
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
     for file_path in os.listdir(dir_path):
@@ -35,7 +34,6 @@ def getimages(ids):
 
 def getmainimage(ids):
     res = []
-
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}/mainimage"
     for file_path in os.listdir(dir_path):
@@ -56,23 +54,18 @@ def variantimagemodifier(d: bytes) -> 'json':
     d = list(d)
     _variants = eval(d[3])
     _variants_new = {}
-
     # mainimage
-
     for variant_name, image_path in _variants.items():  # variants
         if not os.path.isfile(image_path):
             _variants_new[variant_name] = ""
         else:
             _variants_new[variant_name] = image_path
-
     d[3] = _variants_new
     d[8] = json.dumps(getimages(d[13]))
     d[9] = getmainimage(d[13])
-
     de = dataengine.knightclient()
     modifierinsert = de.productimagesmod(
         _variants_new, d[13])
-
     return tuple(d)
 
 
@@ -90,7 +83,6 @@ def product_edt(route):
     d = de.get_product_single(route)
     if not d:
         return redirect("/product-manage")
-
     return render_template("/dashboard/product-edit.html", d=variantimagemodifier(d))
 
 
