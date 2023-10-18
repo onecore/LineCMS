@@ -6,3 +6,5 @@ flask_ckeditor
 wtforms
 flask_paginate
 icecream
+stripe
+currencies
