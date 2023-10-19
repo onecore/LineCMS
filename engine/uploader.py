@@ -241,6 +241,7 @@ def upload_file():
     return jsonify({"status": "success"})
 
 
+@uploader.route('/blog-edit/upload-blog', methods=['POST', 'DELETE'])
 @uploader.route('/upload-blog', methods=['POST', 'DELETE'])
 def upload_file_blog():
     print("Blog thumbnail upload")

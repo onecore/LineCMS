@@ -2,8 +2,21 @@ from flask import Blueprint, render_template, request, redirect, g
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+import os
+from icecream import ic
 
 blog = Blueprint("blog", __name__)
+
+
+def blogthumb(image):
+    upath = f'static/dashboard/uploads/blog/{image}'
+    ni = "static/dashboard/uploads/ni.jpeg"  # no image
+
+    tbool = os.path.isfile(os.path.join(upath))
+    if tbool:
+        return f"/media/blog/{image}"
+    else:
+        return ""
 
 
 @blog.route("/blog-edit/<url>", methods=['POST', 'GET'])
@@ -27,7 +40,7 @@ def blog_edit(url):
             if data_imgname:
                 data["image"] = data_imgname
             else:
-                data['image'] = "no-image.jpeg"
+                data['image'] = ""
             if data_categ:
                 data['category'] = data_categ
             else:
@@ -40,7 +53,7 @@ def blog_edit(url):
             except Exception as e:
                 print(e)
                 return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
-    return render_template("/dashboard/blog-edit.html", blog=blog)
+    return render_template("/dashboard/blog-edit.html", blog=blog, thumb=blogthumb(blog[3]))
 
 
 @blog.route("/blog-manage", methods=['POST', 'GET'])
