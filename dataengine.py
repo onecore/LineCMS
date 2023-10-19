@@ -11,6 +11,7 @@ from icecream import ic
 import random
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
+UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
 class knightclient:
@@ -223,6 +224,20 @@ class knightclient:
 
     def product_manage(self):
         pass
+
+    def delete_image_partial(self, data):
+        _c = self.connection.cursor()
+
+        try:
+            os.remove(os.path.join(UPLOAD_FOLDER_BLOG, data['image']))
+        except:
+            pass
+
+        q = "UPDATE blog SET image = '' WHERE route = '{r}';".format(
+            r=data['route'])
+        _c.execute(q)
+        self.connection.commit()
+        print("Done")
 
     def get_product_single(self, route):
         _c = self.connection.cursor()

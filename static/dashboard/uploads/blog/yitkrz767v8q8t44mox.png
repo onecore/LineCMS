@@ -44,14 +44,10 @@ input[type="file"] {
 <body class="sidebar-dark">
 <script>
 var image_nm = "";
-{% if success %}
-swal("", 'Website information updated', "success");
-{% endif %}
 
 
-{% if error %}
-swal("", `{{error}}`, "warning");
-{% endif %}
+
+
 </script>
 
   <div class="container-scroller">
@@ -197,7 +193,7 @@ swal("", `{{error}}`, "warning");
                 <div class="input-group-prepend">
                   <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">Blog category</span>
                 </div>
-                  <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','" value="{{blog[7]}}">
+                  <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','" value="">
               </div>
 
 
@@ -218,17 +214,15 @@ swal("", `{{error}}`, "warning");
                   <center><p class="text-muted">No additional settings</p></center>
                   <hr>
                   <center><h4 class="badge badge-dark text-mute">Information</h4></center>
-                  <center><p class="text-muted p-0">Timestamp: {{blog[4]}}</p></center>
-                  <center><p class="text-muted p-0">Blog URL: {{blog[6]}}</p></center>
+                  <center><p class="text-muted p-0">Timestamp: </p></center>
+                  <center><p class="text-muted p-0">Blog URL: </p></center>
                   <hr>
                   <center>
-                  {% if blog[5] == '0' %}
-                  <button type="button" class="btn btn-xs btn-muted border" id='hb2' onclick="knightapi2('{{blog[6]}}')">Hide post</button>
-                  {% else %}
-                  <button type="button" class="btn btn-xs btn-muted border" id='hb2' onclick="knightapi2('{{blog[6]}}')">Unhide post</button>
-                  {% endif %}
-                  <button type="button" class="btn btn-xs btn-muted border" onclick="confirm_dedit('1','{{blog[6]}}')">Delete</button>
-                  <button type="button" class="btn btn-xs btn-danger mdi mdi-check border" onclick="deleapi('1','{{blog[6]}}','9999')" style="display:none;" id="finald"></button>
+                  
+                  <button type="button" class="btn btn-xs btn-muted border" id='hb2' onclick="knightapi2('')">Unhide post</button>
+                  
+                  <button type="button" class="btn btn-xs btn-muted border" onclick="confirm_dedit('1','')">Delete</button>
+                  <button type="button" class="btn btn-xs btn-danger mdi mdi-check border" onclick="deleapi('1','','9999')" style="display:none;" id="finald"></button>
 
                   </center>
                   <br>
@@ -244,14 +238,14 @@ swal("", `{{error}}`, "warning");
                 <div class="input-group-prepend">
                   <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">Blog title</span>
                 </div>
-                    <input type="text" class="form-control" id="title" name="title" aria-label="" placeholder="Post title" value="{{blog[1]}}">
-                    <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="{{blog[3]}}">
+                    <input type="text" class="form-control" id="title" name="title" aria-label="" placeholder="Post title" value="">
+                    <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                     <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
-                    <input type="hidden" class="form-control" id="ishidden" name="ishidden" placeholder="" value="{{blog[5]}}">
+                    <input type="hidden" class="form-control" id="ishidden" name="ishidden" placeholder="" value="">
               </div>
 
 
-                  {{ ckeditor.create(value=blog[2]) }}
+                  <textarea class="ckeditor" name="ckeditor" id="ckeditor"></textarea>
                 <br>
 
                 <button type="submit" class="btn btn-primary">Update post</button>
@@ -310,7 +304,7 @@ FilePond.registerPlugin(FilePondPluginImagePreview);
 FilePond.registerPlugin(FilePondPluginFileMetadata);
 FilePond.registerPlugin(FilePondPluginFileRename);
 
-const r = "{{blog[6]}}"
+const r = ""
 const inputElement = document.querySelector(`#mainfile`);
 const pond = FilePond.create(inputElement, {
         server: './upload-blog',
@@ -332,9 +326,7 @@ pond.on('removefile', (error, file) => {
   delpartialim(_d);
 })
 
-{% if blog[3] %}
-  pond.addFile("{{blog[3]}}");
-{% endif %}
+
 </script>
 
 <script>

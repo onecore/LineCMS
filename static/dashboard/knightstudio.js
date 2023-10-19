@@ -55,6 +55,18 @@ function knightapi(data) {
 }
 
 
+function delpartialim(data) {
+  fetch("/api/delpartialim", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res => {
+    //console.log("Request complete! response:", res);
+  });
+}
+
 function knightapi2(data) {
   var hb = document.getElementById("hb2")
   if (hb.innerText == 'Hide post') {

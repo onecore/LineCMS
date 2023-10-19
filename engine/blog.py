@@ -6,17 +6,16 @@ import os
 from icecream import ic
 
 blog = Blueprint("blog", __name__)
+UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
-def blogthumb(image):
-    upath = f'static/dashboard/uploads/blog/{image}'
-    ni = "static/dashboard/uploads/ni.jpeg"  # no image
-
-    tbool = os.path.isfile(os.path.join(upath))
-    if image and tbool:
-        return f"/media/blog/{image}"
-    else:
-        return ""
+def trydelete(image):
+    try:
+        os.remove(os.path.join(UPLOAD_FOLDER_BLOG, image))
+        print("Deleted leftover")
+    except:
+        print("Trydelete except")
+        pass
 
 
 @blog.route("/blog-edit/<url>", methods=['POST', 'GET'])
@@ -39,8 +38,11 @@ def blog_edit(url):
                     "category": data_categ, "hidden": data_hidden, "route": blog[6]}
             if data_imgname:
                 data["image"] = data_imgname
+                # trydelete(blog[3])
             else:
                 data['image'] = ""
+                # trydelete(blog[3])
+
             if data_categ:
                 data['category'] = data_categ
             else:
@@ -53,7 +55,7 @@ def blog_edit(url):
             except Exception as e:
                 print(e)
                 return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
-    return render_template("/dashboard/blog-edit.html", blog=blog, thumb=blogthumb(blog[3]))
+    return render_template("/dashboard/blog-edit.html", blog=blog)
 
 
 @blog.route("/blog-manage", methods=['POST', 'GET'])

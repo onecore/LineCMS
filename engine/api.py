@@ -146,6 +146,17 @@ def knightapi2():
         return "KnightStudio Dashboard build ", version
 
 
+@api.route("/api/delpartialim", methods=['POST', 'GET'])
+def api_deletepartialimage():
+    if request.method == "POST":
+        if 'authenticated' in session:  # Logged in
+            d = dataengine.knightclient()
+            d.delete_image_partial(eval(request.data))
+        return "KnightStudio Dashboard build ", version
+    else:
+        return "KnightStudio Dashboard build ", version
+
+
 @api.route("/delete/<table>/<id>")
 def delete(table, id):
     mid = id
