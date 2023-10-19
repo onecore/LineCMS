@@ -259,7 +259,7 @@ def upload_file_blog():
             filename = secure_filename(file.filename)
 
             file.save(os.path.join(UPLOAD_FOLDER_BLOG, filename))
-            d_e = dataengine.knightclient()
+            # d_e = dataengine.knightclient()
             try:
                 # d_e.update_data_uploads("control", "logo", filename,
                 #                         "owner", session['authenticated'][0])

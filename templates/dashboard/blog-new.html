@@ -24,19 +24,9 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-<style>
-input[type="file"] {
-    display: none;
-}
-.custom-file-upload {
-    border: 1px solid #ccc;
-    border-radius: 13px 13px 13px 13px;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-top:10px;
-    cursor: pointer;
-}
-</style>
+  <link href="../../dashboard/ks-js/filepond.css" rel="stylesheet" />
+  <link href="../../dashboard/ks-js/filepond-plugin-image-preview.min.css" rel="stylesheet"/>
+
 </head>
 
 <body class="sidebar-dark">
@@ -198,18 +188,14 @@ swal("", `{{error}}`, "warning");
               </div>
 
 
-                <h3><span class="badge btn-dark text-white rounded-0">Post thumbnail</span></h3>
+                <fieldset class="border p-2 text-muted">
+                  <legend class="float-none w-auto text-muted" style="font-size:15px">Blog thumbnail</legend>
                   <center>
-                  <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoview" name="logoview" class="img-thumbnail" style="border:none;bottom:30px;">
-                  </center>
-                  <center>
-                  <label class="custom-file-upload center">
-                    <form id="upload-file" name="upload-file">
-                      <input type="file" name="file" onchange="loadFile(event)"/>
-                      <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
+                    <form enctype="multipart/form-data">
+                      <input type="file" name="file" id='mainfile'>
                     </form>
-                  </label>
-                </center>
+                  </center>
+                </fieldset>
             </div>
 
 
@@ -272,18 +258,36 @@ swal("", `{{error}}`, "warning");
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
   <!-- End custom js for this page-->
-
+<script src="../../dashboard/ks-js/filepond-plugin-file-metadata.min.js"></script>
+<script src="../../dashboard/ks-js/filepond-plugin-image-preview.min.js"></script>
+<script src="../../dashboard/ks-js/filepond-plugin-file-rename.min.js"></script>
+<script src="../../dashboard/ks-js/filepond.min.js"></script>
 <script>
-  var loadFile = function(event) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById('logoview');
-      output.src = reader.result;
-    };
-    // image_nm = fname(8);
-    reader.readAsDataURL(event.target.files[0]);
-    document.getElementById("bimg").value = event.target.files[0].name;
-    };
+FilePond.registerPlugin(FilePondPluginImagePreview);
+FilePond.registerPlugin(FilePondPluginFileMetadata);
+FilePond.registerPlugin(FilePondPluginFileRename);
+const inputElement = document.querySelector(`#mainfile`);
+const pond = FilePond.create(inputElement, {
+        server: './upload-blog',
+        labelIdle: "Main image",
+        credits: false,
+        fileMetadataObject: {
+            p_id: product_data['id'],
+        },
+        fileRenameFunction: (file) => {
+            let _st = fname(19);
+            document.getElementById("bimg").value = _st+`${file.extension}`;
+            return _st+`${file.extension}`;
+        },
+  });
+
+pond.on('removefile', (error, file) => {
+  // this object contains the file info
+
+  document.getElementById("bimg").value = "";
+  // file.file.filename = "asdasdasd"
+})
+
 
 </script>
 
@@ -291,21 +295,6 @@ swal("", `{{error}}`, "warning");
 $("#form").submit( function(eventObj) {
   var vv = $("#categ").val()
   $("#cat").val(vv)
-
-  var form_data = new FormData($('#upload-file')[0]);
-  $.ajax({
-      type: 'POST',
-      url: '/upload-blog',
-      data: form_data,
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function(data) {
-          // $("#logoview").attr('src','/media/blog/'+data['status']);
-          // swal("", '', "success");
-          return true;
-      },
-  });
 });
 </script>
 </body>

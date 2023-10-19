@@ -67,6 +67,8 @@ def blog_new():
         data_title = request.form.get('title')  # <--
         data_categ = request.form.get('cat')  # <--
         data_imgname = request.form.get('bimg')  # <--
+        print(request.form)
+
         if not data_title:
             return render_template("/dashboard/blog-new.html", error="Blog title required")
         if not data_body:
