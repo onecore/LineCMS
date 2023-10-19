@@ -241,7 +241,7 @@ def upload_file():
     return jsonify({"status": "success"})
 
 
-@uploader.route('/upload-blog', methods=['POST'])
+@uploader.route('/upload-blog', methods=['POST','DELETE'])
 def upload_file_blog():
     print("Blog thumbnail upload")
     if request.method == 'POST':
@@ -259,19 +259,16 @@ def upload_file_blog():
             filename = secure_filename(file.filename)
 
             file.save(os.path.join(UPLOAD_FOLDER_BLOG, filename))
-            # d_e = dataengine.knightclient()
-            try:
-                # d_e.update_data_uploads("control", "logo", filename,
-                #                         "owner", session['authenticated'][0])
-                log("Post thumbnail uploaded")
-            except Exception as e:
-                log("Post thumbnail failed, revert")
-                # if fails, revert to sample logo
-                # d_e.update_data_uploads("control", "logo", 'sample.png',
-                #                         "owner", session['authenticated'][0])
-                # filename = "sample.png"
-            return jsonify({"status": filename})
-    return jsonify({"status": "success"})
+
+            return UPLOAD_FOLDER_BLOG+"/"+filename
+
+    elif request.method == 'DELETE':
+        os.remove(os.path.join(request.data))
+        print(f"DELETED IMAGE FILE: {request.data}")
+        return "true"
+
+    else:
+        return jsonify({"status": 0})
 
 
 @uploader.route('/upload_fav', methods=['POST'])
