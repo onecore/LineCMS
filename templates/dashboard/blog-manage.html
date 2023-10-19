@@ -480,7 +480,11 @@ swal("", `{{error}}`, "warning");
                   {% for i in blog %}
 
                     <tr id="tr-{{i[0]}}">
+                      {% if i[3] %}
                         <td><a href="/blog/{{i[6]}}" target="_blank"><img src="/media/blog/{{i[3]}}" class="avatar" alt="Avatar"> </a></td>
+                      {% else %}
+                        <td><a href="/blog/{{i[6]}}" target="_blank"><img src="/media/ni.jpeg" class="avatar" alt="Avatar"> </a></td>
+                      {% endif %}
                         <td class="text-truncate" style="max-width: 100px;">{{i[1]}}</td>
                         <td>{{i[4]}}</td>
                         {% if i[5] == '0' %}

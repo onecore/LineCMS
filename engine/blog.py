@@ -13,7 +13,7 @@ def blogthumb(image):
     ni = "static/dashboard/uploads/ni.jpeg"  # no image
 
     tbool = os.path.isfile(os.path.join(upath))
-    if tbool:
+    if image and tbool:
         return f"/media/blog/{image}"
     else:
         return ""

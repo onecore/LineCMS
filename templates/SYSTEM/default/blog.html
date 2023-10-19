@@ -91,7 +91,7 @@
                         </header>
                         <!-- Post content-->
                         <section class="mb-5">
-                          {% if blog[3] != 'no-image.jpeg' %}
+                          {% if blog[3] %}
                             <center><figure class="mb-4"><img class="img-fluid rounded flex" src="/media/blog/{{blog[3]}}" alt="..." /></figure></center>
                           {% endif %}
                           {{ blog[2] | safe }}
