@@ -199,6 +199,12 @@ localStorage.clear();
       <div class="main-panel">
         <div class="container">
           <div class="row">
+            {% if setup %}
+            <center><div class="alert alert-info text-muted p-2 mt-3 border" role="alert">
+              Payment is not activated yet, setup your payment gateway using the button &nbsp<a href="/product-settings" class="btn btn-primary btn-xs">Set up</a>
+            </div></center>
+            {% endif %}
+            <br>
             <div class="col-12 col-md-4 p-3">
 
                 <div class="form-group">

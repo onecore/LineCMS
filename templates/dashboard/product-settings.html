@@ -28,8 +28,9 @@
 
 <body class="sidebar-dark">
 <script>
+
 {% if success %}
-swal("", 'Password has been changed', "success");
+swal("", 'Product Settings updated', "success");
 {% endif %}
 
 
@@ -174,29 +175,31 @@ swal("", `{{error}}`, "warning");
                   <form class="pt-3" method="post">
                   <div class="input-group mb-3 pt-0">
                     <div class="input-group-prepend">
-                      <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">SECRET KEY</span>
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET KEY</span>
                     </div>
-                    <input type="text" class="form-control" id="p-url" aria-label="" placeholder="Secret Key from your Stripe account">
+                    <input type="text" class="form-control" id="skey" name="skey" aria-label="" placeholder="Secret Key from your Stripe account" value="{{settings[0]}}">
                   </div>
                   <div class="input-group mb-3 pt-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
                     </div>
-                    <input type="text" class="form-control" id="p-url" aria-label="" placeholder="Publishable Key from your Stripe account">
+                    <input type="text" class="form-control" id="pkey" name="pkey" aria-label="" placeholder="Publishable Key from your Stripe account" value="{{settings[1]}}">
                   </div>
-                  <hr>
+                  <br>
+                  <hr class="text-muted">
                   <div class="input-group mb-3 pt-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">Currency</span>
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Currency</span>
                     </div>
-                      <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Currency</option>
-                        <option value="1" selected>$ USD</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ckey" name="ckey">
+                        <option value="{{settings[2]}}" selected>{{settings[2]}}</option>
+                        {% for currency in currencies %}
+                        <option value="{{currency}}">{{currency}}</option>
+                        {% endfor %}
                       </select>
                       </div>
                     <div class="mt-3">
+                      <br>
                     <button type="submit" class="btn btn-primary">Save information</button>
                       <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../dashboard/index.html">SIGN IN</a> -->
                     </div>

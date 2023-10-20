@@ -30,6 +30,25 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def productsettings_set(self, sk, pk, ck) -> tuple:
+        try:
+            _c = self.connection.cursor()
+            _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}" WHERE id = 1; """.format(
+                sk=sk, pk=pk, ck=ck)
+            _c.execute(_q)
+            self.connection.commit()
+            return True
+        except:
+            return False
+
+    def productsettings_get(self) -> tuple:
+        """Product settings db table has to be premade"""
+        _c = self.connection.cursor()
+        _q = "SELECT * FROM productsetting where id=1"
+        _fetch = _c.execute(_q)
+        _r = _fetch.fetchone()
+        return _r
+
     def productimagesupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
         """
         Loads data from product table

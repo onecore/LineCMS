@@ -5,6 +5,8 @@ import templater as temple
 import json
 import os
 from icecream import ic
+from helpers import currency
+
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 product = Blueprint("product", __name__)
@@ -71,8 +73,25 @@ def variantimagemodifier(d: bytes) -> 'json':
 
 @product.route("/product-settings", methods=['GET', 'POST'])
 def product_sett():
-    error = None
-    return render_template("/dashboard/product-settings.html", error=error)
+    import currencies
+
+    error, success = None, None
+    currencieslist = currency.currency
+    de = dataengine.knightclient()
+    settings = de.productsettings_get()
+
+    if request.method == "POST":
+        skey = request.form.get("skey")
+        pkey = request.form.get("pkey")
+        ckey = request.form.get("ckey")
+        if skey and pkey and ckey:
+            _set = de.productsettings_set(skey, pkey, ckey)
+            if _set:
+                settings = de.productsettings_get()
+                success = 1
+        else:
+            error = "Some information is missing"
+    return render_template("/dashboard/product-settings.html", currencies=currencieslist, error=error, success=success, settings=settings)
 
 
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
@@ -88,7 +107,14 @@ def product_edt(route):
 
 @product.route("/product-new", methods=['POST', 'GET'])
 def product_new():
-    return render_template("/dashboard/product-new.html")
+    setup = False
+    de = dataengine.knightclient()
+    _settings = de.productsettings_get()
+
+    if not _settings[0] or not _settings[1] or not _settings[2]:
+        setup = True
+
+    return render_template("/dashboard/product-new.html", setup=setup)
 
 
 @product.route("/product-manage", methods=['POST', 'GET'])
