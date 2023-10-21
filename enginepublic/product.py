@@ -6,6 +6,8 @@ import json
 import os
 from icecream import ic
 from engine.product import getimages, getmainimage
+import stripe
+
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 themes = "default"
@@ -13,6 +15,10 @@ themes = "default"
 productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
                         )
+
+ps = dataengine.knightclient()
+_, sk, pk, ck = ps.productsettings_get()
+stripe.api_key = sk
 
 
 def variantpush(v, i, js=False):
@@ -30,8 +36,22 @@ def variantpush(v, i, js=False):
             c = c + 1
     if js:
         return json.dumps(d)
-    else:
-        return d
+    return d
+
+
+@productuser.route('/product-checkout', methods=['GET', 'POST'])
+def prodcheck():
+    return "asd"
+
+
+@productuser.route('/order/success')
+def success():
+    return render_template('success.html')
+
+
+@productuser.route('/order/cancel')
+def cancel():
+    return render_template('cancel.html')
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])

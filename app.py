@@ -30,6 +30,7 @@ from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
+
 # Dashboard imports/views
 
 # Public views
@@ -47,13 +48,15 @@ app = Flask(__name__,
             static_folder='static',
             template_folder='templates')
 
-ckeditor.init_app(app)
+ckeditor.init_app(app)  # wysiwyg html editor
+
 
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 """
 Blueprinted routes

@@ -623,6 +623,8 @@ function p_showhid(){
 
 }
 
+
+
 // window.onbeforeunload = function() {
 //   return "Leaving this page will not save your product information.";
 // }
