@@ -37,6 +37,7 @@ from engine.other import other
 from enginepublic.product import productuser
 from enginepublic.blog import bloguser
 from enginepublic.main import mains
+from enginepublic.notfound import notfound
 # Public views
 
 ckeditor = CKEditor()
@@ -75,6 +76,7 @@ app.register_blueprint(other)
 app.register_blueprint(productuser)
 app.register_blueprint(bloguser)
 app.register_blueprint(mains)
+app.register_blueprint(notfound)
 
 
 # @app.route("/<file>.txt")
