@@ -3,9 +3,6 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 
-_logger = dataengine.knightclient()
-log = _logger.log
-
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
 
@@ -43,12 +40,9 @@ def dashboard_main():
                         upd = dataengine.knightclient()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
-                            log("Website Information Updated")
                             return render_template("dashboard/dashboard.html", data=dt, error=False, success=True)
                         else:
                             error = "System cannot process your request"
-                            log(error, " dashboard POST call")
                             return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
-    log("Authenticate failed, returning to login")
     return redirect("/login")

@@ -15,7 +15,6 @@ def login():
     authenticator for dashboad route
     """
     if request.method == 'POST':
-        log("New login activity")
         _u = request.form.get('uname')
         _p = request.form.get('pwd')
         try:
@@ -31,10 +30,8 @@ def login():
                 log("Login failed, session deleted")
                 return render_template("dashboard/login.html", error=True)
         except Exception as e:
-            print("Error: ", e)
             return render_template("dashboard/login.html", error=True)
     if 'authenticated' in session:
         if len(session['authenticated']):
             return redirect("/dashboard")
-    else:
-        return render_template("dashboard/login.html", error=False)
+    return render_template("dashboard/login.html", error=False)

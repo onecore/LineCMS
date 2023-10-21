@@ -10,11 +10,12 @@ UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
 def trydelete(image):
+    """
+    Deletes any image that is considered left-over, not updated in db and not needed
+    """
     try:
         os.remove(os.path.join(UPLOAD_FOLDER_BLOG, image))
-        print("Deleted leftover")
     except:
-        print("Trydelete except")
         pass
 
 
@@ -38,10 +39,10 @@ def blog_edit(url):
                     "category": data_categ, "hidden": data_hidden, "route": blog[6]}
             if data_imgname:
                 data["image"] = data_imgname
-                # trydelete(blog[3])
+                # trydelete(blog[3]) unused needs testing
             else:
                 data['image'] = ""
-                # trydelete(blog[3])
+                # trydelete(blog[3]) unused needs testing
 
             if data_categ:
                 data['category'] = data_categ
@@ -49,11 +50,11 @@ def blog_edit(url):
                 data['category'] = 'blog'
             try:
                 if (de.blog_update(data)):
+                    # /1/ pattern will show Success
                     return redirect(temple.route_blog+"/1/"+data['route'])
                 else:
                     return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
             except Exception as e:
-                print(e)
                 return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog post failed to publish.")
     return render_template("/dashboard/blog-edit.html", blog=blog)
 
@@ -71,7 +72,6 @@ def blog_manage(alert=None):
     tt = len(blog)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='blog', css_framework="bootstrap5")
-
     return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination, alert=alert)
 
 
@@ -82,19 +82,21 @@ def blog_new():
         data_title = request.form.get('title')  # <--
         data_categ = request.form.get('cat')  # <--
         data_imgname = request.form.get('bimg')  # <--
-        print(request.form)
 
         if not data_title:
             return render_template("/dashboard/blog-new.html", error="Blog title required")
         if not data_body:
             return render_template("/dashboard/blog-new.html", error="Blog content required")
         else:
-            data = {"title": data_title,
-                    "body": data_body, "category": data_categ}
+            data = {
+                    "title": data_title,
+                    "body": data_body,
+                    "category": data_categ
+                    }
             if data_imgname:
                 data["image"] = data_imgname
             else:
-                data['image'] = "no-image.jpeg"
+                data['image'] = ""
             if data_categ:
                 data['category'] = data_categ
             else:
@@ -103,9 +105,7 @@ def blog_new():
             try:
                 if (de.blog_publish(data)):
                     return redirect(temple.route_blog+"/1/"+g.new_blog_url)
-                else:
-                    return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
+                return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
             except Exception as e:
-                print(e)
                 return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
     return render_template("/dashboard/blog-new.html")

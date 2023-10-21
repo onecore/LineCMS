@@ -45,12 +45,12 @@ def prodcheck():
 
 
 @productuser.route('/order/success')
-def success():
+def prsuccess():
     return render_template('success.html')
 
 
 @productuser.route('/order/cancel')
-def cancel():
+def prcancel():
     return render_template('cancel.html')
 
 

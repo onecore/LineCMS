@@ -110,10 +110,8 @@ def product_new():
     setup = False
     de = dataengine.knightclient()
     _settings = de.productsettings_get()
-
     if not _settings[0] or not _settings[1] or not _settings[2]:
         setup = True
-
     return render_template("/dashboard/product-new.html", setup=setup)
 
 

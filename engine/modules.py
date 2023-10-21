@@ -25,6 +25,4 @@ def modules():
         "custom": eval(all_d[5]),
         "extras": eval(all_d[6]),
     }
-    log("KSEngine Modules Loaded")
-    # print(dicts['popup']['enabled'])
     return render_template("dashboard/modules.html", data=dt, mod=dicts)

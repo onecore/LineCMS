@@ -72,7 +72,6 @@ def upload_file_product_main():
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
         except Exception as e:
-            print("Error: ", e)
             pass
 
         log("New Logo upload started")
@@ -90,7 +89,6 @@ def upload_file_product_main():
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
-        print(f"DELETED IMAGE FILE: {request.data}")
         return "true"
     return jsonify({"status": "success"})
 
@@ -118,7 +116,6 @@ def upload_file_product_images():
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
         except Exception as e:
-            print("Error: ", e)
             pass
 
         log("New Logo upload started")
@@ -136,7 +133,6 @@ def upload_file_product_images():
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
-        print(f"DELETED IMAGE FILE: {request.data}")
         return "true"
     return jsonify({"status": "success"})
 
@@ -166,7 +162,6 @@ def upload_file_product_variant():
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
         except Exception as e:
-            print("Error: ", e)
             pass
 
         if keys not in request.files:
@@ -187,23 +182,9 @@ def upload_file_product_variant():
     elif request.method == 'DELETE':
         # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug)
         stop = 0
-        ############# REMOVE VARIANT DOM (contains json)
-        # try:
-        #     jsobj = json.loads(request.data)
-        #     if 'filev' in jsobj:
-        #         _rf = UPLOAD_FOLDER_PRODUCTS+"/" + \
-        #             str(jsobj['fid'])+"/variants/"+jsobj['filev']
-        #         os.remove(os.path.join(_rf))
-        #         stop = 1
-        #         return ""
-        # except Exception as e:
-        #     print("Cant delete", e)
-
-        ############# FILEPOND DELETE (contains PATH ONLY)
         if not stop:
             try:
                 os.remove(os.path.join(request.data))
-                print(f"DELETED IMAGE FILE: {request.data}")
                 return "true"
             except:
                 return ""
@@ -215,15 +196,11 @@ def upload_file():
     if request.method == 'POST':
         log("New Logo upload started")
         if 'file' not in request.files:
-            flash('No file part')
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
-            flash('No selected file')
-            print("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             d_e = dataengine.knightclient()
@@ -265,7 +242,6 @@ def upload_file_blog():
 
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
-        print(f"DELETED IMAGE FILE: {request.data}")
         return "true"
 
     else:
