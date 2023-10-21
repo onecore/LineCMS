@@ -48,11 +48,6 @@
       background-size: cover;
     }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
     .main__title {
       font-size: 4rem
@@ -167,7 +162,7 @@
 <body >
 
 
-  <div class="container-xxl bg-white p-0">
+  <div class="container-fluid bg-white p-0">
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
       <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -178,7 +173,7 @@
 
 
     <!-- Navbar & Hero Start -->
-    <div class="container-xxl position-relative p-0">
+    <div class="container-fluid position-relative p-0">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
         <a href="/" class="navbar-brand p-0">
           <img src="media/{{data['logo']}}" alt="Logo" class="flex"> {{ data['sitename']}}
@@ -197,7 +192,7 @@
                                 <a href="team.html" class="dropdown-item">Our Team</a>
                                 <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                             </div>
-                        </div> -->
+                        </div>
             <a href="#sendusmessage2" class="nav-item nav-link">Contact</a>
           </div>
             {% if 'authenticated' in session %}
@@ -207,7 +202,7 @@
         </div>
       </nav>
 
-      <div class="container-xxl py-5 bg-dark hero-header mb-5">
+      <div class="container-fluid py-5 bg-dark hero-header mb-5">
         <div class="container my-5 py-5">
           <div class="row align-items-center g-5">
             <div class="col-lg-9 text-center text-lg-start">
@@ -234,7 +229,7 @@
 
     <!-- About Start -->
 
-    <div class="container-xxl py-5">
+    <div class="container-fluid py-5">
       <div class="container">
         <div class="row g-5 align-items-center">
           <div class="col-lg-6">
@@ -278,7 +273,7 @@
 
 
     <!-- Menu Start -->
-    <div class="container-xxl py-5">
+    <div class="container-fluid py-5">
       <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
           <h5 class="section-title ff-secondary text-center text-primary fw-normal" id="menus">Our menu</h5>
@@ -638,7 +633,7 @@
     <!-- Reservation Start -->
     {% if mod['videoembed']['enabled']%}
     {% if mod['videoembed']['code'] %}
-    <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s" id="sendusmessage2">
+    <div class="container-fluid py-5 px-0 wow fadeInUp" data-wow-delay="0.1s" id="sendusmessage2">
 
       <div class="row g-0">
         <div class="col-md-6">
@@ -774,7 +769,7 @@
 
     <!-- Back to Top -->
     {% if mod['uparrow']['enabled'] %}
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background-color:{{mod['uparrow']['color']}}"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background-color:{{mod['uparrow']['color']}};color:black"><i class="bi bi-arrow-up"></i></a>
     {% endif %}
   </div>
 
