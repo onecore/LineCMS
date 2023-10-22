@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, g, session, jso
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
+from helpers import themeengine
 
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
