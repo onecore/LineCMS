@@ -98,7 +98,7 @@ function likes(e){
       let ini = {}
       let iniall = {}
       ini[productid] = 1
-      iniall[productid] = []
+      iniall[productid] = [product_url,product_title]
       localStorage.setItem("likes",JSON.stringify(ini))
       localStorage.setItem("likesall",JSON.stringify(iniall))
 
