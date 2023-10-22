@@ -47,8 +47,6 @@ def check(data):
     for product, values in data.items():
         _, _price, _quantity = values.split(",")
         product_data = _de.get_product_single(route=False, checkout=product)
-        print(product_data)
-
         clone = {
                 'price_data': {
                     'product_data': {
@@ -93,7 +91,29 @@ def prodcheck():
 
 @productuser.route('/product-list', methods=['GET', 'POST'])
 def productlist():
-    pass
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    mod = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
+    }
+    products = de.get_product_listings()
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    tt = len(products)
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='products', css_framework="bootstrap5")
+    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=pagination)
 
 
 @productuser.route('/order/success')

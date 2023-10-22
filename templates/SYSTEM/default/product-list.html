@@ -68,26 +68,31 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/blog-list">Blog list</a></li>
+              <li class="breadcrumb-item"><a href="/product-list">Product list</a></li>
             </ol>
           </nav>
           <div class="row">
             <br>
             {{ pagination.info }}
             {{ pagination.links }}
-            {% for blog in blogs %}
-              {% if blog[5] == '0' %}
+            {% for product in products %}
+              {% if product[12] == '0' %}
 
-                <div class="col-md-3  pt-3">
+                <div class="col-md-3  pt-3 pb-3">
                   <div class="card pt-0">
-                    <a href="/blog/{{blog[6]}}"><img src="/media/blog/{{blog[3]}}" class="card-img-top img-fluid" alt="{{blog[1]}}" style="padding-top:5px;"></a>
-                    <div class="card-body">
-                      <h5 class="card-title text-truncate" style="max-width: 200px";>{{blog[1]}}</h5>
-                      <p class="text-truncate" style="max-width: 400px">{{khtml2text(blog[2])}}</p>
 
-                      <p class="text-truncate text-mute" style="max-width: 200px;font-size:14px;margin-top:-5px;color:grey";>Posted: {{blog[4][:11]}}</p>
-                      <p class="text-truncate text-mute p-0" style="max-width: 200px;font-size:14px;margin-top:-15px;color:grey";>Categories: {{blog_list_badge_category(blog[7])|safe}}</p>
-                      <a href="/blog/{{blog[6]}}" class="btn btn-primary float-right">Read more</a>
+                  {% if product[9] %}
+                    <a href="/product/{{product[5]}}"><img src="/media/mainimage/{{product[13]}}/{{product[9]}}" class="card-img-top img-fluid" style="padding-top:5px;"></a>
+                  {% else %}
+                    <a href="/product/{{product[5]}}"><img src="/media/ni.jpeg" class="card-img-top img-fluid" style="padding-top:5px;"></a>
+                  {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title text-truncate" style="max-width: 200px";>{{product[1]}}</h5>
+                      <p class="text-truncate" style="max-width: 400px">{{khtml2text(product[14])}}</p>
+                      {% if product[2] %}
+                      <p class="text-truncate text-mute p-0" style="max-width: 200px;font-size:14px;margin-top:-15px;color:grey";>Categories: {{blog_list_badge_category(product[2])|safe}}</p>
+                      {% endif %}
+                      <a href="/product/{{product[5]}}" class="btn btn-primary float-right">View product</a>
                     </div>
                   </div>
                 </div>
