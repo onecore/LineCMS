@@ -176,8 +176,13 @@ function addls(){
 function removels(){
     // 0 for not added
     localStorage.removeItem(pid)
-    document.getElementById('cart').value = localStorage.length-1;
-}
+      refreshLS()
+      if (isLS()){
+          document.getElementById('cart').value = cartcount;
+      }else{
+          document.getElementById('cart').value = cartcount;
+      }
+    }
 
 const varatc = document.getElementById('addtocart');
 const ladd = document.getElementById('addtolike');
