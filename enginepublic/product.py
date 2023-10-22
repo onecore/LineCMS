@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, g, send_from_directory
+from flask import Blueprint, render_template, request, redirect, g, send_from_directory, url_for, jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
@@ -39,50 +39,71 @@ def variantpush(v, i, js=False):
     return d
 
 
-@productuser.route('/product-checkout', methods=['GET', 'POST'])
-def prodcheck():
-    if request.method == "POST":
-        print(request.data)
+def check(data):
+    _de = dataengine.knightclient()
+    items = []
+    load_items = []
 
+    for product, values in data.items():
+        _, _price, _quantity = values.split(",")
+        product_data = _de.get_product_single(route=False, checkout=product)
+        print(product_data)
+
+        clone = {
+                'price_data': {
+                    'product_data': {
+                        'name': product_data[1],
+                    },
+                    'unit_amount': int(str(_price).replace(".", "")),
+                    'currency': ck.lower(),
+                },
+                'quantity': int(_quantity),
+                }
+
+        items.append(clone)
+
+    ic(items)
     checkout_session = stripe.checkout.Session.create(
-        line_items=[
-            {
-                'price_data': {
-                    'product_data': {
-                        'name': "Product 1",
-                    },
-                    'unit_amount': 200,
-                    'currency': 'usd',
-                },
-                'quantity': 1,
-            },
-            {
-                'price_data': {
-                    'product_data': {
-                        'name': "Product 2",
-                    },
-                    'unit_amount': 100,
-                    'currency': 'usd',
-                },
-                'quantity': 1,
-            },
-        ],
+        line_items=items,
         payment_method_types=['card'],
         mode='payment',
         success_url=request.host_url + 'order/success',
         cancel_url=request.host_url + 'order/cancel',
     )
-    return redirect(checkout_session.url)
+    return checkout_session.url
+
+
+@productuser.route('/product-checkout', methods=['GET', 'POST'])
+def prodcheck():
+    if request.method == "POST":
+        prdata = {}
+        try:
+            prdata = eval(request.data)
+        except Exception as e:
+            return jsonify({"status": 0})
+
+        if prdata:
+            clientres = check(prdata)
+            return jsonify({'c': clientres})
+
+        return jsonify({"status": 0})
+    else:
+        return jsonify({"status": 0})
+
+
+@productuser.route('/product-list', methods=['GET', 'POST'])
+def productlist():
+    pass
 
 
 @productuser.route('/order/success')
 def prsuccess():
-    return render_template('success.html')
+    return render_template('order-success.html')
 
 
 @productuser.route('/order/cancel')
 def prcancel():
-    return render_template('cancel.html')
+    return redirect("/product-list")
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])

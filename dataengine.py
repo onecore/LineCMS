@@ -272,10 +272,14 @@ class knightclient:
         self.connection.commit()
         print("Done")
 
-    def get_product_single(self, route):
+    def get_product_single(self, route, checkout=False):
         _c = self.connection.cursor()
-        self.m_fetch = _c.execute(
-            "SELECT * FROM products WHERE product_urlsystem='{m}'".format(m=route))
+        if checkout:
+            self.m_fetch = _c.execute(
+                "SELECT * FROM products WHERE product_id='{m}'".format(m=checkout))
+        else:
+            self.m_fetch = _c.execute(
+                "SELECT * FROM products WHERE product_urlsystem='{m}'".format(m=route))
         self.m_data = self.m_fetch.fetchone()
         return self.m_data
 

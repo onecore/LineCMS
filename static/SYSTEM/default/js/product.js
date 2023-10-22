@@ -232,10 +232,18 @@ function prepele(){
 }
 
 function checkout(){
-  console.log(refreshLS(get=0,checko=1))
-  // if (refreshLS(true)){
-  //   location.href = "/product-checkout"
-  // }
+  let data = refreshLS(get=0,checko=1)
+  fetch("/product-checkout", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then((response) => response.json())
+  .then((data) => {
+  location.href = data.c
+});
 }
 
 function openlikes(e=null){
