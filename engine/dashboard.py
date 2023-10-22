@@ -17,6 +17,12 @@ def dashboard_main():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
 
+    tmplist = themeengine.templates_list
+    theme = de.themeget()
+    if not theme:
+        de.themeset("default")
+        theme = ("default")
+
     if 'authenticated' in session:
         if len(session['authenticated']):
             if request.method == "POST":
@@ -36,14 +42,14 @@ def dashboard_main():
                 for k, v in dicts.items():
                     if len(v) < 5:
                         error = "Some information must be 5 characters or more"
-                        return render_template("dashboard.html", data=dt, error=error, success=success)
+                        return render_template("dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
                     else:
                         upd = dataengine.knightclient()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
-                            return render_template("dashboard/dashboard.html", data=dt, error=False, success=True)
+                            return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme)
                         else:
                             error = "System cannot process your request"
-                            return render_template("dashboard/dashboard.html", data=dt, error=error, success=False)
-            return render_template("dashboard/dashboard.html", data=dt, error=error, success=success)
+                            return render_template("dashboard/dashboard.html", data=dt, error=error, success=False, tmplist=tmplist, tmpcurrent=theme)
+            return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
     return redirect("/login")

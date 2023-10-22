@@ -19,6 +19,20 @@ class knightclient:
     connection = sqlite3.connect("db/knightstudio", check_same_thread=False)
     # cursor = connection.cursor()
 
+    def themeset(self, theme):
+        _c = self.connection.cursor()
+        q = f"UPDATE control SET theme = '{theme}'"
+        _c.execute(q)
+        self.connection.commit()
+
+    def themeget(self):
+        """Product settings db table has to be premade"""
+        _c = self.connection.cursor()
+        _q = "SELECT theme FROM control"
+        _fetch = _c.execute(_q)
+        _r = _fetch.fetchone()
+        return _r
+
     def url_gen(self, content) -> str:
         """
         content: string format url

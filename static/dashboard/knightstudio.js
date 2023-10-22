@@ -624,7 +624,28 @@ function p_showhid(){
 }
 
 
+function kstheme(){
+  let tmel = document.getElementById("ktheme");
+  let tm = tmel.options[tmel.selectedIndex].text;
 
+  if (!tm){
+    swal("", 'No theme selected', "error");
+    return false;
+  }
+  fetch("/api/themeset", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({'set':tm})
+  }).then(res => {
+    swal("", 'Theme has been updated', "success");
+  });
+}
+
+function ksthemeprev(){
+  
+}
 // window.onbeforeunload = function() {
 //   return "Leaving this page will not save your product information.";
 // }

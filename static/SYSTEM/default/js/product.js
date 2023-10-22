@@ -11,13 +11,16 @@ varselect.addEventListener('change', function (e) {
     let seloption = varbox.options[varbox.selectedIndex].text;
     let stockp = document.getElementById('stock');
     let pricep = document.getElementById('pricep');
+    let pricef = document.getElementById('fprice');
 
     if (seloption === "Available variants"){
           stockp.innerText = "";
           pricep.innerText = `Price: \$${mainprice}`;
+          pricef.value = mainprice;
     }else{
           stockp.innerText = `Variant: ${seloption} - Available in stock: ${productinfo[seloption+"-ivar"]['instock']}`;
           pricep.innerText = `Price: \$${productinfo[seloption+"-ivar"]['price']}`;
+          pricef.value = productinfo[seloption+"-ivar"]['price']
     }
     variantim(seloption)
 });
@@ -38,19 +41,22 @@ function isLS(){
   return false;
 }
 
-function refreshLS(get=false){
+function refreshLS(get=false,checko=false){
   // refresh localStorage objects
   cartcopy = {}; // local use
   cartcount = 0; // local use
   for (let i = 0; i < localStorage.length; i++){
       var key = localStorage.key(i);
-      if (localStorage.getItem(key) > 0 && key != "likes" && key != "likesall"){
+      if (localStorage.getItem(key)[0] > 0 && key != "likes" && key != "likesall"){
         cartcount = cartcount + 1
       };
    }
   cartcopy = {...localStorage}
   if (get){
     return cartcount;
+  }
+  if (checko){
+    return cartcopy
   }
 }
 
@@ -66,7 +72,6 @@ function likesele(addrem){
 }
 
 function likes(e){
-  console.log(productinfo)
     if ("likes" in localStorage && "likesall" in localStorage){ // already in LS
       var lls = localStorage.getItem("likes");
       var lls = JSON.parse(lls)
@@ -157,7 +162,9 @@ function init(){
 
 function addls(){
       // 1 for added
-      localStorage.setItem(pid,1);
+      let _quant = document.getElementById('quant').value;
+      let _price = document.getElementById('fprice').value;
+      localStorage.setItem(pid,[1,_price,_quant]);
       refreshLS()
       if (isLS()){
           document.getElementById('cart').value = cartcount;
@@ -168,7 +175,7 @@ function addls(){
 
 function removels(){
     // 0 for not added
-    localStorage.setItem(pid,0)
+    localStorage.removeItem(pid)
     document.getElementById('cart').value = localStorage.length-1;
 }
 
@@ -220,9 +227,10 @@ function prepele(){
 }
 
 function checkout(){
-  if (refreshLS(true)){
-    location.href = "/product-checkout"
-  }
+  console.log(refreshLS(get=0,checko=1))
+  // if (refreshLS(true)){
+  //   location.href = "/product-checkout"
+  // }
 }
 
 function openlikes(e=null){

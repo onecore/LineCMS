@@ -24,6 +24,7 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css" />
+  <script src="../../dashboard/knightstudio.js"></script>
 
 <style>
 input[type="file"] {
@@ -215,7 +216,7 @@ swal("", `{{error}}`, "warning");
                     <fieldset class="border p-2 text-muted rounded">
                     <legend class="float-none w-auto text-muted" style="font-size:15px">Website Name</legend>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}" style="background:lightgray;opacity:70%">
+                      <input type="text" class="form-control p-2" id="sitename" name="sitename" placeholder="Website Name" value="{{data['sitename']}}" style="background:lightgray;opacity:70%">
                     </div>
                     </fieldset>
                     <br>
@@ -303,9 +304,33 @@ swal("", `{{error}}`, "warning");
                   </fieldset>
                   <br>
                 <fieldset class="border p-2 text-muted rounded">
-                <legend class="float-none w-auto text-muted" style="font-size:15px">Theme</legend>
-              </fieldset>
+                <legend class="float-none w-auto text-muted" style="font-size:15px">Theme Setting</legend>
 
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ktheme" name="ktheme">
+                    {% if tmpcurrent %}
+                    <option value="{{tmpcurrent}}" selected>{{tmpcurrent[0]}}</option>
+                    {% endif %}
+
+                    {% for template in tmplist %}
+                    <option value="{{template}}">{{template}}</option>
+                    {% endfor %}
+                  </select>
+                  <br>
+                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded">Set Current Theme</button><button type="button" onclick="ksthemeprev()" class="btn btn-m btn-primary me-2 d-inline rounded">Preview</button></center>
+
+              </fieldset>
+              <br>
+                <fieldset class="border p-2 text-muted rounded">
+                <legend class="float-none w-auto text-muted" style="font-size:15px">Advanced</legend>
+
+
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Download Product data</button>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Download Blog data</button>
+                  <br>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Upload theme</button>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Access Theme files</button>
+
+              </fieldset>
                 </div>
               </div>
             </div>

@@ -17,7 +17,7 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-_, sk, pk, ck = ps.productsettings_get()
+sk, pk, ck, _ = ps.productsettings_get()
 stripe.api_key = sk
 
 
@@ -41,7 +41,38 @@ def variantpush(v, i, js=False):
 
 @productuser.route('/product-checkout', methods=['GET', 'POST'])
 def prodcheck():
-    return "asd"
+    if request.method == "POST":
+        print(request.data)
+
+    checkout_session = stripe.checkout.Session.create(
+        line_items=[
+            {
+                'price_data': {
+                    'product_data': {
+                        'name': "Product 1",
+                    },
+                    'unit_amount': 200,
+                    'currency': 'usd',
+                },
+                'quantity': 1,
+            },
+            {
+                'price_data': {
+                    'product_data': {
+                        'name': "Product 2",
+                    },
+                    'unit_amount': 100,
+                    'currency': 'usd',
+                },
+                'quantity': 1,
+            },
+        ],
+        payment_method_types=['card'],
+        mode='payment',
+        success_url=request.host_url + 'order/success',
+        cancel_url=request.host_url + 'order/cancel',
+    )
+    return redirect(checkout_session.url)
 
 
 @productuser.route('/order/success')

@@ -9,6 +9,18 @@ api = Blueprint("api", __name__)
 version = "1.4"
 
 
+@api.route("/api/themeset", methods=['POST', 'GET'])
+def themeup():
+    if (request.data):
+        _d = json.loads(request.data)
+        _de = dataengine.knightclient()
+        if _de.themeset(_d['set']):
+            return jsonify({"status": 1})
+        print(request.data)
+        return jsonify({"status": 0})
+    return jsonify({"status": 0})
+
+
 @api.route("/product-update", methods=['POST', 'GET'])
 def productupd():
     _d = json.loads(request.data)
