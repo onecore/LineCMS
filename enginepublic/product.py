@@ -108,11 +108,11 @@ def productlist():
     search = False
     q = request.args.get('q')
     if q:
-        search = True
+        search = q
     page = request.args.get(get_page_parameter(), type=int, default=1)
     tt = len(products)
     pagination = Pagination(page=page, total=tt,
-                            search=search, record_name='products', css_framework="bootstrap5")
+                            search=search, record_name='products', css_framework="bootstrap")
     return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=pagination)
 
 

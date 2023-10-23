@@ -30,6 +30,10 @@
     height: 15vw;
     object-fit: cover;
 }
+
+.float-right {
+  float:right
+}
 </style>
     </head>
     <body>
@@ -68,17 +72,35 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/product-list">Product list</a></li>
+              <li class="breadcrumb-item"><a href="/product-list">Products list</a></li>
             </ol>
           </nav>
-          <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="varsel" style="width: 200px">
-            <option selected>Group by Categories</option>
-                <option value="">asd</option>
-
-          </select>
 
           <div class="row">
-              <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
+            <div class="col float-left">
+              <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="varsel" style="width: 200px">
+                <option selected>Group by Categories</option>
+                    <option value="">asd</option>
+
+              </select>
+            </div>
+
+            <div class="col float-right">
+            <form>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search product" name="q">
+              <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+            </div>
+          </div>
+          <div class="row">
+             <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
+            <br>
             <br>
 
             {% for product in products %}
