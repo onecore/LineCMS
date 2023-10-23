@@ -85,8 +85,10 @@ def product_sett():
         pkey = request.form.get("pkey")
         ckey = request.form.get("ckey")
         wkey = request.form.get("wkey")
-        if skey and pkey and ckey and wkey:
-            _set = de.productsettings_set(skey, pkey, ckey,wkey)
+        wskey = request.form.get("wskey")
+        
+        if skey and pkey and ckey:
+            _set = de.productsettings_set(skey, pkey, ckey,wkey,wskey)
             if _set:
                 settings = de.productsettings_get()
                 success = 1

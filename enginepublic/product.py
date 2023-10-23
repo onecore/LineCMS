@@ -17,7 +17,7 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _, wk = ps.productsettings_get()
+sk, pk, ck, _, wk,wsk = ps.productsettings_get()
 stripe.api_key = sk
 
 
@@ -50,7 +50,7 @@ def new_event():
 
     try:
         event = stripe.Webhook.construct_event(
-            payload, signature, os.environ['STRIPE_WEBHOOK_SECRET'])
+            payload, signature, wsk)
     except Exception as e:
         # the payload could not be verified
         abort(400)
@@ -62,7 +62,6 @@ def new_event():
       for item in session.line_items.data:
           print(f'  - {item.quantity} {item.description} '
                 f'${item.amount_total/100:.02f} {item.currency.upper()}')
-
     return {'success': True}
 
 def check(data):
@@ -144,12 +143,25 @@ def productlist():
 
 @productuser.route('/order/success')
 def prsuccess():
-    return render_template('order-success.html')
+    de = dataengine.knightclient()
+    dt = de.load_data_index(None)  # loads datas
+    modules_settings = de.load_modules_settings()
+    all_d = modules_settings[0]
+    mod = {
+        "popup": eval(all_d[0]),
+        "announcement": eval(all_d[1]),
+        "uparrow": eval(all_d[2]),
+        "socialshare": eval(all_d[3]),
+        "videoembed": eval(all_d[4]),
+        "custom": eval(all_d[5]),
+        "extras": eval(all_d[6]),
+    }
+    return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod)
 
 
 @productuser.route('/order/cancel')
 def prcancel():
-    return redirect("/product-list")
+    return render_template(f"/SYSTEM/{themes}/order-cancel.html")
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
