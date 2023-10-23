@@ -17,7 +17,7 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _ = ps.productsettings_get()
+sk, pk, ck, _, wk = ps.productsettings_get()
 stripe.api_key = sk
 
 
@@ -38,6 +38,32 @@ def variantpush(v, i, js=False):
         return json.dumps(d)
     return d
 
+
+@productuser.route('/event', methods=['POST'])
+def new_event():
+    """
+    Stripe webhook
+    """
+    event = None
+    payload = request.data
+    signature = request.headers['STRIPE_SIGNATURE']
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, signature, os.environ['STRIPE_WEBHOOK_SECRET'])
+    except Exception as e:
+        # the payload could not be verified
+        abort(400)
+
+    if event['type'] == 'checkout.session.completed':
+      session = stripe.checkout.Session.retrieve(
+          event['data']['object'].id, expand=['line_items'])
+      print(f'Sale to {session.customer_details.email}:')
+      for item in session.line_items.data:
+          print(f'  - {item.quantity} {item.description} '
+                f'${item.amount_total/100:.02f} {item.currency.upper()}')
+
+    return {'success': True}
 
 def check(data):
     _de = dataengine.knightclient()

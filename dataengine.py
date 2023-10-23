@@ -44,11 +44,11 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
-    def productsettings_set(self, sk, pk, ck) -> tuple:
+    def productsettings_set(self, sk, pk, ck, wk) -> tuple:
         try:
             _c = self.connection.cursor()
-            _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}" WHERE id = 1; """.format(
-                sk=sk, pk=pk, ck=ck)
+            _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}", webhookkey = "{wk}" WHERE id = 1; """.format(
+                sk=sk, pk=pk, ck=ck,wk=wk)
             _c.execute(_q)
             self.connection.commit()
             return True
