@@ -646,6 +646,49 @@ function kstheme(){
 function ksthemeprev(){
   
 }
+
+function addratespartial(name,amount,min,max){
+  shipping.push([name.value,amount.value,min.value,max.value])
+  shipping_names.push(name.value)
+  name.value = ""
+  amount.value = ""
+  min.value = ""
+  max.value = ""
+  console.log(shipping)
+}
+
+function shippingrateel(){
+  let coldiv = document.getElementById("rates");
+  let sname = document.getElementById("sname")
+  let samount = document.getElementById("samount")
+  let smin = document.getElementById("sminimum")
+  let smax = document.getElementById("smaximum")
+  let l = `
+     <div class="card shadow-none border rounded-0 p-1 m-1" id="${sname.value.trim()}">
+      <div class="card-body">
+        <center><h6 class="card-title border p-2 m-2">${sname.value}</h6></center>
+        <center><p class="card-text m-2"><b>Shipping time</b> ${smin.value}-${smax.value} Business Days,  <b>Shipping Cost</b> ${samount.value}</p></center>
+        <a href="#" class="btn btn-muted btn-xs border">Delete</a>
+      </div>
+    </div>
+  `
+ if (!sname.value || !samount.value || !smin.value || !smax.value){
+    swal("", 'Some information is missing', "error");
+    return false;
+ }
+ if (isNaN(smin.value) || isNaN(smax.value) || isNaN(samount.value)){
+    swal("", 'Cannot validate your input', "error");
+    return false;
+ }
+ if (shipping_names.includes(sname.value)){
+    swal("", 'Please choose a different name', "error");
+    return false;
+ }
+ addratespartial(sname,samount,smin,smax)
+
+coldiv.insertAdjacentHTML( 'afterbegin',l)
+
+}
 // window.onbeforeunload = function() {
 //   return "Leaving this page will not save your product information.";
 // }

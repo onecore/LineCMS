@@ -23,7 +23,11 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="../../dashboard/knightstudio.js"></script>
 
+<style>
+.scontainer { border:0.5px solid #ccc; width:250px; height: 300px; overflow-y: scroll;}
+</style>
 </head>
 
 <body class="sidebar-dark">
@@ -37,6 +41,9 @@ swal("", 'Product Settings updated', "success");
 {% if error %}
 swal("", `{{error}}`, "warning");
 {% endif %}
+
+let shipping = []
+let shipping_names = []
 </script>
 
 
@@ -212,6 +219,83 @@ swal("", `{{error}}`, "warning");
                         {% endfor %}
                       </select>
                       </div>
+                      <div class="input-group mb-3 pt-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Shipping</span>
+                        </div>
+                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping" name="shipping">
+                            <option value="Enable Shipping" selected>Enable Shipping</option>
+                            <option value="on">No Shipping</option>
+                          </select>
+                        </div>
+                        <br>
+                          <div class="container" id="shippingopt">
+                            <fieldset class="border p-2 text-muted rounded">
+                              <legend class="float-none w-auto text-muted" style="font-size:15px">Shipping Enabled </legend> 
+                              <div class="row">
+                              <center>
+                                <p>SHIPPING RATES</p>
+                              </center>
+
+                                <div class="col" id="col-rates">
+                                      <div class="card shadow-none border rounded-0 p-1 m-1">
+                                        <div class="card-header bg-dark text-white">
+                                          Add Shipping rate
+                                        </div>
+                                        <div class="card-body">
+                                          <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="e.g Express Shipping (DHL)" id="sname">
+                                          </div>
+                                          <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping Amount</span>
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                              placeholder="e.g 13.00" id="samount">
+                                          </div>
+                                          <div class="row">                  
+                                          <div class="col-sm-6">
+                                            <div class="input-group input-group-sm mb-3">
+                                              <div class="input-group-prepend">
+                                                <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Minimum Business days</span>
+                                              </div>
+                                              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                placeholder="e.g 5" id="sminimum">
+                                            </div>
+                                          </div>        
+                                          <div class="col-sm-6">
+                                              <div class="input-group input-group-sm mb-3">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Maximum Business days</span>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="e.g 7" id="smaximum">
+                                          </div> 
+                                          </div>
+                                          <button type="button" class="btn btn-primary btn-s" onclick="shippingrateel()">Add Shipping</button>
+                                          <br>
+                                          <div id="rates">
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <button class="btn btn-xs btn-primary mb-2">Select all countries</button>
+                                  <div class="scontainer">
+                                    {% for country_f, country_s in countries.items() %}
+                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}"/> {{country_s}} <br />
+                                    {% endfor %}
+                                  </div>
+                                </div>
+
+
+
+                            </fieldset>
+                          </div>
                     <div class="mt-3">
                       <br>
                     <button type="submit" class="btn btn-primary">Save information</button>
