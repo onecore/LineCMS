@@ -17,7 +17,7 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _, wk,wsk = ps.productsettings_get()
+sk, pk, ck, _, wk,wsk = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
 
@@ -161,7 +161,7 @@ def prsuccess():
 
 @productuser.route('/order/cancel')
 def prcancel():
-    return render_template(f"/SYSTEM/{themes}/order-cancel.html")
+    return redirect("/product-list")
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])

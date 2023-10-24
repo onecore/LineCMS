@@ -133,3 +133,10 @@ def product_mng(alert=None):
                             search=search, record_name='product', css_framework="bootstrap5")
 
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
+
+
+@product.route("/product-orders", methods=['POST', 'GET'])
+def product_orders():
+    pass
+
+
