@@ -137,6 +137,6 @@ def product_mng(alert=None):
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
-    pass
+    return render_template("/dashboard/product-orders.html")
 
 

@@ -11,13 +11,13 @@ import stripe
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 themes = "default"
-
+shipping = ["CA","US"]
 productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _, wk,wsk = ps.productsettings_get() # wk is not needed
+sk, pk, ck, _, wk, wsk = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
 
@@ -49,19 +49,35 @@ def new_event():
     signature = request.headers['STRIPE_SIGNATURE']
 
     try:
-        event = stripe.Webhook.construct_event(
-            payload, signature, wsk)
+        event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
         # the payload could not be verified
-        abort(400)
+        ic("Error>>>>>>: " ,e)
 
     if event['type'] == 'checkout.session.completed':
-      session = stripe.checkout.Session.retrieve(
-          event['data']['object'].id, expand=['line_items'])
-      print(f'Sale to {session.customer_details.email}:')
-      for item in session.line_items.data:
-          print(f'  - {item.quantity} {item.description} '
-                f'${item.amount_total/100:.02f} {item.currency.upper()}')
+        session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
+        items = []
+        for item in session.line_items.data:
+            items.append([item.description,item.quantity])
+            # print(f'  - {item.quantity} {item.description} '
+                # f'${item.amount_total/100:.02f} {item.currency.upper()}')
+          
+        order = {
+                "customer_name":session.customer_details.name,
+                "customer_email":session.customer_details.email,
+                "amount_total":  f'${item.amount_total/100:.02f} {item.currency.upper()}',
+                "created":session.created,
+                "payment_status": session.payment_status,
+                "customer_country": session.customer_details.address.country,
+                "customer_postal": session.customer_details.address.postal_code,
+                "currency": session.currency,
+                "items": items,
+                "session_id": session.id,
+                }
+    
+
+        ic(order)
+        
     return {'success': True}
 
 def check(data):
@@ -87,6 +103,31 @@ def check(data):
 
     ic(items)
     checkout_session = stripe.checkout.Session.create(
+        # Below parameters enable shipping
+        # shipping_address_collection={"allowed_countries": ["US", "CA"]},
+        # shipping_options=[
+        # {
+        #     "shipping_rate_data": {
+        #     "type": "fixed_amount",
+        #     "fixed_amount": {"amount": 0, "currency": "usd"},
+        #     "display_name": "Free shipping",
+        #     "delivery_estimate": {
+        #         "minimum": {"unit": "business_day", "value": 5},
+        #         "maximum": {"unit": "business_day", "value": 7},
+        #     },
+        #     },
+        # },
+        # {
+        #     "shipping_rate_data": {
+        #     "type": "fixed_amount",
+        #     "fixed_amount": {"amount": 1500, "currency": "usd"},
+        #     "display_name": "Next day air",
+        #     "delivery_estimate": {
+        #         "minimum": {"unit": "business_day", "value": 1},
+        #         "maximum": {"unit": "business_day", "value": 1},
+        #     },
+        #     },
+        # },],
         line_items=items,
         payment_method_types=['card'],
         mode='payment',
