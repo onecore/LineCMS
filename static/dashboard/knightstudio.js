@@ -648,7 +648,7 @@ function ksthemeprev(){
 }
 
 function addratespartial(name,amount,min,max){
-  shipping[name.value] = [amount,min,max]
+  shipping[name.value] = [amount.value,min.value,max.value]
   shipping_names.push(name.value)
   name.value = ""
   amount.value = ""
@@ -704,6 +704,10 @@ function showship(e){
   if (e.value === "on"){
       document.getElementById("shippingopt").style.display = "block";
   }else{
+      shipping = {}
+      shipping_names = []
+      divp = document.getElementById("rates");
+      divp.innerHTML = "";
       document.getElementById("shippingopt").style.display = "none";
   }
 }

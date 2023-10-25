@@ -180,7 +180,7 @@ let currkey = "{{settings[2]}}";
                   <!-- <h4 class="card-title">Account Settings</h4> -->
                   <h3><span class="badge bg-secondary text-white rounded-0">Product Payment / Stripe API Setup</span></h3>
                   <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you don't have one.</p>
-                  <form class="pt-3" method="post">
+                  <form class="pt-3" method="post" id="setform">
                   <div class="input-group mb-3 pt-0">
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET KEY</span>
@@ -206,6 +206,8 @@ let currkey = "{{settings[2]}}";
                     </div>
                     <input type="text" class="form-control" id="wskey" name="wskey" aria-label="" placeholder="Webhook Signing key from Stripe"
                       value="{{settings[5]}}">
+                    <input value="" id="cactivated" name="cactivated" hidden>
+                    <input value="" id="shippingobj" name="shippingobj" hidden>
                   </div>
                   <br>
                   <hr class="text-muted">
@@ -288,7 +290,7 @@ let currkey = "{{settings[2]}}";
                                   <p>Countries supported by Stripe payment</p>
                                   <div class="scontainer">
                                     {% for country_f, country_s in countries.items() %}
-                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}" checked/> {{country_s}} <br />
+                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" checked/> {{country_s}} <br />
                                     {% endfor %}
                                   </div>
                                 </div>
@@ -299,7 +301,7 @@ let currkey = "{{settings[2]}}";
                           </div>
                     <div class="mt-3">
                       <br>
-                    <button type="submit" class="btn btn-primary">Save information</button>
+                    <button type="button" onclick="beforesub()" class="btn btn-primary">Save information</button>
                       <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../dashboard/index.html">SIGN IN</a> -->
                     </div>
 
@@ -328,6 +330,27 @@ let currkey = "{{settings[2]}}";
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+  <script>
+  var selcountries = []
+  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    selcountries.push(checkboxes[i].value)
+  }
+
+  function beforesub() {
+    var selcountries = []
+    var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      selcountries.push(checkboxes[i].value)
+    }
+    document.getElementById("cactivated").value = selcountries;
+    document.getElementById("shippingobj").value = JSON.stringify(shipping);
+    document.getElementById("setform").submit()
+    }
+
+  </script>
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
