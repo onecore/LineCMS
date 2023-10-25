@@ -77,7 +77,7 @@ def new_event():
     try:
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
-        pass
+        ic(e)
 
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
@@ -96,12 +96,14 @@ def new_event():
                 "customer_country": session.customer_details.address.country,
                 "customer_postal": session.customer_details.address.postal_code,
                 "currency": session.currency,
-                "items": items,
+                "items": str(items),
                 "session_id": session.id,
                 }
     
 
-        ic(order)
+        de = dataengine.knightclient()
+        de.productorders_set(order)
+        
         
     return {'success': True}
 
@@ -113,12 +115,19 @@ def check(data):
     load_items = []
     
     for product, values in data.items():
-        _, _price, _quantity = values.split(",")
+        _, _price, _quantity, _variant = values.split(",")
+        def includevariant():
+            selected_variant = ""
+            if _variant != "Available variants":
+                selected_variant = _variant
+                return f" - Variant: {selected_variant}"
+            return selected_variant
+            
         product_data = _de.get_product_single(route=False, checkout=product)
         clone = {
                 'price_data': {
                     'product_data': {
-                        'name': product_data[1],
+                        'name': product_data[1] + includevariant(),
                     },
                     'unit_amount': int(str(_price).replace(".", "")),
                     'currency': ck.lower(),

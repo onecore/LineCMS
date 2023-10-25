@@ -44,6 +44,18 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
+    def productorders_set(self,order):
+        ic(order)
+        try:
+            _c = self.connection.cursor()
+            params = "INSERT INTO productorders (fulfilled,customer_name,customer_email,amount_total,created,payment_status,customer_country,customer_postal,currency,items,session_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+            vals = ("0",order['customer_name'],order['customer_email'],order['amount_total'],order['created'],order['payment_status'],order['customer_country'],order['customer_postal'],order['currency'],order['items'],order['session_id'])
+            _c.execute(params, vals)   
+            self.connection.commit()
+        except Exception as e:
+            ic(e)
+            pass
+         
     def productsettings_set(self, sk, pk, ck, wk,wsk,s_enable,s_rates,s_countries) -> tuple:
         try:
             _c = self.connection.cursor()

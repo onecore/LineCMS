@@ -164,7 +164,9 @@ function addls(){
       // 1 for added
       let _quant = document.getElementById('quant').value;
       let _price = document.getElementById('fprice').value;
-      localStorage.setItem(pid,[1,_price,_quant]);
+      let _vari = document.getElementById('varsel');
+      let _varis = _vari.options[_vari.selectedIndex].text;
+      localStorage.setItem(pid,[1,_price,_quant,_varis]);
       refreshLS()
       if (isLS()){
           document.getElementById('cart').value = cartcount;
