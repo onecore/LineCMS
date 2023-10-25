@@ -17,7 +17,7 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _, wk, wsk = ps.productsettings_get() # wk is not needed
+sk, pk, ck, _, wk, wsk,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
 

@@ -44,15 +44,16 @@ class knightclient:
         g.new_blog_url = _v
         return _v
 
-    def productsettings_set(self, sk, pk, ck, wk,wsk) -> tuple:
+    def productsettings_set(self, sk, pk, ck, wk,wsk,s_enable,s_rates,s_countries) -> tuple:
         try:
             _c = self.connection.cursor()
-            _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}", webhookkey = "{wk}",signkey = "{wsk}" WHERE id = 1; """.format(
-                sk=sk, pk=pk, ck=ck,wk=wk,wsk=wsk)
+            _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}", webhookkey = "{wk}",signkey = "{wsk}", shipping_enable = "{se}", shipping_rates = '{sr}', shipping_countries = "{sc}" WHERE id = 1; """.format(
+                sk=sk, pk=pk, ck=ck,wk=wk,wsk=wsk,se=s_enable,sr=s_rates,sc=s_countries)
             _c.execute(_q)
             self.connection.commit()
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def productsettings_get(self) -> tuple:

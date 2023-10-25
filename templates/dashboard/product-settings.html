@@ -227,12 +227,22 @@ let currkey = "{{settings[2]}}";
                           <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Shipping</span>
                         </div>
                           <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping" name="shipping" onchange="showship(this)">
-                            <option value="on" selected>Enable Shipping</option>
-                            <option value="off">No Shipping</option>
+                            {% if settings[6] == "on" %}
+                                 <option value="on" selected>Enable Shipping</option>
+                                  <option value="off">No Shipping</option>
+                            {% else %}
+                                  <option value="on">Enable Shipping</option>
+                                  <option value="off" selected>No Shipping</option>
+                            {% endif %}
                           </select>
                         </div>
                         <br>
-                          <div class="container" id="shippingopt">
+                          {% if settings[6] == "on" %}
+                          <div class="container" id="shippingopt" style="display:block">
+                          {% else %}
+                          <div class="container" id="shippingopt" style="display:none">
+
+                          {% endif %}
                             <fieldset class="border p-2 text-muted rounded">
                               <legend class="float-none w-auto text-muted" style="font-size:15px">Shipping Enabled </legend> 
                               <div class="row">
