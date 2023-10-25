@@ -346,6 +346,13 @@ let currkey = "{{settings[2]}}";
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script>
+  var initload = {{settings[7]|safe}}
+  const r_ = Object.keys(initload);
+  for (var i = 0; i < r_.length; i++) {
+      let cont_ = initload[r_[i]];
+      cont_.push(r_[i])
+      shippingrateel(cont_)
+  }
   var selcountries = []
   var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 

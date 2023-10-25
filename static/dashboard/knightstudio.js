@@ -647,33 +647,37 @@ function ksthemeprev(){
   
 }
 
-function addratespartial(name,amount,min,max){
-  shipping[name.value] = [amount.value,min.value,max.value]
-  shipping_names.push(name.value)
-  name.value = ""
-  amount.value = ""
-  min.value = ""
-  max.value = ""
-  console.log(shipping)
+function addratespartial(name,amount,min,max,data=false){
+  if (data){
+    shipping[name] = [amount,min,max]
+    shipping_names.push(name)
+  }else{
+    shipping[name.value] = [amount.value,min.value,max.value]
+    shipping_names.push(name.value)
+  
+    name.value = ""
+    amount.value = ""
+    min.value = ""
+    max.value = ""    
+  }
 }
 
 function delratespartial(e,ef){
-  console.log(shipping_names)
   shipping_names.splice(shipping_names.indexOf(ef), 1);
   delete shipping[ef]
-  console.log(shipping_names)
 
   const element = document.getElementById(e);
   element.remove();
 }
 
-function shippingrateel(){
+function shippingrateel(data=false){
   let coldiv = document.getElementById("rates");
   let sname = document.getElementById("sname")
   let samount = document.getElementById("samount")
   let smin = document.getElementById("sminimum")
   let smax = document.getElementById("smaximum")
-  let l = `
+
+  var l = `
      <div class="card shadow-none border rounded-0 p-1 m-1" id="${sname.value.trim()}">
       <div class="card-body">
         <center><h6 class="card-title border p-2 m-2">${sname.value}</h6></center>
@@ -682,20 +686,41 @@ function shippingrateel(){
       </div>
     </div>
   `
- if (!sname.value || !samount.value || !smin.value || !smax.value){
-    swal("", 'Some information is missing', "error");
-    return false;
- }
- if (isNaN(smin.value) || isNaN(smax.value) || isNaN(samount.value)){
-    swal("", 'Cannot validate your input', "error");
-    return false;
- }
- if (shipping_names.includes(sname.value)){
-    swal("", 'Please choose a different name', "error");
-    return false;
- }
- addratespartial(sname,samount,smin,smax)
+  if (data){
+      var l = `
+            <div class="card shadow-none border rounded-0 p-1 m-1" id="${data[3].trim()}">
+              <div class="card-body">
+                <center><h6 class="card-title border p-2 m-2">${data[3]}</h6></center>
+                <center><p class="card-text m-2"><b>Shipping time</b> ${data[1]}-${data[2]} Business Days,  <b>Shipping Cost</b> ${data[0]} ${currkey}</p></center>
+                <button type="button" class="btn btn-muted btn-xs border" onclick="delratespartial('${data[3].trim()}','${data[3]}')">Delete</button>
+              </div>
+            </div>
+          `
+      console.log(l)
 
+  }
+if (!data){
+
+  if (!sname.value || !samount.value || !smin.value || !smax.value){
+      swal("", 'Some information is missing', "error");
+      return false;
+  }
+  if (isNaN(smin.value) || isNaN(smax.value) || isNaN(samount.value)){
+      swal("", 'Cannot validate your input', "error");
+      return false;
+  }
+  if (shipping_names.includes(sname.value)){
+      swal("", 'Please choose a different name', "error");
+      return false;
+  }
+}
+if (data){
+    addratespartial(data[3],data[0],data[1],data[2],data=true)
+}else{
+   addratespartial(sname,samount,smin,smax)
+}
+
+console.log("Adding")
 coldiv.insertAdjacentHTML( 'afterbegin',l)
 
 }
