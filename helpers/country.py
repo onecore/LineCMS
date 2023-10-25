@@ -1,4 +1,8 @@
-countries = {"AF":"Afghanistan",
+# Stripe only support countries below
+countries = {'AU':'Australia','AT': 'Austria', 'BE': 'Belgium', 'BR': 'Brazil', 'BG': 'Bulgaria', 'CA': 'Canada', 'HR': 'Croatia', 'CY': 'Cyprus', 'CZ': 'Czech Republic', 'DK': 'Denmark', 'EE': 'Estonia', 'FI': 'Finland', 'FR': 'France', 'DE': 'Germany', 'GI': 'Gibraltar', 'GR': 'Greece', 'HK': 'Hong Kong', 'HU': 'Hungary', 'IN': 'India', 'ID': 'Indonesia', 'IE': 'Ireland', 'IT': 'Italy', 'JP': 'Japan', 'LV': 'Latvia', 'LI': 'Liechtenstein', 'LT': 'Lithuania', 'LU': 'Luxembourg', 'MY': 'Malaysia', 'MT': 'Malta', 'MX': 'Mexico', 'NL': 'Netherlands', 'NZ': 'New Zealand', 'NO': 'Norway', 'PL': 'Poland', 'PT': 'Portugal', 'RO': 'Romania', 'SG': 'Singapore', 'SK': 'Slovakia', 'SI': 'Slovenia', 'ES': 'Spain', 'SE': 'Sweden', 'CH': 'Switzerland', 'TH': 'Thailand', 'AE': 'United Arab Emirates', 'GB': 'United Kingdom', 'US': 'United States'}
+
+# List of countries (for future)
+all_countries = {"AF":"Afghanistan",
 "AX":"Aland Islands",
 "AL":"Albania",
 "DZ":"Algeria",
@@ -12,7 +16,7 @@ countries = {"AF":"Afghanistan",
 "AM":"Armenia",
 "AW":"Aruba",
 "AU":"Australia",
-"AT":"Austria",
+"AT":"Austria", #
 "AZ":"Azerbaijan",
 "BS":"Bahamas",
 "BH":"Bahrain",
@@ -32,7 +36,7 @@ countries = {"AF":"Afghanistan",
 "BR":"Brazil",
 "IO":"British Indian Ocean Territory",
 "BN":"Brunei Darussalam",
-"BG":"Bulgaria",
+"BG":"Bulgaria", #
 "BF":"Burkina Faso",
 "BI":"Burundi",
 "KH":"Cambodia",
@@ -57,7 +61,7 @@ countries = {"AF":"Afghanistan",
 "CU":"Cuba",
 "CW":"Curaçao",
 "CY":"Cyprus",
-"CZ":"Czech Republic",
+"CZ":"Czech Republic", #
 "DK":"Denmark",
 "DJ":"Djibouti",
 "DM":"Dominica",
@@ -73,7 +77,7 @@ countries = {"AF":"Afghanistan",
 "FO":"Faroe Islands",
 "FJ":"Fiji",
 "FI":"Finland",
-"FR":"France",
+"FR":"France", #
 "GF":"French Guiana",
 "PF":"French Polynesia",
 "TF":"French Southern Territories",
@@ -97,7 +101,7 @@ countries = {"AF":"Afghanistan",
 "HM":"Heard Island and McDonald Islands",
 "VA":"Holy See (Vatican City State)",
 "HN":"Honduras",
-"HK":"Hong Kong",
+"HK":"Hong Kong", #
 "HU":"Hungary",
 "IS":"Iceland",
 "IN":"India",
@@ -246,3 +250,5 @@ countries = {"AF":"Afghanistan",
 "YE":"Yemen",
 "ZM":"Zambia",
 "ZW":"Zimbabwe"}
+
+
