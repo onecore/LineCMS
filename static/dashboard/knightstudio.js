@@ -709,6 +709,10 @@ if (!data){
       swal("", 'Cannot validate your input', "error");
       return false;
   }
+  if (parseInt(smin.value) >= parseInt(smax.value)){
+      swal("", 'Minimum option must be less than Maximum', "error");
+      return false;
+  }
   if (shipping_names.includes(sname.value)){
       swal("", 'Please choose a different name', "error");
       return false;
