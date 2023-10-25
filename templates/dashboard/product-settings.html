@@ -300,7 +300,12 @@ let currkey = "{{settings[2]}}";
                                   <p>Countries supported by Stripe payment</p>
                                   <div class="scontainer">
                                     {% for country_f, country_s in countries.items() %}
-                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" checked/> {{country_s}} <br />
+                                        {% if country_f in settings[8] %}
+                                            <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" checked/> {{country_s}} <br />
+                                        {% else %}
+                                            <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" /> {{country_s}} <br />
+
+                                        {% endif %}
                                     {% endfor %}
                                   </div>
                                 </div>
