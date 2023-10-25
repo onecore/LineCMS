@@ -678,21 +678,21 @@ function shippingrateel(data=false){
   let smax = document.getElementById("smaximum")
 
   var l = `
-     <div class="card shadow-none border rounded-0 p-1 m-1" id="${sname.value.trim()}">
+     <div class="card shadow-none border rounded-0 p-1 m-1" id="${sname.value.trim()}" style="background:#FDDCA1">
       <div class="card-body">
-        <center><h6 class="card-title border p-2 m-2">${sname.value}</h6></center>
+        <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:#FFC300">${sname.value}</h6></center>
         <center><p class="card-text m-2"><b>Shipping time</b> ${smin.value}-${smax.value} Business Days,  <b>Shipping Cost</b> ${samount.value} ${currkey}</p></center>
-        <button type="button" class="btn btn-muted btn-xs border" onclick="delratespartial('${sname.value.trim()}','${sname.value}')">Delete</button>
+        <button type="button" class="btn btn-warning btn-xs border" onclick="delratespartial('${sname.value.trim()}','${sname.value}')">Delete</button>
       </div>
     </div>
   `
   if (data){
       var l = `
-            <div class="card shadow-none border rounded-0 p-1 m-1" id="${data[3].trim()}">
+            <div class="card shadow-none border rounded-0 p-1 m-1" id="${data[3].trim()}" style="background:#FDDCA1">
               <div class="card-body">
-                <center><h6 class="card-title border p-2 m-2">${data[3]}</h6></center>
+                <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:#FFC300">${data[3]}</h6></center>
                 <center><p class="card-text m-2"><b>Shipping time</b> ${data[1]}-${data[2]} Business Days,  <b>Shipping Cost</b> ${data[0]} ${currkey}</p></center>
-                <button type="button" class="btn btn-muted btn-xs border" onclick="delratespartial('${data[3].trim()}','${data[3]}')">Delete</button>
+                <button type="button" class="btn btn-warning btn-xs border" onclick="delratespartial('${data[3].trim()}','${data[3]}')">Delete</button>
               </div>
             </div>
           `

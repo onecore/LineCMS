@@ -17,9 +17,9 @@ productuser = Blueprint(
                         )
 
 ps = dataengine.knightclient()
-sk, pk, ck, _, wk, wsk,_,_,_ = ps.productsettings_get() # wk is not needed
+global shipcountries, shiprates, shipstatus
+sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
-
 
 def variantpush(v, i, js=False):
     """
@@ -38,7 +38,34 @@ def variantpush(v, i, js=False):
         return json.dumps(d)
     return d
 
+def parserate(name,amount,mins,maxs):
+    clone =  {
+                "shipping_rate_data": {
+                        "type": "fixed_amount",
+                        "fixed_amount": {"amount": amount, "currency": ck},
+                        "display_name": name,
+                        "delivery_estimate": {
+                            "minimum": {"unit": "business_day", "value": int(mins)},
+                            "maximum": {"unit": "business_day", "value": int(maxs)},
+                   },
+                },
+            }
+    return clone
 
+def ratetemplater(obj):
+    options = []
+    parsedobj = None
+    try:
+        parsedobj = eval(obj)
+    except:
+        print("Unable to parse ship rates")
+        parsedobj = {}
+    if parsedobj:
+        for rate_name,rate_data in parsedobj.items():
+            options.append(parserate(rate_name,rate_data[0],rate_data[1],rate_data[2]))
+        return options
+    return []
+            
 @productuser.route('/event', methods=['POST'])
 def new_event():
     """
@@ -47,12 +74,10 @@ def new_event():
     event = None
     payload = request.data
     signature = request.headers['STRIPE_SIGNATURE']
-
     try:
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
-        # the payload could not be verified
-        ic("Error>>>>>>: " ,e)
+        pass
 
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
@@ -81,10 +106,12 @@ def new_event():
     return {'success': True}
 
 def check(data):
+    _, _, _, _, _, _,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
+    
     _de = dataengine.knightclient()
     items = []
     load_items = []
-
+    
     for product, values in data.items():
         _, _price, _quantity = values.split(",")
         product_data = _de.get_product_single(route=False, checkout=product)
@@ -101,39 +128,38 @@ def check(data):
 
         items.append(clone)
 
-    ic(items)
-    checkout_session = stripe.checkout.Session.create(
-        # Below parameters enable shipping
-        # shipping_address_collection={"allowed_countries": ["US", "CA"]},
-        # shipping_options=[
-        # {
-        #     "shipping_rate_data": {
-        #     "type": "fixed_amount",
-        #     "fixed_amount": {"amount": 0, "currency": "usd"},
-        #     "display_name": "Free shipping",
-        #     "delivery_estimate": {
-        #         "minimum": {"unit": "business_day", "value": 5},
-        #         "maximum": {"unit": "business_day", "value": 7},
-        #     },
-        #     },
-        # },
-        # {
-        #     "shipping_rate_data": {
-        #     "type": "fixed_amount",
-        #     "fixed_amount": {"amount": 1500, "currency": "usd"},
-        #     "display_name": "Next day air",
-        #     "delivery_estimate": {
-        #         "minimum": {"unit": "business_day", "value": 1},
-        #         "maximum": {"unit": "business_day", "value": 1},
-        #     },
-        #     },
-        # },],
-        line_items=items,
-        payment_method_types=['card'],
-        mode='payment',
-        success_url=request.host_url + 'order/success',
-        cancel_url=request.host_url + 'order/cancel',
-    )
+    if shipstatus == "on":  # If shipping Enabled
+        
+        def parsetolist(shipcountries):
+            if "," in shipcountries:
+                return shipcountries.split(",")
+            if len(shipcountries):
+                return [shipcountries]
+            return ["US","CA"]
+        
+        shipratesparsed = ratetemplater(shiprates)    
+        shipcountries = parsetolist(shipcountries)
+        ic(shipratesparsed)
+        checkout_session = stripe.checkout.Session.create(
+            # Below parameters enable shipping
+            shipping_address_collection={"allowed_countries": shipcountries},
+            shipping_options=shipratesparsed,
+            line_items=items,
+            payment_method_types=['card'],
+            mode='payment',
+            success_url=request.host_url + 'order/success',
+            cancel_url=request.host_url + 'order/cancel',
+        )
+    
+    else:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=items,
+            payment_method_types=['card'],
+            mode='payment',
+            success_url=request.host_url + 'order/success',
+            cancel_url=request.host_url + 'order/cancel',
+        )
+    
     return checkout_session.url
 
 
