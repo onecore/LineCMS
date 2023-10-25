@@ -666,6 +666,7 @@ function delratespartial(e,ef){
   const element = document.getElementById(e);
   element.remove();
 }
+
 function shippingrateel(){
   let coldiv = document.getElementById("rates");
   let sname = document.getElementById("sname")
@@ -698,6 +699,11 @@ function shippingrateel(){
 coldiv.insertAdjacentHTML( 'afterbegin',l)
 
 }
-// window.onbeforeunload = function() {
-//   return "Leaving this page will not save your product information.";
-// }
+
+function showship(e){
+  if (e.value === "on"){
+      document.getElementById("shippingopt").style.display = "block";
+  }else{
+      document.getElementById("shippingopt").style.display = "none";
+  }
+}

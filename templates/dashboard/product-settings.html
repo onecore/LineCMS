@@ -224,9 +224,9 @@ let currkey = "{{settings[2]}}";
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Shipping</span>
                         </div>
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping" name="shipping">
-                            <option value="Enable Shipping" selected>Enable Shipping</option>
-                            <option value="on">No Shipping</option>
+                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping" name="shipping" onchange="showship(this)">
+                            <option value="on" selected>Enable Shipping</option>
+                            <option value="off">No Shipping</option>
                           </select>
                         </div>
                         <br>
@@ -285,10 +285,10 @@ let currkey = "{{settings[2]}}";
                                 </div>
                                 </div>
                                 <div class="col-md-4">
-                                  <button class="btn btn-xs btn-primary mb-2">Select all countries</button>
+                                  <p>Countries supported by Stripe payment</p>
                                   <div class="scontainer">
                                     {% for country_f, country_s in countries.items() %}
-                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}"/> {{country_s}} <br />
+                                      <input type="checkbox" class="p-1 m-1" id="{{country_f}}" checked/> {{country_s}} <br />
                                     {% endfor %}
                                   </div>
                                 </div>
