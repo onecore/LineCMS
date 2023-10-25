@@ -235,6 +235,10 @@ function prepele(){
 
 function checkout(){
   let data = refreshLS(get=0,checko=1)
+  let testv = document.getElementById('cart').value
+  if (testv==="0"){
+    return false;
+  }
   fetch("/product-checkout", {
     method: "POST",
     headers: {

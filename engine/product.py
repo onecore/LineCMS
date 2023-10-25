@@ -91,15 +91,7 @@ def product_sett():
         shipping_enable = request.form.get("shipping")
         shipping_rates = request.form.get("shippingobj")    
         shipping_countries = request.form.get("cactivated")    
-                
-# ic| request.form: {'cactivated': 'AU,AT,BE,BR,BG,CA,HR,CY,CZ,DK,EE,FI,FR,DE,GI,GR,HK,HU,IN,ID,IE,IT,JP,LV,LI,LT,LU,MY,MT,MX,NL,NZ,NO,PL,PT,RO,SG,SK,SI,ES,SE,CH,TH,AE,GB,US',
-#                    'ckey': 'USD',
-#                    'pkey': 'pk_test_51O36EwHsYCnLxtQwlFvXtr3UQahqygJD3kPu4Y3PZi2abARASLU1V5ubYURv6bG9J7RNVDstELp7Jn1yWFvbpAmz00C7VBRd8G',
-#                    'shipping': 'on',
-#                    'shippingobj': '{"qwe":["1","1","2"],"qweqwe":["3","1","3"],"eqweqwe":["3","1","3"]}',
-#                    'skey': 'sk_test_51O36EwHsYCnLxtQwMOjPPpuHouEulQ3FcEjthkdkU7xwAY35iTBwfV1RGiNJVML2X1kV7zkVN9kvjGXXxjCSui9k00euOL4wN0',
-#                    'wkey': 'whsec_90df19f00051f98f9b5362466ff78773fbe08f7a93b00994488949fbd34ec425',
-#                    'wskey': 'whsec_PxzcI11lz4m4MJDAyjTwif1ZpVYMzQoM'}
+        
         if skey and pkey and ckey:
             _set = de.productsettings_set(skey, pkey, ckey,wkey,wskey,shipping_enable,shipping_rates,shipping_countries)
             if _set:
@@ -107,19 +99,6 @@ def product_sett():
                 success = 1
         else:
             error = "Some information is missing"
-            
-            
-        # {
-        #     "shipping_rate_data": {
-        #     "type": "fixed_amount",
-        #     "fixed_amount": {"amount": 0, "currency": "usd"},
-        #     "display_name": "Free shipping",
-        #     "delivery_estimate": {
-        #         "minimum": {"unit": "business_day", "value": 5},
-        #         "maximum": {"unit": "business_day", "value": 7},
-        #     },
-        #     },
-        # }
     ic(settings)
     return render_template("/dashboard/product-settings.html", countries = country.countries, currencies=currencieslist, error=error, success=success, settings=settings)
 
