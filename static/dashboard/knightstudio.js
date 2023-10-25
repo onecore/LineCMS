@@ -648,7 +648,7 @@ function ksthemeprev(){
 }
 
 function addratespartial(name,amount,min,max){
-  shipping.push([name.value,amount.value,min.value,max.value])
+  shipping[name.value] = [amount,min,max]
   shipping_names.push(name.value)
   name.value = ""
   amount.value = ""
@@ -657,6 +657,15 @@ function addratespartial(name,amount,min,max){
   console.log(shipping)
 }
 
+function delratespartial(e,ef){
+  console.log(shipping_names)
+  shipping_names.splice(shipping_names.indexOf(ef), 1);
+  delete shipping[ef]
+  console.log(shipping_names)
+
+  const element = document.getElementById(e);
+  element.remove();
+}
 function shippingrateel(){
   let coldiv = document.getElementById("rates");
   let sname = document.getElementById("sname")
@@ -667,8 +676,8 @@ function shippingrateel(){
      <div class="card shadow-none border rounded-0 p-1 m-1" id="${sname.value.trim()}">
       <div class="card-body">
         <center><h6 class="card-title border p-2 m-2">${sname.value}</h6></center>
-        <center><p class="card-text m-2"><b>Shipping time</b> ${smin.value}-${smax.value} Business Days,  <b>Shipping Cost</b> ${samount.value}</p></center>
-        <a href="#" class="btn btn-muted btn-xs border">Delete</a>
+        <center><p class="card-text m-2"><b>Shipping time</b> ${smin.value}-${smax.value} Business Days,  <b>Shipping Cost</b> ${samount.value} ${currkey}</p></center>
+        <button type="button" class="btn btn-muted btn-xs border" onclick="delratespartial('${sname.value.trim()}','${sname.value}')">Delete</button>
       </div>
     </div>
   `
