@@ -71,3 +71,4 @@ def ks_variantcount(v) -> int:
 def ks_tojson(v) -> dict:
     "python dict obj to json"
     return json.dumps(v)
+

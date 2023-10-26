@@ -1,3 +1,4 @@
+from datetime import datetime
 
 
 def loadblogs(count: int, category=None) -> tuple:
@@ -6,3 +7,7 @@ def loadblogs(count: int, category=None) -> tuple:
 
 def loadproducts(count: int, category=None) -> tuple:
     pass
+
+
+def dateformatter(epoch):
+    return datetime.fromtimestamp(int(epoch))

@@ -43,7 +43,21 @@ class knightclient:
         _v = str(v).replace("+", "-")
         g.new_blog_url = _v
         return _v
-
+    
+    def productorders_get(self):
+        _c = self.connection.cursor()
+        _q = "SELECT * FROM productorders ORDER BY id DESC"
+        _fetch = _c.execute(_q)
+        _r = _fetch.fetchall()
+        return _r    
+    
+    def productorders_single_get(self,id):
+        _c = self.connection.cursor()
+        _q = f"SELECT * FROM productorders WHERE id = {id}"
+        _fetch = _c.execute(_q)
+        _r = _fetch.fetchone()
+        return _r  
+    
     def productorders_set(self,order):
         ic(order)
         try:

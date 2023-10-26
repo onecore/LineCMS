@@ -143,6 +143,31 @@ def product_mng(alert=None):
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
-    return render_template("/dashboard/product-orders.html")
+    _de = dataengine.knightclient()
+    orders = _de.productorders_get()
+    alert=None
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    tt = len(orders)
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='orders', css_framework="bootstrap5")
+
+    return render_template("/dashboard/product-orders.html", orders=orders, pagination=pagination, alert=alert)
+
+@product.route("/product-orders/<id>", methods=['POST', 'GET'])
+def product_orders_single(id):
+    _de = dataengine.knightclient()
+    order = _de.productorders_single_get(id)
+    alert=None
+    parseditems = []
+    
+    if order:
+        items = eval(order[10])
+        print(items)
+        
+    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert)
 
 
