@@ -102,6 +102,7 @@ def new_event():
     
 
         de = dataengine.knightclient()
+        
         de.productorders_set(order)
         
         
@@ -113,7 +114,7 @@ def check(data):
     _de = dataengine.knightclient()
     items = []
     load_items = []
-    
+    product_meta = {}
     for product, values in data.items():
         _, _price, _quantity, _variant = values.split(",")
         def includevariant():
@@ -124,6 +125,7 @@ def check(data):
             return selected_variant
             
         product_data = _de.get_product_single(route=False, checkout=product)
+        product_meta[product_data[1] + includevariant()] = product
         clone = {
                 'price_data': {
                     'product_data': {
@@ -148,7 +150,6 @@ def check(data):
         
         shipratesparsed = ratetemplater(shiprates)    
         shipcountries = parsetolist(shipcountries)
-        ic(shipratesparsed)
         checkout_session = stripe.checkout.Session.create(
             # Below parameters enable shipping
             shipping_address_collection={"allowed_countries": shipcountries},
@@ -158,6 +159,7 @@ def check(data):
             mode='payment',
             success_url=request.host_url + 'order/success',
             cancel_url=request.host_url + 'order/cancel',
+            metadata = product_meta
         )
     
     else:
@@ -169,6 +171,7 @@ def check(data):
             cancel_url=request.host_url + 'order/cancel',
         )
     
+    ic(product_meta)
     return checkout_session.url
 
 

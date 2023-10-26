@@ -72,6 +72,7 @@ def variantimagemodifier(d: bytes) -> 'json':
     return tuple(d)
 
 
+
 @product.route("/product-settings", methods=['GET', 'POST'])
 def product_sett():
     import currencies
@@ -166,8 +167,10 @@ def product_orders_single(id):
     
     if order:
         items = eval(order[10])
-        print(items)
+        # for order in items:
+        #     parseditems.append(parseorders(order))
+            
         
-    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert)
+    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems)
 
 
