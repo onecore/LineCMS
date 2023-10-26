@@ -66,7 +66,10 @@ def ratetemplater(obj):
             options.append(parserate(rate_name,rate_data[0],rate_data[1],rate_data[2]))
         return options
     return []
-            
+
+def deductquant(id,variant,quantity):
+    pass
+
 @productuser.route('/event', methods=['POST'])
 def new_event():
     """
@@ -81,15 +84,11 @@ def new_event():
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
         ic(e)
-
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
         items = []
         for item in session.line_items.data:
             items.append([item.description,item.quantity])
-            # print(f'  - {item.quantity} {item.description} '
-                # f'${item.amount_total/100:.02f} {item.currency.upper()}')
-          
         order = {
                 "customer_name":session.customer_details.name,
                 "customer_email":session.customer_details.email,
@@ -107,17 +106,12 @@ def new_event():
                 "phone": session.customer_details.phone,
                 "shipping_cost": ""
                 }
-    
         if shipstatus == "on":
             order["shipping_cost"] = session.shipping_cost.amount_total
-
-            
-
         de = dataengine.knightclient()        
         de.productorders_set(order)
-        
-        
     return {'success': True}
+
 
 def check(data):
     _, _, _, _, _, _,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
