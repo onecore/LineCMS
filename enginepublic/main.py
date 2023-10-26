@@ -8,8 +8,8 @@ mains = Blueprint("mains", __name__)
 _logger = dataengine.knightclient()
 log = _logger.log
 
-themes = "default"
-
+loadtheme_ = dataengine.knightclient()
+themes = loadtheme_.themeget()
 
 @mains.route("/")
 @mains.route("/index")
@@ -32,3 +32,11 @@ def main():
         "extras": eval(all_d[6]),
     }
     return render_template(f"/SYSTEM/{themes}/index.html", data=dt, mod=mod)
+
+@mains.route("/sitemap.txt")
+def sitemap():
+    pass
+
+@mains.route("/robots.txt")
+def robots():
+    pass

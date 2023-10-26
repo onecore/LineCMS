@@ -109,6 +109,7 @@ swal("", `{{error}}`, "warning");
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../dashboard/partials/_settings-panel.html -->
+
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
         <div id="theme-settings" class="settings-panel">
@@ -210,8 +211,8 @@ swal("", `{{error}}`, "warning");
                 <div class="card-body">
                   <!-- <h4 class="card-title">Website Settings</h4> -->
                   <p class="card-description">
-
                   </p>
+                  <hr>
                   <form class="forms-sample" method="post">
                     <fieldset class="border p-2 text-muted rounded">
                     <legend class="float-none w-auto text-muted" style="font-size:15px">Website Name</legend>
@@ -316,19 +317,19 @@ swal("", `{{error}}`, "warning");
                     {% endfor %}
                   </select>
                   <br>
-                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded">Set Current Theme</button><button type="button" onclick="ksthemeprev()" class="btn btn-m btn-primary me-2 d-inline rounded">Preview</button></center>
+                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded">Set Current Theme</button><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded">Open Editor</button></center>
 
               </fieldset>
               <br>
                 <fieldset class="border p-2 text-muted rounded">
-                <legend class="float-none w-auto text-muted" style="font-size:15px">Advanced</legend>
-
+                <legend class="float-none w-auto text-muted" style="font-size:15px">Miscellaneous</legend>
 
                   <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Download Product data</button>
                   <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Download Blog data</button>
-                  <br>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Download All (DB)</button>
                   <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Upload theme</button>
-                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Access Theme files</button>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Generate Sitemap</button>
+                  <button type="button" onclick="kstheme()" class="btn btn-xs btn-muted me-2 d-inline rounded border">Generate Robots</button>
 
               </fieldset>
                 </div>

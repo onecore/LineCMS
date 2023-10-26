@@ -10,8 +10,9 @@ import stripe
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
-themes = "default"
-shipping = ["CA","US"]
+loadtheme_ = dataengine.knightclient()
+themes = loadtheme_.themeget()
+
 productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
                         )
@@ -42,7 +43,7 @@ def parserate(name,amount,mins,maxs):
     clone =  {
                 "shipping_rate_data": {
                         "type": "fixed_amount",
-                        "fixed_amount": {"amount": amount, "currency": ck},
+                        "fixed_amount": {"amount": amount.replace(".",""), "currency": ck},
                         "display_name": name,
                         "delivery_estimate": {
                             "minimum": {"unit": "business_day", "value": int(mins)},

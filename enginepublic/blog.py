@@ -9,7 +9,8 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
-themes = "default"
+loadtheme_ = dataengine.knightclient()
+themes = loadtheme_.themeget()
 
 bloguser = Blueprint(
                         "bloguser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'

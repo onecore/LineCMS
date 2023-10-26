@@ -8,7 +8,8 @@ notfound = Blueprint("notfound", __name__)
 _logger = dataengine.knightclient()
 log = _logger.log
 
-themes = "default"
+loadtheme_ = dataengine.knightclient()
+themes = loadtheme_.themeget()
 
 
 @notfound.route("/notfound.html")
