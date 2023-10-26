@@ -71,6 +71,8 @@ def new_event():
     """
     Stripe webhook
     """
+    sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
+
     event = None
     payload = request.data
     signature = request.headers['STRIPE_SIGNATURE']
@@ -98,11 +100,19 @@ def new_event():
                 "currency": session.currency,
                 "items": str(items),
                 "session_id": session.id,
+                
+                "metadata": session.metadata,
+                "address": session.customer_details.address.line1,
+                "phone": session.customer_details.phone,
+                "shipping_cost": ""
                 }
     
+        if shipstatus == "on":
+            order["shipping_cost"] = session.shipping_cost.amount_total
 
-        de = dataengine.knightclient()
-        
+            
+
+        de = dataengine.knightclient()        
         de.productorders_set(order)
         
         
@@ -159,7 +169,7 @@ def check(data):
             mode='payment',
             success_url=request.host_url + 'order/success',
             cancel_url=request.host_url + 'order/cancel',
-            metadata = product_meta
+            metadata = product_meta,
         )
     
     else:
@@ -169,6 +179,7 @@ def check(data):
             mode='payment',
             success_url=request.host_url + 'order/success',
             cancel_url=request.host_url + 'order/cancel',
+            metadata=product_meta
         )
     
     ic(product_meta)
