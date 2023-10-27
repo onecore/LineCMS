@@ -522,6 +522,10 @@ function p_updatepost() {
 
 }}
 
+function setDecimal(input) {
+  input.value = parseFloat(input.value).toFixed(2);
+}
+
 function p_variant_add_exists(e, loadimage = null) {
   var cont_v = e; //document.getElementById('v-title').value;
 
@@ -542,7 +546,7 @@ function p_variant_add_exists(e, loadimage = null) {
   document.getElementById('variant-notice').style.display = "none";
   newRow.innerHTML = "<tbody>\
     <tr>\
-    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></input></td><td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-stock' placeholder='How much stock you have' value='1000' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
+    <td id='td-" + cont_v + "'><b><center><p class='text-dark rounded'>" + cont_v + "</p></center></b></td> <td class='col-1'><input type='number' onchange='setDecimal(this)' class='form-control' id='" + cont_v + "-price' placeholder='This variant's price' value='1.00' style='width:80px;padding:0'></input></td><td class='col-1'><input type='number' class='form-control' id='" + cont_v + "-stock' placeholder='How much stock you have' value='1000' style='width:80px;padding:0'></td> <td id='img-" + cont_v + "' class='col-4'><form enctype='multipart/form-data'><input type='file' name='" + varid + "' id='" + varid + "'></form></td><td><button type='button' id='btnd-" + cont_v + "' onclick='p_del(this)' class='btn btn-xs border col-xs-1'>X</button>&nbsp&nbsp</td>\
     </tr>\
     </tbody><br>";
   document.getElementById('v-title').value = "";

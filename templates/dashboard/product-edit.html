@@ -236,7 +236,7 @@ localStorage.clear();
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Product Price</span>
                     </div>
-                    <input type="text" class="form-control" id="m-price" aria-label="" placeholder="Please use a valid price" value="{{d[15]}}">
+                    <input type="number" class="form-control" id="m-price" aria-label="" placeholder="Please use a valid price" value="{{d[15]}}">
                   </div>
                 </div>
                 <fieldset class="border p-2 text-muted">
@@ -311,7 +311,7 @@ localStorage.clear();
                     <div class="input-group-prepend">
                       <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Variant Name</span>
                     </div>
-                    <input type="text" class="form-control" id="v-title" aria-label="" placeholder="Unique variant name e.g 'XL size'">
+                    <input type="text" class="form-control" id="v-title" aria-label="" onkeypress="disabledspace()" placeholder="Unique variant name e.g 'XL size'">
                     <button type="button" class="border" onclick="p_variant_add(this)" style="background:white;border-radius:0 8px 8px 0px"> Add variant</button>
                   </div>
                   <div id="variantcontainer" class="row">
@@ -373,44 +373,6 @@ localStorage.clear();
           </div>
         </div>
         <br>
-        <!-- <div class="modal fade pt-0 mt-0" id="varmodal" tabindex="-1" aria-labelledby="varmodal" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="topModalLabel">Update Variant</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <center>
-                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoviewmodal" name="logoviewmpdal" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
-                </center>
-                <center>
-                <center>
-                <input id='bimg-modal' style='display:none'></input>
-                <label class="custom-file-upload center">
-                  <form id="upload-file-modal" name="upload-file">
-                    <input type="file" name="filemodal" onchange="loadFileModal(event)"/>
-                    <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
-                  </form>
-                </label>
-              </center>
-              <hr>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price $</span>
-                </div>
-                <input type="text" class="form-control" id="p-pricemodal" aria-label="" placeholder="This variant's price">
-              </div>
-
-              </div>
-              <div class="modal-footer">
-                <input id='current-variant-input' style="display:none"></input>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss='modal' onclick="p_updatevariant()">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <!-- content-wrapper ends -->
         <!-- partial:../../dashboard/partials/_footer.html -->
         <footer class="footer">
@@ -454,6 +416,17 @@ localStorage.clear();
 <script src="../../dashboard/ks-js/filepond-plugin-image-preview.min.js"></script>
 <script src="../../dashboard/ks-js/filepond-plugin-file-rename.min.js"></script>
 <script src="../../dashboard/ks-js/filepond.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('input[type="number"]').blur(function () {
+      var num = parseFloat($(this).val());
+      var cleanNum = num.toFixed(2);
+      $(this).val(cleanNum);
+    });
+  });
+
+</script>
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileMetadata);
