@@ -6,6 +6,7 @@ import json
 import os
 from icecream import ic
 from engine.product import getimages, getmainimage
+from decimal import Decimal
 import stripe
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
@@ -70,6 +71,11 @@ def ratetemplater(obj):
 def deductquant(id,variant,quantity):
     pass
 
+def price(price:string) -> int:
+    "Stripe friendly price"
+    o = round(Decimal(price)*100)
+    return o
+    
 @productuser.route('/event', methods=['POST'])
 def new_event():
     """
@@ -90,7 +96,6 @@ def new_event():
         for item in session.line_items.data:
             items.append([item.description,item.quantity])
         
-        ic(session)
         order = {
                 "customer_name":session.customer_details.name,
                 "customer_email":session.customer_details.email,
@@ -138,7 +143,7 @@ def check(data):
                     'product_data': {
                         'name': product_data[1] + includevariant(),
                     },
-                    'unit_amount': int(str(_price).replace(".", "")),
+                    'unit_amount': price(_price),
                     'currency': ck.lower(),
                 },
                 'quantity': int(_quantity),

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Account Settings - KnightStudio Dashboard</title>
   <!-- plugins:css -->
+
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
@@ -26,7 +27,7 @@
   <script src="../../dashboard/knightstudio.js"></script>
 
 <style>
-.scontainer { border:0.5px solid #ccc; width:250px; height: 300px; overflow-y: scroll;}
+.scontainer { border-left: solid 1px rgb(64, 64, 65);; width:190px; height: 300px; overflow-y: scroll;}
 </style>
 </head>
 
@@ -267,14 +268,14 @@ let currkey = "{{settings[2]}}";
                                             <div class="input-group-prepend">
                                               <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping Amount</span>
                                             </div>
-                                            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                            <input type="number" class="form-control amounti" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                                               placeholder="e.g 13.00" id="samount" value="10.00">
                                           </div>
                                           <div class="row">                  
                                           <div class="col-sm-6">
                                             <div class="input-group input-group-sm mb-3">
                                               <div class="input-group-prepend">
-                                                <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Minimum Business days</span>
+                                                <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Minimum days</span>
                                               </div>
                                               <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                                                 placeholder="e.g 5" id="sminimum">
@@ -283,7 +284,7 @@ let currkey = "{{settings[2]}}";
                                           <div class="col-sm-6">
                                               <div class="input-group input-group-sm mb-3">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Maximum Business days</span>
+                                                  <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Maximum days</span>
                                                 </div>
                                                 <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="e.g 7" id="smaximum">
                                           </div> 
@@ -347,6 +348,7 @@ let currkey = "{{settings[2]}}";
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+  
   <script>
   var initload = {{settings[7]|safe}}
   const r_ = Object.keys(initload);
@@ -375,6 +377,17 @@ let currkey = "{{settings[2]}}";
     }
 
   </script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+<script>
+  $(document).ready(function () {
+    $('input#samount').blur(function () {
+      var num = parseFloat($(this).val());
+      var cleanNum = num.toFixed(2);
+      $(this).val(cleanNum);
+    });
+  });
+
+</script>
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

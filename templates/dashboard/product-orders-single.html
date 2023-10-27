@@ -462,13 +462,16 @@ swal("", `{{error}}`, "warning");
                       <div class="card-body bordered shadow-none">
                         <center><h4>ORDER DETAILS</h4></center>
                         <br>
-                        <p>Order ID: {{order[0]}}{{order[5]}}</p>
-                        <p>Name: {{order[2]}}</p>
-                        <p>Address: None</p>
-                        <p>Country: {{order[7]}}, {{order[8]}}</p>
-                        <p>Email: {{order[3]}}</p>
-                        <p>Amount Paid: {{order[4]}}</p>
-                        <p>Fulfilled: No</p>
+                        <p><b>Order ID:</b> {{order[0]}}{{order[5]}}</p>
+                        <p><b>Order Date:</b> {{loaddate(order[5])}}</p>                        
+                        <p><b>Name:</b> {{order[2]}}</p>
+                        <p><b>Address:</b> {{order[15]}}</p>
+                        <p><b>Country:</b> {{order[7]}}, {{order[8]}}</p>
+                        <p><b>Email:</b> {{order[3]}}</p>
+                        <p><b>Phone:</b> {{order[16]}}</p>
+                        <p><b>Shipping Paid:</b> {{shipping_fee}}</p>
+                        <p><b>Amount Paid:</b> {{order[4]}}</p>
+                        <p><b>Fulfilled:</b> No</p>
                         
                       </div>
                     </div>

@@ -192,12 +192,20 @@ def product_orders_single(id):
     order = _de.productorders_single_get(id)
     alert=None
     parseditems = []
-    
+    shipping_fee = None
     if order:
         items = eval(order[10])
         for orders in items:
             parseditems.append(parseorders(orders,order))
-            
-    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems)
+        
+        if order[17]:
+            shipping_fee = order[17].replace(".","")
+            shipping_fee = f'${int(shipping_fee)/100:.02f}' 
+        
+        
+        
+        
+        
+    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee)
 
 
