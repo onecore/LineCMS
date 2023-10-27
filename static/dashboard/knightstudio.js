@@ -740,3 +740,13 @@ function showship(e){
       document.getElementById("shippingopt").style.display = "none";
   }
 }
+
+function disabledspace(e) { 
+  var e = window.event || e;
+  var key = e.keyCode;
+  //space pressed
+   if (key == 32) { //space
+    e.preventDefault();
+   }
+         
+}
