@@ -23,6 +23,11 @@ global shipcountries, shiprates, shipstatus
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
+def price(price) -> int:
+    "Stripe friendly price"
+    o = round(Decimal(price)*100) # Decimal to keep 2 decimal places from html input, Float doesn't work as it doesn keep the decimals
+    return o
+
 def variantpush(v, i, js=False):
     """
     function to change images into a dictionary with index,
@@ -44,7 +49,7 @@ def parserate(name,amount,mins,maxs):
     clone =  {
                 "shipping_rate_data": {
                         "type": "fixed_amount",
-                        "fixed_amount": {"amount": amount.replace(".",""), "currency": ck},
+                        "fixed_amount": {"amount": price(amount), "currency": ck},
                         "display_name": name,
                         "delivery_estimate": {
                             "minimum": {"unit": "business_day", "value": int(mins)},
@@ -70,11 +75,6 @@ def ratetemplater(obj):
 
 def deductquant(id,variant,quantity):
     pass
-
-def price(price:string) -> int:
-    "Stripe friendly price"
-    o = round(Decimal(price)*100)
-    return o
     
 @productuser.route('/event', methods=['POST'])
 def new_event():
