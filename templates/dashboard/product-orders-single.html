@@ -428,36 +428,39 @@ swal("", `{{error}}`, "warning");
               <div class="row">
                 <div class="col-md-7"> <!-- Main  bar -->
                   <div class="row bordered">
-                    <div class="card border shadow-none p-3 m-3 rounded-0 border" style="background: #F5F5F1;">
+                    <div class="card border shadow-none rounded border p-3 m-3" style="background: #F4F5F7">
                       <div class="card-body bordered shadow-none">
                         <h5>Items Ordered</h5>
-                        
+                        {% for item in items %}
+                            {% for k,v in item.items() %}
                           <div class="card border shadow-none rounded-0 border" style="background: #ffffff;">
                             <div class="card-body bordered shadow-none">
                               <div class="row">
                               <div class="col-md-2">
                                 <img
-                                  src="https://aaca-2001-569-7f14-3f00-d30-47ca-e048-afcf.ngrok-free.app/media/mainimage/1466759637843/id51zs9r2sogms7s703.jpg"
-                                  style="height: 100px;width:100px;" />
+                                  src="{{item[k]['image']}}"
+                                  style="height: 100px;width:100px;" class="border rounded"/>
                               </div>
                               <div class="col">
                                 <br>
-                                <p>Product:</p>
-                                <p>Quantity:</p>
+                                <p>&nbsp&nbspProduct: <b>{{k}}</b></p>
+                                <p>&nbsp&nbspQuantity: {{item[k]['quantity']}}</p>
                               </div>     
                             </div>
                             </div>
                           </div>
-
+                          {% endfor %}
+                        {% endfor %}
+                        <hr>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-md-4"> <!-- Side bar -->
-                    <div class="card border shadow-none p-3 m-3 rounded-0" style="background: #F5F5F1;">
+                    <div class="card border shadow-none p-3 m-3 rounded" style="background: #F4F5F7;">
                       <div class="card-body bordered shadow-none">
-                        <h4>ORDER DETAILS:</h4>
+                        <center><h4>ORDER DETAILS</h4></center>
                         <br>
                         <p>Order ID: {{order[0]}}{{order[5]}}</p>
                         <p>Name: {{order[2]}}</p>

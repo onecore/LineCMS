@@ -9,7 +9,7 @@ _logger = dataengine.knightclient()
 log = _logger.log
 
 loadtheme_ = dataengine.knightclient()
-themes = loadtheme_.themeget()
+themes = loadtheme_.themeget()[0]
 
 
 @notfound.route("/notfound.html")

@@ -71,7 +71,35 @@ def variantimagemodifier(d: bytes) -> 'json':
         _variants_new, d[13])
     return tuple(d)
 
+def loadorderim(key,obj) -> str:
+    """
+    Returns image path for a product (if any) else use the ni.jpeg
+    """
+    img = None
+    try:
+        robj = eval(obj[14])
+    except:
+        return "/media/ni.jpeg"
+    product_id = robj[key]
+    de = dataengine.knightclient()
+    im = de.get_product_single(0,checkout=product_id)
+    if im:
+        if im[9]:
+            img = f"/media/mainimage/{product_id}/{im[9]}"
+        elif im[8]:
+            ev = eval(im[8])
+            img = f"/media/products/{product_id}/{im[8][0]}"
+        else:
+            img = "/media/ni.jpeg"
+    return img
 
+def parseorders(l,obj) -> dict:
+    """
+    Creates a Dict contains quant, and image path
+    """
+    c = {}
+    c[l[0]] = {"quantity":l[1],"image":loadorderim(l[0],obj)}
+    return c
 
 @product.route("/product-settings", methods=['GET', 'POST'])
 def product_sett():
@@ -167,10 +195,9 @@ def product_orders_single(id):
     
     if order:
         items = eval(order[10])
-        # for order in items:
-        #     parseditems.append(parseorders(order))
+        for orders in items:
+            parseditems.append(parseorders(orders,order))
             
-        
     return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems)
 
 

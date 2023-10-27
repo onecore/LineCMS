@@ -11,7 +11,7 @@ import stripe
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 loadtheme_ = dataengine.knightclient()
-themes = loadtheme_.themeget()
+themes = loadtheme_.themeget()[0]
 
 productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
@@ -89,10 +89,12 @@ def new_event():
         items = []
         for item in session.line_items.data:
             items.append([item.description,item.quantity])
+        
+        ic(session)
         order = {
                 "customer_name":session.customer_details.name,
                 "customer_email":session.customer_details.email,
-                "amount_total":  f'${item.amount_total/100:.02f} {item.currency.upper()}',
+                "amount_total":  f'${session.amount_total/100:.02f} {item.currency.upper()}',
                 "created":session.created,
                 "payment_status": session.payment_status,
                 "customer_country": session.customer_details.address.country,
