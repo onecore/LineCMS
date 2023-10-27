@@ -481,6 +481,14 @@ $("#form").submit( function(eventObj) {
     });
   });
 
+  function varval(){
+       $('input[type="number"]').blur(function () {
+      var num = parseFloat($(this).val());
+      var cleanNum = num.toFixed(2);
+      $(this).val(cleanNum);
+    });
+  }
+
 </script>
 
 <script>
