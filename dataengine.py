@@ -70,7 +70,20 @@ class knightclient:
             ic(e)
             pass
          
+    def productsettings_ship(self,data):
+        "Updates productsettings shipping opt"
+        try:
+            _c = self.connection.cursor()
+            _q = f"""UPDATE productsetting SET shipping_enable='{data['status']}', shipping_rates='{str(data['shipping'])}', shipping_countries="{data['countries']}";"""
+            _c.execute(_q)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def productsettings_set(self, sk, pk, ck, wk,wsk,s_enable,s_rates,s_countries) -> tuple:
+        "Unused func, will delete soon"
         try:
             _c = self.connection.cursor()
             _q = """UPDATE productsetting SET secretkey = "{sk}", publishablekey = "{pk}", currency = "{ck}", webhookkey = "{wk}",signkey = "{wsk}", shipping_enable = "{se}", shipping_rates = '{sr}', shipping_countries = "{sc}" WHERE id = 1; """.format(
@@ -388,7 +401,6 @@ class knightclient:
 
     def knightclientapiv2(self, action) -> bool:
         _c = self.connection.cursor()
-        print(action)
         _where = action['where']
         _action = action['action']
 
@@ -601,6 +613,3 @@ class knightclient:
         # Add more condition depends on site_type
         return all_data
 
-    def insert_data(self, quer):
-        pass
-        pass

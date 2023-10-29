@@ -29,9 +29,42 @@ var email_template_abandoned = {}
 // Product checkout/fulfill
 
 
-function prodsettings(){
+function prodapi(api,obj){
+  fetch(api, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(obj)
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.status == parseInt(1)){
+        swal("Updated", data.message, "success");
+    }else{
+        swal("Update failed", data.message, "error");
+    }
+});
 }
 
+function prodsettings_temp(){
+}
+
+function prodsettings_rates(){
+    let status = document.getElementById("shipping")
+    let selcountries = []
+    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+    for (var i = 0; i < checkboxes.length; i++) {
+    selcountries.push(checkboxes[i].value)
+    }
+    prodapi("/api/prodset-ship",{"countries":selcountries,"shipping":JSON.stringify(shipping),"status":status.value})
+}
+
+function prodsettings_str(){
+}
+
+function prodsettings_smtp(){
+}
 
 function AutoOff() {
 
@@ -43,12 +76,9 @@ function GenID() {
 
 function fname(len) {
     let text = "";
-
     var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-
     for (var i = 0; i < len; i++)
         text += charset.charAt(Math.floor(Math.random() * charset.length));
-
     return text;
 }
 

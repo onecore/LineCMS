@@ -324,7 +324,7 @@
                       </fieldset>
                     </div>
                     <br>
-                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray">SAVE SHIPPING RATES</button></center>
+                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_rates()">SAVE SHIPPING RATES</button></center>
                       <br>
                   </div>
                 </div>
@@ -342,7 +342,7 @@
                       <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a
                           href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you
                         don't have one. </p>
-                      <div class="input-group mb-3 pt-0">
+                      <div class="input-group mb-2 pt-0">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET
                             KEY</span>
@@ -350,7 +350,7 @@
                         <input type="text" class="form-control" id="skey" name="skey" aria-label=""
                           placeholder="Secret Key from your Stripe account" value="{{settings[0]}}">
                       </div>
-                      <div class="input-group mb-3 pt-3">
+                      <div class="input-group mb-2 pt-2">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted"
                             style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
@@ -358,7 +358,7 @@
                         <input type="text" class="form-control" id="pkey" name="pkey" aria-label=""
                           placeholder="Publishable Key from your Stripe account" value="{{settings[1]}}">
                       </div>
-                      <div class="input-group mb-3 pt-3" style="display:none">
+                      <div class="input-group mb-2 pt-2" style="display:none">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
                             KEY</span>
@@ -366,7 +366,7 @@
                         <input type="text" class="form-control" id="wkey" name="wkey" aria-label=""
                           placeholder="Webhook key from Stripe" value="{{settings[4]}}">
                       </div>
-                      <div class="input-group mb-3 pt-3">
+                      <div class="input-group mb-2 pt-2">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
                             SIGN KEY</span>
@@ -376,8 +376,7 @@
                         <input value="" id="cactivated" name="cactivated" hidden>
                         <input value="" id="shippingobj" name="shippingobj" hidden>
                       </div>
-                      <hr class="text-muted">
-                      <div class="input-group mb-3 pt-3">
+                      <div class="input-group mb-2 pt-2">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted"
                             style="border-radius:8px 0 0 8px">Currency</span>
@@ -390,7 +389,7 @@
                       </div>
                       <br>
                       <center><button class="btn btn-primary btn-sm shadow-1 border" type="button"
-                          style="width: 300px; background:#28a745;border: 1px gray">SAVE API SETTINGS</button></center>
+                          style="width: 300px; background:#28a745;border: 1px gray" onclick="">SAVE API SETTINGS</button></center>
 
                     </div>
                   </div>
@@ -494,16 +493,6 @@
           selcountries.push(checkboxes[i].value)
         }
 
-        function beforesub() {
-          var selcountries = []
-          var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-          for (var i = 0; i < checkboxes.length; i++) {
-            selcountries.push(checkboxes[i].value)
-          }
-          document.getElementById("cactivated").value = selcountries;
-          document.getElementById("shippingobj").value = JSON.stringify(shipping);
-          document.getElementById("setform").submit()
-        }
       </script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
       <script>

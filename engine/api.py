@@ -9,6 +9,19 @@ api = Blueprint("api", __name__)
 version = "1.4"
 
 
+@api.route("/api/prodset-ship", methods=['POST', 'GET'])
+def prodset_ship():
+    try:
+        if (request.data):
+            _d = json.loads(request.data)
+            _de = dataengine.knightclient()
+            if _de.productsettings_ship(_d):
+                return jsonify({"status": 1,"message":"Shipping options updated"})
+            return jsonify({"status": 0,"message":"Unable to update"})
+    except:
+        return jsonify({"status": 0,"message":"Settings unable to update"})
+
+
 @api.route("/api/themeset", methods=['POST', 'GET'])
 def themeup():
     if (request.data):
@@ -16,7 +29,6 @@ def themeup():
         _de = dataengine.knightclient()
         if _de.themeset(_d['set']):
             return jsonify({"status": 1})
-        print(request.data)
         return jsonify({"status": 0})
     return jsonify({"status": 0})
 
