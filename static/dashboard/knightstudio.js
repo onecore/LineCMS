@@ -24,9 +24,13 @@ var err = 0;
 
 // Product checkout/fulfill
 var email_template_fulfilled = {}
-var email_template_paymentsuccess = {}
-var email_template_recovercheckout = {}
+var email_template_placed = {}
+var email_template_abandoned = {}
 // Product checkout/fulfill
+
+
+function prodsettings(){
+}
 
 
 function AutoOff() {
@@ -766,3 +770,4 @@ function disabledspace(e) {
     }
 
 }
+
