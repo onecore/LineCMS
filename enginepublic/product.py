@@ -9,8 +9,6 @@ from engine.product import getimages, getmainimage
 from decimal import Decimal
 import stripe
 
-UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
-
 loadtheme_ = dataengine.knightclient()
 themes = loadtheme_.themeget()[0]
 
@@ -64,7 +62,7 @@ def productlist():
 
 
 @productuser.route('/order/success')
-def prsuccess():
+def purchase_success():
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
@@ -82,13 +80,13 @@ def prsuccess():
 
 
 @productuser.route('/order/cancel')
-def prcancel():
+def purchase_cancel():
     return redirect("/product-list")
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
-def publicproductpage(new=None, pid=None):
+def cproductpage(new=None, pid=None):
     de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
@@ -109,13 +107,18 @@ def publicproductpage(new=None, pid=None):
     jproductinfo = json.dumps(productinfo)
     imags = getimages(product[13])
     return render_template(f"/SYSTEM/{themes}/product.html",
-                           product=product, mod=mod, data=dt,
-                           new=new, images=imags,
-                           variants=variants, productinfo=productinfo,
-                           jvariants=jvariants, jproductinfo=jproductinfo,
-                           jslides=variantpush(variants, imags, js=True),
-                           jslidespy=variantpush(variants, imags, js=False),
-                           similarproducts=de.productsimilar(6, product[2]),
+                           product=product, 
+                           mod=mod, 
+                           data=dt,
+                           new=new, 
+                           images=imags,
+                           variants=variants, 
+                           productinfo=productinfo,
+                           jvariants=jvariants,  # Javascript parsed
+                           jproductinfo=jproductinfo, # Javascript parsed 
+                           jslides=variantpush(variants, imags, js=True),  # Javascript parsed
+                           jslidespy=variantpush(variants, imags, js=False), # Python parsed
+                           similarproducts=de.productsimilar(6, product[2]),  
                            mainimage=product[9],
                            )
 
