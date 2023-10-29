@@ -2,19 +2,12 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Product Orders - KnightStudio Dashboard</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+
   <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
-
-
   <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -166,7 +159,6 @@ swal("", `{{error}}`, "warning");
         <br>
         <a class="btn btn-muted btn-s border" href="/product-orders">
           < Orders</a>
-        <button class="btn btn-muted text-dark right border">Fulfillment Setup</button>
 
         <br>
             <div class="container">
@@ -175,7 +167,7 @@ swal("", `{{error}}`, "warning");
                   <div class="row bordered">
                     <div class="card border shadow-none rounded border m-3" style="background: #F4F5F7">
                       <div class="card-body bordered shadow-none">
-                        <h5 class="text-muted">ITEMS FROM ORDER #{{order[0]}}{{order[5]}}</h5>
+                        <h5 class="text-muted"><p class="icon-handbag d-inline"></p> ITEMS FROM ORDER #{{order[0]}}{{order[5]}}</h5>
                         {% for item in items %}
                             {% for k,v in item.items() %}
                           <div class="card border shadow rounded border" style="background: #ffffff;">
@@ -219,7 +211,28 @@ swal("", `{{error}}`, "warning");
                               placeholder="Good for digital goods, links, download links etc.">
                           </div>
                         </form>
-                        <center><button class="btn btn-primary" type="button">Mark as Fulfilled</button></center>
+                        <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Mark as Fulfilled</button></center>
+                          <!-- Editable modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Fulfillment Template - Modify for this order</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ...
+                                  </div>
+                                                                      <p>asdasd</p><br>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit Global Template</button>
+                                    <button type="button" class="btn btn-primary">Save for this order</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Editable modal -->
                       </div>
                     </div>
           
@@ -229,7 +242,7 @@ swal("", `{{error}}`, "warning");
                 <div class="col-md-4"> <!-- Side bar -->
                     <div class="card border shadow-none m-3 rounded" style="background: #F4F5F7;">
                       <div class="card-body bordered shadow-none">
-                        <center><h4>ORDER DETAILS</h4></center>
+                        <center><h4><p class="icon-layers d-inline"></p> ORDER DETAILS</h4></center>
                         <hr style="color:rgb(59, 59, 59)">
                         <br>
                         <p class="text-muted"><b>Order ID:</b> {{order[0]}}{{order[5]}}</p>

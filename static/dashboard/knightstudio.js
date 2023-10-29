@@ -22,6 +22,13 @@ var images = [];
 var run_once = true;
 var err = 0;
 
+// Product checkout/fulfill
+var email_template_fulfilled = {}
+var email_template_paymentsuccess = {}
+var email_template_recovercheckout = {}
+// Product checkout/fulfill
+
+
 function AutoOff() {
 
 }
