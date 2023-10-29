@@ -81,6 +81,18 @@ class knightclient:
         except Exception as e:
             print(e)
             return False
+        
+    def productsettings_str(self,data):
+        "Updates productsettings shipping opt"
+        try:
+            _c = self.connection.cursor()
+            _q = f"""UPDATE productsetting SET secretkey='{data['sk']}', publishablekey='{data['pk']}', currency='{data['ck']}', webhookkey='{data['wsk']}', signkey='{data['wsk']}';"""
+            _c.execute(_q)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
 
     def productsettings_set(self, sk, pk, ck, wk,wsk,s_enable,s_rates,s_countries) -> tuple:
         "Unused func, will delete soon"

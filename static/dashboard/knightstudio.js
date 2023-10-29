@@ -61,6 +61,15 @@ function prodsettings_rates(){
 }
 
 function prodsettings_str(){
+    let sk = document.getElementById("skey").value
+    let pk = document.getElementById("pkey").value
+    let wk = document.getElementById("wskey").value
+    let ck = document.getElementById("ckey").value
+    if (sk && pk && wk && ck){
+        prodapi("/api/prodset-str",{"sk":sk,"pk":pk,"wsk":wk,"ck":ck})
+    }else{
+        swal("Stripe API", 'Missing information', "error");
+    }
 }
 
 function prodsettings_smtp(){
