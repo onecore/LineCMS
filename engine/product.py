@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, g
+from flask import Blueprint, render_template, request, redirect, g,jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import templater as temple
