@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Account Settings - KnightStudio Dashboard</title>
   <!-- plugins:css -->
-
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
@@ -25,31 +24,29 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="../../dashboard/knightstudio.js"></script>
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
 
-<style>
-.scontainer { border-left: solid 1px rgb(64, 64, 65);; width:190px; height: 300px; overflow-y: scroll;}
-</style>
+  <style>
+    .scontainer {
+      width: 190px;
+      height: 300px;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 
 <body class="sidebar-dark">
-<script>
-
-{% if success %}
-swal("", 'Product Settings updated', "success");
-{% endif %}
-
-
-{% if error %}
-swal("", `{{error}}`, "warning");
-{% endif %}
-
-let shipping = {};
-let shipping_names = [];
-let currkey = "{{settings[2]}}";
-</script>
-
-
-
+  <script>
+    {% if success %}
+    swal("", 'Product Settings updated', "success"); 
+    {% endif %} 
+    {% if error %}
+    swal("", `{{error}}`, "warning"); 
+    {% endif %}
+    let shipping = {};
+    let shipping_names = [];
+    let currkey = "{{settings[2]}}";
+  </script>
   <div class="container-scroller">
     <!-- partial:../../dashboard/partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -70,27 +67,21 @@ let currkey = "{{settings[2]}}";
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <h4 class="text-dark ms-auto">Product Payment Setup</h4>
-
         <ul class="navbar-nav ms-auto">
-
           <li class="nav-item d-none d-lg-block">
-              <span class="input-group-addon input-group-prepend border-right">
-                <a href="" class="btn btn-sm btn-dark">Visit Website</a>
-              </span>
+            <span class="input-group-addon input-group-prepend border-right">
+              <a href="" class="btn btn-sm btn-dark">Visit Website</a>
+            </span>
           </li>
           <li class="nav-item d-none d-lg-block">
-              <span class="input-group-addon input-group-prepend border-right">
-                <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
-              </span>
+            <span class="input-group-addon input-group-prepend border-right">
+              <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
+            </span>
           </li>
-          <!-- <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li> -->
+          <!-- <li class="nav-item"><form class="search-form" action="#"><i class="icon-search"></i><input type="search" class="form-control" placeholder="Search Here" title="Search here"></form></li> -->
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-bs-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
       </div>
@@ -98,70 +89,93 @@ let currkey = "{{settings[2]}}";
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../dashboard/partials/_settings-panel.html -->
-
       <!-- partial -->
       <!-- partial:../../dashboard/partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-            <li class="nav-item nav-category">Website & Account</li>
-
+          <li class="nav-item nav-category">Website & Account</li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-webacc" aria-expanded="false" aria-controls="KnightStudio-webacc">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-webacc" aria-expanded="false"
+              aria-controls="KnightStudio-webacc">
               <i class="menu-icon mdi mdi-database-settings"></i>
               <span class="menu-title">Settings</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="KnightStudio-webacc">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/dashboard">Website</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/account"><b class="text-warning">Account</b></a></li>
-                <li class="nav-item"> <a class="nav-link" href="/modules">Modules</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/dashboard">Website</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/account">
+                    <b class="text-warning">Account</b>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/modules">Modules</a>
+                </li>
               </ul>
             </div>
           </li>
-
           <li class="nav-item nav-category">Contents</li>
           <li class="nav-item">
-
-            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-product" aria-expanded="false" aria-controls="KnightStudio-product">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-product" aria-expanded="false"
+              aria-controls="KnightStudio-product">
               <i class="menu-icon mdi mdi-rice"></i>
               <span class="menu-title">Products</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="KnightStudio-product">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/product-orders">Product Orders</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/product-new">New Product</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/product-manage">Manage Products</a></li>
-                <li class="nav-item"> <a class="nav-link " href="/product-settings"><b class="btn btn-xs btn-warning text-dark">Settings</b></a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/product-orders">Product Orders</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/product-new">New Product</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/product-manage">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="/product-settings">
+                    <b class="btn btn-xs btn-warning text-dark">Settings</b>
+                  </a>
+                </li>
               </ul>
             </div>
-            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false" aria-controls="KnightStudio-blog">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-blog" aria-expanded="false"
+              aria-controls="KnightStudio-blog">
               <i class="menu-icon mdi mdi-library-books"></i>
               <span class="menu-title">Blog</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="KnightStudio-blog">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/blog-new">New Post</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/blog-new">New Post</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/blog-manage">Manage Posts</a>
+                </li>
               </ul>
             </div>
-
-            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-messages" aria-expanded="false" aria-controls="KnightStudio-messages">
+            <a class="nav-link" data-bs-toggle="collapse" href="#KnightStudio-messages" aria-expanded="false"
+              aria-controls="KnightStudio-messages">
               <i class="menu-icon mdi mdi-message-processing"></i>
               <span class="menu-title">Messages</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="KnightStudio-messages">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/messages">Customer Messages</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/mwebsite">Website Logging</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/messages">Customer Messages</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/mwebsite">Website Logging</a>
+                </li>
               </ul>
             </div>
           </li>
-
-
           <li class="nav-item nav-category">Information</li>
           <li class="nav-item">
             <a class="nav-link" href="/other">
@@ -175,253 +189,351 @@ let currkey = "{{settings[2]}}";
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row justify-content-center">
-            <div class="col col-md-9">
+            <!-- Left Div -->
+            <div class="col">
               <div class="card">
                 <div class="card-body">
-                    <div class="card shadow-none border rounded p-1 m-1">
-                      <center>
-                        <h3><span class="badge bg-secondary text-white rounded">Product Payment / Stripe API Setup</span></h3>
-                      </center>
-                      <div class="card-body">
-                    <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a
-                        href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you don't have one.</p>
-                    <form class="pt-3" method="post" id="setform">
+                  <center>
+                    <h3>
+                      <span class="badge bg-secondary text-white rounded">Manage Shipping Options</span>
+                    </h3>
+                  </center>
+                  <br>
+                  <center>
+                      <!-- <span class="badge bg-secondary text-white rounded">Order templates</span> -->
+                                            <div>
+                      {{ ckeditor.create() }}
+
+                      </div>
+                  </center>
+                </div>
+                      <div class="d-inline clearfix">
+                        <center>
+                          <h3>
+                          </h3>
+                          <div class="btn-group d-inline" role="group" style="float:left">
+                           &nbsp <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-muted dropdown-toggle rounded-0"
+                              data-bs-toggle="dropdown" aria-expanded="false">&nbsp
+                              Order Fulfilled Template
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                              <li><a class="dropdown-item" href="#">Order Placed Template</a></li>
+                              <li><a class="dropdown-item" href="#">Order Abandoned Template</a></li>
+                            </ul>
+                          </div>
+                          &nbsp&nbsp<button class="btn btn-sm btn-muted border rounded-0" style="float:left;left:4px">Enabled</button>
+                                                <button class="btn btn-primary btn-sm shadow-1 border d-inline" type="button"
+                                                  style="width: 300px; background:#28a745;border: 1px gray">SAVE TEMPLATES</button>
+                        </center>
+                      </div>
+                <br>
+              </div>
+              <br>
+              <div class="card">
+                <div class="card-body">
+                  <center>
+                    <h3>
+                      <span class="badge bg-secondary text-white rounded">Manage Shipping Options</span>
+                    </h3>
+                  </center>
+                  <div class="input-group mb-3 pt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted"
+                        style="border-radius:8px 0 0 8px">Shipping</span>
+                    </div>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping"
+                      name="shipping" onchange="showship(this)"> {% if settings[6] == "on" %} <option value="on"
+                        selected>Enable Shipping</option>
+                      <option value="off">No Shipping</option> {% else %} <option value="on">Enable Shipping</option>
+                      <option value="off" selected>No Shipping</option> {% endif %}
+                    </select>
+                    <p class="text-muted p-3 m-3 pb-0 mb-0">Turn Shipping On if your product is a physical good and is required a
+                      shipping to get to your customer, Turning this on will show an Address form on checkout along with
+                      the Shipping option provided</p>
+                  </div>
+                  <br> {% if settings[6] == "on" %} <div class="container" id="shippingopt" style="display:block"> {%
+                    else %} <div class="container" id="shippingopt" style="display:none"> {% endif %} <fieldset
+                        class="border p-2 text-muted rounded">
+                        <div class="row">
+                          <center></center>
+                          <div class="col" id="col-rates">
+                            <div class="card shadow-none border rounded-0 p-1 m-1">
+                              <div class="card-header bg-dark text-white"> Add Shipping rate </div>
+                              <div class="card-body">
+                                <div class="input-group input-group-sm mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping
+                                      Name</span>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Small"
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="e.g Express Shipping (DHL)"
+                                    id="sname">
+                                </div>
+                                <div class="input-group input-group-sm mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping
+                                      Amount</span>
+                                  </div>
+                                  <input type="number" class="form-control amounti" aria-label="Small"
+                                    aria-describedby="inputGroup-sizing-sm" placeholder="e.g 13.00" id="samount"
+                                    value="10.00">
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <div class="input-group input-group-sm mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Minimum
+                                          days</span>
+                                      </div>
+                                      <input type="text" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" placeholder="3" id="sminimum">
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="input-group input-group-sm mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Maximum
+                                          days</span>
+                                      </div>
+                                      <input type="text" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" placeholder="7" id="smaximum">
+                                    </div>
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-s" onclick="shippingrateel()">Add
+                                    Shipping</button>
+                                  <hr>
+                                  <br>
+                                  <hr>
+                                  <div id="rates"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <p>Countries supported by Stripe payment</p>
+                            <div class="scontainer"> {% for country_f, country_s in countries.items() %} {% if country_f
+                              in settings[8] %} <input type="checkbox" class="p-1 m-1" id="{{country_f}}"
+                                name="{{counry_f}}" value="{{country_f}}" checked /> {{country_s}}
+                              <br /> {% else %} <input type="checkbox" class="p-1 m-1" id="{{country_f}}"
+                                name="{{counry_f}}" value="{{country_f}}" />
+                              {{country_s}}
+                              <br /> {% endif %} {% endfor %}
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <br>
+                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray">SAVE SHIPPING RATES</button></center>
+                      <br>
+                  </div>
+                </div>
+              </div>
+              <!-- Right Div -->
+              <div class="col-md-5">
+                <div class="card">
+                  <div class="card-body">
+                    <center>
+                      <h3>
+                        <span class="badge bg-secondary text-white rounded">Product Payment / Stripe API Setup</span>
+                      </h3>
+                    </center>
+                    <div class="card-body">
+                      <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a
+                          href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you
+                        don't have one. </p>
                       <div class="input-group mb-3 pt-0">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET KEY</span>
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET
+                            KEY</span>
                         </div>
                         <input type="text" class="form-control" id="skey" name="skey" aria-label=""
                           placeholder="Secret Key from your Stripe account" value="{{settings[0]}}">
                       </div>
                       <div class="input-group mb-3 pt-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
+                          <span class="input-group-text btn-muted text-muted"
+                            style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
                         </div>
                         <input type="text" class="form-control" id="pkey" name="pkey" aria-label=""
                           placeholder="Publishable Key from your Stripe account" value="{{settings[1]}}">
                       </div>
                       <div class="input-group mb-3 pt-3" style="display:none">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK KEY</span>
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
+                            KEY</span>
                         </div>
-                        <input type="text" class="form-control" id="wkey" name="wkey" aria-label="" placeholder="Webhook key from Stripe"
-                          value="{{settings[4]}}">
+                        <input type="text" class="form-control" id="wkey" name="wkey" aria-label=""
+                          placeholder="Webhook key from Stripe" value="{{settings[4]}}">
                       </div>
                       <div class="input-group mb-3 pt-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK SIGN KEY</span>
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
+                            SIGN KEY</span>
                         </div>
                         <input type="text" class="form-control" id="wskey" name="wskey" aria-label=""
                           placeholder="Webhook Signing key from Stripe" value="{{settings[5]}}">
                         <input value="" id="cactivated" name="cactivated" hidden>
                         <input value="" id="shippingobj" name="shippingobj" hidden>
                       </div>
-                        <hr class="text-muted">
-                        <div class="input-group mb-3 pt-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Currency</span>
-                          </div>
-                          <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ckey" name="ckey">
-                            <option value="{{settings[2]}}" selected>{{settings[2]}}</option>
-                            {% for currency in currencies %}
-                            <option value="{{currency}}">{{currency}}</option>
-                            {% endfor %}
-                          </select>
-                        </div>
-
+                      <hr class="text-muted">
                       <div class="input-group mb-3 pt-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Shipping</span>
+                          <span class="input-group-text btn-muted text-muted"
+                            style="border-radius:8px 0 0 8px">Currency</span>
                         </div>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="shipping" name="shipping"
-                          onchange="showship(this)">
-                          {% if settings[6] == "on" %}
-                          <option value="on" selected>Enable Shipping</option>
-                          <option value="off">No Shipping</option>
-                          {% else %}
-                          <option value="on">Enable Shipping</option>
-                          <option value="off" selected>No Shipping</option>
-                          {% endif %}
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ckey"
+                          name="ckey">
+                          <option value="{{settings[2]}}" selected>{{settings[2]}}</option> {% for currency in
+                          currencies %} <option value="{{currency}}">{{currency}}</option> {% endfor %}
                         </select>
-                        <p class="text-muted p-3 m-3">Turn Shipping On if your product is a physical good and is required a shipping to get to
-                          your customer, Turning this on will show an Address form on checkout along with the Shipping option provided</p>
                       </div>
-
-                      </div>
-                    </div>
-                  <!-- <h4 class="card-title">Account Settings</h4> -->
-                        <br>
-                          {% if settings[6] == "on" %}
-                          <div class="container" id="shippingopt" style="display:block">
-                          {% else %}
-                          <div class="container" id="shippingopt" style="display:none">
-
-                          {% endif %}
-                            <fieldset class="border p-2 text-muted rounded">
-                                                <center>
-                                                  <h3><span class="badge bg-secondary text-white rounded">Manage Shipping Options</span></h3>
-                                                </center>
-
-                              <div class="row">
-                              <center>
-                              </center>
-
-                                <div class="col" id="col-rates">
-                                      <div class="card shadow-none border rounded-0 p-1 m-1">
-                                        <div class="card-header bg-dark text-white">
-                                          Add Shipping rate
-                                        </div>
-                                        <div class="card-body">
-                                          <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                              <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping Name</span>
-                                            </div>
-                                            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="e.g Express Shipping (DHL)" id="sname">
-                                          </div>
-                                          <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                              <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Shipping Amount</span>
-                                            </div>
-                                            <input type="number" class="form-control amounti" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                              placeholder="e.g 13.00" id="samount" value="10.00">
-                                          </div>
-                                          <div class="row">                  
-                                          <div class="col-sm-6">
-                                            <div class="input-group input-group-sm mb-3">
-                                              <div class="input-group-prepend">
-                                                <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Minimum days</span>
-                                              </div>
-                                              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                                placeholder="3" id="sminimum">
-                                            </div>
-                                          </div>        
-                                          <div class="col-sm-6">
-                                              <div class="input-group input-group-sm mb-3">
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text text-muted" id="inputGroup-sizing-sm">Maximum days</span>
-                                                </div>
-                                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="7" id="smaximum">
-                                          </div> 
-                                          </div>
-                                          <button type="button" class="btn btn-primary btn-s" onclick="shippingrateel()">Add Shipping</button>
-                                          <hr>
-                                          <br>
-                                          <hr>
-                                          <div id="rates">
-
-                                          </div>
-                                        </div>
-                                      </div>
-                                </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <p>Countries supported by Stripe payment</p>
-                                  <div class="scontainer">
-                                    {% for country_f, country_s in countries.items() %}
-                                        {% if country_f in settings[8] %}
-                                            <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" checked/> {{country_s}} <br />
-                                        {% else %}
-                                            <input type="checkbox" class="p-1 m-1" id="{{country_f}}" name="{{counry_f}}"  value="{{country_f}}" /> {{country_s}} <br />
-
-                                        {% endif %}
-                                    {% endfor %}
-                                  </div>
-                                </div>
-
-
-
-                          </div>
-                    <div class="mt-3">
                       <br>
-                      <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../dashboard/index.html">SIGN IN</a> -->
+                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button"
+                          style="width: 300px; background:#28a745;border: 1px gray">SAVE API SETTINGS</button></center>
+
                     </div>
-                  </form>
+                  </div>
                 </div>
                 <br>
-                <center><button type="button" onclick="beforesub()" class="btn btn-primary">Save information</button></center>
+                <div class="card">
+                  <div class="card-body">
+                    <center>
+                      <h3>
+                        <span class="badge bg-secondary text-white rounded">Email settings (SMTP)</span>
+                      </h3>
+                    </center>
+                    <div class="card-body">
+                      <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a
+                          href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you
+                        don't have one. </p>
+                      <div class="input-group mb-3 pt-0">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET
+                            KEY</span>
+                        </div>
+                        <input type="text" class="form-control" id="skey" name="skey" aria-label=""
+                          placeholder="Secret Key from your Stripe account" value="{{settings[0]}}">
+                      </div>
+                      <div class="input-group mb-3 pt-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted"
+                            style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
+                        </div>
+                        <input type="text" class="form-control" id="pkey" name="pkey" aria-label=""
+                          placeholder="Publishable Key from your Stripe account" value="{{settings[1]}}">
+                      </div>
+                      <div class="input-group mb-3 pt-3" style="display:none">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
+                            KEY</span>
+                        </div>
+                        <input type="text" class="form-control" id="wkey" name="wkey" aria-label=""
+                          placeholder="Webhook key from Stripe" value="{{settings[4]}}">
+                      </div>
+                      <div class="input-group mb-3 pt-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
+                            SIGN KEY</span>
+                        </div>
+                        <input type="text" class="form-control" id="wskey" name="wskey" aria-label=""
+                          placeholder="Webhook Signing key from Stripe" value="{{settings[5]}}">
+                        <input value="" id="cactivated" name="cactivated" hidden>
+                        <input value="" id="shippingobj" name="shippingobj" hidden>
+                      </div>
+                      <hr class="text-muted">
+                      <div class="input-group mb-3 pt-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted"
+                            style="border-radius:8px 0 0 8px">Currency</span>
+                        </div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ckey"
+                          name="ckey">
+                          <option value="{{settings[2]}}" selected>{{settings[2]}}</option> {% for currency in
+                          currencies %} <option value="{{currency}}">{{currency}}</option> {% endfor %}
+                        </select>
+                      </div>
+                      <br>
+                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button"
+                          style="width: 300px; background:#28a745;border: 1px gray">SAVE EMAIL SETTINGS</button></center>
 
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
+            <!-- content-wrapper ends -->
+            <!-- partial:../../dashboard/partials/_footer.html -->
+            <footer class="footer">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                  <a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4 </span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights
+                  reserved.</span>
+              </div>
+            </footer>
+            <!-- partial -->
           </div>
-
+          <!-- main-panel ends -->
         </div>
-
-        <!-- content-wrapper ends -->
-        <!-- partial:../../dashboard/partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights reserved.</span>
-          </div>
-        </footer>
-        <!-- partial -->
+        <!-- page-body-wrapper ends -->
       </div>
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  
-  <script>
-  var initload = {{settings[7]|safe}}
-  const r_ = Object.keys(initload);
-  for (var i = 0; i < r_.length; i++) {
-      let cont_ = initload[r_[i]];
-      cont_.push(r_[i])
-      shippingrateel(cont_)
-  }
-  var selcountries = []
-  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+      <!-- container-scroller -->
+      <!-- plugins:js -->
+      <script>
+        var initload = {{settings[7] | safe}}
+        const r_ = Object.keys(initload);
+        for (var i = 0; i < r_.length; i++) {
+          let cont_ = initload[r_[i]];
+          cont_.push(r_[i])
+          shippingrateel(cont_)
+        }
+        var selcountries = []
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+        for (var i = 0; i < checkboxes.length; i++) {
+          selcountries.push(checkboxes[i].value)
+        }
 
-  for (var i = 0; i < checkboxes.length; i++) {
-    selcountries.push(checkboxes[i].value)
-  }
-
-  function beforesub() {
-    var selcountries = []
-    var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
-    for (var i = 0; i < checkboxes.length; i++) {
-      selcountries.push(checkboxes[i].value)
-    }
-    document.getElementById("cactivated").value = selcountries;
-    document.getElementById("shippingobj").value = JSON.stringify(shipping);
-    document.getElementById("setform").submit()
-    }
-
-  </script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
-<script>
-  $(document).ready(function () {
-    $('input#samount').blur(function () {
-      var num = parseFloat($(this).val());
-      var cleanNum = num.toFixed(2);
-      $(this).val(cleanNum);
-    });
-  });
-
-</script>
-  <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-  <script src="../../dashboard/vendors/select2/select2.min.js"></script>
-  <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="../../dashboard/js/off-canvas.js"></script>
-  <script src="../../dashboard/js/hoverable-collapse.js"></script>
-  <script src="../../dashboard/js/template.js"></script>
-  <script src="../../dashboard/js/settings.js"></script>
-  <script src="../../dashboard/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="../../dashboard/js/file-upload.js"></script>
-  <script src="../../dashboard/js/typeahead.js"></script>
-  <script src="../../dashboard/js/select2.js"></script>
-  <!-- End custom js for this page-->
+        function beforesub() {
+          var selcountries = []
+          var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+          for (var i = 0; i < checkboxes.length; i++) {
+            selcountries.push(checkboxes[i].value)
+          }
+          document.getElementById("cactivated").value = selcountries;
+          document.getElementById("shippingobj").value = JSON.stringify(shipping);
+          document.getElementById("setform").submit()
+        }
+      </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          $('input#samount').blur(function () {
+            var num = parseFloat($(this).val());
+            var cleanNum = num.toFixed(2);
+            $(this).val(cleanNum);
+          });
+        });
+      </script>
+      <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
+      <!-- endinject -->
+      <!-- Plugin js for this page -->
+      <script src="../../dashboard/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+      <script src="../../dashboard/vendors/select2/select2.min.js"></script>
+      <script src="../../dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+      <!-- End plugin js for this page -->
+      <!-- inject:js -->
+      <script src="../../dashboard/js/off-canvas.js"></script>
+      <script src="../../dashboard/js/hoverable-collapse.js"></script>
+      <script src="../../dashboard/js/template.js"></script>
+      <script src="../../dashboard/js/settings.js"></script>
+      <script src="../../dashboard/js/todolist.js"></script>
+      <!-- endinject -->
+      <!-- Custom js for this page-->
+      <script src="../../dashboard/js/file-upload.js"></script>
+      <script src="../../dashboard/js/typeahead.js"></script>
+      <script src="../../dashboard/js/select2.js"></script>
+      <!-- End custom js for this page-->
 </body>
 
 </html>
