@@ -50,13 +50,7 @@ function prodapi(api,obj){
 }
 
 function prodsettings_temp(){
-    // CKEDITOR.instances['ckeditor'].setData(value);
-    let dbobj = templates;
-    let status_ = document.getElementById("tempstatus")
-    let status = status_.textContent
-    console.log(status)
-
-    let ck = CKEDITOR.instances['ckeditor'].getData();
+    prodapi("/api/prodset-temp",{"status":tmp_status,"templates":tmp_obj})
 
 }
 

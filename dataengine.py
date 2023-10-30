@@ -69,6 +69,19 @@ class knightclient:
         except Exception as e:
             ic(e)
             pass
+        
+    def productsettings_temp(self,data):
+        "Updates productsettings shipping opt"
+        try:
+            _p = {"f":data['templates']['fulfilled'],"p":data['templates']['placed'],"a":data['templates']['abandoned']}
+            _c = self.connection.cursor()
+            _q = f"""UPDATE productsetting SET templates="{str(data['status'])}", template_fulfilled="{str(_p['f'])}", template_placed="{str(_p['p'])}", template_abandoned="{str(_p['a'])}";"""
+            _c.execute(_q)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
          
     def productsettings_ship(self,data):
         "Updates productsettings shipping opt"
