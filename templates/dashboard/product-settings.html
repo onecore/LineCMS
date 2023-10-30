@@ -49,8 +49,8 @@
     // Product checkout/fulfill
     var templates = {{settings[12]|safe}}
     var email_template_fulfilled = `{{settings[9]|safe}}`
-    var email_template_placed = `{{settings[9]| safe}}`
-    var email_template_abandoned = `{{settings[9]| safe}}`
+    var email_template_placed = `{{settings[10]| safe}}`
+    var email_template_abandoned = `{{settings[11]| safe}}`
       // Product checkout/fulfill
   </script>
   <div class="container-scroller">
@@ -222,7 +222,7 @@
                         <option value="abandoned">Abandoned Template</option>
                     </select>
                     &nbsp&nbsp<button id='tempstatus' class="btn btn-sm btn-muted border rounded-0"
-                      style="float:left;left:4px">Enabled</button>
+                      style="float:left;left:4px" onclick="templatestatus(this)">Enabled</button>
                     <button class="btn btn-primary btn-sm shadow-1 border d-inline" type="button"
                       style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_temp()">SAVE TEMPLATES</button>
                   </div>

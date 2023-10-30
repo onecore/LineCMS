@@ -1,10 +1,11 @@
 var tmp_obj = {"fulfilled":email_template_fulfilled,"placed":email_template_placed,"abandoned":email_template_abandoned}
 let tmp_status = templates;
+var current_tmp = "fulfilled";
 
 const tsel = document.getElementById('tempsel');
 
 tsel.addEventListener('change', function (e) {
-    let current_tmp = e.target.value
+    current_tmp = e.target.value
     CKEDITOR.instances['ckeditor'].setData(tmp_obj[current_tmp]);
 
     let status_e = document.getElementById("tempstatus")
@@ -13,9 +14,19 @@ tsel.addEventListener('change', function (e) {
     }else{
         status_e.textContent = "Disabled"
     }
-
 });
 
+function templatestatus(e){
+    let st = e.textContent;
+    if (st === "Enabled"){
+        e.textContent = "Disabled"
+        tmp_status[current_tmp] = 0;
+
+    }else{
+        e.textContent = "Enabled"
+        tmp_status[current_tmp] = 1;
+    }
+}
 
 function prodapi(api,obj){
   fetch(api, {
