@@ -1,8 +1,11 @@
 var tmp_obj = {"fulfilled":email_template_fulfilled,"placed":email_template_placed,"abandoned":email_template_abandoned}
-let tmp_status = templates;
+var tmp_status = templates;
 var current_tmp = "fulfilled";
-
 const tsel = document.getElementById('tempsel');
+
+tsel.addEventListener('focus', function (e) {
+   tmp_obj[current_tmp] = CKEDITOR.instances['ckeditor'].getData();
+});
 
 tsel.addEventListener('change', function (e) {
     current_tmp = e.target.value
@@ -46,12 +49,6 @@ function prodapi(api,obj){
 });
 }
 
-function loadtemp(){
-    let dbobj = templates;
-    let status_ = document.getElementById("tempstatus")
-    let status = status_.textContent
-}
-
 function prodsettings_temp(){
     // CKEDITOR.instances['ckeditor'].setData(value);
     let dbobj = templates;
@@ -60,7 +57,6 @@ function prodsettings_temp(){
     console.log(status)
 
     let ck = CKEDITOR.instances['ckeditor'].getData();
-    console.log(ck)
 
 }
 
@@ -69,7 +65,7 @@ function prodsettings_rates(){
     let selcountries = []
     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
     for (var i = 0; i < checkboxes.length; i++) {
-    selcountries.push(checkboxes[i].value)
+        selcountries.push(checkboxes[i].value)
     }
     prodapi("/api/prodset-ship",{"countries":selcountries,"shipping":JSON.stringify(shipping),"status":status.value})
 }
