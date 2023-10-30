@@ -23,9 +23,9 @@ var run_once = true;
 var err = 0;
 
 // Product checkout/fulfill
-var email_template_fulfilled = {}
-var email_template_placed = {}
-var email_template_abandoned = {}
+var email_template_fulfilled = {};
+var email_template_placed = {};
+var email_template_abandoned = {};
 // Product checkout/fulfill
 
 

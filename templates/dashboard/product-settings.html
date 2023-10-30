@@ -46,6 +46,12 @@
     let shipping = {};
     let shipping_names = [];
     let currkey = "{{settings[2]}}";
+    // Product checkout/fulfill
+    var templates = {{settings[12]|safe}}
+    var email_template_fulfilled = `{{settings[9]|safe}}`
+    var email_template_placed = `{{settings[9]| safe}}`
+    var email_template_abandoned = `{{settings[9]| safe}}`
+      // Product checkout/fulfill
   </script>
   <div class="container-scroller">
     <!-- partial:../../dashboard/partials/_navbar.html -->
@@ -206,26 +212,21 @@
 
                       </div>
                   </center>
+                  <br>
+                  <div class="d-inline ml-2 pl-2">
+                    &nbsp&nbsp
+                    <select class="form-select form-select-sm border-0" id="tempsel" name='tempsel' aria-label="Default select example"
+                      style="display: inline;float:left;left:10px;width:auto">
+                        <option value="fulfilled" selected>Fulfilled Template</option>
+                        <option value="placed">Placed Template</option>
+                        <option value="abandoned">Abandoned Template</option>
+                    </select>
+                    &nbsp&nbsp<button id='tempstatus' class="btn btn-sm btn-muted border rounded-0"
+                      style="float:left;left:4px">Enabled</button>
+                    <button class="btn btn-primary btn-sm shadow-1 border d-inline" type="button"
+                      style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_temp()">SAVE TEMPLATES</button>
+                  </div>
                 </div>
-                      <div class="d-inline clearfix">
-                        <center>
-                          <h3>
-                          </h3>
-                          <div class="btn-group d-inline" role="group" style="float:left">
-                           &nbsp <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-muted dropdown-toggle rounded-0"
-                              data-bs-toggle="dropdown" aria-expanded="false">&nbsp
-                              Order Fulfilled Template
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                              <li><a class="dropdown-item" href="#">Order Placed Template</a></li>
-                              <li><a class="dropdown-item" href="#">Order Abandoned Template</a></li>
-                            </ul>
-                          </div>
-                          &nbsp&nbsp<button class="btn btn-sm btn-muted border rounded-0" style="float:left;left:4px">Enabled</button>
-                                                <button class="btn btn-primary btn-sm shadow-1 border d-inline" type="button"
-                                                  style="width: 300px; background:#28a745;border: 1px gray">SAVE TEMPLATES</button>
-                        </center>
-                      </div>
                 <br>
               </div>
               <br>
@@ -504,6 +505,8 @@
           });
         });
       </script>
+      <script src="../../dashboard/product-settings.js"></script>
+
       <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
       <!-- endinject -->
       <!-- Plugin js for this page -->
