@@ -1,7 +1,9 @@
 var tmp_obj = {"fulfilled":email_template_fulfilled,"placed":email_template_placed,"abandoned":email_template_abandoned}
 var tmp_status = templates;
 var current_tmp = "fulfilled";
-const tsel = document.getElementById('tempsel');
+var tsel = document.getElementById('tempsel');
+var status_e = document.getElementById("tempstatus")
+
 
 tsel.addEventListener('focus', function (e) {
    tmp_obj[current_tmp] = CKEDITOR.instances['ckeditor'].getData();
@@ -10,14 +12,31 @@ tsel.addEventListener('focus', function (e) {
 tsel.addEventListener('change', function (e) {
     current_tmp = e.target.value
     CKEDITOR.instances['ckeditor'].setData(tmp_obj[current_tmp]);
-
-    let status_e = document.getElementById("tempstatus")
     if (tmp_status[current_tmp] == parseInt(1)){
         status_e.textContent = "Enabled"
     }else{
         status_e.textContent = "Disabled"
     }
+    
+    const sb = document.getElementById("saver")
+    sb.textContent = `Save ${cap(current_tmp)} Order Edit`
 });
+
+function cap(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function init_ps(){
+    if (tmp_status[current_tmp] == parseInt(1)){
+        status_e.textContent = "Enabled"
+    }else{
+        status_e.textContent = "Disabled"
+    }
+}
+
+function saveedit(){
+   tmp_obj[current_tmp] = CKEDITOR.instances['ckeditor'].getData();
+}
 
 function templatestatus(e){
     let st = e.textContent;
@@ -79,3 +98,4 @@ function prodsettings_str(){
 function prodsettings_smtp(){
 }
 
+init_ps()
