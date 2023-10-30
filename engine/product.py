@@ -15,7 +15,7 @@ product = Blueprint("product", __name__)
 
 ps = dataengine.knightclient()
 global shipcountries, shiprates, shipstatus
-sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_ = ps.productsettings_get() # wk is not needed
+sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'

@@ -104,6 +104,7 @@ app.jinja_env.globals.update(ks_tolist=rf.ks_tolist)
 app.jinja_env.globals.update(ks_getdictkeys=rf.ks_getdictkeys)
 app.jinja_env.globals.update(ks_tojson=rf.ks_tojson)
 app.jinja_env.globals.update(ks_variantcount=rf.ks_variantcount)
+app.jinja_env.globals.update(ks_todict=rf.ks_todict)
 
 """
 functions for Jinja templating (Public)

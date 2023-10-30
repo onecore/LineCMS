@@ -70,6 +70,18 @@ class knightclient:
             ic(e)
             pass
         
+    def productsettings_smtp(self,data):
+        "Updates productsettings shipping opt"
+        try:
+            _c = self.connection.cursor()
+            _q = f"""UPDATE productsetting SET smtp="{str(data)}";"""
+            _c.execute(_q)
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        
     def productsettings_temp(self,data):
         "Updates productsettings shipping opt"
         try:

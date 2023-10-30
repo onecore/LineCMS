@@ -50,6 +50,7 @@ function templatestatus(e){
     }
 }
 
+
 function prodapi(api,obj){
   fetch(api, {
     method: "POST",
@@ -68,9 +69,25 @@ function prodapi(api,obj){
 });
 }
 
+function prodsettings_sm(){
+    let els = {}
+    let eserver = document.getElementById("eserver")
+    let eport = document.getElementById("eport")
+    let eemail = document.getElementById("eemail")
+    let epass = document.getElementById("epassword")
+    let etls = document.getElementById("tlsstat")
+    let essl = document.getElementById("sslstat")
+    els.server = eserver.value;
+    els.port = eport.value;
+    els.email = eemail.value;
+    els.password = epass.value;
+    els.ssl = essl.textContent;
+    els.tls = etls.textContent;
+    prodapi("/api/prodset-smtp",els)
+}
+
 function prodsettings_temp(){
     prodapi("/api/prodset-temp",{"status":tmp_status,"templates":tmp_obj})
-
 }
 
 function prodsettings_rates(){
@@ -95,7 +112,11 @@ function prodsettings_str(){
     }
 }
 
-function prodsettings_smtp(){
+function smtpst(e){
+    if (e.textContent == "YES"){
+        e.textContent = "NO"
+    }else{
+        e.textContent = "YES"
+    }
 }
-
 init_ps()

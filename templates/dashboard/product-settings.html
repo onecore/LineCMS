@@ -51,6 +51,8 @@
     var email_template_fulfilled = `{{settings[9]|safe}}`
     var email_template_placed = `{{settings[10]| safe}}`
     var email_template_abandoned = `{{settings[11]| safe}}`
+    var smtpjs = {{settings[13]|safe}}
+
       // Product checkout/fulfill
   </script>
   <div class="container-scroller">
@@ -406,58 +408,58 @@
                       </h3>
                     </center>
                     <div class="card-body">
-                      <p class="text-muted">KnightStudio uses Stripe for fast and secured payment processing, <a
-                          href="https://dashboard.stripe.com/register" target="_blank">create an account</a> if you
-                        don't have one. </p>
+                      <p class="text-muted">To Disable automated order emails please leave forms blank</p>
                       <div class="input-group mb-3 pt-0">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SECRET
-                            KEY</span>
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">SERVER</span>
                         </div>
-                        <input type="text" class="form-control" id="skey" name="skey" aria-label=""
-                          placeholder="Secret Key from your Stripe account" value="{{settings[0]}}">
+                        <input type="text" class="form-control" id="eserver" name="eserver" aria-label=""
+                          placeholder="Server" value="{{ks_todict(settings[13])['server']}}">
+                      </div>
+                      <div class="input-group mb-3 pt-3" style="">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">PORT</span>
+                        </div>
+                        <input type="text" class="form-control" id="eport" name="eport" aria-label="" placeholder="Server Port"
+                          value="{{ks_todict(settings[13])['port']}}">
                       </div>
                       <div class="input-group mb-3 pt-3">
                         <div class="input-group-prepend">
                           <span class="input-group-text btn-muted text-muted"
-                            style="border-radius:8px 0 0 8px">PUBLISHABLE KEY</span>
+                            style="border-radius:8px 0 0 8px">EMAIL</span>
                         </div>
-                        <input type="text" class="form-control" id="pkey" name="pkey" aria-label=""
-                          placeholder="Publishable Key from your Stripe account" value="{{settings[1]}}">
+                        <input type="text" class="form-control" id="eemail" name="eemail" aria-label=""
+                          placeholder="Email" value="{{ks_todict(settings[13])['email']}}">
                       </div>
-                      <div class="input-group mb-3 pt-3" style="display:none">
+                      <div class="input-group mb-3 pt-3" style="">
                         <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
-                            KEY</span>
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">PASSWORD</span>
                         </div>
-                        <input type="text" class="form-control" id="wkey" name="wkey" aria-label=""
-                          placeholder="Webhook key from Stripe" value="{{settings[4]}}">
+                        <input type="password" class="form-control" id="epassword" name="epassword" aria-label=""
+                          placeholder="Password" value="{{ks_todict(settings[13])['password']}}">
+                        <br>
+                        
                       </div>
-                      <div class="input-group mb-3 pt-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">WEBHOOK
-                            SIGN KEY</span>
-                        </div>
-                        <input type="text" class="form-control" id="wskey" name="wskey" aria-label=""
-                          placeholder="Webhook Signing key from Stripe" value="{{settings[5]}}">
-                        <input value="" id="cactivated" name="cactivated" hidden>
-                        <input value="" id="shippingobj" name="shippingobj" hidden>
-                      </div>
-                      <hr class="text-muted">
-                      <div class="input-group mb-3 pt-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text btn-muted text-muted"
-                            style="border-radius:8px 0 0 8px">Currency</span>
-                        </div>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="ckey"
-                          name="ckey">
-                          <option value="{{settings[2]}}" selected>{{settings[2]}}</option> {% for currency in
-                          currencies %} <option value="{{currency}}">{{currency}}</option> {% endfor %}
-                        </select>
+                      <div class="row mx-4">
+                        <div class="col">
+                            <p class="d-inline mt-1" style="float:left"><b>USE SSL&nbsp&nbsp</b> </p>
+                      {% if ks_todict(settings[13])['ssl'] == "YES" %}    
+                            <button id='sslstat' class="btn btn-sm btn-muted border rounded d-inline p-2" style="float:left;left:4px" onclick="smtpst(this)">YES</button>
+                      {% else %}
+                            <button id='sslstat' class="btn btn-sm btn-muted border rounded d-inline p-2" style="float:left;left:4px" onclick="smtpst(this)">NO</button>
+                      {% endif %}
+                          </div>
+                        <div class="col">
+                            <p class="d-inline mt-1" style="float:left"><b>USE TLS&nbsp&nbsp</b> </p>
+                      {% if ks_todict(settings[13])['tls'] == "YES" %}
+                            <button id='tlsstat' class="btn btn-sm btn-muted border rounded d-inline" style="float:left;left:4px" onclick="smtpst(this)">YES</button>
+                      {% else %}
+                            <button id='tlsstat' class="btn btn-sm btn-muted border rounded d-inline" style="float:left;left:4px" onclick="smtpst(this)">NO</button>
+                      {% endif %}
+                          </div>
                       </div>
                       <br>
-                      <center><button class="btn btn-primary btn-sm shadow-1 border" type="button"
-                          style="width: 300px; background:#28a745;border: 1px gray">SAVE EMAIL SETTINGS</button></center>
+                      <center><button class="btn btn-muted btn-sm shadow-1 border my-1" type="button" style="width: 300px;border: 1px gray" onclick="prodsettings_sm()">TEST CONNECTION</button><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_sm()">SAVE EMAIL SETTINGS</button></center>
 
                     </div>
                   </div>
