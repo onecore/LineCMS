@@ -60,7 +60,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Mail Infos below
 __de = dataengine.knightclient()
 mailinfo = __de.productsettings_get()
-
+logger = __de.log
 try:
     maildata = eval(mailinfo[13])
     app.config['MAIL_SERVER']= maildata['server']
@@ -69,24 +69,46 @@ try:
     app.config['MAIL_PASSWORD'] = maildata['password']
     app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
+    logger(f"Mail SMTP settings/credentials Loaded")
+
 except Exception as e:
-    print(f"Error -> {e}")
-    pass
+    logger(f"Error -> {e}")
+    
 
 mail = Mail(app)
 
-app.route("/test-mail/<receiver>",method="POST")
+
+@app.route("/test-mail/<receiver>",methods=["POST"])
 def sendmail_test(receiver):
-    subject = 'Hello'
-    message = '這是 flask-mail example <br> <br>' \
-              '附上一張圖片 <br> <br>' \
-              '<b  style="color:#FF4E4E" >新垣結衣</b>'
+    subject = 'Test Email!'
+    message = '<b>Hello from KnightStudio</b>'
     msg = Message(
         subject=subject,
         recipients=[receiver],
-        html=message
+        html=message,
+        sender=app.config['MAIL_USERNAME'],
     )
-    mail.send(msg)
+    try:
+        mail.send(msg)
+        return jsonify({"status":1,"message":"Email sent without any error"})
+    except Exception as e:
+        return jsonify({"status":0,"message":f"Error occured: {e}"})
+
+
+def sendmail(data):
+    msg = Message(
+        subject=data['subject'],
+        recipients=[data['reciever']],
+        html=data['message'],
+        sender=data['sender'],
+    )
+    try:
+        mail.send(msg)
+        return jsonify({"status":1,"message":"Email sent without any error"})
+    except Exception as e:
+        logger(f"Mail send failed, {e}")
+        return jsonify({"status":0,"message":f"Error occured: {e}"})
+
 
 
 """
