@@ -78,21 +78,24 @@ except Exception as e:
 mail = Mail(app)
 
 
-@app.route("/test-mail/<receiver>",methods=["POST"])
-def sendmail_test(receiver):
-    subject = 'Test Email!'
-    message = '<b>Hello from KnightStudio</b>'
-    msg = Message(
-        subject=subject,
-        recipients=[receiver],
-        html=message,
-        sender=app.config['MAIL_USERNAME'],
-    )
-    try:
-        mail.send(msg)
-        return jsonify({"status":1,"message":"Email sent without any error"})
-    except Exception as e:
-        return jsonify({"status":0,"message":f"Error occured: {e}"})
+@app.route("/test-mail",methods=["POST"])
+def sendmail_test():
+    if request.method == "POST":
+        subject = 'Test Email!'
+        message = '<b>Hello from KnightStudio</b>'
+        if request.data:
+            r = eval(request.data)
+            msg = Message(
+                subject=subject,
+                recipients=[r['receiver']],
+                html=message,
+                sender=app.config['MAIL_USERNAME'],
+            )
+            try:
+                mail.send(msg)
+                return jsonify({"status":1,"message":"Email sent without any error"})
+            except Exception as e:
+                return jsonify({"status":0,"message":f"Error occured: {e}"})
 
 
 def sendmail(data):

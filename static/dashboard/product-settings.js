@@ -51,7 +51,10 @@ function templatestatus(e){
 }
 
 
-function prodapi(api,obj){
+function prodapi(api,obj,getret=false){
+    let r = document.getElementById("temail")
+    let l = document.getElementById("testlog")
+    l.value = ""
   fetch(api, {
     method: "POST",
     headers: {
@@ -62,8 +65,19 @@ function prodapi(api,obj){
   .then((response) => response.json())
   .then((data) => {
     if (data.status == parseInt(1)){
+        if (getret){
+            let l = document.getElementById("testlog")
+            l.value = data.message
+            return false;
+        }
         swal("Updated", data.message, "success");
+        
     }else{
+        if (getret){
+            let l = document.getElementById("testlog")
+            l.value = data.message
+            return false;
+        }
         swal("Update failed", data.message, "error");
     }
 });
@@ -118,5 +132,10 @@ function smtpst(e){
     }else{
         e.textContent = "YES"
     }
+}
+
+function smtptest(){
+    let r = document.getElementById("temail")
+    prodapi("/test-mail",{"receiver":r.value},getret=1)
 }
 init_ps()

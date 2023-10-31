@@ -460,13 +460,39 @@
                           </div>
                       </div>
                       <br>
-                      <center><button class="btn btn-muted btn-sm shadow-1 border my-1 icon-bulb" type="button" style="width: 300px;border: 1px gray" onclick="prodsettings_sm()">&nbspTEST CONNECTION</button><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_sm()">SAVE EMAIL SETTINGS</button></center>
+                      <center><button class="btn btn-muted btn-sm shadow-1 border my-1 icon-bulb" type="button" style="width: 300px;border: 1px gray" data-bs-toggle="modal" data-bs-target="#testc">&nbspTEST CONNECTION</button><button class="btn btn-primary btn-sm shadow-1 border" type="button" style="width: 300px; background:#28a745;border: 1px gray" onclick="prodsettings_sm()">SAVE EMAIL SETTINGS</button></center>
 
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+  
+            <div class="modal fade" id="testc" tabindex="-1" aria-labelledby="testcLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="testclLabel">Mail Server test</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Reciever Email</span>
+                        </div>
+                        <input type="text" class="form-control" id="temail" name="temail" aria-label="" placeholder="Email"
+                          value="">
+                        <button class="btn btn-warning btn-sm" onclick="smtptest()">Send</button>
+                      </div>
+                      <br>
+                      <textarea class="form-control" id="testlog"
+                        rows="6" style="height: 90px;">Test logs...</textarea>
+
+                     </div>
+                </div>
+              </div>
+            </div>
+
             <!-- content-wrapper ends -->
             <!-- partial:../../dashboard/partials/_footer.html -->
             <footer class="footer">
