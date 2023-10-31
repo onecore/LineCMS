@@ -113,7 +113,6 @@ def parseorders(l,obj) -> dict:
 @product.route("/product-settings", methods=['GET', 'POST'])
 def product_sett():
     import currencies
-
     error, success = None, None
     currencieslist = currency.currency
     de = dataengine.knightclient()

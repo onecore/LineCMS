@@ -51,7 +51,10 @@ def ks_tolist(v) -> list:
 
 def ks_todict(v) -> dict:
     "evaluate parsed string to python dict type"
-    return eval(v)
+    try:
+        return eval(v)
+    except:
+        return ""
 
 
 def ks_getdictkeys(v) -> list:

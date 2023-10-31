@@ -18,6 +18,7 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import renderfunc as rf
 from enginepublic import loaders
+from flask_mail import Mail
 
 # Dashboard imports/views
 from engine.blog import blog
@@ -30,7 +31,7 @@ from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
-
+import dataengine
 # Dashboard imports/views
 
 # Public views
@@ -41,7 +42,6 @@ from enginepublic.notfound import notfound
 # Public views
 
 ckeditor = CKEditor()
-
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 version = "1.4"
 app = Flask(__name__,
@@ -51,17 +51,32 @@ app = Flask(__name__,
 
 ckeditor.init_app(app)  # wysiwyg html editor
 
-
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Mail Infos below
+__de = dataengine.knightclient()
+mailinfo = __de.productsettings_get()
+
+try:
+    maildata = eval(mailinfo[13])
+    app.config['MAIL_SERVER']= maildata['server']
+    app.config['MAIL_PORT'] = int(maildata['port'])
+    app.config['MAIL_USERNAME'] = maildata['email']
+    app.config['MAIL_PASSWORD'] = maildata['password']
+    app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
+    app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
+except Exception as e:
+    print(f"Error -> {e}")
+    pass
 
 """
 Blueprinted routes
 """
+# Dashboard
 app.register_blueprint(blog)
 app.register_blueprint(api)
 app.register_blueprint(uploader)
@@ -72,25 +87,15 @@ app.register_blueprint(account)
 app.register_blueprint(message)
 app.register_blueprint(logins)
 app.register_blueprint(other)
+# Dashboard
 
+# User
 app.register_blueprint(productuser)
 app.register_blueprint(bloguser)
 app.register_blueprint(mains)
 app.register_blueprint(notfound)
+# User
 
-
-# @app.route("/<file>.txt")
-# @app.route("/<file>.xml")
-# def robot_map_generator(file):
-#     pass
-#     # match fil: # needs python 3.11
-#     #    case 'robots':
-#     #         return robotmap.robot()
-#     #     case 'robot':
-#     #         return robotmap.robot()
-#     #     case 'sitemap':
-#     #         return robotmap.sitemap()
-#     # return which
 
 
 """
