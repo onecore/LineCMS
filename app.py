@@ -18,7 +18,7 @@ from flask_paginate import Pagination, get_page_parameter
 import templater as temple
 import renderfunc as rf
 from enginepublic import loaders
-from flask_mail import Mail
+from flask_mail import Mail, Message
 
 # Dashboard imports/views
 from engine.blog import blog
@@ -72,6 +72,22 @@ try:
 except Exception as e:
     print(f"Error -> {e}")
     pass
+
+mail = Mail(app)
+
+app.route("/test-mail/<receiver>",method="POST")
+def sendmail_test(receiver):
+    subject = 'Hello'
+    message = '這是 flask-mail example <br> <br>' \
+              '附上一張圖片 <br> <br>' \
+              '<b  style="color:#FF4E4E" >新垣結衣</b>'
+    msg = Message(
+        subject=subject,
+        recipients=[receiver],
+        html=message
+    )
+    mail.send(msg)
+
 
 """
 Blueprinted routes
