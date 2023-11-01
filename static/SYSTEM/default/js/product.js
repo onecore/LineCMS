@@ -43,20 +43,24 @@ function isLS(){
 
 function refreshLS(get=false,checko=false){
   // refresh localStorage objects
-  cartcopy = {}; // local use
   cartcount = 0; // local use
+  cartcheck = {}
+
+
   for (let i = 0; i < localStorage.length; i++){
       var key = localStorage.key(i);
       if (localStorage.getItem(key)[0] > 0 && key != "likes" && key != "likesall"){
         cartcount = cartcount + 1
+        cartcheck[key] = localStorage.getItem(key)
       };
    }
-  cartcopy = {...localStorage}
+
+
   if (get){
-    return cartcount;
+    return cartcount; //length
   }
   if (checko){
-    return cartcopy
+    return cartcheck //checkoutobj
   }
 }
 
@@ -239,6 +243,7 @@ function checkout(){
   if (testv==="0"){
     return false;
   }
+  console.log(data)
   fetch("/product-checkout", {
     method: "POST",
     headers: {

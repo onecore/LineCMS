@@ -6,5 +6,7 @@ def parsetemplate(**kwargs):
     
     
 def sendtemplate(**kwargs):
-    print(kwargs)
+    print("Sending now...")
+    if "obj" and "template" in kwargs:
+        print(kwargs)
     

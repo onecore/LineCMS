@@ -258,7 +258,7 @@ def new_event():
     """
     Stripe webhook
     """
-    sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
+    sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 
     event = None
     payload = request.data
@@ -297,7 +297,9 @@ def new_event():
         de = dataengine.knightclient()        
         if de.productorders_set(order):
             temp_settings = de.productsettings_get()
-            mailer.sendtemplate(template="placed",obj=temp_settings) # Send email using Placed template
+            # { Send email using Placed template
+            mailer.sendtemplate(template="placed",obj=temp_settings) 
+            # }Send email using Placed template
             return {'success': True}
         else:
             return {'success': False}
@@ -313,6 +315,7 @@ def check(data):
     load_items = []
     product_meta = {}
     for product, values in data.items():
+        print(values)
         _, _price, _quantity, _variant = values.split(",")
         def includevariant():
             selected_variant = ""
