@@ -224,7 +224,7 @@
                       style="display: inline;float:left;left:10px;width:auto">
                         <option value="fulfilled" selected>Fulfilled Template</option>
                         <option value="placed">Placed Template</option>
-                        <option value="abandoned">Abandoned Template</option>
+                        <!-- <option value="abandoned">Abandoned Template</option> -->
                     </select>
                     &nbsp&nbsp<button id='tempstatus' class="btn btn-sm btn-muted border rounded-0"
                       style="float:left;left:4px" onclick="templatestatus(this)">Enabled</button>
@@ -314,7 +314,7 @@
                             </div>
                           </div>
                           <div class="col-md-4">
-                            <p>Countries supported by Stripe payment</p>
+                            <p>Countries supported by Stripe</p>
                             <div class="scontainer"> {% for country_f, country_s in countries.items() %} {% if country_f
                               in settings[8] %} <input type="checkbox" class="p-1 m-1" id="{{country_f}}"
                                 name="{{counry_f}}" value="{{country_f}}" checked /> {{country_s}}
