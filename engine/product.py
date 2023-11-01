@@ -339,10 +339,10 @@ def check(data):
     if shipstatus == "on":  # If shipping Enabled
         
         def parsetolist(shipcountries):
-            if "," in shipcountries:
-                return shipcountries.split(",")
-            if len(shipcountries):
-                return [shipcountries]
+            try:
+                return eval(shipcountries)
+            except:
+                ["US","CA"]
             return ["US","CA"]
         
         shipratesparsed = ratetemplater(shiprates)    
