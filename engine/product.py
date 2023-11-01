@@ -9,12 +9,12 @@ from helpers import currency
 from helpers import country
 from decimal import Decimal
 import stripe
+from helpers import mailer
 
 product = Blueprint("product", __name__)
 
 
 ps = dataengine.knightclient()
-global shipcountries, shiprates, shipstatus
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 
@@ -42,7 +42,7 @@ def getimages(ids):
         return res
     else:
         return []
-
+    
 
 def getmainimage(ids):
     res = []
@@ -209,11 +209,7 @@ def product_orders_single(id):
         if order[17]:
             shipping_fee = order[17].replace(".","")
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
-        
-        
-        
-        
-        
+
     return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee)
 
 
@@ -256,7 +252,7 @@ def ratetemplater(obj):
 
 def deductquant(id,variant,quantity):
     pass
-    
+
 @product.route('/event', methods=['POST'])
 def new_event():
     """
@@ -294,15 +290,23 @@ def new_event():
                 "phone": session.customer_details.phone,
                 "shipping_cost": ""
                 }
+        
         if shipstatus == "on":
             order["shipping_cost"] = session.shipping_cost.amount_total
+            
         de = dataengine.knightclient()        
-        de.productorders_set(order)
+        if de.productorders_set(order):
+            temp_settings = de.productsettings_get()
+            mailer.sendtemplate(template="placed",obj=temp_settings) # Send email using Placed template
+            return {'success': True}
+        else:
+            return {'success': False}
+
     return {'success': True}
 
 
 def check(data):
-    _, _, _, _, _, _,shipstatus,shiprates,shipcountries = ps.productsettings_get() # wk is not needed
+    _, _, _, _, _, _,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
     
     _de = dataengine.knightclient()
     items = []

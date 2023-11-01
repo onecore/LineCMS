@@ -51,6 +51,7 @@ app = Flask(__name__,
 
 ckeditor.init_app(app)  # wysiwyg html editor
 
+MAILENABLED = False
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
@@ -65,12 +66,10 @@ try:
     maildata = eval(mailinfo[13])
     app.config['MAIL_SERVER']= maildata['server']
     app.config['MAIL_PORT'] = int(maildata['port'])
-    app.config['MAIL_USERNAME'] = maildata['email']
-    app.config['MAIL_PASSWORD'] = maildata['password']
     app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
     logger(f"Mail SMTP settings/credentials Loaded")
-
+    MAILENABLED = True
 except Exception as e:
     logger(f"Error -> {e}")
     

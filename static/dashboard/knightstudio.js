@@ -738,11 +738,11 @@ function shippingrateel(data = false) {
     let smax = document.getElementById("smaximum")
 
     var l = `
-     <div class="card shadow-none rounded p-1 m-1" id="${sname.value.trim()}" style="background:#e6e6e6;color:orange;border-top: thick double white;">
+     <div class="card shadow border rounded p-1 m-1" id="${sname.value.trim()}" style="background:#e6e6e6;color:orange;border-top: thick double white;">
       <div class="card-body">
           <center><p class="text-muted">Unsaved Shipping Rate*</p></center>
 
-        <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:#000066;color:white">${sname.value}</h6></center>
+        <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:#SteelBlue;color:white">${sname.value}</h6></center>
         <center><p class="card-text m-2" style="color:black"><b>Shipping time</b> ${smin.value}-${smax.value} Business Days,  <b>Cost</b> ${samount.value} ${currkey}</p></center>
         <center><button type="button" class="btn btn-muted btn-xs border-dark text-dark" onclick="delratespartial('${sname.value.trim()}','${sname.value}')">Remove</button></center>
       </div>
@@ -750,9 +750,9 @@ function shippingrateel(data = false) {
   `
     if (data) {
         var l = `
-            <div class="card shadow-none rounded p-1 m-1" id="${data[3].trim()}" style="background:#e6e6e6;color:orange;border-top: thick double #32a1ce;">
+            <div class="card shadow border rounded p-1 m-1" id="${data[3].trim()}" style="background:#e6e6e6;color:orange;border-top: thick double #32a1ce;">
               <div class="card-body">
-                <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:#000066;color:white">${data[3]}</h6></center>
+                <center><h6 class="card-title border p-2 m-2 rounded-2" style="background:SteelBlue;color:white">${data[3]}</h6></center>
                 <center><p class="card-text m-2" style="color:black"><b>Shipping time</b> ${data[1]}-${data[2]} Business Days,  <b>Cost</b> ${data[0]} ${currkey}</p></center>
                 <center><button type="button" class="btn btn-muted btn-xs border-dark text-dark fa fa-trash" onclick="delratespartial('${data[3].trim()}','${data[3]}')">Remove</button></center>
               </div>
