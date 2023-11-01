@@ -9,7 +9,6 @@ from helpers import currency
 from helpers import country
 from decimal import Decimal
 import stripe
-from helpers import mailer
 
 product = Blueprint("product", __name__)
 
@@ -17,10 +16,9 @@ product = Blueprint("product", __name__)
 ps = dataengine.knightclient()
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
+logging = ps.log
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
-
-
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
 
@@ -250,6 +248,13 @@ def ratetemplater(obj):
         return options
     return []
 
+
+def sendtemplate(**kwargs):
+    print("Sending now...")
+    if "obj" and "template" in kwargs:
+        print(kwargs)
+        
+        
 def deductquant(id,variant,quantity):
     pass
 
@@ -293,12 +298,13 @@ def new_event():
         
         if shipstatus == "on":
             order["shipping_cost"] = session.shipping_cost.amount_total
-            
+
         de = dataengine.knightclient()        
         if de.productorders_set(order):
+            logging(f"New order placed from: {order['customer_name']} - {order['customer_email']}")
             temp_settings = de.productsettings_get()
             # { Send email using Placed template
-            mailer.sendtemplate(template="placed",obj=temp_settings) 
+            sendtemplate(template="placed",obj=temp_settings) 
             # }Send email using Placed template
             return {'success': True}
         else:

@@ -65,9 +65,10 @@ class knightclient:
             vals = ("0",order['customer_name'],order['customer_email'],order['amount_total'],order['created'],order['payment_status'],order['customer_country'],order['customer_postal'],order['currency'],order['items'],order['session_id'],str(order['metadata']),order['address'],order['phone'],order['shipping_cost'])
             _c.execute(params, vals)   
             self.connection.commit()
+            return True
         except Exception as e:
             ic(e)
-            pass
+            return False
         
     def productsettings_smtp(self,data):
         "Updates productsettings shipping opt"
@@ -128,7 +129,7 @@ class knightclient:
             self.connection.commit()
             return True
         except Exception as e:
-            print(e)
+            print("Error: ",e)
             return False
 
     def productsettings_get(self) -> tuple:
