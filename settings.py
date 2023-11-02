@@ -26,3 +26,7 @@ route_blog_list = "/blog-list"
 # Misc Settings / Variables below
 cms_debug = False   # Debug (Only for Devs)
 cms_version = "1.4"
+
+# Email template paths for (Abandoned, Placed, Fulfilled) templates in .HTML form (Do not add Leading slash)
+email_templates = "templates/email"
+email_templates_write = ["fulfilled","placed"]

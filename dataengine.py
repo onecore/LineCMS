@@ -9,6 +9,7 @@ import json
 import os
 from icecream import ic
 import random
+import settings
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
@@ -84,18 +85,25 @@ class knightclient:
         
     def productsettings_temp(self,data):
         "Updates productsettings shipping opt"
-        email_templates = "/templates/email"
         
-        def writetemplatelocal(which,template):
-            with open(f"{email_templates}/{which}", 'wb') as et:
-                et.write(template)
-                
+        def writetemplatelocal(**kwargs):
+            try:
+                for temfile in settings.email_templates_write:      
+                    with open(f"{settings.email_templates}/{temfile}.html", 'w+') as et:
+                        et.write(str(kwargs[temfile]))
+                return True
+            except:
+                return False
         try:
             _p = {"f":data['templates']['fulfilled'],"p":data['templates']['placed'],"a":data['templates']['abandoned']}
             _c = self.connection.cursor()
             _q = f"""UPDATE productsetting SET templates="{str(data['status'])}", template_fulfilled="{str(_p['f'])}", template_placed="{str(_p['p'])}", template_abandoned="{str(_p['a'])}";"""
             _c.execute(_q)
             self.connection.commit()
+            if (writetemplatelocal(fulfilled=_p['f'],placed=_p['p'])):
+                self.log("Email templates not saved")
+            else:
+                self.log("Email templates saved")
             return True
         except Exception as e:
             print(e)

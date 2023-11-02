@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, g, send_from_directory
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
+import settings
 import json
 import os
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 loadtheme_ = dataengine.knightclient()
@@ -17,10 +16,10 @@ bloguser = Blueprint(
                         )
 
 
-@bloguser.route(temple.route_blog, methods=['POST', 'GET'])
-@bloguser.route(temple.route_blog+"/", methods=['POST', 'GET'])
-@bloguser.route(temple.route_blog+"/<url>", methods=['POST', 'GET'])
-@bloguser.route(temple.route_blog+"/<new>/<url>", methods=['POST', 'GET'])
+@bloguser.route(settings.route_blog, methods=['POST', 'GET'])
+@bloguser.route(settings.route_blog+"/", methods=['POST', 'GET'])
+@bloguser.route(settings.route_blog+"/<url>", methods=['POST', 'GET'])
+@bloguser.route(settings.route_blog+"/<new>/<url>", methods=['POST', 'GET'])
 def blog_mainview(new=None, url=None):
     """
     Blog main view
@@ -47,7 +46,7 @@ def blog_mainview(new=None, url=None):
         return redirect(f"/SYSTEM/{themes}/blog.html")
 
 
-@bloguser.route(temple.route_blog_list, methods=['GET'])
+@bloguser.route(settings.route_blog_list, methods=['GET'])
 def blog_list():
     """
     Blog posts listings

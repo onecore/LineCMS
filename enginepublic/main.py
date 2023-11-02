@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, g, session, url_for
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
+import settings
 
 mains = Blueprint("mains", __name__)
 

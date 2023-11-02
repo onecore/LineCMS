@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, g
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
+import settings as temple
 import os
 from icecream import ic
 

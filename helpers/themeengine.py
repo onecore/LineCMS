@@ -1,6 +1,5 @@
 import os
 import dataengine
-import version
 
 templates_list = []
 

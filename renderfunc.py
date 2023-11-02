@@ -1,7 +1,7 @@
 """
 Inline functions for Jinja
 """
-import templater as temple
+import settings as temple
 import json
 from flask import jsonify
 
