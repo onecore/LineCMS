@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, g, session, jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
 import json
 from icecream import ic
 

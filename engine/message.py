@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, g, session, url_for, jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
 
 message = Blueprint("message", __name__)
 
@@ -28,7 +27,7 @@ def messagerec():
     }
     _de = dataengine.knightclient()
     if (_de.message(dicts)):
-        log("New message from received")
+        log("New message received")
         return jsonify({'status': True})
     else:
         log("New message failed to process")

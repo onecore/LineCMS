@@ -3,7 +3,6 @@ import dataengine
 from werkzeug.utils import secure_filename
 import os
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
 import json
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)

@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, g,jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
 import json
 import os
 from icecream import ic
@@ -195,12 +194,11 @@ def product_orders_single(id):
             parseditems.append(parseorders(orders,order))
         
         if order[17]:
-            shipping_fee = order[17].replace(".","")
+            shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
 
     return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee)
 
-# Product webhook and other dashboard funcs
 def price(price) -> int:
     "Stripe friendly price"
     o = round(Decimal(price)*100) # Decimal to keep 2 decimal places from html input, Float doesn't work as it doesn keep the decimals
@@ -237,8 +235,26 @@ def ratetemplater(obj):
 
 def sendtemplate(**kwargs):
     print("Sending now...")
+            
     if "obj" and "template" in kwargs:
-        print(kwargs)
+        parsed = None
+        if kwargs['obj'][12]:
+            parsed = eval(kwargs['obj'][12])
+        
+        if parsed:
+            html_template = kwargs['template']
+            if html_template == "placed":
+                pass
+            elif html_template == "abandoned": # removed for now
+                pass
+            elif html_template == "fulfilled":
+                pass
+            else:
+                return False
+            
+        else:
+            return False
+        
         
 def deductquant(id,variant,quantity):
     pass

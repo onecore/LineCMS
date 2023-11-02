@@ -84,6 +84,12 @@ class knightclient:
         
     def productsettings_temp(self,data):
         "Updates productsettings shipping opt"
+        email_templates = "/templates/email"
+        
+        def writetemplatelocal(which,template):
+            with open(f"{email_templates}/{which}", 'wb') as et:
+                et.write(template)
+                
         try:
             _p = {"f":data['templates']['fulfilled'],"p":data['templates']['placed'],"a":data['templates']['abandoned']}
             _c = self.connection.cursor()
