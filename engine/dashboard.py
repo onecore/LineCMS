@@ -31,12 +31,18 @@ def dashboard_main():
                 u_metadescription = request.form.get('meta_description')
                 u_metakeywords = request.form.get('meta_keywords')
                 u_footercopyright = request.form.get('footercopyright')
+                u_number = request.form.get('sitenumber')
+                u_email = request.form.get('siteemail')
+                u_address = request.form.get('siteaddress')
                 dicts = {
                     "sitename": u_sitename,
                     "description": u_description,
                     "meta_description": u_metadescription,
                     "meta_keywords": u_metakeywords,
-                    "footercopyright": u_footercopyright
+                    "footercopyright": u_footercopyright,
+                    "sitenumber": u_number,
+                    "siteemail": u_email,
+                    "siteaddress": u_address
                 }
                 for k, v in dicts.items():
                     if len(v) < 5:

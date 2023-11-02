@@ -548,8 +548,8 @@ class knightclient:
         """
         _c = self.connection.cursor()
         try:
-            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}' WHERE owner = '{owner}';".format(
-                sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'], owner=owner)
+            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}', sitenumber = '{sitenumber}', siteemail='{siteemail}', siteaddress='{siteaddress}' WHERE owner = '{owner}';".format(
+                sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'],sitenumber=dicts['sitenumber'],siteemail=dicts['siteemail'],siteaddress=dicts['siteaddress'],owner=owner)
             _c.execute(q)
             self.connection.commit()
             return True
@@ -655,12 +655,12 @@ class knightclient:
             "messages": len(self.site_msgs),
         }
         # adds menu_list in dict if either single, multi, otherwise False
-        if "0" in all_data['site_type']:  # single
-            self.menu = _c.execute("SELECT * FROM menu_single")
-            all_data['menu_list'] = self.menu.fetchall()
-        elif "1" in all_data['site_type']:  # multi
-            self.menu = _c.execute("SELECT * FROM menu")
-            all_data['menu_list'] = self.menu.fetchall()
+        # if "0" in all_data['site_type']:  # single
+        #     self.menu = _c.execute("SELECT * FROM menu_single")
+        #     all_data['menu_list'] = self.menu.fetchall()
+        # elif "1" in all_data['site_type']:  # multi
+        #     self.menu = _c.execute("SELECT * FROM menu")
+        #     all_data['menu_list'] = self.menu.fetchall()
         # Add more condition depends on site_type
         return all_data
 
