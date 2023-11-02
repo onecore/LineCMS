@@ -2,7 +2,6 @@
 ks_badge_insert = "bg-secondary"  # Blog-list view / fn blog_list_badge_category
 ks_admin_button = "bg-primary"   # Admin button / fn admin_button
 
-
 # Dashboard route (URL)
 route_dashboard = "/dashboard"
 
@@ -24,9 +23,9 @@ route_blog_list = "/blog-list"
 
 
 # Misc Settings / Variables below
-cms_debug = False   # Debug (Only for Devs)
+cms_debug = False  
 cms_version = "1.4"
 
 # Email template paths for (Abandoned, Placed, Fulfilled) templates in .HTML form (Do not add Leading slash)
-email_templates = "templates/email"
-email_templates_write = ["fulfilled","placed"]
+# email_templates = "templates/email"
+# email_templates_write = ["fulfilled","placed"] # Do not change as its act as iterable and needs some other modification

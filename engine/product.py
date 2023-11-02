@@ -7,6 +7,7 @@ from icecream import ic
 from helpers import currency
 from helpers import country
 from decimal import Decimal
+from helpers import emailparser
 import stripe
 
 product = Blueprint("product", __name__)
@@ -231,30 +232,7 @@ def ratetemplater(obj):
         for rate_name,rate_data in parsedobj.items():
             options.append(parserate(rate_name,rate_data[0],rate_data[1],rate_data[2]))
         return options
-    return []
-
-def sendtemplate(**kwargs):
-    print("Sending now...")
-            
-    if "obj" and "template" in kwargs:
-        parsed = None
-        if kwargs['obj'][12]:
-            parsed = eval(kwargs['obj'][12])
-        
-        if parsed:
-            html_template = kwargs['template']
-            if html_template == "placed":
-                pass
-            elif html_template == "abandoned": # removed for now
-                pass
-            elif html_template == "fulfilled":
-                pass
-            else:
-                return False
-            
-        else:
-            return False
-        
+    return []        
         
 def deductquant(id,variant,quantity):
     pass
@@ -305,8 +283,9 @@ def new_event():
         if de.productorders_set(order):
             logging(f"New order placed from: {order['customer_name']} - {order['customer_email']}")
             temp_settings = de.productsettings_get()
+            comp_data = de.load_data_index(0)
             # { Send email using Placed template
-            sendtemplate(template="placed",obj=temp_settings) 
+            emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data)
             # }Send email using Placed template
             return {'success': True}
         else:
