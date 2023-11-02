@@ -653,6 +653,9 @@ class knightclient:
             "favicon": self.site_data[0][10],
             "site_type": self.site_data[0][11],
             "messages": len(self.site_msgs),
+            'sitenumber':self.site_data[0][16],
+            'siteemail':self.site_data[0][17],
+            'siteaddress':self.site_data[0][18],
         }
         # adds menu_list in dict if either single, multi, otherwise False
         # if "0" in all_data['site_type']:  # single
