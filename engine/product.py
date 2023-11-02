@@ -21,11 +21,9 @@ logging = ps.log
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
-
 def allowed_file(filename) -> str:
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 def getimages(ids):
     res = []
@@ -41,7 +39,6 @@ def getimages(ids):
     else:
         return []
     
-
 def getmainimage(ids):
     res = []
     # Iterate directory
@@ -55,7 +52,6 @@ def getmainimage(ids):
         return res[0]
     else:
         return ""
-
 
 def variantimagemodifier(d: bytes) -> 'json':
     """
@@ -137,7 +133,6 @@ def product_sett():
     ic(settings)
     return render_template("/dashboard/product-settings.html", countries = country.countries, currencies=currencieslist, error=error, success=success, settings=settings)
 
-
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
     if route == "upload-p-variant" or route == "upload-p-variant":
@@ -148,7 +143,6 @@ def product_edt(route):
         return redirect("/product-manage")
     return render_template("/dashboard/product-edit.html", d=variantimagemodifier(d))
 
-
 @product.route("/product-new", methods=['POST', 'GET'])
 def product_new():
     setup = False
@@ -157,7 +151,6 @@ def product_new():
     if not _settings[0] or not _settings[1] or not _settings[2]:
         setup = True
     return render_template("/dashboard/product-new.html", setup=setup)
-
 
 @product.route("/product-manage", methods=['POST', 'GET'])
 @product.route("/product-manage/<alert>", methods=['POST', 'GET'])
@@ -172,9 +165,7 @@ def product_mng(alert=None):
     tt = len(pr)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='product', css_framework="bootstrap5")
-
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
-
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
@@ -189,7 +180,6 @@ def product_orders():
     tt = len(orders)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='orders', css_framework="bootstrap5")
-
     return render_template("/dashboard/product-orders.html", orders=orders, pagination=pagination, alert=alert)
 
 @product.route("/product-orders/<id>", methods=['POST', 'GET'])
@@ -210,17 +200,14 @@ def product_orders_single(id):
 
     return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee)
 
-
-
 # Product webhook and other dashboard funcs
-
 def price(price) -> int:
     "Stripe friendly price"
     o = round(Decimal(price)*100) # Decimal to keep 2 decimal places from html input, Float doesn't work as it doesn keep the decimals
     return o
 
-
 def parserate(name,amount,mins,maxs):
+    "Parse shipping rate opt. obj for stripe "
     clone =  {
                 "shipping_rate_data": {
                         "type": "fixed_amount",
@@ -248,12 +235,10 @@ def ratetemplater(obj):
         return options
     return []
 
-
 def sendtemplate(**kwargs):
     print("Sending now...")
     if "obj" and "template" in kwargs:
         print(kwargs)
-        
         
 def deductquant(id,variant,quantity):
     pass
@@ -268,10 +253,12 @@ def new_event():
     event = None
     payload = request.data
     signature = request.headers['STRIPE_SIGNATURE']
+    
     try:
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
-        ic(e)
+        logging(f"Stripe Webhook Err -> {e}")
+        
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
         items = []
@@ -289,7 +276,6 @@ def new_event():
                 "currency": session.currency,
                 "items": str(items),
                 "session_id": session.id,
-                
                 "metadata": session.metadata,
                 "address": session.customer_details.address.line1,
                 "phone": session.customer_details.phone,
@@ -309,21 +295,20 @@ def new_event():
             return {'success': True}
         else:
             return {'success': False}
-
     return {'success': True}
-
 
 def check(data):
     _, _, _, _, _, _,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
-    
     _de = dataengine.knightclient()
     items = []
     load_items = []
     product_meta = {}
+    
     for product, values in data.items():
-        print(values)
         _, _price, _quantity, _variant = values.split(",")
+        
         def includevariant():
+            "Dangy..."
             selected_variant = ""
             if _variant != "Available variants":
                 selected_variant = _variant
@@ -342,11 +327,10 @@ def check(data):
                 },
                 'quantity': int(_quantity),
                 }
-
         items.append(clone)
 
     if shipstatus == "on":  # If shipping Enabled
-        
+    
         def parsetolist(shipcountries):
             try:
                 return eval(shipcountries)
@@ -378,7 +362,6 @@ def check(data):
             metadata=product_meta
         )
     
-    ic(product_meta)
     return checkout_session.url
 
 
