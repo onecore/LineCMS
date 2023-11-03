@@ -8,6 +8,7 @@ from helpers import currency
 from helpers import country
 from decimal import Decimal
 from helpers import emailparser
+from ast import literal_eval as lite
 import stripe
 
 product = Blueprint("product", __name__)
@@ -287,9 +288,17 @@ def new_event():
             logging(f"New order placed from: {order['customer_name']} - {order['customer_email']}")
             temp_settings = de.productsettings_get()
             comp_data = de.load_data_index(0)
+            
             # { Send email using Placed template
-            emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus)
+            sendmailer = False
+            try:
+                _set = lite(temp_settings[12])['placed']
+                if _set:
+                    emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus)
+            except Exception as e:
+                pass
             # }Send email using Placed template
+            
             return {'success': True}
         else:
             return {'success': False}
