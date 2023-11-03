@@ -277,7 +277,10 @@ def new_event():
                 }
         
         if shipstatus == "on":
+            shipstatus = True
             order["shipping_cost"] = session.shipping_cost.amount_total
+        else:
+            shipstatus = False
 
         de = dataengine.knightclient()        
         if de.productorders_set(order):
@@ -285,7 +288,7 @@ def new_event():
             temp_settings = de.productsettings_get()
             comp_data = de.load_data_index(0)
             # { Send email using Placed template
-            emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data)
+            emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus)
             # }Send email using Placed template
             return {'success': True}
         else:
