@@ -25,7 +25,7 @@ def data(which,order,company,shipstatus,tracking=False):
     "tracking parameter only for fulfilled template"
     formatter = {
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
-                "ORDERNUMBER":order['created'],"ORDERTOTAL":order['amount_total'],"ORDERDATE":order['created'],"CUSTOMERADDRESS":order['address'],"CUSTOMERNAME":order['customer_name']
+                "ORDERNUMBER":order['ordernumber'],"ORDERTOTAL":order['amount_total'],"ORDERDATE":order['created'],"CUSTOMERADDRESS":order['address'],"CUSTOMERNAME":order['customer_name']
             }
     if tracking:
         formatter['TRACKINGLINK'] = tracking
