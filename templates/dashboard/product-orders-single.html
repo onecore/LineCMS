@@ -8,14 +8,145 @@
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+<style>
+  
+.tracking-detail {
+ padding:3rem 0
+}
+#tracking {
+ margin-bottom:1rem
+}
+[class*=tracking-status-] p {
+ margin:0;
+ font-size:1.1rem;
+ color:#fff;
+ text-transform:uppercase;
+ text-align:center
+}
+[class*=tracking-status-] {
+ padding:1.6rem 0
+}
+.tracking-status-intransit {
+ background-color:#65aee0
+}
+.tracking-status-outfordelivery {
+ background-color:#f5a551
+}
+.tracking-status-deliveryoffice {
+ background-color:#f7dc6f
+}
+.tracking-status-delivered {
+ background-color:#4cbb87
+}
+.tracking-status-attemptfail {
+ background-color:#b789c7
+}
+.tracking-status-error,.tracking-status-exception {
+ background-color:#d26759
+}
+.tracking-status-expired {
+ background-color:#616e7d
+}
+.tracking-status-pending {
+ background-color:#ccc
+}
+.tracking-status-inforeceived {
+ background-color:#214977
+}
+.tracking-list {
+}
+.tracking-item {
+ position:relative;
+ padding:2rem 1.5rem .5rem 2.5rem;
+ font-size:.9rem;
+ margin-left:3rem;
+ min-height:5rem
+}
+.tracking-item:last-child {
+ padding-bottom:4rem
+}
+.tracking-item .tracking-date {
+ margin-bottom:.5rem
+}
+.tracking-item .tracking-date span {
+ color:#888;
+ font-size:85%;
+ padding-left:.4rem
+}
+.tracking-item .tracking-content {
+ padding:.5rem .8rem;
+ background-color:#f4f4f4;
+ border-radius:.5rem
+}
+.tracking-item .tracking-content span {
+ display:block;
+ color:#888;
+ font-size:85%
+}
+.tracking-item .tracking-icon {
+ line-height:2.6rem;
+ position:absolute;
+ left:-1.3rem;
+ width:2.6rem;
+ height:2.6rem;
+ text-align:center;
+ border-radius:50%;
+ font-size:1.1rem;
+ background-color:#fff;
+ color:#fff
+}
+.tracking-item .tracking-icon.status-sponsored {
+ background-color:#f68
+}
+.tracking-item .tracking-icon.status-delivered {
+ background-color:#4cbb87
+}
+.tracking-item .tracking-icon.status-outfordelivery {
+ background-color:#f5a551
+}
+.tracking-item .tracking-icon.status-deliveryoffice {
+ background-color:#f7dc6f
+}
+.tracking-item .tracking-icon.status-attemptfail {
+ background-color:#b789c7
+}
+.tracking-item .tracking-icon.status-exception {
+ background-color:#d26759
+}
+.tracking-item .tracking-icon.status-inforeceived {
+ background-color:#214977
+}
+.tracking-item .tracking-icon.status-intransit {
+ color:#e5e5e5;
+ border:1px solid #e5e5e5;
+ font-size:.6rem
+}
+@media(min-width:992px) {
+ .tracking-item {
+  margin-left:10rem
+ }
+ .tracking-item .tracking-date {
+  position:absolute;
+  left:-10rem;
+  width:7.5rem;
+  text-align:right
+ }
+ .tracking-item .tracking-date span {
+  display:block
+ }
+ .tracking-item .tracking-content {
+  padding:0;
+  background-color:transparent
+ }
+}
+</style>
 </head>
 
 <body class="sidebar-dark">
@@ -215,8 +346,14 @@ swal("", `{{error}}`, "warning");
                               placeholder="Good for digital goods, links, download links etc.">
                           </div>
                         </form>
-                        <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Manual</button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" disabled> Mark as
-                            Fulfilled</button></center>
+                        <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Manual</button>&nbsp
+                          {% if template %}
+                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Mark as Fulfilled</button></center>
+                          {% else %}
+                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" disabled> Mark as Fulfilled</button> </center>
+                          {% endif %}
+                          <br>
+                          <small class="text-muted text-small">Mark as Fulfilled will send an email to a customer using an email template, make sure to have your email settings up-to-date and tested, Manual will also mark the order as fulfilled but will not try to send an automatic email</small>
                           <!-- Editable modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                               <div class="modal-dialog">
@@ -226,9 +363,8 @@ swal("", `{{error}}`, "warning");
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                    ...
+                                      {{ ckeditor.create() }}
                                   </div>
-                                                                      <p>asdasd</p><br>
 
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit Global Template</button>
@@ -240,9 +376,66 @@ swal("", `{{error}}`, "warning");
                             <!-- Editable modal -->
                       </div>
                     </div>
-          
+                    <div class="container rounded">
+                      <div class="row">
+                    
+                        <div class="col-lg-12">
+                          <div id="tracking border">
+                            <div class="tracking-list">
+
+                              <div class="tracking-item">
+                                <div class="tracking-icon status-intransit">
+                                  <i class="large material-icons m-2" style="color:green">storefront</i>
+                                  <!-- <i class="fas fa-circle"></i> -->
+                                </div>
+                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
+                                <div class="tracking-content">Order Placed<span>Order #989712332123 - Paid $133 for Shipping</span></div>
+                              </div>
+
+                              <div class="tracking-item">
+                                <div class="tracking-icon status-intransit">
+                                  <i class="large material-icons m-2" style="color:green">credit_card_gear</i>
+                                  <!-- <i class="fas fa-circle"></i> -->
+                                </div>
+                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
+                                <div class="tracking-content">Payment accepted<span>Order #989712332123 - Paid the amount of $133</span></div>
+                              </div>
+
+                              <div class="tracking-item">
+                                <div class="tracking-icon status-intransit">
+                                  <i class="large material-icons m-2" style="color:green">mark_email_unread</i>
+                                  <!-- <i class="fas fa-circle"></i> -->
+                                </div>
+                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
+                                <div class="tracking-content">Customer Notified<span>Email sent to customer with order details</span></div>
+                              </div>
+
+                              <div class="tracking-item">
+                                <div class="tracking-icon status-intransit">
+                                  <i class="large material-icons m-2" style="color:green">local_shipping</i>
+                                  <!-- <i class="fas fa-circle"></i> -->
+                                </div>
+                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
+                                <div class="tracking-content">Order Fulfilled<span>Tracking link attached</span></div>
+                              </div>
+
+                              <div class="tracking-item">
+                                <div class="tracking-icon status-intransit">
+                                  <i class="large material-icons m-2" style="color:green">check_circle</i>
+                                  <!-- <i class="fas fa-circle"></i> -->
+                                </div>
+                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
+                                <div class="tracking-content">Customer Notified<span>Email sent to customer with order details and tracking details</span></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <br>
                 </div>
+
                 
                 <div class="col-md-4"> <!-- Side bar -->
                     <div class="card border shadow-none m-3 rounded" style="background: #F4F5F7;">

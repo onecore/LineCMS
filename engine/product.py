@@ -9,6 +9,7 @@ from helpers import country
 from decimal import Decimal
 from helpers import emailparser
 from ast import literal_eval as lite
+from jinja2 import Template
 import stripe
 
 product = Blueprint("product", __name__)
@@ -187,6 +188,17 @@ def product_orders():
 def product_orders_single(id):
     _de = dataengine.knightclient()
     order = _de.productorders_single_get(id)
+    temp = _de.productsettings_get()
+    template = None
+    
+    try:
+        temp_status = lite(temp[12])['fulfilled']
+        if temp_status:
+            template = temp[9]
+                
+    except Exception as e:
+        pass
+    
     alert=None
     parseditems = []
     shipping_fee = None
@@ -199,7 +211,7 @@ def product_orders_single(id):
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
 
-    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee)
+    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,template=template)
 
 def price(price) -> int:
     "Stripe friendly price"

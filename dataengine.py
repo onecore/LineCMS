@@ -34,6 +34,12 @@ class knightclient:
         _r = _fetch.fetchone()
         return _r
 
+    def orderhistory_get():
+        pass
+
+    def orderhistory_set(data):
+        pass
+    
     def url_gen(self, content) -> str:
         """
         content: string format url
