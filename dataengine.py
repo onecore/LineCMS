@@ -34,10 +34,10 @@ class knightclient:
         _r = _fetch.fetchone()
         return _r
 
-    def orderhistory_get():
+    def orderhistory_get(self,id):
         pass
-
-    def orderhistory_set(data):
+        
+    def orderhistory_add(self,data):
         pass
     
     def url_gen(self, content) -> str:
@@ -71,6 +71,9 @@ class knightclient:
             params = "INSERT INTO productorders (fulfilled,customer_name,customer_email,amount_total,created,payment_status,customer_country,customer_postal,currency,items,session_id,metadata,address,phone,shipping_cost) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             vals = ("0",order['customer_name'],order['customer_email'],order['amount_total'],order['created'],order['payment_status'],order['customer_country'],order['customer_postal'],order['currency'],order['items'],order['session_id'],str(order['metadata']),order['address'],order['phone'],order['shipping_cost'])
             _c.execute(params, vals)   
+            curr_id = _c.lastrowid
+            secq = "UPDATE productorders SET ordernumber='{o}' where id='{c}';".format(o=f"{curr_id}{order['created']}",c=curr_id)
+            _c.execute(secq)
             self.connection.commit()
             return True
         except Exception as e:
