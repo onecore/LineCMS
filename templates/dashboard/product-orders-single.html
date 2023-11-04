@@ -15,6 +15,8 @@
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+  <script src="../../dashboard/product-order-single.js"></script>
+
 <style>
   
 .tracking-detail {
@@ -328,6 +330,7 @@ swal("", `{{error}}`, "warning");
                     </div>
                   </div>
                   <div class="row">
+                                                         
                     <div class="card border shadow-none rounded m-3 shadow" style="background: #F4F5F7;width:100%">
                       <div class="card-body bordered shadow-none">
                         <form>
@@ -356,19 +359,23 @@ swal("", `{{error}}`, "warning");
                           <small class="text-muted text-small">Mark as Fulfilled will send an email to a customer using an email template, make sure to have your email settings up-to-date and tested, Manual will also mark the order as fulfilled but will not try to send an automatic email</small>
                           <!-- Editable modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog">
+                              <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Fulfillment Template - Modify for this order</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                      {{ ckeditor.create() }}
+                                    <div>
+
+                                      {{ ckeditor.create(value=template) }}
+
+                                    </div>
                                   </div>
 
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit Global Template</button>
-                                    <button type="button" class="btn btn-primary">Save for this order</button>
+                                    <a class="btn btn-secondary"  href="/product-settings">Edit Global Template</a>
+                                    <button type="button" class="btn btn-primary" onclick="ckdata_get()" data-bs-dismiss="modal" id="customtemp_stat">Save for this order</button>
                                   </div>
                                 </div>
                               </div>
@@ -460,13 +467,23 @@ swal("", `{{error}}`, "warning");
               </div>
             </div>
       </div>
+              <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/"
+                      target="_blank">KnightStudio Dashboard v1.4</span>
+                  <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2023. All rights
+                    reserved.</span>
+                </div>
+              </footer>
     </div>
+    
     </div>
 
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

@@ -210,7 +210,6 @@ def product_orders_single(id):
         if order[17]:
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
-
     return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,template=template)
 
 def price(price) -> int:
