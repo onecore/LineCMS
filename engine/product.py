@@ -301,7 +301,8 @@ def new_event():
         addord = de.productorders_set(order)
         if addord:        
             if order['shipping_cost']:
-                history_obj["message"] = f"Order #{addord} - Paid ${price(int(order['shipping_cost']))} for Shipping"
+                ship_fee_ = f"${int(order['shipping_cost'])/100:.02f}"
+                history_obj["message"] = f"Order #{addord} - Paid {ship_fee_} for Shipping"
             else:
                 history_obj['message'] = f"Order #{addord}"
             
