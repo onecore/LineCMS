@@ -34,11 +34,19 @@ class knightclient:
         _r = _fetch.fetchone()
         return _r
 
-    def orderhistory_get(self,id):
-        pass
+    def orderhistory_get(self,orn):
+        _c = self.connection.cursor()
+        q = f"SELECT history FROM productorders WHERE ordernumber='{orn}';"
+        _c.execute(q)
+        _r = _c.fetchone()
+        return _r
         
     def orderhistory_add(self,data):
-        pass
+        _c = self.connection.cursor()
+        q = """UPDATE productorders SET history="{o}" where ordernumber='{orn}';""".format(o=str(data['obj']),orn=str(data['ordernumber']))
+        _c.execute(q)
+        self.connection.commit()
+        return True
     
     def url_gen(self, content) -> str:
         """
@@ -75,7 +83,7 @@ class knightclient:
             secq = "UPDATE productorders SET ordernumber='{o}' where id='{c}';".format(o=f"{curr_id}{order['created']}",c=curr_id)
             _c.execute(secq)
             self.connection.commit()
-            return True
+            return f"{curr_id}{order['created']}"
         except Exception as e:
             ic(e)
             return False

@@ -189,6 +189,7 @@ def product_orders_single(id):
     _de = dataengine.knightclient()
     order = _de.productorders_single_get(id)
     temp = _de.productsettings_get()
+    hist = _de.orderhistory_get(order[19])
     template = None
     
     try:
@@ -288,14 +289,28 @@ def new_event():
                 "shipping_cost": ""
                 }
         
+        history_obj = {1: {"title":"Order Placed","message":"","timestamp":order['created']}}
+        
         if shipstatus == "on":
             shipstatus = True
             order["shipping_cost"] = session.shipping_cost.amount_total
         else:
             shipstatus = False
 
-        de = dataengine.knightclient()        
-        if de.productorders_set(order):
+        de = dataengine.knightclient()    
+        addord = de.productorders_set(order)
+        if addord:        
+            if order['shipping_cost']:
+                history_obj["message"] = f"Order #{addord} - Paid ${price(int(order['shipping_cost']))} for Shipping"
+            else:
+                history_obj['message'] = f"Order #{addord}"
+            
+            if order['payment_status'] == "paid":
+                history_obj[2] = {"title":"Payment accepted","message":f"Order #{addord} - Paid the amount of {order['amount_total']}","timestamp":order['created']}
+            else:
+                history_obj[2] = {"title":"Payment unverified","message":f"Order #{addord} - Paid the amount of {order['amount_total']}","timestamp":order['created']}
+                
+
             logging(f"New order placed from: {order['customer_name']} - {order['customer_email']}")
             temp_settings = de.productsettings_get()
             comp_data = de.load_data_index(0)
@@ -306,10 +321,13 @@ def new_event():
                 _set = lite(temp_settings[12])['placed']
                 if _set:
                     emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus)
+                    history_obj[3] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":order['created']}
             except Exception as e:
+                history_obj[3] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":order['created']}
                 pass
             # }Send email using Placed template
-            
+            args = {"obj":history_obj,"ordernumber":addord}
+            de.orderhistory_add(args)
             return {'success': True}
         else:
             return {'success': False}
