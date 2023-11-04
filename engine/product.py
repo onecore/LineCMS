@@ -184,14 +184,18 @@ def product_orders():
                             search=search, record_name='orders', css_framework="bootstrap5")
     return render_template("/dashboard/product-orders.html", orders=orders, pagination=pagination, alert=alert)
 
-@product.route("/product-orders/<id>", methods=['POST', 'GET'])
-def product_orders_single(id):
+@product.route("/product-orders/<ids>", methods=['POST', 'GET'])
+def product_orders_single(ids):
     _de = dataengine.knightclient()
-    order = _de.productorders_single_get(id)
+    order = _de.productorders_single_get(ids)
     temp = _de.productsettings_get()
     hist = _de.orderhistory_get(order[19])
     template = None
-    
+    try:
+        history = dict(lite(hist[0]).items())
+    except Exception as e:
+        history = None
+        
     try:
         temp_status = lite(temp[12])['fulfilled']
         if temp_status:
@@ -211,7 +215,10 @@ def product_orders_single(id):
         if order[17]:
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
-    return render_template("/dashboard/product-orders-single.html", order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,template=template)
+    print(history)
+    return render_template("/dashboard/product-orders-single.html",
+                           order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
+                           template=template,history=history)
 
 def price(price) -> int:
     "Stripe friendly price"
@@ -302,9 +309,9 @@ def new_event():
         if addord:        
             if order['shipping_cost']:
                 ship_fee_ = f"${int(order['shipping_cost'])/100:.02f}"
-                history_obj["message"] = f"Order #{addord} - Paid {ship_fee_} for Shipping"
+                history_obj[1]["message"] = f"Order #{addord} - Paid {ship_fee_} for Shipping"
             else:
-                history_obj['message'] = f"Order #{addord}"
+                history_obj[1]['message'] = f"Order #{addord}"
             
             if order['payment_status'] == "paid":
                 history_obj[2] = {"title":"Payment accepted","message":f"Order #{addord} - Paid the amount of {order['amount_total']}","timestamp":order['created']}

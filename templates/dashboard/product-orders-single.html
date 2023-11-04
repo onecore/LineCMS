@@ -336,7 +336,7 @@ swal("", `{{error}}`, "warning");
                         <form>
                           <div class="input-group mb-3 input-group-sm">
                             <div class="input-group-prepend">
-                              <span class="input-group-text btn-muted text-muted">Tracking code</span>
+                              <span class="input-group-text btn-muted text-muted">Tracking link</span>
                             </div>
                             <input type="text" class="form-control" aria-describedby="tinfo"
                               placeholder="Add tracking code if customer paid for shipping">
@@ -390,50 +390,60 @@ swal("", `{{error}}`, "warning");
                           <div id="tracking border">
                             <div class="tracking-list">
 
+                          {% if history[1] %}
                               <div class="tracking-item">
                                 <div class="tracking-icon status-intransit">
                                   <i class="large material-icons m-2" style="color:green">storefront</i>
                                   <!-- <i class="fas fa-circle"></i> -->
                                 </div>
-                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
-                                <div class="tracking-content">Order Placed<span>Order #989712332123 - Paid $133 for Shipping</span></div>
+                                <div class="tracking-date">{{loaddate(history[1]['timestamp'],split=1)[0]}}<span>{{loaddate(history[1]['timestamp'],split=1)[1]}}</span></div>
+                                <div class="tracking-content">{{history[1]['title']}}<span>{{history[1]['message']}}</span></div>
                               </div>
+                          {% endif %}
 
+                          {% if history[2] %}
                               <div class="tracking-item">
                                 <div class="tracking-icon status-intransit">
                                   <i class="large material-icons m-2" style="color:green">credit_card_gear</i>
                                   <!-- <i class="fas fa-circle"></i> -->
                                 </div>
-                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
-                                <div class="tracking-content">Payment accepted<span>Order #989712332123 - Paid the amount of $133</span></div>
+                                <div class="tracking-date">{{loaddate(history[2]['timestamp'],split=1)[0]}}<span>{{loaddate(history[2]['timestamp'],split=1)[1]}}</span></div>
+                                <div class="tracking-content">{{history[2]['title']}}<span>{{history[2]['message']}}</span></div>
                               </div>
+                          {% endif %}
 
+                          {% if history[3] %}
                               <div class="tracking-item">
                                 <div class="tracking-icon status-intransit">
                                   <i class="large material-icons m-2" style="color:green">mark_email_unread</i>
                                   <!-- <i class="fas fa-circle"></i> -->
                                 </div>
-                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
-                                <div class="tracking-content">Customer Notified<span>Email sent to customer with order details</span></div>
+                                <div class="tracking-date">{{loaddate(history[3]['timestamp'],split=1)[0]}}<span>{{loaddate(history[3]['timestamp'],split=1)[1]}}</span></div>
+                                <div class="tracking-content">{{history[3]['title']}}<span>{{history[3]['message']}}</span></div>
                               </div>
+                          {% endif %}
 
+                          {% if history[4] %}
                               <div class="tracking-item">
                                 <div class="tracking-icon status-intransit">
                                   <i class="large material-icons m-2" style="color:green">local_shipping</i>
                                   <!-- <i class="fas fa-circle"></i> -->
                                 </div>
-                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
-                                <div class="tracking-content">Order Fulfilled<span>Tracking link attached</span></div>
+                                <div class="tracking-date">{{loaddate(history[4]['timestamp'],split=1)[0]}}<span>{{loaddate(history[4]['timestamp'],split=1)[1]}}</span></div>
+                                <div class="tracking-content">{{history[4]['title']}}<span>{{history[4]['message']}}</span></div>
                               </div>
+                          {% endif %}
 
+                          {% if history[5] %}
                               <div class="tracking-item">
                                 <div class="tracking-icon status-intransit">
                                   <i class="large material-icons m-2" style="color:green">check_circle</i>
                                   <!-- <i class="fas fa-circle"></i> -->
                                 </div>
-                                <div class="tracking-date">Aug 10, 2018<span>05:01 PM</span></div>
-                                <div class="tracking-content">Customer Notified<span>Email sent to customer with order details and tracking details</span></div>
+                                <div class="tracking-date">{{loaddate(history[5]['timestamp'],split=1)[0]}}<span>{{loaddate(history[5]['timestamp'],split=1)[1]}}</span></div>
+                                <div class="tracking-content">{{history[5]['title']}}<span>{{history[5]['message']}}</span></div>
                               </div>
+                          {% endif%}
                             </div>
                           </div>
                         </div>

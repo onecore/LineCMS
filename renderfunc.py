@@ -5,7 +5,6 @@ import settings as temple
 import json
 from flask import jsonify
 
-
 def ks_include_adminbutton() -> str:
     "Includes Admin button if session exists"
     c = temple.ks_admin_button
