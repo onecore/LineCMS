@@ -38,17 +38,17 @@ def parse_send(**kwargs) -> bool:
         
     if kwargs:
         try:
-            
             temps = {"fulfilled": kwargs['ps'][9],"placed": kwargs['ps'][10]}
-            t_settings = le(kwargs['ps'][12])
+            subobj = {"fulfilled": f"Hi {kwargs['order']['customer_name']} Your order is on the way! ", "placed": f"Hi {kwargs['order']['customer_name']} Your order is placed! "}
             
+            t_settings = le(kwargs['ps'][12])
             if "template" in kwargs: # Change template template
                 temps[kwargs['which']] = kwargs['template']
                 
             template = Template(temps[kwargs['which']])
             rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],False))
             
-            subject = f"Hi {kwargs['order']['customer_name']} Your order is placed! "
+            subject = subobj[kwargs['which']]
             recip = kwargs['order']['customer_email']
             sendr = le(kwargs['ps'][13])['email']
             

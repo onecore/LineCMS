@@ -1,26 +1,23 @@
-from helpers import country
+order = [
+"customer_name",
+"customer_email",
+"amount_total",
+"created",
+"payment_status",
+"customer_country",
+"customer_postal",
+"currency",
+"items",
+"session_id",
+"metadata",
+"address",
+"phone",
+"shipping_cost"
+]
 
+x = []
 
-
-#print(country.all_countries_2LISO)
-d = "AC, AD, AE, AF, AG, AI, AL, AM, AO, AQ, AR, AT, AU, AW, AX, AZ, BA, BB, BD, BE, BF, BG, BH, BI, BJ, BL, BM, BN, BO, BQ, BR, BS, BT, BV, BW, BY, BZ, CA, CD, CF, CG, CH, CI, CK, CL, CM, CN, CO, CR, CV, CW, CY, CZ, DE, DJ, DK, DM, DO, DZ, EC, EE, EG, EH, ER, ES, ET, FI, FJ, FK, FO, FR, GA, GB, GD, GE, GF, GG, GH, GI, GL, GM, GN, GP, GQ, GR, GS, GT, GU, GW, GY, HK, HN, HR, HT, HU, ID, IE, IL, IM, IN, IO, IQ, IS, IT, JE, JM, JO, JP, KE, KG, KH, KI, KM, KN, KR, KW, KY, KZ, LA, LB, LC, LI, LK, LR, LS, LT, LU, LV, LY, MA, MC, MD, ME, MF, MG, MK, ML, MM, MN, MO, MQ, MR, MS, MT, MU, MV, MW, MX, MY, MZ, NA, NC, NE, NG, NI, NL, NO, NP, NR, NU, NZ, OM, PA, PE, PF, PG, PH, PK, PL, PM, PN, PR, PS, PT, PY, QA, RE, RO, RS, RU, RW, SA, SB, SC, SE, SG, SH, SI, SJ, SK, SL, SM, SN, SO, SR, SS, ST, SV, SX, SZ, TA, TC, TD, TF, TG, TH, TJ, TK, TL, TM, TN, TO, TR, TT, TV, TW, TZ, UA, UG, US, UY, UZ, VA, VC, VE, VG, VN, VU, WF, WS, XK, YE, YT, ZA, ZM, ZW, ZZ"
-x = d.replace(",", "").split(" ")
-
-all_country = country.all_countries_2LISO
-oo = []
-for k,v in all_country.items():
-    oo.append(k)
-
-all_country = oo
-
-allowed_country =  d.replace(",", "").split(" ") 
-
-f = {}
-
-allcountr_dict = country.all_countries_2LISO
-for country in allowed_country:
-    if country in all_country:
-        f[country] = allcountr_dict[country]
-
-print(f)
+for i in order:
+    x.append(i)
     
+print (x)

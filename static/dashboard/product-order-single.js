@@ -26,12 +26,22 @@ function api_psingle(data){
   })
   .then((response) => response.json())
   .then((data) => {
-        swal("", 'Order fulfilled', "success");
+        // swal("", 'Order fulfilled', "success");
 
         let sdata = data;
 });
 }
 
+function test(data,message=null){
+            let status = false;
+            if (custom_template_status){
+                data['template'] = custom_template;
+            }else{
+                data['template'] = "";
+            }
+            
+            api_psingle(data)
+}
 
 function confl(data,message=null) {
     let d = {
@@ -64,12 +74,11 @@ function confl(data,message=null) {
 
 
 function fulfill_auto(orn){
-    confl()
     let tr = document.getElementById('tinfo');
     let ad = document.getElementById('ainfo');
     let trv = tr.value
     let adv = ad.value
-    data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
+    data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":""}
     if (trv && adv){
         confl(data)
     }else if (!trv){

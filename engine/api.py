@@ -3,14 +3,18 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import json
 from icecream import ic
-from helpers import emailparser
+from helpers import emailparser, combine
+from ast import literal_eval as lite
+import time
 
 api = Blueprint("api", __name__)
 version = "1.4"
 
+def epoch():
+    return time.time()
+
 @api.route("/api/product-fulfill", methods=['POST'])
 def prodfulfill():
-
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -19,12 +23,16 @@ def prodfulfill():
             sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
             temp_settings = _de.productsettings_get()
             comp_data = _de.load_data_index(0)
-            _order = _de.product_orders_single(_d['ordernumber'])
+            _order = _de.productorders_single_get(0,_d['ordernumber'])
             history = False
+            
+            if _order:
+                _order = combine.zipper("orders",_order)
+                
             try:
                 history = lite(_load_h[0])
-            except:
-                return jsonify({"status": 0,"message":"Unable to update"})
+            except Exception as e:
+                history = {}
 
             # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
             if _de.orderfulfill(_d):
@@ -34,13 +42,29 @@ def prodfulfill():
                 shipstatus = False
                 if shipstatus == "on":
                     shipstatus = True
-                    
-                emailparser.parse_send(which="fulfilled",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
                 
+
+                
+                sendmailer = False
+                history_obj = history
+                history_obj[5] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":epoch()}
+                try:
+                    _set = lite(temp_settings[12])['fulfilled']
+                    if int(_set):
+                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
+                        history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
+                except Exception as e:
+                    print("Error, ",e)
+                    history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
+
+                history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
+                args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
+                _de.orderhistory_add(args)
+            
                 return jsonify({"status": 1,"message":"Order fulfilled","obj":{}})
             
             return jsonify({"status": 0,"message":"Unable to fulfill"})
-    except:
+    except Exception as r:
         return jsonify({"status": 0,"message":"Request error, Unable to fulfill"})
 
         

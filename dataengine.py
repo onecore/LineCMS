@@ -35,12 +35,16 @@ class knightclient:
         return _r
 
     def orderfulfill(self,data):
-        _c = self.connection.cursor()
-        q = """UPDATE productorders SET tracking="{t}", fulfilled="1", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
-        _c.execute(q)
-        self.connection.commit()
-        return True    
-    
+        try:
+            _c = self.connection.cursor()
+            print(data)
+            q = """UPDATE productorders SET tracking="{t}", fulfilled="1", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
+            _c.execute(q)
+            self.connection.commit()
+            return True    
+        except Exception as t:
+            return False
+        
     def orderhistory_get(self,orn):
         _c = self.connection.cursor()
         q = f"SELECT history FROM productorders WHERE ordernumber='{orn}';"
@@ -50,7 +54,8 @@ class knightclient:
         
     def orderhistory_add(self,data):
         _c = self.connection.cursor()
-        q = """UPDATE productorders SET history="{o}" where ordernumber='{orn}';""".format(o=str(data['obj']),orn=str(data['ordernumber']))
+        print("DL ",data)
+        q = """UPDATE productorders SET history="{o}" where ordernumber="{orn}";""".format(o=str(data['obj']),orn=str(data['ordernumber']))
         _c.execute(q)
         self.connection.commit()
         return True
@@ -77,7 +82,7 @@ class knightclient:
         _c = self.connection.cursor()
         _q = f"SELECT * FROM productorders WHERE id = {ids}"
         if loadfulfill:
-            _q = f"SELECT * FROM productorders WHERE ordernumber = '{ids}'"
+            _q = f"SELECT * FROM productorders WHERE ordernumber = '{loadfulfill}'"
         _fetch = _c.execute(_q)
         _r = _fetch.fetchone()
         return _r  
