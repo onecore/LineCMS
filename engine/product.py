@@ -7,7 +7,7 @@ from icecream import ic
 from helpers import currency
 from helpers import country
 from decimal import Decimal
-from helpers import emailparser
+from helpers import emailparser, combine
 from ast import literal_eval as lite
 from jinja2 import Template
 import stripe
@@ -189,12 +189,17 @@ def product_orders_single(ids):
     _de = dataengine.knightclient()
     order = _de.productorders_single_get(ids)
     temp = _de.productsettings_get()
+    _comp = _de.load_data_index(0)
     hist = _de.orderhistory_get(order[19])
     template = None
+    
+    if order:
+        _order = combine.zipper("orders",order)
+
     try:
         history = dict(lite(hist[0]).items())
     except Exception as e:
-        history = None
+        history = {}
         
     try:
         temp_status = lite(temp[12])['fulfilled']
@@ -204,9 +209,11 @@ def product_orders_single(ids):
     except Exception as e:
         pass
     
+
     alert=None
     parseditems = []
     shipping_fee = None
+    
     if order:
         items = eval(order[10])
         for orders in items:
@@ -215,7 +222,12 @@ def product_orders_single(ids):
         if order[17]:
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
-    print(history)
+
+    template = Template(template)
+    # def data(which,order,company,shipstatus,tracking=False):
+    
+    rendered = template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
+        
     return render_template("/dashboard/product-orders-single.html",
                            order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
                            template=template,history=history)

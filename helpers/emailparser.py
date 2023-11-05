@@ -33,8 +33,7 @@ def data(which,order,company,shipstatus,tracking=False):
 
 def parse_send(**kwargs) -> bool:    
     with current_app.app_context():
-        from app import sendmail
-
+        from app import sendmail        
         
     if kwargs:
         try:
