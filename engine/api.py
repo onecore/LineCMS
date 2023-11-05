@@ -3,21 +3,45 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import json
 from icecream import ic
+from helpers import emailparser
 
 api = Blueprint("api", __name__)
 version = "1.4"
 
 @api.route("/api/product-fulfill", methods=['POST'])
 def prodfulfill():
+
     try:
         if (request.data):
             _d = json.loads(request.data)
             _de = dataengine.knightclient()
-            if _de.productsettings_smtp(_d):
-                return jsonify({"status": 1,"message":"SMTP Credentials updated"})
-            return jsonify({"status": 0,"message":"Unable to update"})
+            _load_h = _de.orderhistory_get(_d['ordernumber'])
+            sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
+            temp_settings = _de.productsettings_get()
+            comp_data = _de.load_data_index(0)
+            _order = _de.product_orders_single(_d['ordernumber'])
+            history = False
+            try:
+                history = lite(_load_h[0])
+            except:
+                return jsonify({"status": 0,"message":"Unable to update"})
+
+            # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
+            if _de.orderfulfill(_d):
+                # Load required
+                
+                # Load required
+                shipstatus = False
+                if shipstatus == "on":
+                    shipstatus = True
+                    
+                emailparser.parse_send(which="fulfilled",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
+                
+                return jsonify({"status": 1,"message":"Order fulfilled","obj":{}})
+            
+            return jsonify({"status": 0,"message":"Unable to fulfill"})
     except:
-        return jsonify({"status": 0,"message":"Settings unable to update"})
+        return jsonify({"status": 0,"message":"Request error, Unable to fulfill"})
 
         
 

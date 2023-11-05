@@ -34,6 +34,13 @@ class knightclient:
         _r = _fetch.fetchone()
         return _r
 
+    def orderfulfill(self,data):
+        _c = self.connection.cursor()
+        q = """UPDATE productorders SET tracking="{t}", fulfilled="1", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
+        _c.execute(q)
+        self.connection.commit()
+        return True    
+    
     def orderhistory_get(self,orn):
         _c = self.connection.cursor()
         q = f"SELECT history FROM productorders WHERE ordernumber='{orn}';"
@@ -66,9 +73,11 @@ class knightclient:
         _r = _fetch.fetchall()
         return _r    
     
-    def productorders_single_get(self,id):
+    def productorders_single_get(self,ids,loadfulfill=False):
         _c = self.connection.cursor()
-        _q = f"SELECT * FROM productorders WHERE id = {id}"
+        _q = f"SELECT * FROM productorders WHERE id = {ids}"
+        if loadfulfill:
+            _q = f"SELECT * FROM productorders WHERE ordernumber = '{ids}'"
         _fetch = _c.execute(_q)
         _r = _fetch.fetchone()
         return _r  
