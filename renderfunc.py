@@ -4,6 +4,7 @@ Inline functions for Jinja
 import settings as temple
 import json
 from flask import jsonify
+from ast import literal_eval as lite
 
 def ks_include_adminbutton() -> str:
     "Includes Admin button if session exists"
@@ -45,13 +46,13 @@ def ks_html2text_truncate(v) -> str:
 
 
 def ks_tolist(v) -> list:
-    "evaluate parsed string to python list type"
-    return eval(v)
+    "liteuate parsed string to python list type"
+    return lite(v)
 
 def ks_todict(v) -> dict:
-    "evaluate parsed string to python dict type"
+    "liteuate parsed string to python dict type"
     try:
-        return eval(v)
+        return lite(v)
     except:
         return ""
 
@@ -63,13 +64,13 @@ def ks_getdictkeys(v) -> list:
 
     for k, v in p.items():
         o.append(k)
-    return eval(o)
+    return lite(o)
 
 
 def ks_variantcount(v) -> int:
     "return variant's length"
     if len(v) > 2:
-        p = eval(v)
+        p = lite(v)
         return len(p.keys())
     return 0
 
