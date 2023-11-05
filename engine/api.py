@@ -7,10 +7,22 @@ from icecream import ic
 api = Blueprint("api", __name__)
 version = "1.4"
 
+@api.route("/api/product-fulfill", methods=['POST'])
+def prodfulfill():
+    try:
+        if (request.data):
+            _d = json.loads(request.data)
+            _de = dataengine.knightclient()
+            if _de.productsettings_smtp(_d):
+                return jsonify({"status": 1,"message":"SMTP Credentials updated"})
+            return jsonify({"status": 0,"message":"Unable to update"})
+    except:
+        return jsonify({"status": 0,"message":"Settings unable to update"})
+
+        
 
 @api.route("/api/prodset-smtp", methods=['POST', 'GET'])
 def prodset_smtp():
-    print ("Aas")
     try:
         if (request.data):
             _d = json.loads(request.data)
