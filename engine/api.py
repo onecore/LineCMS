@@ -15,6 +15,7 @@ def epoch():
 
 @api.route("/api/product-fulfill", methods=['POST'])
 def prodfulfill():
+    "order fulfillment api"
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -24,20 +25,15 @@ def prodfulfill():
             temp_settings = _de.productsettings_get()
             comp_data = _de.load_data_index(0)
             _order = _de.productorders_single_get(0,_d['ordernumber'])
-            history = False
+            history, shipstatus = {},False
             if _order:
                 _order = combine.zipper("orders",_order)
-            
             try:
                 history = lite(_load_h[0])
             except Exception as e:
-                history = {}
+                pass
             # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
             if _de.orderfulfill(_d):
-                # Load required
-                
-                # Load required
-                shipstatus = False
                 if shipstatus == "on":
                     shipstatus = True
 
@@ -48,18 +44,16 @@ def prodfulfill():
                     if int(_set):
                         emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
                         history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
+                
                 except Exception as e:
                     history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
 
                 history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
-
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
-
                 _de.orderhistory_add(args)
-
                 return jsonify({"status": 1,"message":"Order fulfilled","obj":json.dumps(history_obj)})
-            
             return jsonify({"status": 0,"message":"Unable to fulfill"})
+        
     except Exception as r:
         print("Error: ",r)
         return jsonify({"status": 0,"message":"Request error, Unable to fulfill"})
@@ -68,6 +62,8 @@ def prodfulfill():
 
 @api.route("/api/prodset-smtp", methods=['POST', 'GET'])
 def prodset_smtp():
+    "mail settings api update"
+
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -81,6 +77,7 @@ def prodset_smtp():
 
 @api.route("/api/prodset-temp", methods=['POST', 'GET'])
 def prodset_template():
+    "api for saving template (fulfilled & placed)"
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -94,6 +91,7 @@ def prodset_template():
 
 @api.route("/api/prodset-str", methods=['POST', 'GET'])
 def prodset_stripe():
+    "stripe api credential api"
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -107,6 +105,7 @@ def prodset_stripe():
 
 @api.route("/api/prodset-ship", methods=['POST', 'GET'])
 def prodset_ship():
+    "shipping options api update"
     try:
         if (request.data):
             _d = json.loads(request.data)
@@ -120,6 +119,7 @@ def prodset_ship():
 
 @api.route("/api/themeset", methods=['POST', 'GET'])
 def themeup():
+    "theme settings update"
     if (request.data):
         _d = json.loads(request.data)
         _de = dataengine.knightclient()
@@ -131,6 +131,7 @@ def themeup():
 
 @api.route("/product-update", methods=['POST', 'GET'])
 def productupd():
+    "product update api"
     _d = json.loads(request.data)
     _de = dataengine.knightclient()
     if _d['id']:
@@ -143,6 +144,7 @@ def productupd():
 
 @api.route("/product-d", methods=['POST', 'GET'])
 def productdel():
+    "product delete api"
     _d = json.loads(request.data)
     _de = dataengine.knightclient()
     if _d['id']:
@@ -155,6 +157,7 @@ def productdel():
 
 @api.route("/product-publish", methods=['POST', 'GET'])
 def productpub():
+    "product publish api"
     _d = json.loads(request.data)
     _de = dataengine.knightclient()
 
@@ -168,6 +171,7 @@ def productpub():
 
 @api.route("/module_update", methods=['POST', 'GET'])
 def modupdate():
+    "module update api"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             de = dataengine.knightclient()
@@ -181,10 +185,11 @@ def modupdate():
 
 @api.route("/knightclientapi", methods=['POST', 'GET'])
 def knightapi():
+    "api updater (Needs update)"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             d = dataengine.knightclient()
-            if (d.knightclientapi(eval(request.data)['action'])):
+            if (d.knightclientapi(lite(request.data)['action'])):
                 return jsonify({'status': True})
             return jsonify({'status': False})
         return "KnightStudio Dashboard build ", version
@@ -194,6 +199,7 @@ def knightapi():
 
 @api.route("/deleapip", methods=['POST', 'GET'])
 def delete_apip():
+    "blog post deleter api"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             table = request.json['table']
@@ -209,6 +215,7 @@ def delete_apip():
 
 @api.route("/deleapi", methods=['POST', 'GET'])
 def delete_api():
+    "blog post deleter api"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             table = request.json['table']
@@ -224,10 +231,11 @@ def delete_api():
 
 @api.route("/knightclientapiv2", methods=['POST', 'GET'])
 def knightapi2():
+    "api needs an update"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             d = dataengine.knightclient()
-            if (d.knightclientapiv2(eval(request.data))):
+            if (d.knightclientapiv2(lite(request.data))):
                 return jsonify({'status': True})
             return jsonify({'status': False})
         return "KnightStudio Dashboard build ", version
@@ -237,21 +245,23 @@ def knightapi2():
 
 @api.route("/api/delpartialim", methods=['POST', 'GET'])
 def api_deletepartialimage():
+    "partial delete image (image that is not needed, not inserted in db)"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
             d = dataengine.knightclient()
-            d.delete_image_partial(eval(request.data))
+            d.delete_image_partial(lite(request.data))
         return "KnightStudio Dashboard build ", version
     else:
         return "KnightStudio Dashboard build ", version
 
 
 @api.route("/delete/<table>/<id>")
-def delete(table, id):
-    mid = id
+def delete(table, ids):
+    'Deletes table (soon to be removed)'
+    mid = ids
     if 'authenticated' in session:
         d = dataengine.knightclient()
-        if d.delete(table, id):
+        if d.delete(table, ids):
             return jsonify({"status": True})
         return jsonify("status", False)
     return jsonify({"status": False})

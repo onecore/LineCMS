@@ -5,8 +5,8 @@ from flask_paginate import Pagination, get_page_parameter
 other = Blueprint("other", __name__)
 version = "1.4"
 
-_logger = dataengine.knightclient()
-log = _logger.log
+de = dataengine.knightclient()
+log = de.log
 
 
 @other.route("/logoff")
@@ -20,14 +20,12 @@ def logout():
 
 
 @other.route("/other")
-def help():
-    de = dataengine.knightclient()
+def helpv():
     dt = de.load_data_index(None)  # loads datas
     return render_template("dashboard/help.html", version=version, data=dt)
 
 
 @other.route("/mwebsite")
 def logpage():
-    _l = dataengine.knightclient()
-    data = _l.get_logs()
+    data = de.get_logs()
     return render_template("dashboard/log.html", data=data)

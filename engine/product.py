@@ -15,20 +15,22 @@ import settings
 
 product = Blueprint("product", __name__)
 
+UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
 ps = dataengine.knightclient()
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 logging = ps.log
 
-UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
 def allowed_file(filename) -> str:
+    "returns allowed file extensions"
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def getimages(ids):
+def getimages(ids) -> list:
+    "returns product images from local folder"
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
@@ -42,7 +44,8 @@ def getimages(ids):
     else:
         return []
     
-def getmainimage(ids):
+def getmainimage(ids) -> str:
+    "returns product's main image"
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}/mainimage"
@@ -72,8 +75,7 @@ def variantimagemodifier(d: bytes) -> 'json':
     d[3] = _variants_new
     d[8] = json.dumps(getimages(d[13]))
     d[9] = getmainimage(d[13])
-    de = dataengine.knightclient()
-    modifierinsert = de.productimagesmod(
+    modifierinsert = ps.productimagesmod(
         _variants_new, d[13])
     return tuple(d)
 
@@ -87,8 +89,7 @@ def loadorderim(key,obj) -> str:
     except:
         return "/media/ni.jpeg"
     product_id = robj[key]
-    de = dataengine.knightclient()
-    im = de.get_product_single(0,checkout=product_id)
+    im = ps.get_product_single(0,checkout=product_id)
     if im:
         if im[9]:
             img = f"/media/mainimage/{product_id}/{im[9]}"
@@ -101,7 +102,7 @@ def loadorderim(key,obj) -> str:
 
 def parseorders(l,obj) -> dict:
     """
-    Creates a Dict contains quant, and image path
+    creates a dict contains quant, and image path
     """
     c = {}
     c[l[0]] = {"quantity":l[1],"image":loadorderim(l[0],obj)}
@@ -109,11 +110,10 @@ def parseorders(l,obj) -> dict:
 
 @product.route("/product-settings", methods=['GET', 'POST'])
 def product_sett():
-    import currencies
+    "views - product settings"
     error, success = None, None
     currencieslist = currency.currency
-    de = dataengine.knightclient()
-    settings = de.productsettings_get()
+    settings = ps.productsettings_get()
 
     if request.method == "POST":
         skey = request.form.get("skey")
@@ -127,30 +127,29 @@ def product_sett():
         shipping_countries = request.form.get("cactivated")    
         
         if skey and pkey and ckey:
-            _set = de.productsettings_set(skey, pkey, ckey,wkey,wskey,shipping_enable,shipping_rates,shipping_countries)
+            _set = ps.productsettings_set(skey, pkey, ckey,wkey,wskey,shipping_enable,shipping_rates,shipping_countries)
             if _set:
-                settings = de.productsettings_get()
+                settings = ps.productsettings_get()
                 success = 1
         else:
             error = "Some information is missing"
-    ic(settings)
     return render_template("/dashboard/product-settings.html", countries = country.countries, currencies=currencieslist, error=error, success=success, settings=settings)
 
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
 def product_edt(route):
+    "views - product edit"
     if route == "upload-p-variant" or route == "upload-p-variant":
         return ""
-    de = dataengine.knightclient()
-    d = de.get_product_single(route)
+    d = ps.get_product_single(route)
     if not d:
         return redirect("/product-manage")
     return render_template("/dashboard/product-edit.html", d=variantimagemodifier(d))
 
 @product.route("/product-new", methods=['POST', 'GET'])
 def product_new():
+    "views - create new product"
     setup = False
-    de = dataengine.knightclient()
-    _settings = de.productsettings_get()
+    _settings = ps.productsettings_get()
     if not _settings[0] or not _settings[1] or not _settings[2]:
         setup = True
     return render_template("/dashboard/product-new.html", setup=setup)
@@ -158,13 +157,13 @@ def product_new():
 @product.route("/product-manage", methods=['POST', 'GET'])
 @product.route("/product-manage/<alert>", methods=['POST', 'GET'])
 def product_mng(alert=None):
-    de = dataengine.knightclient()
+    "views - product manage (lists)"
     search = False
     q = request.args.get('q')
     if q:
         search = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    pr = de.get_product_listings()
+    pr = ps.get_product_listings()
     tt = len(pr)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='product', css_framework="bootstrap5")
@@ -172,6 +171,7 @@ def product_mng(alert=None):
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
+    "views - product orders (lists)"
     orders = ps.productorders_get()
     alert=None
     search = False
@@ -186,6 +186,7 @@ def product_orders():
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):
+    "views - product order single"
     order = ps.productorders_single_get(ids)
     temp = ps.productsettings_get()
     _comp = ps.load_data_index(0)
@@ -245,6 +246,7 @@ def parserate(name,amount,mins,maxs) -> dict:
     return clone
 
 def ratetemplater(obj) -> list:
+    "parces rate into a stripe friendly obj"
     options = []
     parsedobj = None
     try:
@@ -261,7 +263,7 @@ def ratetemplater(obj) -> list:
 @product.route('/event', methods=['POST'])
 def new_event():
     """
-    Stripe webhook
+    views - stripe webhook
     """
     sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
     event = None
@@ -318,7 +320,7 @@ def new_event():
             temp_settings = ps.productsettings_get()
             comp_data = ps.load_data_index(0)
             
-            # { Send email using Placed template
+            # send email using Placed template
             try:
                 _set = lite(temp_settings[12])['placed']
                 if int(_set):
@@ -328,7 +330,7 @@ def new_event():
             except Exception as e:
                 history_obj[3] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":order['created']}
                 pass
-            # }Send email using Placed template
+            # send email using Placed template
             args = {"obj":history_obj,"ordernumber":addord}
             ps.orderhistory_add(args) # Update history
             return {'success': True}
@@ -345,8 +347,9 @@ def check(data):
     
     for product, values in data.items():
         _, _price, _quantity, _variant = values.split(",")
+        
         def includevariant():
-            "Dangy..."
+            "includes variant in product single page view"
             selected_variant = ""
             if _variant != settings.order_novariant_selected:
                 selected_variant = _variant
@@ -367,9 +370,11 @@ def check(data):
                 }
         items.append(clone)
 
-    if shipstatus == "on":  # If shipping Enabled
+    if shipstatus == "on":  # 'on' shipping Enabled
         onerror = settings.order_error_countries
+        
         def parsetolist(shipcountries):
+            "casts db obj into list"
             try:
                 return lite(shipcountries)
             except:
@@ -405,17 +410,16 @@ def check(data):
 
 @product.route('/product-checkout', methods=['GET', 'POST'])
 def prodcheck():
+    "api style for prod. checkout"
     if request.method == "POST":
         prdata = {}
         try:
             prdata = lite(request.data)
         except Exception as e:
             return jsonify({"status": 0})
-
         if prdata:
             clientres = check(prdata)
             return jsonify({'c': clientres})
-
         return jsonify({"status": 0})
     else:
         return jsonify({"status": 0})

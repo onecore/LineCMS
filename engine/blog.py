@@ -21,15 +21,16 @@ def trydelete(image):
 
 @blog.route("/blog-edit/<url>", methods=['POST', 'GET'])
 def blog_edit(url):
+    "view - blog edit"
     de = dataengine.knightclient()
     blog = de.get_blog_single(url)
 
     if request.method == 'POST':
-        data_body = request.form.get('ckeditor')  # <--
-        data_title = request.form.get('title')  # <--
-        data_categ = request.form.get('cat')  # <--
-        data_imgname = request.form.get('bimg')  # <--
-        data_hidden = request.form.get('ishidden')  # <--
+        data_body = request.form.get('ckeditor') 
+        data_title = request.form.get('title') 
+        data_categ = request.form.get('cat') 
+        data_imgname = request.form.get('bimg') 
+        data_hidden = request.form.get('ishidden') 
         if not data_title:
             return render_template("/dashboard/blog-edit.html", blog=blog, error="Blog title can't be empty")
         if not data_body:
@@ -43,7 +44,6 @@ def blog_edit(url):
             else:
                 data['image'] = ""
                 # trydelete(blog[3]) unused needs testing
-
             if data_categ:
                 data['category'] = data_categ
             else:
@@ -62,6 +62,7 @@ def blog_edit(url):
 @blog.route("/blog-manage", methods=['POST', 'GET'])
 @blog.route("/blog-manage/<alert>", methods=['POST', 'GET'])
 def blog_manage(alert=None):
+    "view - lists blog posts"
     de = dataengine.knightclient()
     search = False
     q = request.args.get('q')
@@ -77,11 +78,13 @@ def blog_manage(alert=None):
 
 @blog.route("/blog-new", methods=['POST', 'GET'])
 def blog_new():
+    "view - publish new blog "
     if request.method == 'POST':
-        data_body = request.form.get('ckeditor')  # <--
-        data_title = request.form.get('title')  # <--
-        data_categ = request.form.get('cat')  # <--
-        data_imgname = request.form.get('bimg')  # <--
+        de = dataengine.knightclient()
+        data_body = request.form.get('ckeditor') 
+        data_title = request.form.get('title') 
+        data_categ = request.form.get('cat') 
+        data_imgname = request.form.get('bimg') 
 
         if not data_title:
             return render_template("/dashboard/blog-new.html", error="Blog title required")
@@ -101,7 +104,6 @@ def blog_new():
                 data['category'] = data_categ
             else:
                 data['category'] = 'blog'
-            de = dataengine.knightclient()
             try:
                 if (de.blog_publish(data)):
                     return redirect(temple.route_blog+"/1/"+g.new_blog_url)

@@ -6,37 +6,42 @@ from flask_paginate import Pagination, get_page_parameter
 import json
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)
-
-_logger = dataengine.knightclient()
-log = _logger.log
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
+from settings import uploads_allowedext
+de = dataengine.knightclient()
+log = de.log
+ALLOWED_EXTENSIONS = uploads_allowedext
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
 def allowed_file(filename) -> str:
+    "validates file extension"
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @uploader.route("/media/<file>")
 def showuploaded(file) -> str:
+    "return uploaded -> root"
     return send_from_directory("static/dashboard/uploads", file)
 
 
 @uploader.route("/media/blog/<file>")
 def showuploaded_blog(file) -> str:
+    "return uploaded -> blog"
     return send_from_directory("static/dashboard/uploads/blog", file)
 
 
 @uploader.route("/media/products/<folderid>/<file>")
 def showuploaded_products(folderid, file) -> str:
+    "return uploaded -> product images"
     return send_from_directory("static/dashboard/uploads/products/"+folderid, file)
 
 
 @uploader.route("/media/mainimage/<folderid>/<file>")
 def showuploaded_productsmainimage(folderid, file) -> str:
+    "return uploaded -> product main image"
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/mainimage", file)
 
 
@@ -44,6 +49,7 @@ def showuploaded_productsmainimage(folderid, file) -> str:
 @uploader.route("/<folderid>/variants/<file>")
 @uploader.route("/media/variant/<folderid>/<file>")
 def showuploaded_products_variant(folderid, file) -> str:
+    "return uploaded -> variant image"
     return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
 
 
@@ -51,7 +57,7 @@ def showuploaded_products_variant(folderid, file) -> str:
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_main():
     """
-    Main image file uploade
+    main image file upload
     """
     if request.method == 'POST':
         _id = None
@@ -73,7 +79,6 @@ def upload_file_product_main():
         except Exception as e:
             pass
 
-        log("New Logo upload started")
         if 'file' not in request.files:
             return redirect(request.url)
         file = request.files['file']
@@ -83,12 +88,12 @@ def upload_file_product_main():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            # de = dataengine.knightclient()
-            # d = de.productmainupdater("mainimage", _iddc, r, filename=filename)
             return r
+        
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
         return "true"
+    
     return jsonify({"status": "success"})
 
 
@@ -96,7 +101,7 @@ def upload_file_product_main():
 @uploader.route('/upload-p-images', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_images():
     """
-    Images files upload
+    images files upload
     """
     if request.method == 'POST':
         _id = None
@@ -117,7 +122,6 @@ def upload_file_product_images():
         except Exception as e:
             pass
 
-        log("New Logo upload started")
         if 'file' not in request.files:
             return redirect(request.url)
         file = request.files['file']
@@ -127,8 +131,6 @@ def upload_file_product_images():
             filename = secure_filename(file.filename)
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
-            # de = dataengine.knightclient()
-            # d = de.productimagesupdater("images", _iddc, r, filename)
             return r
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
@@ -140,7 +142,7 @@ def upload_file_product_images():
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 def upload_file_product_variant():
     """
-    File upload for variants
+    file upload for variants
     """
     if request.method == 'POST':
         _iddc = dict(request.form)
@@ -174,12 +176,11 @@ def upload_file_product_variant():
             file.save(os.path.join(custom_folder, filename))
             r = custom_folder+"/"+filename
             # insert in database (append or replace value)
-            de = dataengine.knightclient()
             d = de.productvariantsupdater("variants", _iddc, r)
             return r
 
     elif request.method == 'DELETE':
-        # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug)
+        # 2 requests sends to this method (one in plain text & one in json obj) (DIY as filepond creates this bug or just misconfigured)
         stop = 0
         if not stop:
             try:
@@ -192,6 +193,7 @@ def upload_file_product_variant():
 
 @uploader.route('/upload', methods=['POST', 'GET'])
 def upload_file():
+    "logo uploader"
     if request.method == 'POST':
         log("New Logo upload started")
         if 'file' not in request.files:
@@ -202,15 +204,12 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            d_e = dataengine.knightclient()
             try:
-                d_e.update_data_uploads("control", "logo", filename,
+                de.update_data_uploads("control", "logo", filename,
                                         "owner", session['authenticated'][0])
-                log("Logo file uploaded")
             except Exception as e:
-                log("Logo upload failed, revert")
                 # if fails, revert to sample logo
-                d_e.update_data_uploads("control", "logo", 'sample.png',
+                de.update_data_uploads("control", "logo", 'sample.png',
                                         "owner", session['authenticated'][0])
                 filename = "sample.png"
             return jsonify({"status": filename})
@@ -220,7 +219,7 @@ def upload_file():
 @uploader.route('/blog-edit/upload-blog', methods=['POST', 'DELETE'])
 @uploader.route('/upload-blog', methods=['POST', 'DELETE'])
 def upload_file_blog():
-    print("Blog thumbnail upload")
+    "blog thumbnail upload"
     if request.method == 'POST':
         log("New Logo upload started")
         if 'file' not in request.files:
@@ -229,12 +228,9 @@ def upload_file_blog():
         file = request.files['file']
         if file.filename == '':
             flash('No selected file')
-            print("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            print("success processing now")
             filename = secure_filename(file.filename)
-
             file.save(os.path.join(UPLOAD_FOLDER_BLOG, filename))
 
             return UPLOAD_FOLDER_BLOG+"/"+filename
@@ -242,13 +238,13 @@ def upload_file_blog():
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
         return "true"
-
     else:
         return jsonify({"status": 0})
 
 
 @uploader.route('/upload_fav', methods=['POST'])
 def upload_fav():
+    "favicon uploader"
     if request.method == 'POST':
         log("New Favicon file upload started")
         if 'file' not in request.files:
@@ -257,21 +253,16 @@ def upload_fav():
         file = request.files['file']
         if file.filename == '':
             flash('No selected file')
-            print("No selected file")
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            print("success processing now")
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            d_e = dataengine.knightclient()
             try:
-                d_e.update_data_uploads("control", "favicon", filename,
+                de.update_data_uploads("control", "favicon", filename,
                                         "owner", session['authenticated'][0])
-                log("Favicon file uploaded")
             except Exception as e:
-                log("Favicon file failed to upload: ", e)
                 # if fails, revert to sample logo
-                d_e.update_data_uploads("control", "favicon", 'knight.svg',
+                de.update_data_uploads("control", "favicon", 'knight.svg',
                                         "owner", session['authenticated'][0])
                 filename = "knight.svg"
             return jsonify({"status": filename})

@@ -37,3 +37,7 @@ cms_version = "1.4"
 order_error_countries = ['CA','US']
 order_payment_method = ['card']  # check stripe for list of avail. method
 order_novariant_selected = "Available variants"  # override default value (when no variant selected) / Also needs an update on JS side
+
+
+# Uploads
+uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])

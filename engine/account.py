@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, g, session, url_for
+from flask import Blueprint, render_template, request, redirect, session
 import dataengine
-from flask_paginate import Pagination, get_page_parameter
 
 account = Blueprint("account", __name__)
 
@@ -10,8 +9,7 @@ def dashboard_account():
     """
     dashboard account settings page
     """
-    error = False
-    success = False
+    error, success = False, False
     if request.method == 'POST':
         try:
             p1 = request.form.get('pwd1')
@@ -27,7 +25,6 @@ def dashboard_account():
                 else:
                     success = False
                     error = "System cannot process your request"
-
         except Exception as e:
             return False
     try:
