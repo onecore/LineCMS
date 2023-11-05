@@ -15,9 +15,13 @@ function ckdata_get(){
         bel.textContent = "Save for this order"
     }
 }
-
-function api_psingle(data){
-  fetch("/api/product-fulfill", {
+function restruct(d){
+    if (d['obj']){
+         
+    }
+}
+async function api_psingle(data){
+  await fetch("/api/product-fulfill", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -26,9 +30,9 @@ function api_psingle(data){
   })
   .then((response) => response.json())
   .then((data) => {
-        let sdata = data;
-        if (parseInt(sdata['status']) === 1){
+        if (parseInt(data['status']) === 1){
             swal("", 'Order fulfilled', "success");
+            restruct(data)
 
         }else{
             swal("", 'Order failed to fulfill', "error");

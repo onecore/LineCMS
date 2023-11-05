@@ -55,6 +55,5 @@ def parse_send(**kwargs) -> bool:
             sendmail(subject=subject,reciever=recip,html=rendered,sender=sendr)
                 
         except Exception as e:
-            print(">>>",e)
             return False
         

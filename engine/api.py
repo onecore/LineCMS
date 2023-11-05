@@ -28,7 +28,7 @@ def prodfulfill():
             
             if _order:
                 _order = combine.zipper("orders",_order)
-                
+            
             try:
                 history = lite(_load_h[0])
             except Exception as e:
@@ -43,9 +43,6 @@ def prodfulfill():
                 if shipstatus == "on":
                     shipstatus = True
                 
-
-                
-                sendmailer = False
                 history_obj = history
                 history_obj[5] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":epoch()}
                 try:
@@ -54,7 +51,6 @@ def prodfulfill():
                         emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
                         history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
                 except Exception as e:
-                    print("Error, ",e)
                     history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
 
                 history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
@@ -65,6 +61,7 @@ def prodfulfill():
             
             return jsonify({"status": 0,"message":"Unable to fulfill"})
     except Exception as r:
+        print("Error: ",r)
         return jsonify({"status": 0,"message":"Request error, Unable to fulfill"})
 
         

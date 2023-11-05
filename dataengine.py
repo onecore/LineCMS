@@ -54,7 +54,6 @@ class knightclient:
         
     def orderhistory_add(self,data):
         _c = self.connection.cursor()
-        print("DL ",data)
         q = """UPDATE productorders SET history="{o}" where ordernumber="{orn}";""".format(o=str(data['obj']),orn=str(data['ordernumber']))
         _c.execute(q)
         self.connection.commit()
