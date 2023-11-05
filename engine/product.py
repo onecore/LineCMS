@@ -191,7 +191,7 @@ def product_orders_single(ids):
     temp = _de.productsettings_get()
     _comp = _de.load_data_index(0)
     hist = _de.orderhistory_get(order[19])
-    template = None
+    template = ""
     
     if order:
         _order = combine.zipper("orders",order)
@@ -204,8 +204,7 @@ def product_orders_single(ids):
     try:
         temp_status = lite(temp[12])['fulfilled']
         if temp_status:
-            template = temp[9]
-                
+            template = temp[9]                
     except Exception as e:
         pass
     
@@ -223,14 +222,13 @@ def product_orders_single(ids):
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
 
-    template = Template(template)
+    _template = Template(template)
     # def data(which,order,company,shipstatus,tracking=False):
     
-    rendered = template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
-        
+    rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
     return render_template("/dashboard/product-orders-single.html",
                            order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
-                           template=template,history=history)
+                           template=rendered,history=history)
 
 def price(price) -> int:
     "Stripe friendly price"

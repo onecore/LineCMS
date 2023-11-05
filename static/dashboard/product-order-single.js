@@ -22,6 +22,7 @@ function restruct(d){
     }
 }
 
+
 async function api_psingle(data){
   await fetch("/api/product-fulfill", {
     method: "POST",
@@ -88,6 +89,7 @@ function fulfill_auto(orn){
     let trv = tr.value
     let adv = ad.value
     data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":""}
+    test(data)
     if (trv && adv){
         confl(data)
     }else if (!trv){

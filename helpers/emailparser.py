@@ -22,6 +22,7 @@ def price(price) -> int:
     return o
 
 def data(which,order,company,shipstatus,tracking=False):
+    
     "tracking parameter only for fulfilled template"
     formatter = {
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
