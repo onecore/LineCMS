@@ -172,8 +172,7 @@ def product_mng(alert=None):
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
-    _de = dataengine.knightclient()
-    orders = _de.productorders_get()
+    orders = ps.productorders_get()
     alert=None
     search = False
     q = request.args.get('q')
@@ -187,11 +186,10 @@ def product_orders():
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):
-    _de = dataengine.knightclient()
-    order = _de.productorders_single_get(ids)
-    temp = _de.productsettings_get()
-    _comp = _de.load_data_index(0)
-    hist = _de.orderhistory_get(order[19])
+    order = ps.productorders_single_get(ids)
+    temp = ps.productsettings_get()
+    _comp = ps.load_data_index(0)
+    hist = ps.orderhistory_get(order[19])
     template = ""
     alert=None
     shipping_fee = None
@@ -341,7 +339,6 @@ def new_event():
 def check(data):
     "parses all the data needed to make a friendly objs for stripe api, returns an api url (checkout)"
     _, _, _, _, _, _,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
-    _de = dataengine.knightclient()
     items = []
     load_items = []
     product_meta = {}
@@ -356,7 +353,7 @@ def check(data):
                 return f" - Variant: {selected_variant}"
             return selected_variant
             
-        product_data = _de.get_product_single(route=False, checkout=product)
+        product_data = ps.get_product_single(route=False, checkout=product)
         product_meta[product_data[1] + includevariant()] = product
         clone = {
                 'price_data': {
