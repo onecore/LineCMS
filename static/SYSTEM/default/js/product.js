@@ -244,6 +244,7 @@ function checkout(){
     return false;
   }
   console.log(data)
+
   fetch("/product-checkout", {
     method: "POST",
     headers: {
@@ -253,7 +254,7 @@ function checkout(){
   })
   .then((response) => response.json())
   .then((data) => {
-  location.href = data.c
+    location.href = data.c
 });
 }
 

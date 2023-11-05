@@ -13,7 +13,7 @@ de = dataengine.knightclient()
 themes = de.themeget()[0]
 
 productuser = Blueprint(
-                        "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
+                        "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/'+themes
                         )
 
 
@@ -87,10 +87,11 @@ def purchase_cancel():
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
-def cproductpage(new=None, pid=None):
+def pproductpage(new=None, pid=None):
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
+    product = de.get_product_single(pid)
     mod = {
         "popup": lite(all_d[0]),
         "announcement": lite(all_d[1]),
@@ -100,7 +101,6 @@ def cproductpage(new=None, pid=None):
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
-    product = de.get_product_single(pid)
     variants = lite(product[3])
     productinfo = lite(product[10])
     jvariants = json.dumps(variants)

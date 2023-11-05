@@ -60,7 +60,7 @@
 
             &nbsp&nbsp
             <div>
-              <button class="btn bg-white text-dark rounded-0" onclick="checkout()">Checkout</button><input type="button" class="btn bg-dark text-white border" id="cart" style="margin-left:-2px;" value="0" disabled></input>
+              <button class="btn bg-white text-dark rounded-0" onclick="checkout();return false;">Checkout</button><input type="button" class="btn bg-dark text-white border" id="cart" style="margin-left:-2px;" value="0" disabled></input>
             </div>
 
               {% if 'authenticated' in session %}

@@ -344,7 +344,6 @@ def check(data):
     items = []
     load_items = []
     product_meta = {}
-    
     for product, values in data.items():
         _, _price, _quantity, _variant = values.split(",")
         
@@ -414,9 +413,10 @@ def prodcheck():
     if request.method == "POST":
         prdata = {}
         try:
-            prdata = lite(request.data)
+            prdata = json.loads(request.data)
         except Exception as e:
             return jsonify({"status": 0})
+        
         if prdata:
             clientres = check(prdata)
             return jsonify({'c': clientres})
