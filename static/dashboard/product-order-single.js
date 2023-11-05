@@ -35,11 +35,9 @@ async function api_psingle(data){
         if (parseInt(data['status']) === 1){
             swal("", 'Order fulfilled', "success");
             restruct(data)
-
         }else{
             swal("", 'Order failed to fulfill', "error");
         }
-
 });
 }
 
