@@ -25,7 +25,6 @@ def prodfulfill():
             comp_data = _de.load_data_index(0)
             _order = _de.productorders_single_get(0,_d['ordernumber'])
             history = False
-            
             if _order:
                 _order = combine.zipper("orders",_order)
             
@@ -33,7 +32,6 @@ def prodfulfill():
                 history = lite(_load_h[0])
             except Exception as e:
                 history = {}
-
             # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
             if _de.orderfulfill(_d):
                 # Load required
@@ -42,7 +40,7 @@ def prodfulfill():
                 shipstatus = False
                 if shipstatus == "on":
                     shipstatus = True
-                
+
                 history_obj = history
                 history_obj[5] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":epoch()}
                 try:
@@ -54,10 +52,12 @@ def prodfulfill():
                     history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
 
                 history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
+
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
+
                 _de.orderhistory_add(args)
-            
-                return jsonify({"status": 1,"message":"Order fulfilled","obj":history_obj})
+
+                return jsonify({"status": 1,"message":"Order fulfilled","obj":json.dumps(history_obj)})
             
             return jsonify({"status": 0,"message":"Unable to fulfill"})
     except Exception as r:
