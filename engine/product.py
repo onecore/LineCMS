@@ -11,6 +11,7 @@ from helpers import emailparser, combine
 from ast import literal_eval as lite
 from jinja2 import Template
 import stripe
+import settings
 
 product = Blueprint("product", __name__)
 
@@ -192,50 +193,45 @@ def product_orders_single(ids):
     _comp = _de.load_data_index(0)
     hist = _de.orderhistory_get(order[19])
     template = ""
+    alert=None
+    shipping_fee = None
     
     if order:
         _order = combine.zipper("orders",order)
-
     try:
         history = dict(lite(hist[0]).items())
     except Exception as e:
         history = {}
-        
     try:
         temp_status = lite(temp[12])['fulfilled']
-        if temp_status:
+        if int(temp_status):
             template = temp[9]            
-                
     except Exception as e:
         pass
     
-    alert=None
     parseditems = []
-    shipping_fee = None
-    
     if order:
         items = lite(order[10])
         for orders in items:
             parseditems.append(parseorders(orders,order))
-        
         if order[17]:
             shipping_fee = order[17].replace(".","") # needs to update (tho it works)
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
 
     _template = Template(template)
-    # def data(which,order,company,shipstatus,tracking=False):
-    
     rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
     return render_template("/dashboard/product-orders-single.html",
                            order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
                            template=rendered,history=history)
 
+
+# --> Start of webhook etc.
 def price(price) -> int:
     "Stripe friendly price"
     o = round(Decimal(price)*100) # Decimal to keep 2 decimal places from html input, Float doesn't work as it doesn keep the decimals
     return o
 
-def parserate(name,amount,mins,maxs):
+def parserate(name,amount,mins,maxs) -> dict:
     "Parse shipping rate opt. obj for stripe "
     clone =  {
                 "shipping_rate_data": {
@@ -243,14 +239,14 @@ def parserate(name,amount,mins,maxs):
                         "fixed_amount": {"amount": price(amount), "currency": ck},
                         "display_name": name,
                         "delivery_estimate": {
-                            "minimum": {"unit": "business_day", "value": int(mins)},
-                            "maximum": {"unit": "business_day", "value": int(maxs)},
+                                "minimum": {"unit": "business_day", "value": int(mins)},
+                                "maximum": {"unit": "business_day", "value": int(maxs)},
                    },
                 },
             }
     return clone
 
-def ratetemplater(obj):
+def ratetemplater(obj) -> list:
     options = []
     parsedobj = None
     try:
@@ -262,9 +258,7 @@ def ratetemplater(obj):
             options.append(parserate(rate_name,rate_data[0],rate_data[1],rate_data[2]))
         return options
     return []        
-        
-def deductquant(id,variant,quantity):
-    pass
+
 
 @product.route('/event', methods=['POST'])
 def new_event():
@@ -272,22 +266,18 @@ def new_event():
     Stripe webhook
     """
     sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
-
     event = None
     payload = request.data
     signature = request.headers['STRIPE_SIGNATURE']
-    
     try:
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
         logging(f"Stripe Webhook Err -> {e}")
-        
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
         items = []
         for item in session.line_items.data:
             items.append([item.description,item.quantity])
-        
         order = {
                 "customer_name":session.customer_details.name,
                 "customer_email":session.customer_details.email,
@@ -304,7 +294,6 @@ def new_event():
                 "phone": session.customer_details.phone,
                 "shipping_cost": ""
                 }
-        
         history_obj = {1: {"title":"Order Placed","message":"","timestamp":order['created']}}
         
         if shipstatus == "on":
@@ -313,8 +302,7 @@ def new_event():
         else:
             shipstatus = False
 
-        de = dataengine.knightclient()    
-        addord = de.productorders_set(order)
+        addord = ps.productorders_set(order)
         if addord:        
             if order['shipping_cost']:
                 ship_fee_ = f"${int(order['shipping_cost'])/100:.02f}"
@@ -329,11 +317,10 @@ def new_event():
                 
 
             logging(f"New order placed from: {order['customer_name']} - {order['customer_email']}")
-            temp_settings = de.productsettings_get()
-            comp_data = de.load_data_index(0)
+            temp_settings = ps.productsettings_get()
+            comp_data = ps.load_data_index(0)
             
             # { Send email using Placed template
-            sendmailer = False
             try:
                 _set = lite(temp_settings[12])['placed']
                 if int(_set):
@@ -345,13 +332,14 @@ def new_event():
                 pass
             # }Send email using Placed template
             args = {"obj":history_obj,"ordernumber":addord}
-            de.orderhistory_add(args)
+            ps.orderhistory_add(args) # Update history
             return {'success': True}
         else:
             return {'success': False}
     return {'success': True}
 
 def check(data):
+    "parses all the data needed to make a friendly objs for stripe api, returns an api url (checkout)"
     _, _, _, _, _, _,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
     _de = dataengine.knightclient()
     items = []
@@ -360,11 +348,10 @@ def check(data):
     
     for product, values in data.items():
         _, _price, _quantity, _variant = values.split(",")
-        
         def includevariant():
             "Dangy..."
             selected_variant = ""
-            if _variant != "Available variants":
+            if _variant != settings.order_novariant_selected:
                 selected_variant = _variant
                 return f" - Variant: {selected_variant}"
             return selected_variant
@@ -384,13 +371,13 @@ def check(data):
         items.append(clone)
 
     if shipstatus == "on":  # If shipping Enabled
-    
+        onerror = settings.order_error_countries
         def parsetolist(shipcountries):
             try:
                 return lite(shipcountries)
             except:
-                ["US","CA"]
-            return ["US","CA"]
+                return onerror
+            return onerror
         
         shipratesparsed = ratetemplater(shiprates)    
         shipcountries = parsetolist(shipcountries)
@@ -399,7 +386,7 @@ def check(data):
             shipping_address_collection={"allowed_countries": shipcountries},
             shipping_options=shipratesparsed,
             line_items=items,
-            payment_method_types=['card'],
+            payment_method_types=settings.order_payment_method,
             mode='payment',
             success_url=request.host_url + 'order/success',
             cancel_url=request.host_url + 'order/cancel',
@@ -409,7 +396,7 @@ def check(data):
     else:
         checkout_session = stripe.checkout.Session.create(
             line_items=items,
-            payment_method_types=['card'],
+            payment_method_types=settings.order_payment_method,
             mode='payment',
             success_url=request.host_url + 'order/success',
             cancel_url=request.host_url + 'order/cancel',
