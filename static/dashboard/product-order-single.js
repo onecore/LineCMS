@@ -15,11 +15,13 @@ function ckdata_get(){
         bel.textContent = "Save for this order"
     }
 }
+
 function restruct(d){
     if (d['obj']){
-         
+         // continue here
     }
 }
+
 async function api_psingle(data){
   await fetch("/api/product-fulfill", {
     method: "POST",
