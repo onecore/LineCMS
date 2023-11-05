@@ -7,19 +7,20 @@ from icecream import ic
 from engine.product import getimages, getmainimage
 from decimal import Decimal
 import stripe
+from ast import literal_eval as lite
 
-loadtheme_ = dataengine.knightclient()
-themes = loadtheme_.themeget()[0]
+de = dataengine.knightclient()
+themes = de.themeget()[0]
 
 productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
                         )
 
 
-def variantpush(v, i, js=False):
+def variantpush(v, i, js=False) -> dict:
     """
     function to change images into a dictionary with index,
-    purpose to show image in lightslider when variant changed, actual variant image will show
+    purpose to show image in lightslider when variant changed
     """
     c, d = 0, {}
     for im in i:  # images
@@ -35,18 +36,18 @@ def variantpush(v, i, js=False):
 
 @productuser.route('/product-list', methods=['GET', 'POST'])
 def productlist():
-    de = dataengine.knightclient()
+    "views - product list"
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
-        "popup": eval(all_d[0]),
-        "announcement": eval(all_d[1]),
-        "uparrow": eval(all_d[2]),
-        "socialshare": eval(all_d[3]),
-        "videoembed": eval(all_d[4]),
-        "custom": eval(all_d[5]),
-        "extras": eval(all_d[6]),
+        "popup": lite(all_d[0]),
+        "announcement": lite(all_d[1]),
+        "uparrow": lite(all_d[2]),
+        "socialshare": lite(all_d[3]),
+        "videoembed": lite(all_d[4]),
+        "custom": lite(all_d[5]),
+        "extras": lite(all_d[6]),
     }
     products = de.get_product_listings()
     search = False
@@ -62,46 +63,46 @@ def productlist():
 
 @productuser.route('/order/success')
 def purchase_success():
-    de = dataengine.knightclient()
+    "views - checkout success (stripe call)"
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
-        "popup": eval(all_d[0]),
-        "announcement": eval(all_d[1]),
-        "uparrow": eval(all_d[2]),
-        "socialshare": eval(all_d[3]),
-        "videoembed": eval(all_d[4]),
-        "custom": eval(all_d[5]),
-        "extras": eval(all_d[6]),
+        "popup": lite(all_d[0]),
+        "announcement": lite(all_d[1]),
+        "uparrow": lite(all_d[2]),
+        "socialshare": lite(all_d[3]),
+        "videoembed": lite(all_d[4]),
+        "custom": lite(all_d[5]),
+        "extras": lite(all_d[6]),
     }
     return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod)
 
 
 @productuser.route('/order/cancel')
 def purchase_cancel():
+    "views - checkout cancelled/error (stripe call)"
     return redirect("/product-list")
 
 
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
 def cproductpage(new=None, pid=None):
-    de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
-        "popup": eval(all_d[0]),
-        "announcement": eval(all_d[1]),
-        "uparrow": eval(all_d[2]),
-        "socialshare": eval(all_d[3]),
-        "videoembed": eval(all_d[4]),
-        "custom": eval(all_d[5]),
-        "extras": eval(all_d[6]),
+        "popup": lite(all_d[0]),
+        "announcement": lite(all_d[1]),
+        "uparrow": lite(all_d[2]),
+        "socialshare": lite(all_d[3]),
+        "videoembed": lite(all_d[4]),
+        "custom": lite(all_d[5]),
+        "extras": lite(all_d[6]),
     }
     product = de.get_product_single(pid)
-    variants = eval(product[3])
-    productinfo = eval(product[10])
+    variants = lite(product[3])
+    productinfo = lite(product[10])
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
     imags = getimages(product[13])
@@ -124,4 +125,5 @@ def cproductpage(new=None, pid=None):
 
 @productuser.route("/ks/<folder>/<file>")
 def staticgetter(folder: str, file: str) -> str:
+    "jj formatter - returns image file"
     return send_from_directory(f"static/SYSTEM/default/{folder}", file)

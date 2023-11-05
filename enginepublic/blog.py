@@ -6,14 +6,15 @@ import json
 import os
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
+from ast import literal_eval as lite
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
-loadtheme_ = dataengine.knightclient()
-themes = loadtheme_.themeget()
+de = dataengine.knightclient()
+themes = de.themeget()
 
 bloguser = Blueprint(
-                        "bloguser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
-                        )
+                    "bloguser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
+                    )
 
 
 @bloguser.route(settings.route_blog, methods=['POST', 'GET'])
@@ -22,21 +23,20 @@ bloguser = Blueprint(
 @bloguser.route(settings.route_blog+"/<new>/<url>", methods=['POST', 'GET'])
 def blog_mainview(new=None, url=None):
     """
-    Blog main view
+    views - blog main view
     """
     if url:
-        de = dataengine.knightclient()
         dt = de.load_data_index(None)  # loads datas
         modules_settings = de.load_modules_settings()
         all_d = modules_settings[0]
         mod = {
-            "popup": eval(all_d[0]),
-            "announcement": eval(all_d[1]),
-            "uparrow": eval(all_d[2]),
-            "socialshare": eval(all_d[3]),
-            "videoembed": eval(all_d[4]),
-            "custom": eval(all_d[5]),
-            "extras": eval(all_d[6]),
+            "popup": lite(all_d[0]),
+            "announcement": lite(all_d[1]),
+            "uparrow": lite(all_d[2]),
+            "socialshare": lite(all_d[3]),
+            "videoembed": lite(all_d[4]),
+            "custom": lite(all_d[5]),
+            "extras": lite(all_d[6]),
         }
         blog = de.get_blog_single(url)
         cats = blog[7].split(",")
@@ -49,20 +49,19 @@ def blog_mainview(new=None, url=None):
 @bloguser.route(settings.route_blog_list, methods=['GET'])
 def blog_list():
     """
-    Blog posts listings
+    views - blog posts listings
     """
-    de = dataengine.knightclient()
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
-        "popup": eval(all_d[0]),
-        "announcement": eval(all_d[1]),
-        "uparrow": eval(all_d[2]),
-        "socialshare": eval(all_d[3]),
-        "videoembed": eval(all_d[4]),
-        "custom": eval(all_d[5]),
-        "extras": eval(all_d[6]),
+        "popup": lite(all_d[0]),
+        "announcement": lite(all_d[1]),
+        "uparrow": lite(all_d[2]),
+        "socialshare": lite(all_d[3]),
+        "videoembed": lite(all_d[4]),
+        "custom": lite(all_d[5]),
+        "extras": lite(all_d[6]),
     }
     blogs = de.get_blog_listings()
     search = False
