@@ -60,7 +60,7 @@ def variantimagemodifier(d: bytes) -> 'json':
     tuple->list->tuple, checks if file exists, else modify db data to avoid loading file that doesn't exists
     """
     d = list(d)
-    _variants = eval(d[3])
+    _variants = lite(d[3])
     _variants_new = {}
     # mainimage
     for variant_name, image_path in _variants.items():  # variants
@@ -82,7 +82,7 @@ def loadorderim(key,obj) -> str:
     """
     img = None
     try:
-        robj = eval(obj[14])
+        robj = lite(obj[14])
     except:
         return "/media/ni.jpeg"
     product_id = robj[key]
@@ -92,7 +92,7 @@ def loadorderim(key,obj) -> str:
         if im[9]:
             img = f"/media/mainimage/{product_id}/{im[9]}"
         elif im[8]:
-            ev = eval(im[8])
+            ev = lite(im[8])
             img = f"/media/products/{product_id}/{im[8][0]}"
         else:
             img = "/media/ni.jpeg"
@@ -204,17 +204,17 @@ def product_orders_single(ids):
     try:
         temp_status = lite(temp[12])['fulfilled']
         if temp_status:
-            template = temp[9]                
+            template = temp[9]            
+                
     except Exception as e:
         pass
     
-
     alert=None
     parseditems = []
     shipping_fee = None
     
     if order:
-        items = eval(order[10])
+        items = lite(order[10])
         for orders in items:
             parseditems.append(parseorders(orders,order))
         
@@ -254,9 +254,8 @@ def ratetemplater(obj):
     options = []
     parsedobj = None
     try:
-        parsedobj = eval(obj)
+        parsedobj = lite(obj)
     except:
-        print("Unable to parse ship rates")
         parsedobj = {}
     if parsedobj:
         for rate_name,rate_data in parsedobj.items():
@@ -388,7 +387,7 @@ def check(data):
     
         def parsetolist(shipcountries):
             try:
-                return eval(shipcountries)
+                return lite(shipcountries)
             except:
                 ["US","CA"]
             return ["US","CA"]
@@ -425,7 +424,7 @@ def prodcheck():
     if request.method == "POST":
         prdata = {}
         try:
-            prdata = eval(request.data)
+            prdata = lite(request.data)
         except Exception as e:
             return jsonify({"status": 0})
 
