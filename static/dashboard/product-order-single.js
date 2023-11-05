@@ -26,9 +26,14 @@ function api_psingle(data){
   })
   .then((response) => response.json())
   .then((data) => {
-        // swal("", 'Order fulfilled', "success");
-
         let sdata = data;
+        if (parseInt(sdata['status']) === 1){
+            swal("", 'Order fulfilled', "success");
+
+        }else{
+            swal("", 'Order failed to fulfill', "error");
+        }
+
 });
 }
 

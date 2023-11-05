@@ -61,7 +61,7 @@ def prodfulfill():
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
             
-                return jsonify({"status": 1,"message":"Order fulfilled","obj":{}})
+                return jsonify({"status": 1,"message":"Order fulfilled","obj":history_obj})
             
             return jsonify({"status": 0,"message":"Unable to fulfill"})
     except Exception as r:
