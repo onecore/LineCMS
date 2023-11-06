@@ -22,7 +22,7 @@ product = Blueprint("product", __name__)
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
-ps = dataengine.knightclient()
+ps = dataengine.SandEngine()
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 logging = ps.log

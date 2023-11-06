@@ -22,7 +22,7 @@ def prodfulfill():
     try:
         if (request.data):
             _d = json.loads(request.data)
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             _load_h = _de.orderhistory_get(_d['ordernumber'])
             sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
             temp_settings = _de.productsettings_get()
@@ -70,7 +70,7 @@ def prodset_smtp():
     try:
         if (request.data):
             _d = json.loads(request.data)
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             if _de.productsettings_smtp(_d):
                 return jsonify({"status": 1,"message":"SMTP Credentials updated"})
             return jsonify({"status": 0,"message":"Unable to update"})
@@ -84,7 +84,7 @@ def prodset_template():
     try:
         if (request.data):
             _d = json.loads(request.data)
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             if _de.productsettings_temp(_d):
                 return jsonify({"status": 1,"message":"Order templates updated"})
             return jsonify({"status": 0,"message":"Unable to update"})
@@ -98,7 +98,7 @@ def prodset_stripe():
     try:
         if (request.data):
             _d = json.loads(request.data)
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             if _de.productsettings_str(_d):
                 return jsonify({"status": 1,"message":"Shipping options updated"})
             return jsonify({"status": 0,"message":"Unable to update"})
@@ -112,7 +112,7 @@ def prodset_ship():
     try:
         if (request.data):
             _d = json.loads(request.data)
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             if _de.productsettings_ship(_d):
                 return jsonify({"status": 1,"message":"Shipping options updated"})
             return jsonify({"status": 0,"message":"Unable to update"})
@@ -125,7 +125,7 @@ def themeup():
     "theme settings update"
     if (request.data):
         _d = json.loads(request.data)
-        _de = dataengine.knightclient()
+        _de = dataengine.SandEngine()
         if _de.themeset(_d['set']):
             return jsonify({"status": 1})
         return jsonify({"status": 0})
@@ -136,7 +136,7 @@ def themeup():
 def productupd():
     "product update api"
     _d = json.loads(request.data)
-    _de = dataengine.knightclient()
+    _de = dataengine.SandEngine()
     if _d['id']:
         rs = _de.product_update(_d)
         if rs:
@@ -149,7 +149,7 @@ def productupd():
 def productdel():
     "product delete api"
     _d = json.loads(request.data)
-    _de = dataengine.knightclient()
+    _de = dataengine.SandEngine()
     if _d['id']:
         rs = _de.delete_pr(_d['id'])
         if rs:
@@ -162,7 +162,7 @@ def productdel():
 def productpub():
     "product publish api"
     _d = json.loads(request.data)
-    _de = dataengine.knightclient()
+    _de = dataengine.SandEngine()
 
     if _d['id']:
         rs = _de.product_publish(_d)
@@ -177,7 +177,7 @@ def modupdate():
     "module update api"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            de = dataengine.knightclient()
+            de = dataengine.SandEngine()
             if (de.update_module(request.data)):
                 return jsonify({'status': True})
             return jsonify({'status': False})
@@ -191,7 +191,7 @@ def knightapi():
     "api updater (Needs update)"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            d = dataengine.knightclient()
+            d = dataengine.SandEngine()
             if (d.knightclientapi(lite(request.data)['action'])):
                 return jsonify({'status': True})
             return jsonify({'status': False})
@@ -208,7 +208,7 @@ def delete_apip():
             table = request.json['table']
             column = request.json['column']
             value = request.json['value']
-            de = dataengine.knightclient()
+            de = dataengine.SandEngine()
             if (de.delete_apip(table, column, value)):
                 return jsonify({"status": 1, "message": "Blog post has been deleted"})
             return jsonify({"status": 0, "message": "Blog post cannot delete right now"})
@@ -224,7 +224,7 @@ def delete_api():
             table = request.json['table']
             column = request.json['column']
             value = request.json['value']
-            de = dataengine.knightclient()
+            de = dataengine.SandEngine()
             if (de.delete_api(table, column, value)):
                 return jsonify({"status": 1, "message": "Blog post has been deleted"})
             return jsonify({"status": 0, "message": "Blog post cannot delete right now"})
@@ -237,7 +237,7 @@ def knightapi2():
     "api needs an update"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            d = dataengine.knightclient()
+            d = dataengine.SandEngine()
             if (d.knightclientapiv2(lite(request.data))):
                 return jsonify({'status': True})
             return jsonify({'status': False})
@@ -251,7 +251,7 @@ def api_deletepartialimage():
     "partial delete image (image that is not needed, not inserted in db)"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            d = dataengine.knightclient()
+            d = dataengine.SandEngine()
             d.delete_image_partial(lite(request.data))
         return "KnightStudio Dashboard build ", version
     else:
@@ -263,7 +263,7 @@ def delete(table, ids):
     'Deletes table (soon to be removed)'
     mid = ids
     if 'authenticated' in session:
-        d = dataengine.knightclient()
+        d = dataengine.SandEngine()
         if d.delete(table, ids):
             return jsonify({"status": True})
         return jsonify("status", False)

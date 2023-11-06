@@ -20,7 +20,7 @@ UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
-class knightclient:
+class SandEngine:
 
     connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
     # cursor = connection.cursor()

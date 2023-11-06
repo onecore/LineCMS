@@ -12,7 +12,7 @@ import json
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)
 from settings import uploads_allowedext
-de = dataengine.knightclient()
+de = dataengine.SandEngine()
 log = de.log
 ALLOWED_EXTENSIONS = uploads_allowedext
 UPLOAD_FOLDER = 'static/dashboard/uploads'

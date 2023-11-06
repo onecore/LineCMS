@@ -1,20 +1,15 @@
 """
 SandCMS - Content Management System (Product & Blogging) for Rapid website development
 Website: www.sandcms.com
-Initial: 04/1/23
 Author: S. Jangra & Mark A.R. Pequeras
 """
 from ast import literal_eval as le
 import dataengine
-import settings
-from flask import render_template
 from jinja2 import Template
 from decimal import Decimal
-from flask_mail import Message, Mail
-from flask import jsonify
 from flask import current_app
 
-d = dataengine.knightclient()
+d = dataengine.SandEngine()
 logger = d.log
 
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,sender,_ = d.productsettings_get()

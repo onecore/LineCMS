@@ -17,7 +17,7 @@ def dashboard_main():
     main dashboard page
     """
     error, success = False, False
-    de = dataengine.knightclient()
+    de = dataengine.SandEngine()
     dt = de.load_data_index(None)  # loads datas
 
     tmplist = themeengine.templates_list
@@ -53,7 +53,7 @@ def dashboard_main():
                         error = "Some information must be 5 characters or more"
                         return render_template("dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
                     else:
-                        upd = dataengine.knightclient()
+                        upd = dataengine.SandEngine()
                         if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                             dt = de.load_data_index(None)  # loads datas
                             return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme)
