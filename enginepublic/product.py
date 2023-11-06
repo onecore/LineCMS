@@ -1,11 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, g, send_from_directory, url_for, jsonify
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
+from flask import Blueprint, render_template, request, redirect, send_from_directory
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import json
-import os
-from icecream import ic
-from engine.product import getimages, getmainimage
-from decimal import Decimal
+from engine.product import getimages
 from ast import literal_eval as lite
 
 de = dataengine.knightclient()

@@ -1,4 +1,8 @@
-
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
 
 # Templating & System variables
 ks_badge_insert = "bg-secondary"  # Blog-list view / fn blog_list_badge_category
@@ -41,3 +45,6 @@ order_novariant_selected = "Available variants"  # override default value (when 
 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
+
+# Database Path and File
+dbase_path = "dbase/sand"

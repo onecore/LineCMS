@@ -1,12 +1,7 @@
 """
-KnightSolutions Canada
-Extendable Content Manage System for any Website template
-www.KnightStudio.ca - KnightStudio Dashboard / Client files
-Aug 31,2023
-www.sinsoro.com - SinsoroCMS / Client files
-Sept 19, 2023
-Developed by Mark Anthony Pequeras - Python >= v3
-Database: Sqlite3
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
 """
 
 import dataengine

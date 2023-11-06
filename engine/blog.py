@@ -1,9 +1,13 @@
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
 from flask import Blueprint, render_template, request, redirect, g
 import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import settings as temple
 import os
-from icecream import ic
 
 blog = Blueprint("blog", __name__)
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'

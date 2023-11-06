@@ -1,9 +1,14 @@
-from flask import Blueprint, render_template, request, redirect, g, flash, send_from_directory, jsonify, session
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
+from flask import Blueprint, request, redirect, flash, send_from_directory, jsonify, session
 import dataengine
 from werkzeug.utils import secure_filename
 import os
-from flask_paginate import Pagination, get_page_parameter
 import json
+
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)
 from settings import uploads_allowedext

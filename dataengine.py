@@ -1,3 +1,8 @@
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
 import sqlite3
 import datetime
 import time
@@ -17,7 +22,7 @@ UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 class knightclient:
 
-    connection = sqlite3.connect("db/knightstudio", check_same_thread=False)
+    connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
     # cursor = connection.cursor()
 
     def themeset(self, theme):

@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, g, session, url_for
+"""
+SandCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.sandcms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
+from flask import Blueprint, render_template
 import dataengine
-from flask_paginate import Pagination, get_page_parameter
 from ast import literal_eval as lite
 module = Blueprint("module", __name__)
 
