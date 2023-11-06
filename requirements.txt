@@ -8,4 +8,4 @@ flask_paginate
 icecream
 stripe
 currencies
-flask_redmail
+flask_mail

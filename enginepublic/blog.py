@@ -10,7 +10,7 @@ from ast import literal_eval as lite
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 de = dataengine.knightclient()
-themes = de.themeget()
+themes = de.themeget()[0]
 
 bloguser = Blueprint(
                     "bloguser", __name__, static_folder='static', static_url_path='/static/SYSTEM/default'
