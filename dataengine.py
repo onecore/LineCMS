@@ -537,7 +537,7 @@ class SandEngine:
         except Exception as e:
             self.log("Unable to delete blog post, "+str(e))
 
-    def delete(self, table, id):
+    def ddelete(self, table, id):
         _c = self.connection.cursor()
         try:
             q = "DELETE FROM {table} WHERE id = {id};".format(
