@@ -15,10 +15,10 @@ from flask import Flask, Blueprint, g, flash, render_template, request, jsonify,
 from werkzeug.utils import secure_filename
 from flask_ckeditor import CKEditor
 from flask_paginate import Pagination, get_page_parameter
-import templater as temple
-import renderfunc as rf
+import helpers.renderfunc as rf
 from enginepublic import loaders
 from flask_mail import Mail, Message
+from ast import literal_eval as lite
 
 # Dashboard imports/views
 from engine.blog import blog
@@ -41,7 +41,6 @@ from enginepublic.main import mains
 from enginepublic.notfound import notfound
 # Public views
 
-ckeditor = CKEditor()
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 version = "1.4"
 app = Flask(__name__,
@@ -49,9 +48,10 @@ app = Flask(__name__,
             static_folder='static',
             template_folder='templates')
 
+ckeditor = CKEditor()
 ckeditor.init_app(app)  # wysiwyg html editor
 
-MAILENABLED = False
+MAILCONFIGLOADED = False
 UPLOAD_FOLDER = 'static/dashboard/uploads'
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
@@ -63,16 +63,17 @@ __de = dataengine.knightclient()
 mailinfo = __de.productsettings_get()
 logger = __de.log
 try:
-    maildata = eval(mailinfo[13])
+    maildata = lite(mailinfo[13])
     app.config['MAIL_SERVER']= maildata['server']
     app.config['MAIL_PORT'] = int(maildata['port'])
+    app.config['MAIL_USERNAME'] = "theonecore@gmail.com" #maildata['email']
+    app.config['MAIL_PASSWORD'] = "gaud mgxn ilke adfs" #maildata['password']
     app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
-    logger(f"Mail SMTP settings/credentials Loaded")
-    MAILENABLED = True
+    logger(f"Startup: Mail SMTP settings/credentials Loaded")
+    MAILCONFIGLOADED = True
 except Exception as e:
-    logger(f"Error -> {e}")
-    
+    logger(f"Startup: Mail Error -> {e}")
 
 mail = Mail(app)
 
@@ -83,7 +84,7 @@ def sendmail_test():
         subject = 'Test Email!'
         message = '<b>Hello from KnightStudio</b>'
         if request.data:
-            r = eval(request.data)
+            r = lite(request.data)
             msg = Message(
                 subject=subject,
                 recipients=[r['receiver']],
@@ -96,12 +97,11 @@ def sendmail_test():
             except Exception as e:
                 return jsonify({"status":0,"message":f"Error occured: {e}"})
 
-
-def sendmail(data):
+def sendmail(**data):
     msg = Message(
         subject=data['subject'],
         recipients=[data['reciever']],
-        html=data['message'],
+        html=data['html'],
         sender=data['sender'],
     )
     try:
@@ -110,7 +110,6 @@ def sendmail(data):
     except Exception as e:
         logger(f"Mail send failed, {e}")
         return jsonify({"status":0,"message":f"Error occured: {e}"})
-
 
 
 """
@@ -157,3 +156,4 @@ functions for Jinja templating (Public)
 app.jinja_env.globals.update(loadblogs=loaders.loadblogs)
 app.jinja_env.globals.update(loadproducts=loaders.loadproducts)
 app.jinja_env.globals.update(loaddate=loaders.dateformatter)
+

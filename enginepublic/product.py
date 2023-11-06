@@ -6,7 +6,6 @@ import os
 from icecream import ic
 from engine.product import getimages, getmainimage
 from decimal import Decimal
-import stripe
 from ast import literal_eval as lite
 
 de = dataengine.knightclient()

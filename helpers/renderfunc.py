@@ -11,6 +11,7 @@ def ks_include_adminbutton() -> str:
     c = temple.ks_admin_button
     v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
         c+"'"+"style='color:white'"+">Owner Dashboard</a>"
+    
     return v
 
 
