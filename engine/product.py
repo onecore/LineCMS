@@ -97,7 +97,6 @@ def variantimagemodifier(d: bytes) -> 'json':
 
     d[9] = getmainimage(d[13])
 
-
     modifierinsert = ps.productimagesmod(
         _variants_new, d[13])
     return tuple(d)

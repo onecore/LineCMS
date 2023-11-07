@@ -9,7 +9,7 @@ from flask_paginate import Pagination, get_page_parameter
 import json
 from engine.product import getimages
 from ast import literal_eval as lite
-
+from helpers.caster import trythis
 de = dataengine.SandEngine()
 themes = de.themeget()[0]
 
@@ -102,7 +102,9 @@ def pproductpage(new=None, pid=None):
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
-    variants = lite(product[3])
+    if not product:
+        return redirect("/product-manage")
+    variants = trythis(product[3],{})  
     productinfo = lite(product[10])
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
