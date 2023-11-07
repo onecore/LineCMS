@@ -24,7 +24,7 @@ def dashboard_account():
             elif len(p1) < 4 or len(p2) < 4:
                 error = "Password must have 5 characters and above"
             else:
-                de_ = dataengine.knightclient()
+                de_ = dataengine.SandEngine()
                 if de_.update_credential(session['authenticated'][0], p2):
                     success = True
                 else:
@@ -33,7 +33,7 @@ def dashboard_account():
         except Exception as e:
             return False
     try:
-        _de = dataengine.knightclient()
+        _de = dataengine.SandEngine()
         _cred = _de.get_cred(
             session['authenticated'][0], session['authenticated'][1])
         _cred_data = _cred[0]

@@ -26,7 +26,7 @@ def trydelete(image):
 @blog.route("/blog-edit/<url>", methods=['POST', 'GET'])
 def blog_edit(url):
     "view - blog edit"
-    de = dataengine.knightclient()
+    de = dataengine.SandEngine()
     blog = de.get_blog_single(url)
 
     if request.method == 'POST':
@@ -67,7 +67,7 @@ def blog_edit(url):
 @blog.route("/blog-manage/<alert>", methods=['POST', 'GET'])
 def blog_manage(alert=None):
     "view - lists blog posts"
-    de = dataengine.knightclient()
+    de = dataengine.SandEngine()
     search = False
     q = request.args.get('q')
     if q:
@@ -84,7 +84,7 @@ def blog_manage(alert=None):
 def blog_new():
     "view - publish new blog "
     if request.method == 'POST':
-        de = dataengine.knightclient()
+        de = dataengine.SandEngine()
         data_body = request.form.get('ckeditor') 
         data_title = request.form.get('title') 
         data_categ = request.form.get('cat') 

@@ -20,7 +20,7 @@ UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
 
-class knightclient:
+class SandEngine:
 
     connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
     # cursor = connection.cursor()
@@ -537,7 +537,7 @@ class knightclient:
         except Exception as e:
             self.log("Unable to delete blog post, "+str(e))
 
-    def delete(self, table, id):
+    def ddelete(self, table, id):
         _c = self.connection.cursor()
         try:
             q = "DELETE FROM {table} WHERE id = {id};".format(

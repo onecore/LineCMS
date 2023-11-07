@@ -5,11 +5,8 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 
 import dataengine
-import os
-from flask import Flask, Blueprint, g, flash, render_template, request, jsonify, session, redirect, url_for, send_from_directory
-from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify
 from flask_ckeditor import CKEditor
-from flask_paginate import Pagination, get_page_parameter
 import helpers.renderfunc as rf
 from enginepublic import loaders
 from flask_mail import Mail, Message
@@ -54,7 +51,7 @@ app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xd
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Mail Infos below
-__de = dataengine.knightclient()
+__de = dataengine.SandEngine()
 mailinfo = __de.productsettings_get()
 logger = __de.log
 try:

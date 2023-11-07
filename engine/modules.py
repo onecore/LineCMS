@@ -8,14 +8,14 @@ import dataengine
 from ast import literal_eval as lite
 module = Blueprint("module", __name__)
 
-_logger = dataengine.knightclient()
+_logger = dataengine.SandEngine()
 log = _logger.log
 
 
 @module.route("/modules")
 def modules():
     "view - modules control"
-    de = dataengine.knightclient()
+    de = dataengine.SandEngine()
     dt = de.load_data_index(None)  # loads datas
 
     modules_settings = de.load_modules_settings()

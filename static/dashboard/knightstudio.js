@@ -538,18 +538,34 @@ function build_variants() {
 function p_publish() {
     // document.getElementById("loading").style = 'display:block';
     // document.getElementById("publishb").style = 'display:none';
-    build_variants()
-    fetch("/product-publish", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product_data)
-    }).then(res => {
-        // swal("", 'Module Updated', "success");
-        console.log("Request complete! response:", res);
-    });
 
+    if (build_variants() == false){
+            swal("", 'Please check for any missing information.', "error");
+            document.getElementById("cover-spin").style.display = "none";
+    }else{
+        fetch("/product-publish", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product_data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+                if (parseInt(data['status']) === 1){
+                    swal("", 'Order fulfilled', "success");
+                    if (data['url']){
+                        location.href = "/product/"+data['url']
+                    }
+                }else{
+                    swal("", 'Unable to publish your product', "error");
+                }
+        });
+    }
+
+}
+function loadingel(func){
+    setTimeout(func, 2000)
 }
 
 function p_updatepost() {

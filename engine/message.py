@@ -8,7 +8,7 @@ import dataengine
 
 message = Blueprint("message", __name__)
 
-_logger = dataengine.knightclient()
+_logger = dataengine.SandEngine()
 log = _logger.log
 
 
@@ -16,7 +16,7 @@ log = _logger.log
 def messages():
     "view - list all messages"
     
-    _m = dataengine.knightclient()
+    _m = dataengine.SandEngine()
     data = _m.get_messages()
     return render_template("dashboard/messages.html", data=data)
 
@@ -32,7 +32,7 @@ def messagerec():
         'phone': json['phone'],
         'message': json['message'],
     }
-    _de = dataengine.knightclient()
+    _de = dataengine.SandEngine()
     if (_de.message(dicts)):
         log("New message received")
         return jsonify({'status': True})

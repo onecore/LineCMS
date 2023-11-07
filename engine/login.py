@@ -18,7 +18,7 @@ def login():
         _u = request.form.get('uname')
         _p = request.form.get('pwd')
         try:
-            _de = dataengine.knightclient()
+            _de = dataengine.SandEngine()
             _cred = _de.get_cred(_u, _p)
             _cred_data = _cred[0]
             if _cred_data[0] == _u and _cred_data[1] == _p:

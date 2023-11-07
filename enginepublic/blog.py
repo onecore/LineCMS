@@ -12,7 +12,7 @@ from flask_paginate import Pagination, get_page_parameter
 from ast import literal_eval as lite
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
-de = dataengine.knightclient()
+de = dataengine.SandEngine()
 themes = de.themeget()[0]
 
 bloguser = Blueprint(

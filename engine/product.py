@@ -22,7 +22,7 @@ product = Blueprint("product", __name__)
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 
-ps = dataengine.knightclient()
+ps = dataengine.SandEngine()
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
 stripe.api_key = sk
 logging = ps.log
@@ -38,11 +38,15 @@ def getimages(ids) -> list:
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
-    for file_path in os.listdir(dir_path):
-        # check if current file_path is a file
-        if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
-            # add filename to list
-            res.append(file_path)
+    try:
+        for file_path in os.listdir(dir_path):
+            # check if current file_path is a file
+            if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
+                # add filename to list
+                res.append(file_path)
+    except FileNotFoundError: # no images
+        pass
+    
     if res:
         return res
     else:
@@ -50,14 +54,20 @@ def getimages(ids) -> list:
     
 def getmainimage(ids) -> str:
     "returns product's main image"
+
+
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}/mainimage"
-    for file_path in os.listdir(dir_path):
-        # check if current file_path is a file
-        if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
-            # add filename to list
-            res.append(file_path)
+    try:
+        for file_path in os.listdir(dir_path):
+            # check if current file_path is a file
+            if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
+                # add filename to list
+                res.append(file_path)
+    except FileNotFoundError: # no image
+        pass
+
     if res:
         return res[0]
     else:
@@ -69,6 +79,9 @@ def variantimagemodifier(d: bytes) -> 'json':
     """
     d = list(d)
     _variants = lite(d[3])
+    if not _variants:
+        _variants = {}
+    
     _variants_new = {}
     # mainimage
     for variant_name, image_path in _variants.items():  # variants
@@ -76,9 +89,14 @@ def variantimagemodifier(d: bytes) -> 'json':
             _variants_new[variant_name] = ""
         else:
             _variants_new[variant_name] = image_path
+
+    
     d[3] = _variants_new
+
     d[8] = json.dumps(getimages(d[13]))
+
     d[9] = getmainimage(d[13])
+
     modifierinsert = ps.productimagesmod(
         _variants_new, d[13])
     return tuple(d)
