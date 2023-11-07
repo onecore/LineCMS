@@ -550,7 +550,9 @@ function p_publish() {
     .then((data) => {
             if (parseInt(data['status']) === 1){
                 swal("", 'Order fulfilled', "success");
-                restruct(data)
+                if (data['url']){
+                    location.href = "/product/"+data['url']
+                }
             }else{
                 swal("", 'Unable to publish your product', "error");
             }
