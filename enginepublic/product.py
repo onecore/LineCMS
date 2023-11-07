@@ -102,8 +102,10 @@ def pproductpage(new=None, pid=None):
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
+    
     if not product:
         return redirect("/product-manage")
+    
     variants = trythis(product[3],{})  
     productinfo = lite(product[10])
     jvariants = json.dumps(variants)
