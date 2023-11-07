@@ -38,11 +38,15 @@ def getimages(ids) -> list:
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
-    for file_path in os.listdir(dir_path):
-        # check if current file_path is a file
-        if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
-            # add filename to list
-            res.append(file_path)
+    try:
+        for file_path in os.listdir(dir_path):
+            # check if current file_path is a file
+            if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
+                # add filename to list
+                res.append(file_path)
+    except:
+        pass
+    
     if res:
         return res
     else:

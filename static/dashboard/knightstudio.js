@@ -545,10 +545,16 @@ function p_publish() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(product_data)
-    }).then(res => {
-        // swal("", 'Module Updated', "success");
-        console.log("Request complete! response:", res);
-    });
+    })
+    .then((response) => response.json())
+    .then((data) => {
+            if (parseInt(data['status']) === 1){
+                swal("", 'Order fulfilled', "success");
+                restruct(data)
+            }else{
+                swal("", 'Unable to publish your product', "error");
+            }
+});
 
 }
 
