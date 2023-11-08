@@ -42,7 +42,8 @@ def parse_send(**kwargs) -> bool:
             
             t_settings = le(kwargs['ps'][12])
             if "template" in kwargs: # Change template to Custom template
-                temps[kwargs['which']] = kwargs['template']
+                if kwargs['template']:
+                    temps[kwargs['which']] = kwargs['template']
                 
             
             template = Template(temps[kwargs['which']])

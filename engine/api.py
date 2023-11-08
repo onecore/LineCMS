@@ -45,6 +45,7 @@ def prodfulfill():
                 try:
                     _set = lite(temp_settings[12])['fulfilled']
                     if int(_set):
+                        print(_d['template'],"<<<<")
                         emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
                         history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
                 
