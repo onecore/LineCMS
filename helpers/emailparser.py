@@ -46,7 +46,7 @@ def parse_send(**kwargs) -> bool:
             temps = {"fulfilled": kwargs['ps'][9],"placed": kwargs['ps'][10]}
             subobj = {"fulfilled": f"Hi {kwargs['order']['customer_name']} Your order is on the way! ", "placed": f"Hi {kwargs['order']['customer_name']} Your order is placed! "}
             
-            t_settings = le(kwargs['ps'][12])
+            # t_settings = le(kwargs['ps'][12])
             if "template" in kwargs: # Change template to Custom template
                 if kwargs['template']:
                     temps[kwargs['which']] = kwargs['template']
