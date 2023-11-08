@@ -42,17 +42,6 @@ async function api_psingle(data){
 });
 }
 
-function test(data,message=null){
-            let status = false;
-            if (custom_template_status){
-                data['template'] = custom_template;
-            }else{
-                data['template'] = "";
-            }
-            
-            api_psingle(data)
-}
-
 function confl(data,message=null) {
     let d = {
         title: " ",
@@ -89,7 +78,6 @@ function fulfill_auto(orn){
     let trv = tr.value
     let adv = ad.value
     data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":""}
-    test(data)
     if (trv && adv){
         confl(data)
     }else if (!trv){
