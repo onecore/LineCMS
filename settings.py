@@ -52,3 +52,4 @@ dbase_path = "dbase/sand"
 
 # Products
 product_similar_load = 7 # try to pull similar in this count (if similar runs out it will pull random product)
+product_similar_noimage_set = "ni.jpeg" # Image file needs to be in '/static/dashboard/uploads/'

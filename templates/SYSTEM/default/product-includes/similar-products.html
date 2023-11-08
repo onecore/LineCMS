@@ -12,10 +12,8 @@
 
                 {% else %}
                   <div class="row p-2 bg-white border rounded">
-                      {% if similar[9] %}
+                      {% if similar[9]|length > 4 %}
                       <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image rounded border" src="/media/mainimage/{{similar[13]}}/{{similar[9]}}" style='width:250px;height:150px'></div>
-                      {% elif similar[8] %}
-                      <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image rounded border" src="/media/products/{{similar[13]}}/{{similar[8][0]}}" style='width:250px;height:150px'></div>
                       {% else %}
                       <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image  rounded border" src="/media/ni.jpeg" style='width:250px;height:150px'></div>
                       {% endif %}
