@@ -44,7 +44,11 @@ order_novariant_selected = "Available variants"  # override default value (when 
 
 
 # Uploads
-uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
+uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed File Extentions in uploader
 
 # Database Path and File
 dbase_path = "dbase/sand"
+
+
+# Products
+product_similar_load = 7 # try to pull similar in this count (if similar runs out it will pull random product)

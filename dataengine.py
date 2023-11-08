@@ -278,13 +278,13 @@ class SandEngine:
         self.m_fetch = _c.execute(
             "SELECT * FROM products WHERE category='{m}' LIMIT {l};".format(m=category, l=count))
         self.m_data = self.m_fetch.fetchall()
+
         for d in self.m_data:
             pr.append(d)
-            count = count - 1
 
         if len(pr) < count:
             self.mr_fetch = _c.execute(
-                "SELECT * FROM products ORDER BY random() LIMIT {l};".format(l=count))
+                "SELECT * FROM products ORDER BY random() LIMIT {l};".format(l=count-len(pr)))
             self.mr_data = self.mr_fetch.fetchall()
             for i in self.mr_data:
                 pr.append(i)

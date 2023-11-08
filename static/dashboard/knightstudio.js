@@ -574,6 +574,8 @@ function p_updatepost() {
     // document.getElementById("publishb").style = 'display:none';
     if (build_variants() == false) {
         swal("", 'Please check for any missing information.', "error");
+        document.getElementById("cover-spin").style.display = "none";
+
     } else {
 
         fetch("/product-update", {

@@ -10,6 +10,8 @@ import json
 from engine.product import getimages
 from ast import literal_eval as lite
 from helpers.caster import trythis
+import settings
+
 de = dataengine.SandEngine()
 themes = de.themeget()[0]
 
@@ -106,7 +108,7 @@ def pproductpage(new=None, pid=None):
     if not product:
         return redirect("/product-manage")
     
-    variants = trythis(product[3],{})  
+    variants = lite(product[3])  
     productinfo = lite(product[10])
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
@@ -119,11 +121,11 @@ def pproductpage(new=None, pid=None):
                            images=imags,
                            variants=variants, 
                            productinfo=productinfo,
-                           jvariants=jvariants,  # Javascript parsed
-                           jproductinfo=jproductinfo, # Javascript parsed 
-                           jslides=variantpush(variants, imags, js=True),  # Javascript parsed
-                           jslidespy=variantpush(variants, imags, js=False), # Python parsed
-                           similarproducts=de.productsimilar(6, product[2]),  
+                           jvariants=jvariants,  # Javascript obj
+                           jproductinfo=jproductinfo, # Javascript obj
+                           jslides=variantpush(variants, imags, js=True),  # Javascript obj
+                           jslidespy=variantpush(variants, imags, js=False), # Python obj
+                           similarproducts=de.productsimilar(settings.product_similar_load, product[2]),  
                            mainimage=product[9],
                            )
 
