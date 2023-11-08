@@ -19,7 +19,7 @@ def price(price) -> int:
     o = round(Decimal(price)*100) 
     return o
 
-def data(which,order,company,shipstatus,tracking=False) -> dict:
+def data(which,order,company,shipstatus=False,tracking=False,additional=False) -> dict:
     """adds all the jinja templating values"""
     formatter = {
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
@@ -27,6 +27,10 @@ def data(which,order,company,shipstatus,tracking=False) -> dict:
             }
     if tracking:
         formatter['TRACKINGLINK'] = tracking
+    
+    if additional:
+        formatter['ADDITIONAL'] = additional
+
     return formatter
 
 def parse_send(**kwargs) -> bool:
@@ -37,6 +41,8 @@ def parse_send(**kwargs) -> bool:
         
     if kwargs:
         try:
+            tracking,additional,shipstatus = False,False,False
+
             temps = {"fulfilled": kwargs['ps'][9],"placed": kwargs['ps'][10]}
             subobj = {"fulfilled": f"Hi {kwargs['order']['customer_name']} Your order is on the way! ", "placed": f"Hi {kwargs['order']['customer_name']} Your order is placed! "}
             
@@ -44,10 +50,18 @@ def parse_send(**kwargs) -> bool:
             if "template" in kwargs: # Change template to Custom template
                 if kwargs['template']:
                     temps[kwargs['which']] = kwargs['template']
-                
             
+            if "tracking" in kwargs:
+                tracking = kwargs['tracking']
+            
+            if "additional" in kwargs:
+                additional = kwargs['additional']
+
+            if "shipstatus" in kwargs:
+                shipstatus = kwargs['shipstatus']
+
             template = Template(temps[kwargs['which']])
-            rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],False)) # tracking is False (perfect for fulfilled call)
+            rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],shipstatus=shipstatus,tracking=tracking,additional=additional)) # tracking is False (perfect for fulfilled call)
             
             subject = subobj[kwargs['which']]
             recip = kwargs['order']['customer_email']
@@ -55,5 +69,6 @@ def parse_send(**kwargs) -> bool:
             sendmail(subject=subject,reciever=recip,html=rendered,sender=sendr)
                 
         except Exception as e:
+            print("err: ",e)
             return False
         

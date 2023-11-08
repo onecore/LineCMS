@@ -24,6 +24,7 @@ def prodfulfill():
         if (request.data):
             _d = json.loads(request.data)
             _load_h = _de.orderhistory_get(_d['ordernumber'])
+            print(_d)
             sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
             temp_settings = _de.productsettings_get()
             comp_data = _de.load_data_index(0)
@@ -45,10 +46,12 @@ def prodfulfill():
                 try:
                     _set = lite(temp_settings[12])['fulfilled']
                     if int(_set):
-                        print(_d['template'],"<<<<")
-                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'])
+                        tracking, additional = _d['tracking'], _d['additional']
+                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional)
                         history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
-                
+                    else:
+                        history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
+
                 except Exception as e:
                     history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
 
