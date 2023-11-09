@@ -9,3 +9,4 @@ icecream
 stripe
 currencies
 flask_mail
+lxml
