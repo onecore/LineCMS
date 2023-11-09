@@ -187,7 +187,7 @@ def knightapi():
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
 
-            if (_de.knightclientapi(lite(request.data)['action'])):
+            if (_de.knightclientapi(eval(request.data)['action'])):
                 return jsonify({'status': True})
             return jsonify({'status': False})
         return "KnightStudio Dashboard build ", version
