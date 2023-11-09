@@ -8,10 +8,10 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import json
 import os
-from helpers import currency
+from helpers import currency, dataparser
 from helpers import country
 from decimal import Decimal
-from helpers import emailparser, combine
+from helpers import emailparser
 from ast import literal_eval as lite
 from jinja2 import Template
 import stripe
@@ -216,9 +216,12 @@ def product_orders_single(ids):
     template = ""
     alert=None
     shipping_fee = None
+
+    x = dataparser.Order("orders",order)
+    print(x.getempty(),"<<<")
     
     if order:
-        _order = combine.zipper("orders",order)
+        _order = dataparser.zipper("orders",order)
     try:
         history = dict(lite(hist[0]).items())
     except Exception as e:

@@ -49,6 +49,9 @@ uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed
 # Database Path and File
 dbase_path = "dbase/sand"
 
+# Simple Logging
+logging_enabled = False
+
 
 # Products
 product_similar_load = 7 # try to pull similar in this count (if similar runs out it will pull random product)

@@ -6,7 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, request, session, jsonify
 import dataengine
 import json
-from helpers import emailparser, combine
+from helpers import dataparser, emailparser
 from ast import literal_eval as lite
 import time
 
@@ -31,7 +31,7 @@ def prodfulfill():
             _order = _de.productorders_single_get(0,_d['ordernumber'])
             history, shipstatus = {},False
             if _order:
-                _order = combine.zipper("orders",_order)
+                _order = dataparser.zipper("orders",_order)
             try:
                 history = lite(_load_h[0])
             except Exception as e:

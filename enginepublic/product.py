@@ -9,7 +9,6 @@ from flask_paginate import Pagination, get_page_parameter
 import json
 from engine.product import getimages
 from ast import literal_eval as lite
-from helpers.caster import trythis
 import settings
 
 de = dataengine.SandEngine()
