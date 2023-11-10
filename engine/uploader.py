@@ -8,46 +8,49 @@ import dataengine
 from werkzeug.utils import secure_filename
 import os
 import json
+from settings import uploads_allowedext
+from settings import uploads_products
+from settings import uploads_blog
+from settings import uploads_dashboard
 
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)
-from settings import uploads_allowedext
+
+
+
 de = dataengine.SandEngine()
 log = de.log
-ALLOWED_EXTENSIONS = uploads_allowedext
-UPLOAD_FOLDER = 'static/dashboard/uploads'
-UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
-UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
+
 
 
 def allowed_file(filename) -> str:
     "validates file extension"
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in uploads_allowedext
 
 
 @uploader.route("/media/<file>")
 def showuploaded(file) -> str:
     "return uploaded -> root"
-    return send_from_directory("static/dashboard/uploads", file)
+    return send_from_directory(uploads_dashboard, file)
 
 
 @uploader.route("/media/blog/<file>")
 def showuploaded_blog(file) -> str:
     "return uploaded -> blog"
-    return send_from_directory("static/dashboard/uploads/blog", file)
+    return send_from_directory(uploads_blog, file)
 
 
 @uploader.route("/media/products/<folderid>/<file>")
 def showuploaded_products(folderid, file) -> str:
     "return uploaded -> product images"
-    return send_from_directory("static/dashboard/uploads/products/"+folderid, file)
+    return send_from_directory(uploads_products+"/"+folderid, file)
 
 
 @uploader.route("/media/mainimage/<folderid>/<file>")
 def showuploaded_productsmainimage(folderid, file) -> str:
     "return uploaded -> product main image"
-    return send_from_directory("static/dashboard/uploads/products/"+folderid+"/mainimage", file)
+    return send_from_directory(uploads_products+"/"+folderid+"/mainimage", file)
 
 
 # added for lightslider images / variants
@@ -55,7 +58,7 @@ def showuploaded_productsmainimage(folderid, file) -> str:
 @uploader.route("/media/variant/<folderid>/<file>")
 def showuploaded_products_variant(folderid, file) -> str:
     "return uploaded -> variant image"
-    return send_from_directory("static/dashboard/uploads/products/"+folderid+"/variants", file)
+    return send_from_directory(uploads_products+"/"+folderid+"/variants", file)
 
 
 @uploader.route('/product-edit/upload-p-main', methods=['POST', 'GET', 'DELETE'])
@@ -77,7 +80,7 @@ def upload_file_product_main():
         except:
             return False
         custom_folder = os.path.join(
-            UPLOAD_FOLDER_PRODUCTS, str(_id)+"/mainimage")
+            uploads_products, str(_id)+"/mainimage")
         try:
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
@@ -96,6 +99,7 @@ def upload_file_product_main():
             return r
         
     elif request.method == 'DELETE':
+        # filepond call
         os.remove(os.path.join(request.data))
         return "true"
     
@@ -120,7 +124,7 @@ def upload_file_product_images():
                 return False
         except:
             return False
-        custom_folder = os.path.join(UPLOAD_FOLDER_PRODUCTS, str(_id))
+        custom_folder = os.path.join(uploads_products, str(_id))
         try:
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
@@ -163,7 +167,7 @@ def upload_file_product_variant():
         except:
             return False
         custom_folder = os.path.join(
-            UPLOAD_FOLDER_PRODUCTS, str(_id)+"/variants")
+            uploads_products, str(_id)+"/variants")
         try:
             if not os.path.exists(custom_folder):
                 os.makedirs(custom_folder)
@@ -200,7 +204,6 @@ def upload_file_product_variant():
 def upload_file():
     "logo uploader"
     if request.method == 'POST':
-        log("New Logo upload started")
         if 'file' not in request.files:
             return redirect(request.url)
         file = request.files['file']
@@ -208,7 +211,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            file.save(os.path.join(uploads_dashboard, filename))
             try:
                 de.update_data_uploads("control", "logo", filename,
                                         "owner", session['authenticated'][0])
@@ -236,9 +239,9 @@ def upload_file_blog():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER_BLOG, filename))
+            file.save(os.path.join(uploads_blog, filename))
 
-            return UPLOAD_FOLDER_BLOG+"/"+filename
+            return uploads_blog+"/"+filename
 
     elif request.method == 'DELETE':
         os.remove(os.path.join(request.data))
@@ -261,7 +264,7 @@ def upload_fav():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            file.save(os.path.join(uploads_dashboard, filename))
             try:
                 de.update_data_uploads("control", "favicon", filename,
                                         "owner", session['authenticated'][0])
