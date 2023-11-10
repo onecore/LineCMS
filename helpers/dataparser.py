@@ -13,7 +13,7 @@ def zipper(key: str,combinewith: list) -> dict:
 
 # public route
 class Order:
-	empty = [] # list of empty 
+	empty = [] # list of empty cols
 	def __init__(self,key,lst) -> None:
 		self.obj = zipper(key,lst)
 
