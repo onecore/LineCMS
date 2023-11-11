@@ -61,7 +61,7 @@ order_novariant_selected = "Available variants"  # override default value (when 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed File Extentions in uploader
 uploads_blog = 'static/dashboard/uploads/blog'   # Blog Uploads
-uploads_products = 'static/dashboard/uploads/products123' # Product Images / Main images and Variant images
+uploads_products = 'static/dashboard/uploads/products' # Product Images / Main images and Variant images
 uploads_dashboard = "static/dashboard/uploads/dashboard" # SandCMS Dashboard Uploads ()
 
 # Database Path and File
