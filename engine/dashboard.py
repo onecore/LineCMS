@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template, request, redirect, session, redirect
 import dataengine
 from helpers import themeengine
+import settings
 
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
@@ -48,17 +49,20 @@ def dashboard_main():
                     "siteemail": u_email,
                     "siteaddress": u_address
                 }
+
                 for k, v in dicts.items():
-                    if len(v) < 5:
-                        error = "Some information must be 5 characters or more"
-                        return render_template("dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
+                    if k not in settings.inputs_dashboard_settings and len(v) <= settings.inputs_dashboard_minumum_length:
+                        error = f"Some information must be {settings.inputs_dashboard_minumum_length} characters or more"
+                if error: 
+                    return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
+                else:
+                    upd = dataengine.SandEngine()
+                    if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
+                        dt = de.load_data_index(None)  # loads datas
+                        return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme)
                     else:
-                        upd = dataengine.SandEngine()
-                        if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
-                            dt = de.load_data_index(None)  # loads datas
-                            return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme)
-                        else:
-                            error = "System cannot process your request"
-                            return render_template("dashboard/dashboard.html", data=dt, error=error, success=False, tmplist=tmplist, tmpcurrent=theme)
+                        error = "System cannot process your request"
+                        return render_template("dashboard/dashboard.html", data=dt, error=error, success=False, tmplist=tmplist, tmpcurrent=theme)
+                    
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
     return redirect("/login")

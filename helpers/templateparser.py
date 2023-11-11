@@ -10,7 +10,7 @@ from ast import literal_eval as lite
 
 def ks_include_adminbutton() -> str:
     "Includes Admin button if session exists"
-    c = temple.ks_admin_button
+    c = temple.sc_admin_button
     v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
         c+"'"+"style='color:white'"+">Owner Dashboard</a>"
     
@@ -24,7 +24,7 @@ def ks_badge_insert(v) -> str:
         i = str(v).split(",")
         for cat in i:
             q += "<badge class='badge {c}'>".format(
-                c=temple.ks_badge_insert)+cat+"</badge>&nbsp"
+                c=temple.sc_badge_insert)+cat+"</badge>&nbsp"
     return q
 
 

@@ -4,9 +4,13 @@ Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 
+#**** Load Default values *****
+load_default = True  # Override all settings value to Default (Not recommended if you have a modified source)
+load_default_empty = False # Use Default value on empty setting
+
 # Templating & System variables
-ks_badge_insert = "bg-secondary"  # Blog-list view / fn blog_list_badge_category
-ks_admin_button = "bg-primary"   # Admin button / fn admin_button
+sc_badge_insert = "bg-secondary"  # Blog-list view / fn blog_list_badge_category
+sc_admin_button = "bg-primary"   # Admin button / fn admin_button
 
 # Dashboard route (URL)
 route_dashboard = "/dashboard"
@@ -36,6 +40,17 @@ cms_version = "1.4"
 # email_templates = "templates/email"
 # email_templates_write = ["fulfilled","placed"] # Do not change as its act as iterable and needs some other modification
 
+# Inputs List for inputs_dashboard_settings
+# -"sitename"
+# -"description"
+# -"meta_description"
+# -"meta_keywords"
+# -"footercopyright"
+# -"sitenumber"
+# -"siteemail"
+# -"siteaddress"
+inputs_dashboard_settings = set(["sitename"]) # Form inputs that can be Empty
+inputs_dashboard_minumum_length = 5 # Less than the value will return a required or not enough error
 
 # Orders
 order_error_countries = ['CA','US']
@@ -46,8 +61,9 @@ order_novariant_selected = "Available variants"  # override default value (when 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed File Extentions in uploader
 uploads_blog = 'static/dashboard/uploads/blog'   # Blog Uploads
-uploads_products = 'static/dashboard/uploads/products' # Product Images / Main images and Variant images
+uploads_products = 'static/dashboard/uploads/products123' # Product Images / Main images and Variant images
 uploads_dashboard = "static/dashboard/uploads/dashboard" # SandCMS Dashboard Uploads ()
+
 # Database Path and File
 dbase_path = "dbase/sand"
 
