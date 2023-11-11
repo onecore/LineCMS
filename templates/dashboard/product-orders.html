@@ -481,7 +481,7 @@ swal("", `{{error}}`, "warning");
                 {% if orders %}
                   {% for order in orders %}
                     <tr">
-                      <td><a href="/product-orders/{{order[0]}}">{{order[0]}}{{order[5]}}</a></td>
+                      <td><a href="/product-orders/{{order[0]}}"><small class="badge bg-success">Pending</small>  {{order[0]}}{{order[5]}}</a></td>
                       <td>{{order[2]}}</td>
                       <td>{{order[7]}}</td>
                       <td>{{loaddate(order[5])}}</td>
