@@ -17,9 +17,7 @@ function ckdata_get(){
 }
 
 function restruct(d){
-    if (d['obj']){
-         // continue here
-    }
+    location.reload()
 }
 
 
@@ -35,7 +33,8 @@ async function api_psingle(data){
   .then((data) => {
         if (parseInt(data['status']) === 1){
             swal("", 'Order fulfilled', "success");
-            restruct(data)
+            setTimeout(restruct, 2000);
+
         }else{
             swal("", 'Order failed to fulfill', "error");
         }
@@ -58,6 +57,7 @@ function confl(data,message=null) {
     }
 
     swal(d).then(function(isConfirm) {
+        loadingbar()
         if (isConfirm) {
             let status = false;
             if (custom_template_status){

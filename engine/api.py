@@ -58,7 +58,8 @@ def prodfulfill():
                 history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
-                return jsonify({"status": 1,"message":"Order fulfilled","obj":json.dumps(history_obj)})
+
+                return jsonify({"status": 1,"message":"Order fulfilled","historyobj":json.dumps(history_obj)})
             return jsonify({"status": 0,"message":"Unable to fulfill"})
         
     except Exception as r:

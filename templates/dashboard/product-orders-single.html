@@ -18,6 +18,7 @@
   <script src="../../dashboard/product-order-single.js"></script>
 
 <style>
+
 .swal-button--confirm {
     background-color: #28a745;
 }
@@ -156,6 +157,41 @@
   padding:0;
   background-color:transparent
  }
+}
+
+
+#cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+#cover-spin::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
 }
 </style>
 </head>
@@ -377,13 +413,16 @@ swal("", `{{error}}`, "warning");
                           </div>
                         </form>
                         {% endif %}
+                        
                         {% if orderdata.fulfilled == '0' %}
+                        <div id="fulfillit">
                         <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Manual</button>&nbsp
                           {% if template %}
-                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" onclick="fulfill_auto('{{order[19]}}')"> Mark as fulfilled</button></center>
+                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" onclick="fulfill_auto('{{order[19]}}')"> Mark as fulfilled</button>
                           {% else %}
-                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" disabled> Mark as fulfilled</button> </center>
+                          <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" disabled> Mark as fulfilled</button>
                           {% endif %}
+                          </center>
                           <br>
                           <small class="text-muted text-small">Mark as Fulfilled will send an email to a customer using an email template, make sure to have your email settings up-to-date and tested, Manual will also mark the order as fulfilled but will not try to send an automatic email</small>
                           <!-- Editable modal -->
@@ -408,6 +447,7 @@ swal("", `{{error}}`, "warning");
                                 </div>
                               </div>
                             </div>
+                          </div>
                           {% endif %}
 
                             <!-- Editable modal -->
@@ -482,7 +522,7 @@ swal("", `{{error}}`, "warning");
                   </div>
                   <br>
                 </div>
-
+                <div id="cover-spin"></div>
                 
                 <div class="col-md-4"> <!-- Side bar -->
                     <div class="card border shadow-none m-3 rounded" style="background: #F4F5F7;">
@@ -544,6 +584,12 @@ swal("", `{{error}}`, "warning");
   <script src="../../dashboard/js/file-upload.js"></script>
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    function loadingbar(){
+      $('#cover-spin').show(0);
+    }
+  </script>
   <!-- End custom js for this page-->
 </body>
 

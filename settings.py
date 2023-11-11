@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 
 #**** Load Default values *****
-load_default = True  # Override all settings value to Default (Not recommended if you have a modified source)
+load_default = False  # Override all settings value to Default (Not recommended if you have a modified source)
 load_default_empty = False # Use Default value on empty setting
 
 # Templating & System variables
