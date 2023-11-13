@@ -90,6 +90,17 @@ function fulfill_auto(orn){
 
 }
 
-function fulfill_manual(){
+function mailmod() {
+console.log('asd')
+  window.location.href = "mailto:example@gmail.com?subject=enquiry&body=" + mantemp;
+}
+
+function fulfill_manual(orn){
+    let tr = document.getElementById('tinfo');
+    let ad = document.getElementById('ainfo');
+    let trv = tr.value
+    let adv = ad.value
+    data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":"","manual":true}
+    mailmodl()
 
 }

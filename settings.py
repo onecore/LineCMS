@@ -58,6 +58,19 @@ order_payment_method = ['card']  # check stripe for list of avail. method
 order_novariant_selected = "Available variants"  # override default value (when no variant selected) / Also needs an update on JS side
 order_template_notracking_message = "Not supplied" # will show in the email if theres no tracking added (unless Formatter removed)
 order_template_noadditional_message = "Not supplied" # will show in the email if theres no additional added (unless Formatter removed)
+order_template_manual = """
+{{COMPANYNAME}}
+Woo hoo! Your order is on its way. Your order details can be found below.%0D%0A%0D%0A
+ORDER SUMMARY%0D%0A
+Order #{{ORDERNUMBER}}%0D%0A
+Order Date: {{ORDERDATE}}%0D%0A
+Order Total: {{ORDERTOTAL}}%0D%0A
+SHIPPED TO ADDRESS: {{CUSTOMERADDRESS}}%0D%0A%0D%0A
+
+TRACK YOUR ORDER: [addyourtrackinglinketc.]%0D%0A
+ADDITIONAL INFO: [addyouradditionalinfoetc.]
+"""
+
 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed File Extentions in uploader
@@ -75,3 +88,4 @@ logging_enabled = False
 # Products
 product_similar_load = 7 # try to pull similar in this count (if similar runs out it will pull random product)
 product_similar_noimage_set = "ni.jpeg" # Image file needs to be in '/static/dashboard/uploads/'
+

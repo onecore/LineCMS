@@ -260,9 +260,12 @@ def product_orders_single(ids):
 
     _template = Template(template)
     rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
+    
+    _template_manual = Template(settings.order_template_manual)
+    _manual_rend = _template_manual.render(emailparser.data("",_order,_comp,"",_order['tracking']))
     return render_template("/dashboard/product-orders-single.html",
                            order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
-                           template=rendered,history=history,orderdata=ordersobj)
+                           template=rendered,history=history,orderdata=ordersobj,manual_t=_manual_rend)
 
 
 # --> Start of webhook etc.

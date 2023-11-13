@@ -378,6 +378,7 @@ swal("", `{{error}}`, "warning");
                                                          
                     <div class="card border shadow-none rounded m-3 shadow" style="background: #F4F5F7;width:100%">
                       <div class="card-body bordered shadow-none">
+
                         {% if orderdata.fulfilled == '0' %}
                         <form>
                           <div class="input-group mb-3 input-group-sm">
@@ -394,10 +395,12 @@ swal("", `{{error}}`, "warning");
                             <input type="text" class="form-control" aria-describedby="tinfo"
                               placeholder="Good for digital goods, links, download links, comments, etc." id="ainfo">
                           </div>
+
                         </form>
                         {% else %}
                         <form>
                           <div class="input-group mb-3 input-group-sm">
+
                             <div class="input-group-prepend">
                               <span class="input-group-text btn-muted text-muted">Tracking link</span>
                             </div>
@@ -425,8 +428,9 @@ swal("", `{{error}}`, "warning");
                         {% endif %}
                         
                         {% if orderdata.fulfilled == '0' %}
+
                         <div id="fulfillit">
-                        <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray"> Manual</button>&nbsp
+                        <center><button class="btn btn-muted text-dark border icon-settings d-inline shadows" style="background:#f5f5f5" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>&nbsp<button class="btn btn-primary icon-check shadow" type="button" onclick="fulfill_manual('{{order[19]}}')" style="background:#28a745;border: 1px gray"> Manual</button>&nbsp
                           {% if template %}
                           <button class="btn btn-primary icon-check shadow" type="button" style="background:#28a745;border: 1px gray" onclick="fulfill_auto('{{order[19]}}')"> Mark as fulfilled</button>
                           {% else %}
@@ -600,6 +604,10 @@ swal("", `{{error}}`, "warning");
       $('#cover-spin').show(0);
     }
   </script>
+
+<script>
+  const mantemp = `{{manual_t|safe}}`
+</script>
   <!-- End custom js for this page-->
 </body>
 
