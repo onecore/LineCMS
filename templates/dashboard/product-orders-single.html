@@ -392,7 +392,7 @@ swal("", `{{error}}`, "warning");
                               <span class="input-group-text btn-muted text-muted">Additional Info</span>
                             </div>
                             <input type="text" class="form-control" aria-describedby="tinfo"
-                              placeholder="Good for digital goods, links, download links etc." id="ainfo">
+                              placeholder="Good for digital goods, links, download links, comments, etc." id="ainfo">
                           </div>
                         </form>
                         {% else %}
@@ -401,15 +401,25 @@ swal("", `{{error}}`, "warning");
                             <div class="input-group-prepend">
                               <span class="input-group-text btn-muted text-muted">Tracking link</span>
                             </div>
+                            {% if orderdata.tracking %}
                             <input type="text" class="form-control" aria-describedby="tinfo"
-                              placeholder="Add tracking code if customer paid for shipping" id="tinfo" value="asdasdasdasd" disabled>
+                              placeholder="No tracking code supplied" id="tinfo" value="{{orderdata.tracking}}" disabled>
+                            {% else %}
+                            <input type="text" class="form-control" aria-describedby="tinfo" placeholder="No tracking code supplied" id="tinfo"
+                              value="No tracking info supplied" disabled>
+                            {% endif %}
                           </div>
                           <div class="input-group mb-3 input-group-sm">
                             <div class="input-group-prepend">
                               <span class="input-group-text btn-muted text-muted">Additional Info</span>
                             </div>
+                            {% if orderdata.additional %}
                             <input type="text" class="form-control" aria-describedby="tinfo"
-                              placeholder="Good for digital goods, links, download links etc." id="ainfo" value="adasdasdasd" disabled>
+                              placeholder="No additional supplied" id="ainfo" value="{{orderdata.additional}}" disabled>
+                            {% else %}
+                            <input type="text" class="form-control" aria-describedby="tinfo" placeholder="No additional supplied" id="ainfo"
+                              value="No Additional info supplied" disabled>
+                            {% endif %}
                           </div>
                         </form>
                         {% endif %}
