@@ -91,7 +91,6 @@ function fulfill_auto(orn){
 }
 
 function mailmod() {
-console.log('asd')
   window.location.href = "mailto:example@gmail.com?subject=enquiry&body=" + mantemp;
 }
 
@@ -101,6 +100,6 @@ function fulfill_manual(orn){
     let trv = tr.value
     let adv = ad.value
     data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":"","manual":true}
-    mailmodl()
+    mailmod()
 
 }

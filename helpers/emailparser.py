@@ -9,6 +9,7 @@ from jinja2 import Template
 from decimal import Decimal
 from flask import current_app
 import settings
+from enginepublic import loaders
 
 d = dataengine.SandEngine()
 logger = d.log
@@ -20,13 +21,16 @@ def price(price) -> int:
     o = round(Decimal(price)*100) 
     return o
 
-def data(which,order,company,shipstatus=False,tracking=False,additional=False) -> dict:
+def data(which,order,company,shipstatus=False,tracking=False,additional=False,parsedate=False) -> dict:
     """adds all the jinja templating values"""
     formatter = {
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
                 "ORDERNUMBER":order['ordernumber'],"ORDERTOTAL":order['amount_total'],"ORDERDATE":order['created'],"CUSTOMERADDRESS":order['address'],"CUSTOMERNAME":order['customer_name']
             }
     
+    if parsedate: # calls from manual fulfill
+        formatter['ORDERDATE'] = loaders.dateformatter(formatter['ORDERDATE'])
+
     if tracking:
         formatter['TRACKINGLINK'] = tracking
     else:
