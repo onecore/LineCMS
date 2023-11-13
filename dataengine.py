@@ -38,7 +38,9 @@ class SandEngine:
         fetch = c.execute(q)
         return fetch.fetchone()
 
-    def orderlist(self,data):
+    def orderlist(self,page,perpage,offset,search,status,initload=False):
+        c = self.connection.cursor()
+
         try:
             pass
         except:
@@ -79,9 +81,12 @@ class SandEngine:
         g.new_blog_url = n
         return n
     
-    def productorders_get(self):
+    def productorders_get(self,q=False,total=False):
         c = self.connection.cursor()
-        q = "SELECT * FROM productorders ORDER BY id DESC"
+        if total:        
+            fetch = c.execute("SELECT Count(*) FROM productorders")
+            return fetch.fetchone()
+        
         fetch = c.execute(q)
         return fetch.fetchall()
    

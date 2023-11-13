@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, redirect, jsonify
 import dataengine
-from flask_paginate import Pagination, get_page_parameter
+from flask_paginate import Pagination, get_page_parameter,get_page_args
 import json
 import os
 from helpers import currency, dataparser
@@ -189,40 +189,40 @@ def product_mng(alert=None):
     tt = len(pr)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='product', css_framework="bootstrap5")
-    
     if request.method == "POST":
         pass
-
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
 
 @product.route("/product-orders", methods=['POST', 'GET'])
 def product_orders():
     "views - product orders (lists)"
-    orders = ps.productorders_get()
     alert=None
+
     search = False
     q = request.args.get('q')
+
     if q:
         search = True
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    tt = len(orders)
-    pagination = Pagination(page=page, total=tt,
-                            search=search, record_name='orders', css_framework="bootstrap5")
-    
-    if request.method == "POST": # Pagination and custom loads
-        try:
-            if (request.data):
-                _de = _de.orderlist(json.loads(request.data))
-                if _de:
-                    return jsonify({"status":1,"orders":_de,"pagination":pagination})
-                else:
-                    return jsonify({'status':0})
-            else:
-                return jsonify({"status":0})
-        except:
-            pass
 
-    return render_template("/dashboard/product-orders.html", orders=orders, pagination=pagination, alert=alert)
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 15
+    offset = (page - 1) * per_page
+
+    if per_page:
+        sql = "select * from productorders order by id desc limit {}, {}".format(offset, per_page)
+    else:
+        sql = "select * from productorders order by id"
+
+    orders = ps.productorders_get(sql)
+
+    tt = ps.productorders_get(False,True)[0]
+
+    pagination = Pagination(page=page, total=tt,
+                            search=search, record_name='orders',
+                            css_framework="bootstrap5",
+                            per_page=per_page)
+
+    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=pagination, alert=alert)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):

@@ -476,6 +476,8 @@ swal("", `{{error}}`, "warning");
                   <th>Amount Paid</th>
                 </tr>
               </thead>
+                          {{ pagination.info }}
+                          {{ pagination.links }}
               <tbody>
                 {% if orders %}
                   {% for order in orders %}
