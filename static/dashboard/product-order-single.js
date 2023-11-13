@@ -91,7 +91,7 @@ function fulfill_auto(orn){
 }
 
 function mailmod() {
-  window.location.href = "mailto:example@gmail.com?subject=enquiry&body=" + mantemp;
+  window.location.href = `mailto:${manm}?subject=${mans}&body=${mantemp}`
 }
 
 function fulfill_manual(orn){
@@ -100,6 +100,5 @@ function fulfill_manual(orn){
     let trv = tr.value
     let adv = ad.value
     data = {"ordernumber":orn,"tracking":trv,"additional":adv,"template":"","manual":true}
-    mailmod()
-
+    confl(data,"Mark this order as fulfilled?")
 }
