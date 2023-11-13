@@ -56,7 +56,8 @@ inputs_dashboard_minumum_length = 5 # Less than the value will return a required
 order_error_countries = ['CA','US']
 order_payment_method = ['card']  # check stripe for list of avail. method
 order_novariant_selected = "Available variants"  # override default value (when no variant selected) / Also needs an update on JS side
-
+order_template_notracking_message = "Not supplied" # will show in the email if theres no tracking added (unless Formatter removed)
+order_template_noadditional_message = "Not supplied" # will show in the email if theres no additional added (unless Formatter removed)
 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])  # Allowed File Extentions in uploader

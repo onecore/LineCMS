@@ -22,18 +22,18 @@ async function api_plist(data){
 }
 
 
-// const setperpage = document.getElementById('ostatus')
+const setperpage = document.getElementById('ostatus')
 
-// setperpage.addEventListener('change', function (e) {
-//     let status_val = e.target.value;
-//     // let pp_seloption = ppage_val.options[ppage_val.selectedIndex].text;
-//     console.log(status_val)
-//     const ppage_ = document.getElementById("perpage")
-//     const ssearch = document.getElementById("searchb")
-//     let ppagec = ppage_.value;
-//     let searchc = ssearch.value;
-//     let par_ = {"page":cur_page,"perpage":ppagec,"status":status_val,"query":searchc}
-//     api_plist(par_)
+setperpage.addEventListener('change', function (e) {
+    const ppage_ = document.getElementById("perpage")
+    const ssearch = document.getElementById("searchb")
+    let status_val = e.target.value;
+    let ppagec = ppage_.value;
+    let searchc = ssearch.value;
+    let par_ = {"page":cur_page,"perpage":ppagec,"status":status_val,"query":searchc}
+    // api_plist(par_)
+    let q = `product-orders?per_page=${ppagec}&status=${status_val}&search=${searchc}`
+    location.href = q
 
 
-// });
+});

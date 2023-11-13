@@ -8,6 +8,7 @@ import dataengine
 from jinja2 import Template
 from decimal import Decimal
 from flask import current_app
+import settings
 
 d = dataengine.SandEngine()
 logger = d.log
@@ -25,11 +26,16 @@ def data(which,order,company,shipstatus=False,tracking=False,additional=False) -
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
                 "ORDERNUMBER":order['ordernumber'],"ORDERTOTAL":order['amount_total'],"ORDERDATE":order['created'],"CUSTOMERADDRESS":order['address'],"CUSTOMERNAME":order['customer_name']
             }
+    
     if tracking:
         formatter['TRACKINGLINK'] = tracking
+    else:
+        formatter['TRACKINGLINK'] = settings.order_template_notracking_message
     
     if additional:
         formatter['ADDITIONAL'] = additional
+    else:
+        formatter['ADDITIONAL'] = settings.order_template_noadditional_message
 
     return formatter
 
@@ -42,7 +48,10 @@ def parse_send(**kwargs) -> bool:
     if kwargs:
         try:
             tracking,additional,shipstatus = False,False,False
-
+            if 'tracking' in kwargs:
+                tracking = kwargs['tracking']
+            if 'additional' in kwargs:
+                additional = kwargs['additional']
             temps = {"fulfilled": kwargs['ps'][9],"placed": kwargs['ps'][10]}
             subobj = {"fulfilled": f"Hi {kwargs['order']['customer_name']} Your order is on the way! ", "placed": f"Hi {kwargs['order']['customer_name']} Your order is placed! "}
             
