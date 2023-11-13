@@ -189,6 +189,10 @@ def product_mng(alert=None):
     tt = len(pr)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='product', css_framework="bootstrap5")
+    
+    if request.method == "POST":
+        pass
+
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
 
 @product.route("/product-orders", methods=['POST', 'GET'])

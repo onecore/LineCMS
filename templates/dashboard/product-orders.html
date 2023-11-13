@@ -23,6 +23,7 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <style>
 
   .table-responsive {
@@ -425,23 +426,22 @@ swal("", `{{error}}`, "warning");
               <div class="row">
                 <div class="col-sm-3">
                   <div class="show-entries">
-                    <span>Show</span>
-                    <select class="form-control">
+                    <span class="text-muted">Show</span>
+                    <select class="form-control" id="perpage">
                       <option>5</option>
                       <option>10</option>
-                      <option>15</option>
+                      <option selected>15</option>
                       <option>20</option>
                     </select>
-                    <span>entries</span>
+                    <span class="text-muted">orders</span>
                   </div>
                 </div>
                 <div class="col-sm-9">
-                  <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                   <div class="filter-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control">
+                    <label class="text-muted">Search</label>
+                    <input type="text" class="form-control" placeholder="Order # or Name" id="searchb">
                   </div>
-                  <div class="filter-group">
+                  <!-- <div class="filter-group">
                     <label>Location</label>
                     <select class="form-control">
                       <option>All</option>
@@ -451,15 +451,14 @@ swal("", `{{error}}`, "warning");
                       <option>New York</option>
                       <option>Paris</option>
                     </select>
-                  </div>
+                  </div> -->
                   <div class="filter-group">
-                    <label>Status</label>
-                    <select class="form-control">
-                      <option>Any</option>
-                      <option>Delivered</option>
-                      <option>Shipped</option>
-                      <option>Pending</option>
-                      <option>Cancelled</option>
+                    <label class="text-muted">Status</label>
+                    <select class="form-control" id="ostatus">
+                      <option value="pending">Pending</option>
+                      <option value="fulfilled">Fulfilled</option>
+                      <option value="fulfilledtrack">Fulfilled with Tracking</option>
+                      <option value="fulfilledtrackno">Fulfilled without Tracking</option>
                     </select>
                   </div>
                   <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -497,6 +496,7 @@ swal("", `{{error}}`, "warning");
       </div>
     </div>
     </div>
+    <script src="../../dashboard/product-orders.js"></script>
 
     <!-- page-body-wrapper ends -->
   </div>
