@@ -1,3 +1,5 @@
+var cur_page = 1;
+
 async function api_plist(data){
   await fetch("/api/product-ordersp", {
     method: "POST",
@@ -30,7 +32,7 @@ setperpage.addEventListener('change', function (e) {
     const ssearch = document.getElementById("searchb")
     let ppagec = ppage_.value;
     let searchc = ssearch.value;
-    let par_ = {"p":ppagec,"s":status_val,"q":searchc}
+    let par_ = {"page":cur_page,"perpage":ppagec,"status":status_val,"query":searchc}
     api_plist(par_)
 
 

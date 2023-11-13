@@ -17,6 +17,7 @@ _de = dataengine.SandEngine()
 def epoch():
     return time.time()
 
+
 @api.route("/api/product-fulfill", methods=['POST'])
 def prodfulfill():
     "order fulfillment api"
@@ -24,8 +25,7 @@ def prodfulfill():
         if (request.data):
             _d = json.loads(request.data)
             _load_h = _de.orderhistory_get(_d['ordernumber'])
-            print(_d)
-            sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
+            _,_,_,_,_,_,shipstatus,_,_,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
             temp_settings = _de.productsettings_get()
             comp_data = _de.load_data_index(0)
             _order = _de.productorders_single_get(0,_d['ordernumber'])

@@ -208,6 +208,20 @@ def product_orders():
     tt = len(orders)
     pagination = Pagination(page=page, total=tt,
                             search=search, record_name='orders', css_framework="bootstrap5")
+    
+    if request.method == "POST": # Pagination and custom loads
+        try:
+            if (request.data):
+                _de = _de.orderlist(json.loads(request.data))
+                if _de:
+                    return jsonify({"status":1,"orders":_de,"pagination":pagination})
+                else:
+                    return jsonify({'status':0})
+            else:
+                return jsonify({"status":0})
+        except:
+            pass
+
     return render_template("/dashboard/product-orders.html", orders=orders, pagination=pagination, alert=alert)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
