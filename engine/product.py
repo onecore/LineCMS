@@ -317,6 +317,7 @@ def new_event():
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
         logging(f"Stripe Webhook Err -> {e}")
+        
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
         items = []
