@@ -259,7 +259,8 @@ def product_orders_single(ids):
             shipping_fee = f'${int(shipping_fee)/100:.02f}' 
 
     _template = Template(template)
-    rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking']))
+    
+    rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking'],_order['additional'],True,True))
     
     _template_manual = Template(settings.order_template_manual)
     _manual_rend = _template_manual.render(emailparser.data("",_order,_comp,"",_order['tracking'],parsedate=True))
@@ -317,7 +318,7 @@ def new_event():
         event = stripe.Webhook.construct_event(payload, signature, wsk)
     except Exception as e:
         logging(f"Stripe Webhook Err -> {e}")
-        
+
     if event['type'] == 'checkout.session.completed':
         session = stripe.checkout.Session.retrieve(event['data']['object'].id, expand=['line_items'])
         items = []

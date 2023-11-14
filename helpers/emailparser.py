@@ -21,7 +21,7 @@ def price(price) -> int:
     o = round(Decimal(price)*100) 
     return o
 
-def data(which,order,company,shipstatus=False,tracking=False,additional=False,parsedate=False) -> dict:
+def data(which,order,company,shipstatus=False,tracking=False,additional=False,parsedate=False,disableTrackAdditional=False) -> dict:
     """adds all the jinja templating values"""
     formatter = {
                 "COMPANYNAME":company['sitename'],"COMPANYNUMBER":company['sitenumber'],"COMPANYEMAIL":company['siteemail'],
@@ -31,6 +31,11 @@ def data(which,order,company,shipstatus=False,tracking=False,additional=False,pa
     if parsedate: # calls from manual fulfill
         formatter['ORDERDATE'] = loaders.dateformatter(formatter['ORDERDATE'])
 
+    if disableTrackAdditional:
+        formatter['TRACKINGLINK'] = "{{TRACKINGLINK}}"
+        formatter['ADDITIONAL'] = "{{ADDITIONAL}}"
+        return formatter
+    
     if tracking:
         formatter['TRACKINGLINK'] = tracking
     else:
@@ -74,7 +79,7 @@ def parse_send(**kwargs) -> bool:
                 shipstatus = kwargs['shipstatus']
 
             template = Template(temps[kwargs['which']])
-            
+
             if "parsedate" in kwargs:
                 rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],shipstatus=shipstatus,tracking=tracking,additional=additional,parsedate=kwargs['parsedate'])) # tracking is False (perfect for fulfilled call)
             else:

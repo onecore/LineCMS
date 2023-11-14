@@ -53,6 +53,7 @@ def prodfulfill():
                     _set = lite(temp_settings[12])['fulfilled']
                     if int(_set):
                         tracking, additional = _d['tracking'], _d['additional']
+                        
                         if not is_manual:
                             emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional)
                         if is_manual:
