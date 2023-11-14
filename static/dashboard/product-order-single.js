@@ -20,6 +20,9 @@ function restruct(d){
     location.reload()
 }
 
+function mailmod() {
+  window.location.href = `mailto:${manm}?subject=${mans}&body=${mantemp}`
+}
 
 async function api_psingle(data){
   await fetch("/api/product-fulfill", {
@@ -67,6 +70,8 @@ function confl(data,message=null) {
             }
             
             api_psingle(data)
+        }else{
+            document.getElementById("cover-spin").style.display = "none";
         }
     })
 }
@@ -90,9 +95,6 @@ function fulfill_auto(orn){
 
 }
 
-function mailmod() {
-  window.location.href = `mailto:${manm}?subject=${mans}&body=${mantemp}`
-}
 
 function fulfill_manual(orn){
     let tr = document.getElementById('tinfo');
