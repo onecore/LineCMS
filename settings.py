@@ -59,7 +59,7 @@ order_novariant_selected = "Available variants"  # override default value (when 
 order_template_notracking_message = "Not supplied" # will show in the email if theres no tracking added (unless Formatter removed)
 order_template_noadditional_message = "Not supplied" # will show in the email if theres no additional added (unless Formatter removed)
 order_template_manual = """ 
-{{COMPANYNAME}}
+{{COMPANYNAME}}%0D%0A
 Woo hoo! Your order is on its way. Your order details can be found below.%0D%0A%0D%0A
 ORDER SUMMARY%0D%0A
 Order #{{ORDERNUMBER}}%0D%0A
@@ -67,8 +67,8 @@ Order Date: {{ORDERDATE}}%0D%0A
 Order Total: {{ORDERTOTAL}}%0D%0A
 SHIPPED TO ADDRESS: {{CUSTOMERADDRESS}}%0D%0A%0D%0A
 
-TRACK YOUR ORDER: [addyourtrackinglinketc.]%0D%0A
-ADDITIONAL INFO: [addyouradditionalinfoetc.]
+TRACK YOUR ORDER: {{TRACKINGLINK}}%0D%0A
+ADDITIONAL INFO: {{ADDITIONAL}}
 """     # Template for manual fulfillment
 
 

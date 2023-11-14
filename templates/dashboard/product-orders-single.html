@@ -424,6 +424,9 @@ swal("", `{{error}}`, "warning");
                               value="No Additional info supplied" disabled>
                             {% endif %}
                           </div>
+                          {% if orderdata.fulfilled == '2' %}
+                          <center><a href="mailto:{{orderdata.customer_email}}?subject=Hello {{orderdata.customer_name}}, Your order is on the way!&body={{manual_t|safe}}" type="button" class="btn btn-primary">Send Email to {{orderdata.customer_name}}</a></center>
+                          {% endif %}
                         </form>
                         {% endif %}
                         

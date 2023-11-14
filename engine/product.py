@@ -263,7 +263,7 @@ def product_orders_single(ids):
     rendered = _template.render(emailparser.data("",_order,_comp,"",_order['tracking'],_order['additional'],True,True))
     
     _template_manual = Template(settings.order_template_manual)
-    _manual_rend = _template_manual.render(emailparser.data("",_order,_comp,"",_order['tracking'],parsedate=True))
+    _manual_rend = _template_manual.render(emailparser.data("",_order,_comp,"",_order['tracking'],_order['additional'],parsedate=True))
     return render_template("/dashboard/product-orders-single.html",
                            order=order,alert=alert,items=parseditems,shipping_fee=shipping_fee,
                            template=rendered,history=history,orderdata=ordersobj,manual_t=_manual_rend)
