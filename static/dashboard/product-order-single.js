@@ -25,12 +25,12 @@ function mailmod() {
 }
 
 async function api_psingle(data){
-  await fetch("/api/product-fulfill", {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+    await fetch("/api/product-fulfill", {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
   })
   .then((response) => response.json())
   .then((data) => {

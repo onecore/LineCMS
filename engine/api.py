@@ -30,6 +30,8 @@ def prodfulfill():
             comp_data = _de.load_data_index(0)
             _order = _de.productorders_single_get(0,_d['ordernumber'])
             history, shipstatus = {},False
+            is_manual = True if "manual" in _d else False
+
             if _order:
                 _order = dataparser.zipper("orders",_order)
             try:
@@ -42,20 +44,36 @@ def prodfulfill():
                     shipstatus = True
 
                 history_obj = history
-                history_obj[5] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":epoch()}
+                if is_manual:
+                    history_obj[5] = {"title":"No Notification sent","message":"Please send an email manually","timestamp":epoch()}
+                else:
+                    history_obj[5] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":epoch()}
                 try:
                     _set = lite(temp_settings[12])['fulfilled']
                     if int(_set):
                         tracking, additional = _d['tracking'], _d['additional']
-                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional)
-                        history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
+                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional,is_manual=is_manual)
+                        if is_manual:
+                            history_obj[5] = {"title":"Customer Not Notified","message":"Please send an email manually","timestamp":epoch()}
+                        else:
+                            history_obj[5] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":epoch()}
+
                     else:
-                        history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
+                        if is_manual:
+                            history_obj[5] = {"title":"No Notification sent","message":"Please send an email manually","timestamp":epoch()}
+                        else:
+                            history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
 
                 except Exception as e:
-                    history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
+                    if is_manual:
+                        history_obj[5] = {"title":"No Notification sent","message":"Please send an email manually","timestamp":epoch()}
+                    else:
+                        history_obj[5] = {"title":"No Notification sent","message":"Disabled in Placed template settings or Mail configuration","timestamp":epoch()}
+                if is_manual:
+                    history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed, Please send an email manually","timestamp":epoch()}
+                else:
+                    history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
 
-                history_obj[4] = {"title":"Order Fulfilled","message":"This order is now on archived as its mark as completed","timestamp":epoch()}
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
 
