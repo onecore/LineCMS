@@ -49,7 +49,10 @@ class SandEngine:
     def orderfulfill(self,data):
         try:
             c = self.connection.cursor()
-            q = """UPDATE productorders SET tracking="{t}", fulfilled="1", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
+            if "manual" in data:
+                q = """UPDATE productorders SET tracking="{t}", fulfilled="2", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
+            else:
+                q = """UPDATE productorders SET tracking="{t}", fulfilled="1", additional="{a}"  where ordernumber='{o}';""".format(t=data['tracking'],o=str(data['ordernumber']),a=str(data['additional']))
             c.execute(q)
             self.connection.commit()
             return True    

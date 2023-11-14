@@ -369,7 +369,7 @@ def new_event():
                 _set = lite(temp_settings[12])['placed']
                 if int(_set):
                     order['ordernumber'] = str(addord)
-                    emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus)
+                    emailparser.parse_send(which="placed",ps=temp_settings,order=order,company=comp_data,shipstatus=shipstatus,parsedate=False)
                     history_obj[3] = {"title":"Customer Notified","message":"Email sent to customer with order details","timestamp":order['created']}
                 else:
                     history_obj[3] = {"title":"No Notification sent","message":"Disabled in 'Placed template' settings or Mail configuration","timestamp":order['created']}

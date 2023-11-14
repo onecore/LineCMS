@@ -38,7 +38,8 @@ def prodfulfill():
                 history = lite(_load_h[0])
             except Exception as e:
                 pass
-            # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}
+            # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}        
+                    
             if _de.orderfulfill(_d):
                 if shipstatus == "on":
                     shipstatus = True
@@ -52,7 +53,8 @@ def prodfulfill():
                     _set = lite(temp_settings[12])['fulfilled']
                     if int(_set):
                         tracking, additional = _d['tracking'], _d['additional']
-                        emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional,is_manual=is_manual)
+                        if not is_manual:
+                            emailparser.parse_send(which="fulfilled",ps=temp_settings,order=_order,company=comp_data,shipstatus=shipstatus,template=_d['template'],tracking=tracking,additional=additional)
                         if is_manual:
                             history_obj[5] = {"title":"Customer Not Notified","message":"Please send an email manually","timestamp":epoch()}
                         else:

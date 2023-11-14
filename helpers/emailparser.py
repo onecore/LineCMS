@@ -74,8 +74,12 @@ def parse_send(**kwargs) -> bool:
                 shipstatus = kwargs['shipstatus']
 
             template = Template(temps[kwargs['which']])
-            rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],shipstatus=shipstatus,tracking=tracking,additional=additional)) # tracking is False (perfect for fulfilled call)
             
+            if "parsedate" in kwargs:
+                rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],shipstatus=shipstatus,tracking=tracking,additional=additional,parsedate=kwargs['parsedate'])) # tracking is False (perfect for fulfilled call)
+            else:
+                rendered = template.render(data(kwargs['which'],kwargs['order'],kwargs['company'],shipstatus=shipstatus,tracking=tracking,additional=additional,parsedate=True)) # tracking is False (perfect for fulfilled call)
+
             subject = subobj[kwargs['which']]
             recip = kwargs['order']['customer_email']
             sendr = le(kwargs['ps'][13])['email']
