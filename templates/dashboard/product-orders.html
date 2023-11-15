@@ -444,16 +444,6 @@ swal("", `{{error}}`, "warning");
             <div class="table-filter">
               <div class="row">
                 <div class="col-sm-3">
-                  <div class="show-entries">
-                    <span class="text-muted">Show</span>
-                    <select class="form-control" id="perpage">
-                      <option>5</option>
-                      <option>10</option>
-                      <option selected>15</option>
-                      <option>20</option>
-                    </select>
-                    <span class="text-muted">orders</span>
-                  </div>
                 </div>
                 <div class="col-sm-9">
                   <div class="filter-group">
@@ -474,10 +464,12 @@ swal("", `{{error}}`, "warning");
                   <div class="filter-group">
                     <label class="text-muted">Status</label>
                     <select class="form-control" id="ostatus">
-                      <option value="pending">Pending</option>
-                      <option value="fulfilled">Fulfilled</option>
-                      <option value="fulfilledtrack">Fulfilled with Tracking</option>
-                      <option value="fulfi">Fulfilled without Tracking</option>
+                      {% if status %}
+                      <option value="{{status}}">{{status}}</option>
+                      {% endif %}
+                      <option value="Pending">Pending</option>
+                      <option value="Fulfilled">Fulfilled</option>
+                      <option value="Fulfilled Manually">Fulfilled Manually</option>
                     </select>
                   </div>
                   <span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -508,17 +500,22 @@ swal("", `{{error}}`, "warning");
                       <td>{{order[4]}}</td>
                     </tr>
                   {% endfor %}
+                  {% if status %}
+                  <br>
+                  <center><p class="badge bg-primary">{{orders|length}} {{status}} Orders loaded</p></center>
+                  {% else %}
+                  <center>
+                    <p class="badge bg-primary">{{orders|length}} Pending Orders loaded</p>
+                  </center>
+
+                  {% endif %}
+                {% else %}
+                <br>
+                <p>You have no orders yet.</p>
                 {% endif %}
               </tbody>
             </table>
-            <div class="row pt-4 pb-2">
-              <div class="col">
-                {{ pagination.info }}
-              </div>
-              <div class="col">
-                {{ pagination.links }}
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

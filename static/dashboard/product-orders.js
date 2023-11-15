@@ -28,11 +28,9 @@ setperpage.addEventListener('change', function (e) {
     const ppage_ = document.getElementById("perpage")
     const ssearch = document.getElementById("searchb")
     let status_val = e.target.value;
-    let ppagec = ppage_.value;
     let searchc = ssearch.value;
-    let par_ = {"page":cur_page,"perpage":ppagec,"status":status_val,"query":searchc}
     // api_plist(par_)
-    let q = `product-orders?pp=${ppagec}&status=${status_val}&search=${searchc}&page=${ppge}`
+    let q = `product-orders?status=${status_val}&search=${searchc}&page=${ppge}`
     location.href = q
 
 

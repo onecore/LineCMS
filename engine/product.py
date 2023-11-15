@@ -199,33 +199,41 @@ def product_orders():
     alert=None
 
     search = False
-    q = request.args.get('q')
+    q = request.args.get('search')
     per_page = request.args.get('pp')
+    status = request.args.get('status')
 
     if q:
         search = True
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    if not per_page:
-        per_page = 15
+
+    per_page = 15
     offset = (page - 1) * int(per_page)
 
-    if per_page:
-        sql = "select * from productorders order by id desc limit {}, {}".format(offset, per_page)
-        print(sql)
+    if status:
+        if status == "Pending":
+            sql = "select * from productorders where fulfilled=0 order by id desc"
+
+        if status == "Fulfilled":
+            sql = "select * from productorders where fulfilled=1 order by id desc"
+        if status == "Fulfilled Manually":
+            sql = "select * from productorders where fulfilled=2 order by id desc"
+
+
+
     else:
-        sql = "select * from productorders order by id"
+        sql = "select * from productorders where fulfilled=0 order by id"
 
     orders = ps.productorders_get(sql)
 
     tt = ps.productorders_get(False,True)[0]
 
-    pagination = Pagination(page=page, total=tt,
+    pagination = Pagination(page=page, total=len(orders),
                             search=search, record_name='orders',
-                            css_framework="bootstrap5",
-                            per_page=per_page)
+                            css_framework="bootstrap5",inner_window=3,outer_window=3)
 
-    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=pagination, alert=alert)
+    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=pagination, alert=alert,status=status)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):
