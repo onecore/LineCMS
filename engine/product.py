@@ -200,16 +200,19 @@ def product_orders():
 
     search = False
     q = request.args.get('q')
+    per_page = request.args.get('pp')
 
     if q:
         search = True
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    per_page = 15
-    offset = (page - 1) * per_page
+    if not per_page:
+        per_page = 15
+    offset = (page - 1) * int(per_page)
 
     if per_page:
         sql = "select * from productorders order by id desc limit {}, {}".format(offset, per_page)
+        print(sql)
     else:
         sql = "select * from productorders order by id"
 

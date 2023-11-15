@@ -205,18 +205,22 @@ swal("", `{{error}}`, "warning");
         <div class="content-wrapper">
           <div>
 
+            <div class="row">
+              <div class="col-md-5">
             <div class="card">
               <div class="card-body" style="padding-left:7%;padding-right:7%">
                 <!-- <h4 class="card-title">Website Modules Control</h4> -->
                 <p class="card-description">
-
-                  </p>
-                  <div>
+            
+                </p>
+                <div>
                   <h3><span class="badge bg-secondary text-white">Announcement</span></h3>
-                  <p class="text-muted">Announcement message will show on the top of the page, please make the announcement as short as posible.</p>
-
-                  <input class="flex rounded form-control"  placeholder="Please share a message you'd like to be in announcement" id="announcement_content" value="{{mod['announcement']['message']}}"></input>
-
+                  <p class="text-muted">Announcement message will show on the top of the page, please make the announcement as short
+                    as posible.</p>
+            
+                  <input class="flex rounded form-control" placeholder="Please share a message you'd like to be in announcement"
+                    id="announcement_content" value="{{mod['announcement']['message']}}"></input>
+            
                   {% if mod['announcement']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="announcement_btn" checked>
@@ -224,21 +228,23 @@ swal("", `{{error}}`, "warning");
                   </div>
                   {% else %}
                   <div class="form-check form-switch" style="padding-left:43px">
-                    <input class="form-check-input form-control" type="checkbox" role="switch" id="announcement_btn" >
+                    <input class="form-check-input form-control" type="checkbox" role="switch" id="announcement_btn">
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-                <h3><span class="badge bg-secondary text-white">Featured Image & Message</span></h3>
-                <p class="text-muted">Make the message as short as posible, either can be blank</p>
-                <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="popup_img" name="sitename" placeholder="Featured image" value="{{mod['popup']['image']}}">
-                <p>Message</p> <input type="text" style="width:80%" class="form-control" id="popup_message" name="sitename" placeholder="Featured message" value="{{mod['popup']['message']}}">
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+                  <h3><span class="badge bg-secondary text-white">Featured Image & Message</span></h3>
+                  <p class="text-muted">Make the message as short as posible, either can be blank</p>
+                  <p>Image direct link</p> <input type="text" style="width:80%" class="form-control" id="popup_img" name="sitename"
+                    placeholder="Featured image" value="{{mod['popup']['image']}}">
+                  <p>Message</p> <input type="text" style="width:80%" class="form-control" id="popup_message" name="sitename"
+                    placeholder="Featured message" value="{{mod['popup']['message']}}">
                   {% if mod['popup']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="popup_btn" checked>
@@ -250,19 +256,21 @@ swal("", `{{error}}`, "warning");
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-
-                <h3><span class="badge bg-secondary text-white">Up-arrow</span></h3>
-                <p class="text-muted">Up-arrow shows when visitor reached the bottom of the page</p>
-
-                <p>Color</p><input class="flex rounded form-control" style="width:80%" placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green" id="uparrow_content" value="{{mod['uparrow']['color']}}"></input>
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+            
+                  <h3><span class="badge bg-secondary text-white">Up-arrow</span></h3>
+                  <p class="text-muted">Up-arrow shows when visitor reached the bottom of the page</p>
+            
+                  <p>Color</p><input class="flex rounded form-control" style="width:80%"
+                    placeholder="Color: black, grey, red, yellow, white,orange,blue,brown,green" id="uparrow_content"
+                    value="{{mod['uparrow']['color']}}"></input>
                   {% if mod['uparrow']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="uparrow_btn" checked>
@@ -274,44 +282,52 @@ swal("", `{{error}}`, "warning");
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-                <h3><span class="badge bg-secondary text-white">Social share</span></h3>
-                <p class="text-muted">Please do not include 'http://', e.g fb.com/mypagename</p>
-                <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link" id="socialshare_facebook" value="{{mod['socialshare']['fb']}}"></input>
-                <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Twitter link" id="socialshare_twitter" value="{{mod['socialshare']['tw']}}"></input>
-                <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Instagram link" id="socialshare_instagram" value="{{mod['socialshare']['ig']}}"></input>
-                <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Google link" id="socialshare_google" value="{{mod['socialshare']['gl']}}"></input>
-                {% if mod['socialshare']['enabled'] %}
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+                  <h3><span class="badge bg-secondary text-white">Social share</span></h3>
+                  <p class="text-muted">Please do not include 'http://', e.g fb.com/mypagename</p>
+                  <p>Facebook</p><input class="flex rounded form-control" style="width:80%" placeholder="Facebook link"
+                    id="socialshare_facebook" value="{{mod['socialshare']['fb']}}"></input>
+                  <p>Twitter</p><input class="flex rounded form-control" style="width:80%" placeholder="Twitter link"
+                    id="socialshare_twitter" value="{{mod['socialshare']['tw']}}"></input>
+                  <p>Instagram</p><input class="flex rounded form-control" style="width:80%" placeholder="Instagram link"
+                    id="socialshare_instagram" value="{{mod['socialshare']['ig']}}"></input>
+                  <p>Google</p><input class="flex rounded form-control" style="width:80%" placeholder="Google link"
+                    id="socialshare_google" value="{{mod['socialshare']['gl']}}"></input>
+                  {% if mod['socialshare']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="socialshare_btn" checked>
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
-                {% else %}
+                  {% else %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="socialshare_btn">
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
-                {% endif %}
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-
-                <h3><span class="badge bg-secondary text-white">Video embed</span></h3>
-                <p class="text-muted">Embed codes can be copied from Youtube, Vimeo or any Video sharing platform</p>
-                <p>Embed code</p><input class="flex rounded form-control" style="width:80%" placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code" value="{{mod['videoembed']['code']}}"></input>
-                <p>Thumbnail source</p><input class="flex rounded form-control" style="width:80%" placeholder="Direct link to image file as thumbnail" id="videoembed_thumbnail" value="{{mod['videoembed']['thumbnail']}}"></input>
+                  {% endif %}
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+            
+                  <h3><span class="badge bg-secondary text-white">Video embed</span></h3>
+                  <p class="text-muted">Embed codes can be copied from Youtube, Vimeo or any Video sharing platform</p>
+                  <p>Embed code</p><input class="flex rounded form-control" style="width:80%"
+                    placeholder="Video embed code (Daily motion, Youtube etc.)" id="videoembed_code"
+                    value="{{mod['videoembed']['code']}}"></input>
+                  <p>Thumbnail source</p><input class="flex rounded form-control" style="width:80%"
+                    placeholder="Direct link to image file as thumbnail" id="videoembed_thumbnail"
+                    value="{{mod['videoembed']['thumbnail']}}"></input>
                   {% if mod['videoembed']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="videoembed_btn" checked>
@@ -323,23 +339,32 @@ swal("", `{{error}}`, "warning");
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-
-
-                <h3><span class="badge bg-secondary text-white">Extras</span></h3>
-                <p class="text-muted">Inputs below might be shown on website as Button, Inputs or Text (Contact us to customize)</p>
-                <p class="text-muted">Whatsapp (If you want to recieve a message thru Whatsapp)</p><input class="flex rounded form-control" style="width:80%" placeholder="Your Whatsapp number you want to show online" id="extras_whatsapp" value="{{mod['extras']['whatsapp']}}"></input>
-                <p class="text-muted">Number (If you want to show or receive a call on your Business number)</p><input class="flex rounded form-control" style="width:80%" placeholder="Business number" id="extras_number" value="{{mod['extras']['number']}}"></input>
-                <p class="text-muted">Email (If you want to show or receive an email on your Business email)</p><input class="flex rounded form-control" style="width:80%" placeholder="Business email" id="extras_email" value="{{mod['extras']['email']}}"></input>
-                <p class="text-muted">Full Address (If you wanna show your Business location/address)</p><input class="flex rounded form-control" style="width:80%" placeholder="Full address" id="extras_address" value="{{mod['extras']['address']}}"></input>
+            
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+            
+            
+                  <h3><span class="badge bg-secondary text-white">Extras</span></h3>
+                  <p class="text-muted">Inputs below might be shown on website as Button, Inputs or Text (Contact us to customize)
+                  </p>
+                  <p class="text-muted">Whatsapp (If you want to recieve a message thru Whatsapp)</p><input
+                    class="flex rounded form-control" style="width:80%" placeholder="Your Whatsapp number you want to show online"
+                    id="extras_whatsapp" value="{{mod['extras']['whatsapp']}}"></input>
+                  <p class="text-muted">Number (If you want to show or receive a call on your Business number)</p><input
+                    class="flex rounded form-control" style="width:80%" placeholder="Business number" id="extras_number"
+                    value="{{mod['extras']['number']}}"></input>
+                  <p class="text-muted">Email (If you want to show or receive an email on your Business email)</p><input
+                    class="flex rounded form-control" style="width:80%" placeholder="Business email" id="extras_email"
+                    value="{{mod['extras']['email']}}"></input>
+                  <p class="text-muted">Full Address (If you wanna show your Business location/address)</p><input
+                    class="flex rounded form-control" style="width:80%" placeholder="Full address" id="extras_address"
+                    value="{{mod['extras']['address']}}"></input>
                   {% if mod['extras']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control" type="checkbox" role="switch" id="extras_btn" checked>
@@ -351,19 +376,20 @@ swal("", `{{error}}`, "warning");
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                <br>
-
-
-                <h3><span class="badge bg-secondary text-white">Developer Mode (KnightStudio Developer Only)</span></h3>
-                <p class="text-muted">Custom module settings goes here (Only for KnightStudio Developer)</p>
-                <p>Code</p><input class="flex rounded form-control" style="width:80%" placeholder="Custom modules settings" id="custom_code" value="{{mod['custom']['code']}}"></input>
+            
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <br>
+            
+            
+                  <h3><span class="badge bg-secondary text-white">Developer Mode (KnightStudio Developer Only)</span></h3>
+                  <p class="text-muted">Custom module settings goes here (Only for KnightStudio Developer)</p>
+                  <p>Code</p><input class="flex rounded form-control" style="width:80%" placeholder="Custom modules settings"
+                    id="custom_code" value="{{mod['custom']['code']}}"></input>
                   {% if mod['custom']['enabled'] %}
                   <div class="form-check form-switch" style="padding-left:43px">
                     <input class="flex form-check-input form-control bg-dark" type="checkbox" role="switch" id="custom_btn" checked>
@@ -375,20 +401,29 @@ swal("", `{{error}}`, "warning");
                     <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-top:10px"> Enable / Disable</label>
                   </div>
                   {% endif %}
-
-
-
-                <br>
-                <br>
-                <hr>
-                <br>
-                  <p class="text-center text-muted">Website needs refresh to view changes, Module will be Off automatically when theres an important value that is missing, Turning Off will make the specified module hidden.</p>
+            
+            
+            
+                  <br>
+                  <br>
+                  <hr>
+                  <br>
+                  <p class="text-center text-muted">Website needs refresh to view changes, Module will be Off automatically when
+                    theres an important value that is missing, Turning Off will make the specified module hidden.</p>
                   <p class="text-center text-muted">Contact us for any help with the inputs above or module placement.</p>
-
+            
+                </div>
+              </div>
+            
+            </div>
+              </div>
+              <div class="col-md-5">
+                <div class="card">
+                  <div class="card-body">
+                    asdasd
+                </div>
               </div>
             </div>
-
-          </div>
 
         </div>
 

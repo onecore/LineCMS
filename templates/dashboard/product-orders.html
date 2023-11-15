@@ -35,7 +35,7 @@
 }
 .pagination-page-info b {
     color: black;
-    background: #6aa6ed;
+    /* background: #6aa6ed; */
     padding-left: 2px;
     padding: .1em .25em;
     font-size: 150%;
@@ -484,7 +484,7 @@ swal("", `{{error}}`, "warning");
                 </div>
               </div>
             </div>
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover mt-3">
               <thead>
                 <tr>
                   <th>Order #</th>
@@ -495,8 +495,7 @@ swal("", `{{error}}`, "warning");
                   <th>Amount Paid</th>
                 </tr>
               </thead>
-                          {{ pagination.info }}
-                          {{ pagination.links }}
+
               <tbody>
                 {% if orders %}
                   {% for order in orders %}
@@ -512,6 +511,14 @@ swal("", `{{error}}`, "warning");
                 {% endif %}
               </tbody>
             </table>
+            <div class="row pt-4 pb-2">
+              <div class="col">
+                {{ pagination.info }}
+              </div>
+              <div class="col">
+                {{ pagination.links }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -523,6 +530,9 @@ swal("", `{{error}}`, "warning");
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+  <script>
+    let ppge = {{page}}
+  </script>
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

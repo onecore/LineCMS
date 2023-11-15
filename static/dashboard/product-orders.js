@@ -32,7 +32,7 @@ setperpage.addEventListener('change', function (e) {
     let searchc = ssearch.value;
     let par_ = {"page":cur_page,"perpage":ppagec,"status":status_val,"query":searchc}
     // api_plist(par_)
-    let q = `product-orders?per_page=${ppagec}&status=${status_val}&search=${searchc}`
+    let q = `product-orders?pp=${ppagec}&status=${status_val}&search=${searchc}&page=${ppge}`
     location.href = q
 
 
