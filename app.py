@@ -3,15 +3,24 @@ SandCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
+from helpers.settingsvalidate import svalidate
 
+# Remove this code if you want to.
+if not svalidate():
+    print("\nSandCMS: Error in Settings file Detected, Please fix to prevent future errors\n")
+else:
+    print("\nSandCMS: Settings loaded\n")
+# Remove this code if you want to.
+
+    
 import dataengine
 from flask import Flask, request, jsonify
 from flask_ckeditor import CKEditor
-import helpers.renderfunc as rf
+import helpers.templateparser as rf
 from enginepublic import loaders
 from flask_mail import Mail, Message
 from ast import literal_eval as lite
-
+import settings
 # Dashboard imports/views
 from engine.blog import blog
 from engine.api import api
@@ -44,12 +53,7 @@ ckeditor = CKEditor()
 ckeditor.init_app(app)  # wysiwyg html editor
 
 MAILCONFIGLOADED = False
-UPLOAD_FOLDER = 'static/dashboard/uploads'
-UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
-UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 # Mail Infos below
 __de = dataengine.SandEngine()
 mailinfo = __de.productsettings_get()
@@ -59,13 +63,17 @@ try:
     app.config['MAIL_SERVER']= maildata['server']
     app.config['MAIL_PORT'] = int(maildata['port'])
     app.config['MAIL_USERNAME'] = "theonecore@gmail.com" #maildata['email']
-    app.config['MAIL_PASSWORD'] = "gaud mgxn ilke adfs" #maildata['password']
+    app.config['MAIL_PASSWORD'] = "xomx pthh bzbh dqms" #maildata['password']
     app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
-    logger(f"Startup: Mail SMTP settings/credentials Loaded")
+    logger(f"SandCMS: Mail SMTP settings/credentials Loaded")
+    print("SandCMS: Mail SMTP settings/credentials Loaded\n")
+
     MAILCONFIGLOADED = True
+
 except Exception as e:
-    logger(f"Startup: Mail Error -> {e}")
+    logger(f"SandCMS: Mail Error -> {e}")
+    print("\nSandCMS: SMTP Settings loaded\n")
 
 mail = Mail(app)
 

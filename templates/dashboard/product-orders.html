@@ -41,6 +41,14 @@
     font-size: 150%;
 }
 
+.page-link  {
+  background-color: rgb(232, 232, 232);
+  font-weight:normal;
+  color: rgb(41, 40, 40) !important;
+  border-radius: 35% !important;
+
+}
+
 /* .page-link {
   border-radius: 10%;
   background-color: #2196F3;
@@ -514,6 +522,14 @@ swal("", `{{error}}`, "warning");
                 <p>You have no orders yet.</p>
                 {% endif %}
               </tbody>
+                          <div class="row pt-4 pb-2">
+                            <div class="col">
+                              {{ pagination.info }}
+                            </div>
+                            <div class="col">
+                              {{ pagination.links }}
+                            </div>
+                          </div>
             </table>
 
           </div>

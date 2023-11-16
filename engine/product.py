@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template, request, redirect, jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter,get_page_args
+from flask import Markup
 import json
 import os
 from helpers import currency, dataparser
@@ -27,6 +28,45 @@ sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.produ
 stripe.api_key = sk
 logging = ps.log
 
+class pagination(Pagination):
+    def __init__(self, found=0, **kwargs):
+        super().__init__(found, **kwargs)
+
+    @property
+    def links(self):
+        """Get all the pagination links."""
+        if self.total_pages <= 1:
+            if self.show_single_page:
+                return self._get_single_page_link()
+
+            return ""
+
+        if self.css_framework == "bulma":
+            s = [
+                self.link_css_fmt.format(
+                    self.link_size,
+                    self.alignment,
+                    self.bulma_style,
+                    self.prev_page,
+                    self.next_page,
+                )
+            ]
+            for page in self.pages:
+                s.append(
+                    self.single_page(page) if page else self.gap_marker_fmt
+                )
+            s.append(self.css_end_fmt)
+        else:
+            s = [self.link_css_fmt.format(self.link_size, self.alignment)]
+            s.append(self.prev_page)
+
+            s.append(self.next_page)
+            s.append(self.css_end_fmt)
+            if self.css_framework == "foundation" and self.alignment:
+                s.insert(0, F_ALIGNMENT.format(self.alignment))
+                s.append("</div>")
+
+        return Markup("".join(s))
 
 def allowed_file(filename) -> str:
     "returns allowed file extensions"
@@ -220,20 +260,23 @@ def product_orders():
         if status == "Fulfilled Manually":
             sql = "select * from productorders where fulfilled=2 order by id desc"
 
-
-
     else:
-        sql = "select * from productorders where fulfilled=0 order by id"
+        sql = "select * from productorders where fulfilled=0 order by id limit {},{}".format(offset,per_page)
 
     orders = ps.productorders_get(sql)
 
     tt = ps.productorders_get(False,True)[0]
 
-    pagination = Pagination(page=page, total=len(orders),
-                            search=search, record_name='orders',
-                            css_framework="bootstrap5",inner_window=3,outer_window=3)
+    if status:
+        tt = len(orders)
+    else:
+        tt =ps.productorders_get(False,True)[0]
 
-    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=pagination, alert=alert,status=status)
+    paging = pagination(page=page, total=tt,
+                            search=search, record_name='orders',
+                            css_framework="bootstrap5",inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >")
+
+    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):
