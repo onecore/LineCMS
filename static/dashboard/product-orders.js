@@ -32,6 +32,11 @@ setperpage.addEventListener('change', function (e) {
     // api_plist(par_)
     let q = `product-orders?status=${status_val}&search=${searchc}&page=1`
     location.href = q
-
-
 });
+
+
+function trigg(){
+  var event = new Event('change');
+  let element = document.getElementById("ostatus")
+  element.dispatchEvent(event);
+}

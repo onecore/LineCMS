@@ -244,21 +244,17 @@ def product_orders():
     per_page = 15
     offset = (page - 1) * int(per_page)
 
-    if q:
-        search = True
-
     if status:
         if status == "Pending":
-            sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
+            s = "select * from productorders where fulfilled=0 AND (ordernumber like '%{}%' OR customer_name like '%{}%') order by id desc limit {},{}".format(q,q,offset,per_page)                
         if status == "Fulfilled":
-            sql = "select * from productorders where fulfilled=1 order by id desc limit {},{}".format(offset,per_page)
+            s = "select * from productorders where fulfilled=1 AND (ordernumber like '%{}%' OR customer_name like '%{}%') order by id desc limit {},{}".format(q,q,offset,per_page)
         if status == "Fulfilled Manually":
-            sql = "select * from productorders where fulfilled=2 order by id desc limit {},{}".format(offset,per_page)
-
+            s = "select * from productorders where fulfilled=2 AND (ordernumber like '%{}%' OR customer_name like '%{}%') order by id desc limit {},{}".format(q,q,offset,per_page)
     else:
-        sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
+        s = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
 
-    orders = ps.productorders_get(sql)
+    orders = ps.productorders_get(s)
     count_bluf = ps.productorders_get(False,True)[0]
 
     if orders:
@@ -268,7 +264,7 @@ def product_orders():
         showpager = False
         orders = []
     paging = pagination(page=page, total=count_bluf,
-                            search=search, record_name='orders',
+                            search=False, record_name='orders',
                             css_framework="bootstrap5",inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >")
 
     return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status,showpager=showpager)

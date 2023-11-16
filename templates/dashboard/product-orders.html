@@ -440,6 +440,7 @@ swal("", `{{error}}`, "warning");
                   <div class="filter-group">
                     <label class="text-muted">Search</label>
                     <input type="text" class="form-control" placeholder="Order # or Name" id="searchb">
+                    <li class="p-2 icon-search" onclick="trigg()"></li>
                   </div>
                   <!-- <div class="filter-group">
                     <label>Location</label>
@@ -500,9 +501,9 @@ swal("", `{{error}}`, "warning");
                 {% else %}
                 <br>
                 {% if status %}
-                <center><p class="badge btn-muted border text-dark">You have no {{status}} orders.</p></center>
+                <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} {{status}} orders.</p></center>
                 {% else %}
-                <center><p class="badge btn-muted border text-dark">You have no Pending orders.</p></center>
+                <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} Pending orders </p></center>
                 {% endif %}
                 {% endif %}
               </tbody>
