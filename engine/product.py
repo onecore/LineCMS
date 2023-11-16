@@ -59,9 +59,7 @@ class pagination(Pagination):
         else:
             s = [self.link_css_fmt.format(self.link_size, self.alignment)]
             s.append(self.prev_page)
-
             s.append(self.next_page)
-            s.append(self.css_end_fmt)
             if self.css_framework == "foundation" and self.alignment:
                 s.insert(0, F_ALIGNMENT.format(self.alignment))
                 s.append("</div>")
@@ -237,24 +235,21 @@ def product_mng(alert=None):
 def product_orders():
     "views - product orders (lists)"
     alert=None
-
     search = False
     q = request.args.get('search')
     per_page = request.args.get('pp')
     status = request.args.get('status')
+    showpager = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 15
+    offset = (page - 1) * int(per_page)
 
     if q:
         search = True
 
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-
-    per_page = 15
-    offset = (page - 1) * int(per_page)
-
     if status:
         if status == "Pending":
             sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
-
         if status == "Fulfilled":
             sql = "select * from productorders where fulfilled=1 order by id desc limit {},{}".format(offset,per_page)
         if status == "Fulfilled Manually":
@@ -264,14 +259,19 @@ def product_orders():
         sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
 
     orders = ps.productorders_get(sql)
+    count_bluf = ps.productorders_get(False,True)[0]
 
-    tt =ps.productorders_get(False,True)[0]
-
-    paging = pagination(page=page, total=tt,
+    if orders:
+        if per_page > len(orders):
+            showpager = False
+    else:
+        showpager = False
+        orders = []
+    paging = pagination(page=page, total=count_bluf,
                             search=search, record_name='orders',
                             css_framework="bootstrap5",inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >")
 
-    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status)
+    return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status,showpager=showpager)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
 def product_orders_single(ids):

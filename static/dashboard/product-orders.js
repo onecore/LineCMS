@@ -30,7 +30,7 @@ setperpage.addEventListener('change', function (e) {
     let status_val = e.target.value;
     let searchc = ssearch.value;
     // api_plist(par_)
-    let q = `product-orders?status=${status_val}&search=${searchc}&page=${ppge}`
+    let q = `product-orders?status=${status_val}&search=${searchc}&page=1`
     location.href = q
 
 

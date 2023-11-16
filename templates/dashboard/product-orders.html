@@ -468,7 +468,9 @@ swal("", `{{error}}`, "warning");
               </div>
             </div>
                   <div class="row pt-2 pb-0">
+                    {% if showpager %}
                     <center>{{ pagination.links }}</center>
+                    {% endif %}
                   </div>
             <table class="table table-striped table-hover mt-3">
               <thead>
@@ -497,12 +499,18 @@ swal("", `{{error}}`, "warning");
 
                 {% else %}
                 <br>
-                <p>You have no orders yet.</p>
+                {% if status %}
+                <center><p class="badge btn-muted border text-dark">You have no {{status}} orders.</p></center>
+                {% else %}
+                <center><p class="badge btn-muted border text-dark">You have no Pending orders.</p></center>
+                {% endif %}
                 {% endif %}
               </tbody>
             </table>
           </div>
-                            <center class="pt-3">{{ pagination.links }}</center>
+            {% if showpager %}
+          <center class="pt-3">{{ pagination.links }}</center>
+            {% endif %}
 
         </div>
       </div>
