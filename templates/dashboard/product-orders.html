@@ -25,28 +25,11 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.pagination-page-info {
-    padding: .6em;
-    padding-left: 0;
-    width: 40em;
-    margin: .5em;
-    margin-left: 0;
-    font-size: 12px;
-}
-.pagination-page-info b {
-    color: black;
-    /* background: #6aa6ed; */
-    padding-left: 2px;
-    padding: .1em .25em;
-    font-size: 150%;
-}
 
-.page-link  {
-  background-color: rgb(232, 232, 232);
-  font-weight:normal;
-  color: rgb(41, 40, 40) !important;
-  border-radius: 35% !important;
 
+.pagination  {
+  padding-right: 50px !important;
+  text-align: center;
 }
 
 /* .page-link {
@@ -484,6 +467,9 @@ swal("", `{{error}}`, "warning");
                 </div>
               </div>
             </div>
+                  <div class="row pt-2 pb-0">
+                    <center>{{ pagination.links }}</center>
+                  </div>
             <table class="table table-striped table-hover mt-3">
               <thead>
                 <tr>
@@ -508,31 +494,16 @@ swal("", `{{error}}`, "warning");
                       <td>{{order[4]}}</td>
                     </tr>
                   {% endfor %}
-                  {% if status %}
-                  <br>
-                  <center><p class="badge bg-primary">{{orders|length}} {{status}} Orders loaded</p></center>
-                  {% else %}
-                  <center>
-                    <p class="badge bg-primary">{{orders|length}} Pending Orders loaded</p>
-                  </center>
 
-                  {% endif %}
                 {% else %}
                 <br>
                 <p>You have no orders yet.</p>
                 {% endif %}
               </tbody>
-                          <div class="row pt-4 pb-2">
-                            <div class="col">
-                              {{ pagination.info }}
-                            </div>
-                            <div class="col">
-                              {{ pagination.links }}
-                            </div>
-                          </div>
             </table>
-
           </div>
+                            <center class="pt-3">{{ pagination.links }}</center>
+
         </div>
       </div>
     </div>

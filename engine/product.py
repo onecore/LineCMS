@@ -253,24 +253,19 @@ def product_orders():
 
     if status:
         if status == "Pending":
-            sql = "select * from productorders where fulfilled=0 order by id desc"
+            sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
 
         if status == "Fulfilled":
-            sql = "select * from productorders where fulfilled=1 order by id desc"
+            sql = "select * from productorders where fulfilled=1 order by id desc limit {},{}".format(offset,per_page)
         if status == "Fulfilled Manually":
-            sql = "select * from productorders where fulfilled=2 order by id desc"
+            sql = "select * from productorders where fulfilled=2 order by id desc limit {},{}".format(offset,per_page)
 
     else:
-        sql = "select * from productorders where fulfilled=0 order by id limit {},{}".format(offset,per_page)
+        sql = "select * from productorders where fulfilled=0 order by id desc limit {},{}".format(offset,per_page)
 
     orders = ps.productorders_get(sql)
 
-    tt = ps.productorders_get(False,True)[0]
-
-    if status:
-        tt = len(orders)
-    else:
-        tt =ps.productorders_get(False,True)[0]
+    tt =ps.productorders_get(False,True)[0]
 
     paging = pagination(page=page, total=tt,
                             search=search, record_name='orders',
