@@ -265,7 +265,7 @@ def product_orders():
         orders = []
     paging = pagination(page=page, total=count_bluf,
                             search=False, record_name='orders',
-                            css_framework="bootstrap5",inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >")
+                            css_framework="bootstrap5",inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >",alignment="center")
 
     return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status,showpager=showpager)
 
