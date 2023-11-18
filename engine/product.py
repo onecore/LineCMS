@@ -244,7 +244,7 @@ def product_orders():
     per_page = 15
     offset = (page - 1) * int(per_page)
 
-    if status:
+    if status:  
         if status == "Pending":
             s = "select * from productorders where fulfilled=0 AND (ordernumber like '%{}%' OR customer_name like '%{}%') order by id desc limit {},{}".format(q,q,offset,per_page)                
         if status == "Fulfilled":

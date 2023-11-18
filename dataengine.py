@@ -430,8 +430,16 @@ class SandEngine:
             "SELECT * FROM blog WHERE route='{m}'".format(m=route))
         return m.fetchone()
 
-    def get_blog_listings(self, page=0, result=10) -> list:
+    def get_blog_listings(self, page=0, result=10,getcount=False,quer=[]) -> list:        
         c = self.connection.cursor()
+        if getcount:
+            fetch = c.execute("SELECT Count(*) FROM blog")
+            return fetch.fetchone()
+        
+        if quer:
+            c.execute("select * from blog order by id desc limit {},{}".format(quer[0],quer[1]))
+            return c.fetchall()
+        
         m = c.execute("SELECT * FROM blog ORDER BY id DESC")
         return m.fetchall()
 

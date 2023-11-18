@@ -62,8 +62,8 @@ try:
     maildata = lite(mailinfo[13])
     app.config['MAIL_SERVER']= maildata['server']
     app.config['MAIL_PORT'] = int(maildata['port'])
-    app.config['MAIL_USERNAME'] = "theonecore@gmail.com" #maildata['email']
-    app.config['MAIL_PASSWORD'] = "xomx pthh bzbh dqms" #maildata['password']
+    app.config['MAIL_USERNAME'] = maildata['email']
+    app.config['MAIL_PASSWORD'] = maildata['password']
     app.config['MAIL_USE_TLS'] = True if maildata['tls'] == "YES" else False
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
     logger(f"SandCMS: Mail SMTP settings/credentials Loaded")
