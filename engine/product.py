@@ -218,15 +218,21 @@ def product_new():
 @product.route("/product-manage/<alert>", methods=['POST', 'GET'])
 def product_mng(alert=None):
     "views - product manage (lists)"
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 10
+    offset = (page - 1) * int(per_page)
+
     search = False
     q = request.args.get('q')
     if q:
         search = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    pr = ps.get_product_listings()
-    tt = len(pr)
-    pagination = Pagination(page=page, total=tt,
-                            search=search, record_name='product', css_framework="bootstrap5")
+
+    pcount = ps.get_product_listings(getcount=True)[0]
+    pr = ps.get_product_listings(quer=[offset,per_page])
+
+    pagination = Pagination(page=page, total=pcount,
+                            search=search, record_name='product', css_framework="bootstrap5",alignment="center")
     if request.method == "POST":
         pass
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
