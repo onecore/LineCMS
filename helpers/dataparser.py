@@ -5,7 +5,8 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 
 keys = {
-		"orders" : ['id','fulfilled','customer_name', 'customer_email', 'amount_total', 'created', 'payment_status', 'customer_country', 'customer_postal', 'currency', 'items', 'session_id', 'notes','tracking','metadata', 'address', 'phone', 'shipping_cost','history','ordernumber','additional']
+		"orders" : ['id','fulfilled','customer_name', 'customer_email', 'amount_total', 'created', 'payment_status', 'customer_country', 'customer_postal', 'currency', 'items', 'session_id', 'notes','tracking','metadata', 'address', 'phone', 'shipping_cost','history','ordernumber','additional'],
+		"mod" : ["popup","announcement","uparrow","socialshare","videoembed","custom","extras"]
 		}
 
 def zipper(key: str,combinewith: list) -> dict:
@@ -32,6 +33,10 @@ class Product(Order):
 		super().__init__(key, lst)
 
 class Blog(Order):
+	def __init__(self, key, lst) -> None:
+		super().__init__(key, lst)
+
+class Mod(Order):
 	def __init__(self, key, lst) -> None:
 		super().__init__(key, lst)
 

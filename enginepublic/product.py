@@ -4,12 +4,14 @@ Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, redirect, send_from_directory
-import dataengine
 from flask_paginate import Pagination, get_page_parameter
-import json
 from engine.product import getimages
+from helpers import dataparser
 from ast import literal_eval as lite
+import dataengine
 import settings
+import json
+
 
 de = dataengine.SandEngine()
 themes = de.themeget()[0]
@@ -18,11 +20,16 @@ productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/'+themes
                         )
 
+def safeget(ret,val):
+    try:
+        return lite(ret)
+    except:
+        return val
 
 def variantpush(v, i, js=False) -> dict:
     """
     function to change images into a dictionary with index,
-    purpose to show image in lightslider when variant changed
+    purpose to show variant image in lightslider when variant changed
     """
     c, d = 0, {}
     for im in i:  # images
@@ -43,13 +50,13 @@ def productlist():
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
-        "popup": lite(all_d[0]),
-        "announcement": lite(all_d[1]),
-        "uparrow": lite(all_d[2]),
-        "socialshare": lite(all_d[3]),
-        "videoembed": lite(all_d[4]),
-        "custom": lite(all_d[5]),
-        "extras": lite(all_d[6]),
+        "popup": safeget(all_d[0],"0"),
+        "announcement": safeget(all_d[1],"0"),
+        "uparrow": safeget(all_d[2],"0"),
+        "socialshare": safeget(all_d[3],"0"),
+        "videoembed": safeget(all_d[4],"0"),
+        "custom": safeget(all_d[5],"0"),
+        "extras": safeget(all_d[6],"0"),
     }
     products = de.get_product_listings()
     search = False
