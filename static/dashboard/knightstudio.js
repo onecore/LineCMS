@@ -492,7 +492,6 @@ function grabvariantdata() {
 }
 
 function grabinputs() {
-    product_data['stock']
     product_data['images'] = images;
     product_data['title'] = document.getElementById("title").value;
     product_data['price'] = document.getElementById("m-price").value;
@@ -501,6 +500,8 @@ function grabinputs() {
     product_data['seo_description'] = document.getElementById("p-desc").value;
     product_data['seo_keywords'] = document.getElementById("p-keywords").value;
     product_data['body'] = CKEDITOR.instances['ckeditor'].getData();
+    product_data['stock'] = document.getElementById("m-stock").value;
+
     // product_data['images'] = categorydocument.getElementById("categ").value;
     // product_data['mainimage'] = categorydocument.getElementById("categ").value;
     if (product_data['title'].length <= 4) {
@@ -519,6 +520,15 @@ function grabinputs() {
         swal("", 'Price not accepted, unable to validate', "error");
         return false;
     }
+    if (product_data['stock'].length <= 0) {
+        swal("", 'Stock not accepted, unable to validate', "error");
+        return false;
+    }   
+    if (validatePrice(product_data['stock'])) {
+        swal("", 'Stock not accepted, unable to validate', "error");
+        return false;
+    } 
+
     if (!validatePrice(product_data['price'])) {
         swal("", 'Price not accepted, unable to validate', "error");
         return false;
@@ -555,7 +565,7 @@ function p_publish() {
         .then((response) => response.json())
         .then((data) => {
                 if (parseInt(data['status']) === 1){
-                    swal("", 'Order fulfilled', "success");
+                    swal("", 'Product Created', "success");
                     if (data['url']){
                         location.href = "/product/"+data['url']
                     }

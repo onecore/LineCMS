@@ -360,9 +360,9 @@ class SandEngine:
         try:
             ts = self.timestamp(routeStyle=1)
             ugen = self.url_gen(ts+" "+d['title'])
-            params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden,product_id,body,price) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            params = "INSERT INTO products (title,category,variants,product_url,product_urlsystem,seo_description,seo_keywords,images,mainimage,variant_details,timestamp,hidden,product_id,body,price,stock) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             vals = (d['title'], d['category'], str(d['variants']), d['product_url'], ugen,
-                    d['seo_description'], d['seo_keywords'], str(d['images']), d['mainimage'], str(d['variant_details']), ts, "0", d['id'], d['body'], d['price'])
+                    d['seo_description'], d['seo_keywords'], str(d['images']), d['mainimage'], str(d['variant_details']), ts, "0", d['id'], d['body'], d['price'],d['stock'])
             c.execute(params, vals)
             self.connection.commit()
             return ugen
