@@ -103,6 +103,7 @@ def productlist():
     alert=None
     par_q = request.args.get('search')
     par_c = request.args.get('category')
+    
     if par_c == "Group by Categories":
         par_c = ""
         
@@ -115,7 +116,9 @@ def productlist():
         products = de.get_product_listings(custom={"s":par_q,"c":par_c,"off":offset,"perp":per_page})
     else:
         products = de.get_product_listings(quer=[offset,per_page])
+
     products_count = de.get_product_listings(getcount=True)[0]
+    products_cats = de.get_product_listings(getcats=True)
 
     if products:
         if per_page > len(products):
@@ -126,7 +129,8 @@ def productlist():
 
     paginate = pagination(page=page, total=products_count,record_name='products',css_framework="bootstrap5",
                             inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >",alignment="center")
-    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=paginate,showpager=showpager,page=page)
+    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=paginate,showpager=showpager,page=page,
+                           categories=products_cats,selectedcat=par_c)
 
 
 @productuser.route('/order/success')

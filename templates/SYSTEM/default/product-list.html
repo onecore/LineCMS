@@ -65,15 +65,20 @@
 
           <div class="row">
             <div class="col float-left">
-              <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="category" style="width: 200px">
+              <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="categorysel" style="width: 200px">
                 <option selected>Group by Categories</option>
-                    <option value="">asd</option>
-
+                  {% if selectedcat %}
+                    <option value="{{selectedcat}}" selected>{{selectedcat}}</option>
+                  {% endif %}
+                  {% for cat in categories %}
+                    {% if cat[0] %}
+                    <option value="{{cat[0]}}">{{cat[0]}}</option>
+                    {% endif %}
+                  {% endfor %}
               </select>
             </div>
 
             <div class="col float-right">
-            <form>
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Search product" name="q" id="q">
               <div class="input-group-append">
@@ -82,14 +87,15 @@
                 </button>
               </div>
             </div>
-          </form>
             </div>
           </div>
           <div class="row">
              <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
             <br>
             <br>
-
+            {% if not products %}
+            <center><h3 class="pt-5">No products found..</h3></center>
+            {% endif %}
             {% for product in products %}
               {% if product[12] == '0' %}
 
