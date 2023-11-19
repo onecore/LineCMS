@@ -477,9 +477,9 @@ swal("", `{{error}}`, "warning");
                 </tbody>
             </table>
             {% if blog %}
-            {{ pagination.info }}
             {{ pagination.links }}
             {% endif %}
+            
             {% if not blog %}
             <br>
             <center><p>You don't have any post yet, <a href="/blog-new">Write a blog now</a></p> </center>

@@ -125,7 +125,7 @@ def blog_manage(alert=None):
 
 
     pagination = Pagination(page=page, total=tcount,
-                            search=search, record_name='blog', css_framework="bootstrap5")
+                            search=search, record_name='blog', css_framework="bootstrap5",alignment="center")
     return render_template("/dashboard/blog-manage.html", blog=blog, pagination=pagination, alert=alert)
 
 
