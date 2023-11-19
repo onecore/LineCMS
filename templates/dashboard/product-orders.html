@@ -468,6 +468,12 @@ swal("", `{{error}}`, "warning");
           </div>
             {% if showpager %}
           <center class="pt-3">{{ pagination.links }}</center>
+            {% else %}
+            {% if page > 1 %}
+            <ul class="pagination   justify-content-center">
+              {{ pagination.prev_page|safe}}
+            </ul>
+            {% endif %}
             {% endif %}
 
         </div>
