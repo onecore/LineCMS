@@ -2,30 +2,23 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Publish Product - KnightStudio Dashboard</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
-  <link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
-  <script src="../../dashboard/knightstudio.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Publish Product - KnightStudio Dashboard</title>
+<link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
+<link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="../../dashboard/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="../../dashboard/vendors/typicons/typicons.css">
+<link rel="stylesheet" href="../../dashboard/vendors/simple-line-icons/css/simple-line-icons.css">
+<link rel="stylesheet" href="../../dashboard/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="../../dashboard/vendors/select2/select2.min.css">
+<link rel="stylesheet" href="../../dashboard/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+<link rel="stylesheet" href="../../dashboard/css/vertical-layout-light/style.css">
+<link rel="shortcut icon" href="../../dashboard/img/terminal.svg" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+<script src="../../dashboard/knightstudio.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <link href="../../dashboard/ks-js/filepond.css" rel="stylesheet" />
 <link href="../../dashboard/ks-js/filepond-plugin-image-preview.min.css" rel="stylesheet"/>
@@ -41,6 +34,7 @@ input[type="file"] {
     margin-top:10px;
     cursor: pointer;
 }
+
 fieldset {
     border: 1px solid #000;
 }
@@ -98,7 +92,6 @@ swal("", `{{error}}`, "warning");
 localStorage.clear();
 </script>
   <div class="container-scroller">
-    <!-- partial:../../dashboard/partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
         <div class="me-3">
@@ -123,12 +116,6 @@ localStorage.clear();
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
               </span>
           </li>
-          <!-- <li class="nav-item">
-            <form class="search-form" action="#">
-              <i class="icon-search"></i>
-              <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-            </form>
-          </li> -->
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>

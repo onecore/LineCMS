@@ -501,7 +501,6 @@ function grabinputs() {
     product_data['seo_keywords'] = document.getElementById("p-keywords").value;
     product_data['body'] = CKEDITOR.instances['ckeditor'].getData();
     product_data['stock'] = document.getElementById("m-stock").value;
-
     // product_data['images'] = categorydocument.getElementById("categ").value;
     // product_data['mainimage'] = categorydocument.getElementById("categ").value;
     if (product_data['title'].length <= 4) {
@@ -524,7 +523,7 @@ function grabinputs() {
         swal("", 'Stock not accepted, unable to validate', "error");
         return false;
     }   
-    if (validatePrice(product_data['stock'])) {
+    if (!validatePrice(product_data['stock'])) {
         swal("", 'Stock not accepted, unable to validate', "error");
         return false;
     } 
@@ -532,7 +531,6 @@ function grabinputs() {
     if (!validatePrice(product_data['price'])) {
         swal("", 'Price not accepted, unable to validate', "error");
         return false;
-
     }
     return grabvariantdata()
 }
@@ -584,7 +582,7 @@ function p_updatepost() {
 
     // document.getElementById("loading").style = 'display:block';
     // document.getElementById("publishb").style = 'display:none';
-    if (build_variants() == false) {
+    if (!build_variants()) {
         swal("", 'Please check for any missing information.', "error");
         document.getElementById("cover-spin").style.display = "none";
 
