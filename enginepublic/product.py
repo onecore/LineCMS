@@ -98,18 +98,29 @@ def productlist():
         "custom": safeget(all_d[5],"0"),
         "extras": safeget(all_d[6],"0"),
     }
-    
-    products = de.get_product_listings()
 
-    search = False
-    q = request.args.get('q')
-    if q:
-        search = q
+
+    alert=None
+    q = request.args.get('search')
+    per_page = request.args.get('pp')
+    showpager = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 15
+    offset = (page - 1) * int(per_page)
+
+    products = de.get_product_listings()
+    products_count = de.get_product_listings(getcount=True)[0]
+
+    if products:
+        if per_page > len(products):
+            showpager = False
+    else:
+        showpager = False
+        products = []
+
     tt = len(products)
-    pagination = Pagination(page=page, total=tt,
-                            search=search, record_name='products', css_framework="bootstrap")
-    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=pagination)
+    pagination = Pagination(page=page, total=products_count,record_name='products', css_framework="bootstrap",alignment="center")
+    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=pagination,showpager=showpager)
 
 
 @productuser.route('/order/success')
