@@ -3,7 +3,7 @@ SandCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, render_template, request, redirect, send_from_directory
+from flask import Blueprint, Markup,render_template, request, redirect, send_from_directory
 from flask_paginate import Pagination, get_page_parameter
 from engine.product import getimages
 from helpers import dataparser
@@ -102,13 +102,12 @@ def productlist():
 
     alert=None
     q = request.args.get('search')
-    per_page = request.args.get('pp')
     showpager = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 15
     offset = (page - 1) * int(per_page)
 
-    products = de.get_product_listings()
+    products = de.get_product_listings(quer=[offset,per_page])
     products_count = de.get_product_listings(getcount=True)[0]
 
     if products:
@@ -118,9 +117,10 @@ def productlist():
         showpager = False
         products = []
 
-    tt = len(products)
-    pagination = Pagination(page=page, total=products_count,record_name='products', css_framework="bootstrap",alignment="center")
-    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=pagination,showpager=showpager)
+    paginate = pagination(page=page, total=products_count,record_name='products',css_framework="bootstrap5",
+                            inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >",alignment="center")
+    print(paginate.prev_page)
+    return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=paginate,showpager=showpager,page=page)
 
 
 @productuser.route('/order/success')

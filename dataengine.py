@@ -391,7 +391,7 @@ class SandEngine:
                 "SELECT * FROM products WHERE product_urlsystem='{m}'".format(m=route))
         return m.fetchone()
 
-    def get_product_listings(self, page=0, result=10,getcount=False,quer=[]):
+    def get_product_listings(self, page=0, result=10,getcount=False,quer=[],custom=[]):
         c = self.connection.cursor()
         if getcount:
             c.execute("SELECT Count(*) FROM products")
@@ -400,8 +400,8 @@ class SandEngine:
             c.execute("select * from products order by id desc limit {},{}".format(quer[0],quer[1]))
             return c.fetchall()
         
-        m = c.execute("SELECT * FROM products ORDER BY id DESC")
-        return m.fetchall()
+        c.execute("SELECT * FROM products ORDER BY id DESC")
+        c.fetchall()
 
     def blog_publish(self, dicts) -> bool:
         c = self.connection.cursor()
