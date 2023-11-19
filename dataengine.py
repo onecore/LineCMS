@@ -391,8 +391,23 @@ class SandEngine:
                 "SELECT * FROM products WHERE product_urlsystem='{m}'".format(m=route))
         return m.fetchone()
 
-    def get_product_listings(self, page=0, result=10,getcount=False,quer=[],custom=[]):
+    def get_product_listings(self, getcount=False,quer=[],custom={}):
         c = self.connection.cursor()
+        if custom:
+            if custom['s']:
+                if custom['c']:
+                    c.execute("select * from products where hidden=0 AND category='{}' AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['c'],custom['s'],custom['s'],custom['off'],custom['perp']))
+                    return c.fetchall()
+                
+                c.execute("select * from products where hidden=0 AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['s'],custom['s'],custom['off'],custom['perp']))
+                return c.fetchall()
+            
+            if custom['c']:
+                if custom['s']:
+                    c.execute("select * from products where hidden=0 AND category='{}' AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['c'],custom['s'],custom['s'],custom['off'],custom['perp']))
+                c.execute("select * from products where hidden=0 AND category='{}' order by id desc limit {},{}".format(custom['c'],custom['off'],custom['perp']))
+                return c.fetchall()
+            
         if getcount:
             c.execute("SELECT Count(*) FROM products")
             return c.fetchone()

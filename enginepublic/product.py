@@ -101,13 +101,20 @@ def productlist():
 
 
     alert=None
-    q = request.args.get('search')
+    par_q = request.args.get('search')
+    par_c = request.args.get('category')
+    if par_c == "Group by Categories":
+        par_c = ""
+        
     showpager = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 15
     offset = (page - 1) * int(per_page)
 
-    products = de.get_product_listings(quer=[offset,per_page])
+    if par_q or par_c:
+        products = de.get_product_listings(custom={"s":par_q,"c":par_c,"off":offset,"perp":per_page})
+    else:
+        products = de.get_product_listings(quer=[offset,per_page])
     products_count = de.get_product_listings(getcount=True)[0]
 
     if products:
@@ -119,7 +126,6 @@ def productlist():
 
     paginate = pagination(page=page, total=products_count,record_name='products',css_framework="bootstrap5",
                             inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >",alignment="center")
-    print(paginate.prev_page)
     return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=paginate,showpager=showpager,page=page)
 
 
