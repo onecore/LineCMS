@@ -257,6 +257,15 @@ localStorage.clear();
                     <input type="number" class="form-control" id="m-price" aria-label="" placeholder="Please use a valid price" value="1.00">
                   </div>
                 </div>
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Product Stock</span>
+                    </div>
+                    <input type="number" class="form-control" id="m-stock" aria-label="" placeholder="Please use a valid price"
+                      value="1000">
+                  </div>
+                </div>
                 <fieldset class="border p-2 text-muted">
                   <legend class="float-none w-auto text-muted" style="font-size:15px">Product Main Image</legend>
                   <center>
@@ -375,46 +384,7 @@ localStorage.clear();
           </div>
         </div>
         <br>
-        <!-- <div class="modal fade pt-0 mt-0" id="varmodal" tabindex="-1" aria-labelledby="varmodal" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="topModalLabel">Update Variant</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <center>
-                <img src="/dashboard/img/no-image.jpeg" alt="..." id="logoviewmodal" name="logoviewmpdal" class="img-thumbnail" style="border:none;bottom:30px;height:170px">
-                </center>
-                <center>
-                <center>
-                <input id='bimg-modal' style='display:none'></input>
-                <label class="custom-file-upload center">
-                  <form id="upload-file-modal" name="upload-file">
-                    <input type="file" name="filemodal" onchange="loadFileModal(event)"/>
-                    <i class="fa fa-cloud-upload"></i> Click here to choose&nbsp&nbsp
-                  </form>
-                </label>
-              </center>
-              <hr>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Price $</span>
-                </div>
-                <input type="text" class="form-control" id="p-pricemodal" aria-label="" placeholder="This variant's price">
-              </div>
-
-              </div>
-              <div class="modal-footer">
-                <input id='current-variant-input' style="display:none"></input>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss='modal' onclick="p_updatevariant()">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- content-wrapper ends -->
-        <!-- partial:../../dashboard/partials/_footer.html -->
+        
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a href="https://www.KnightStudio.ca/" target="_blank">KnightStudio Dashboard v1.4</span>
@@ -561,16 +531,11 @@ $("#form").submit( function(eventObj) {
     });
 
   pond.on('removefile', (error, file) => {
-    // this object contains the file info
-
     product_data['mainimage'] = "";
-    // file.file.filename = "asdasdasd"
   })
 
   pondimages.on('removefile', (error, file) => {
-    // this object contains the file info
     images = images.filter(v => v !== file.filename);
-    // file.file.filename = "asdasdasd"
   })
 </script>
 </body>
