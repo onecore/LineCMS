@@ -120,9 +120,11 @@
             {% if showpager %}
             {{ pagination.links }}
             {% else %}
+            {% if page > 1%}
             <ul class="pagination   justify-content-center">
                   {{ pagination.prev_page|safe}}
             </ul>
+            {% endif %}
             {% endif %}
         </div>
         <!-- Footer-->
