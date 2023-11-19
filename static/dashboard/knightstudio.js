@@ -14,6 +14,7 @@ var product_data = {
     "price": "",
     "variant_details": {},
     "hidden": "0",
+    "stock": "1000"
 };
 var variant_data = [];
 var variant_data_dict = {};
@@ -491,6 +492,7 @@ function grabvariantdata() {
 }
 
 function grabinputs() {
+    product_data['stock']
     product_data['images'] = images;
     product_data['title'] = document.getElementById("title").value;
     product_data['price'] = document.getElementById("m-price").value;
