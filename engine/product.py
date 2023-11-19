@@ -181,7 +181,6 @@ def product_sett():
         ckey = request.form.get("ckey")
         wkey = request.form.get("wkey")
         wskey = request.form.get("wskey")
-
         shipping_enable = request.form.get("shipping")
         shipping_rates = request.form.get("shippingobj")    
         shipping_countries = request.form.get("cactivated")    

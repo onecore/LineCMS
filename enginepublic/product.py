@@ -20,6 +20,46 @@ productuser = Blueprint(
                         "productuser", __name__, static_folder='static', static_url_path='/static/SYSTEM/'+themes
                         )
 
+
+class pagination(Pagination):
+    """Modified removed numbered links"""
+    def __init__(self, found=0, **kwargs):
+        super().__init__(found, **kwargs)
+
+    @property
+    def links(self):
+        """Get all the pagination links."""
+        if self.total_pages <= 1:
+            if self.show_single_page:
+                return self._get_single_page_link()
+
+            return ""
+
+        if self.css_framework == "bulma":
+            s = [
+                self.link_css_fmt.format(
+                    self.link_size,
+                    self.alignment,
+                    self.bulma_style,
+                    self.prev_page,
+                    self.next_page,
+                )
+            ]
+            for page in self.pages:
+                s.append(
+                    self.single_page(page) if page else self.gap_marker_fmt
+                )
+            s.append(self.css_end_fmt)
+        else:
+            s = [self.link_css_fmt.format(self.link_size, self.alignment)]
+            s.append(self.prev_page)
+            s.append(self.next_page)
+            if self.css_framework == "foundation" and self.alignment:
+                s.insert(0, F_ALIGNMENT.format(self.alignment))
+                s.append("</div>")
+
+        return Markup("".join(s))
+
 def safeget(ret,val):
     try:
         return lite(ret)
@@ -58,7 +98,9 @@ def productlist():
         "custom": safeget(all_d[5],"0"),
         "extras": safeget(all_d[6],"0"),
     }
+    
     products = de.get_product_listings()
+
     search = False
     q = request.args.get('q')
     if q:
