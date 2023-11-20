@@ -437,6 +437,9 @@ def new_event():
             return {'success': False}
     return {'success': True}
 
+def verifyprice():
+    pass
+
 def check(data):
     "parses all the data needed to make a friendly objs for stripe api, returns an api url (checkout)"
     _, _, _, _, _, _,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed

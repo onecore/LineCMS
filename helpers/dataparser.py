@@ -8,6 +8,7 @@ keys = {
 		"orders" : ['id','fulfilled','customer_name', 'customer_email', 'amount_total', 'created', 'payment_status', 'customer_country', 'customer_postal', 'currency', 'items', 'session_id', 'notes','tracking','metadata', 'address', 'phone', 'shipping_cost','history','ordernumber','additional'],
 		"mod" : ["popup","announcement","uparrow","socialshare","videoembed","custom","extras"],
 		"product" : ["id","title","category","variants","product_url","product_urlsystem","seo_description","seo_keywords","images","mainimage","variant_details","timestamp","hidden","product_id","body","price","stock"],
+		"site" : ["site_description","sitename","footer_copyright","logo","up_arrow","domain","social_share","pop_up","meta_description","meta_keywords","favicon","site_type","messages","site_phone","site_email","site_location"],
 		}
 
 def zipper(key: str,combinewith: list) -> dict:
@@ -34,6 +35,10 @@ class Product(Order):
 		super().__init__(key, lst)
 
 class Blog(Order):
+	def __init__(self, key, lst) -> None:
+		super().__init__(key, lst)
+
+class Site(Order):
 	def __init__(self, key, lst) -> None:
 		super().__init__(key, lst)
 

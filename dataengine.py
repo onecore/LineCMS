@@ -668,7 +668,7 @@ class SandEngine:
         m = c.execute("SELECT * FROM modules")
         return m.fetchall()
 
-    def load_data_index(self, which) -> tuple:
+    def load_data_index(self, load) -> tuple:
         """
         Loads data from DB, function calls in main page
         """
@@ -678,6 +678,9 @@ class SandEngine:
         self.fetch_msg = c.execute("SELECT * FROM messages")
         self.site_msgs = self.fetch_msg.fetchall()
 
+        if load:
+            return self.site_data[0]
+        
         all_data = {  
             "sitedescription": self.site_data[0][0],
             "sitename": self.site_data[0][1],

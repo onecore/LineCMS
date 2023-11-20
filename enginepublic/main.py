@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template
 import dataengine
 from ast import literal_eval as lite
+from helpers import dataparser
 
 mains = Blueprint("mains", __name__)
 
@@ -21,6 +22,8 @@ def main():
     main page / index
     """
     dt = de.load_data_index(None)  # loads datas
+    sitedata = dataparser.Site("site",de.load_data_index(True))
+
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
@@ -32,7 +35,8 @@ def main():
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
-    return render_template(f"/SYSTEM/{themes}/index.html", data=dt, mod=mod)
+    
+    return render_template(f"/SYSTEM/{themes}/index.html", data=dt, mod=mod,site=sitedata)
 
 @mains.route("/sitemap.txt")
 def sitemap():
