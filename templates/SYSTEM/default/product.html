@@ -7,7 +7,7 @@
 <meta name="description" content="{{product[6]}}" />
 <meta name="keywords" content="{{product[7]}}" />
 <meta name="author" content="KnightStudio Canada" />
-<title>{{ product[1] }} - {{ data['sitename'] }}</title>
+<title>{{ product.title }} - {{ data['sitename'] }}</title>
 <link href="/ks/css/style.css" rel="stylesheet" />
 <link href="/media/{{data['favicon']}}" rel="icon">
 <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -84,7 +84,7 @@
                     <center>
                     <div class="alert alert-success" role="alert">
                       Product is now live!
-                      <br><a class="btn btn-primary btn-xs rounded" href="/product-edit/{{product[5]}}"> Update product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-new"> Create new product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-manage"> View all products</a>
+                      <br><a class="btn btn-primary btn-xs rounded" href="/product-edit/{{product.product_urlsystem}}"> Update product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-new"> Create new product</a>&nbsp&nbsp<a class="btn btn-primary btn-xs rounded" href="/product-manage"> View all products</a>
                     </div>
                   </center>
                     {% endif %}
@@ -92,8 +92,8 @@
                     <div class="demo">
                         <ul id="lightSlider">
                           {% if mainimage %}
-                          <li data-thumb="/media/mainimage/{{product[13]}}/{{mainimage}}"/>
-                              <img class="img-fluid" src="/media/mainimage/{{product[13]}}/{{mainimage}}" style="width:100%"/>
+                          <li data-thumb="/media/mainimage/{{product.product_id}}/{{product.mainimage}}"/>
+                              <img class="img-fluid" src="/media/mainimage/{{product.product_id}}/{{product.mainimage}}" style="width:100%"/>
                           </li>
                           {% endif %}
 
@@ -103,8 +103,8 @@
                                   <img class="img-fluid" src="/{{ke.replace('static/dashboard/uploads/products/','')}}" style="width:100%"/>
                               </li>
                               {% else %}
-                              <li data-thumb="/media/products/{{product[13]}}/{{ke}}"/>
-                                  <img class="img-fluid" src="/media/products/{{product[13]}}/{{ke}}" style="width:100%"/>
+                              <li data-thumb="/media/products/{{product.product_id}}/{{ke}}"/>
+                                  <img class="img-fluid" src="/media/products/{{product.product_id}}/{{ke}}" style="width:100%"/>
                               </li>
                               {% endif %}
                           {% endfor %}
@@ -114,7 +114,7 @@
                     </article>
                     <br>
                     {% if 'authenticated' in session %}
-                    <center><a class="btn btn-primary" href="/product-edit/{{product[5]}}">Edit this product</a></center>
+                    <center><a class="btn btn-primary" href="/product-edit/{{product.product_urlsystem}}">Edit this product</a></center>
                     {% endif %}
 
                     <hr>
@@ -130,22 +130,22 @@
 
                 <!-- Side widgets-->
                 <div class="col-lg-5">
-                    <center><h2>{{product[1]}}</h2></center>
+                    <center><h2>{{product.title}}</h2></center>
                     <div class="container">
                       <div class="row border rounded-3">
 
                       <div class="card" style="background:none;border:0">
                         <div class="row mt-3 mb-0">
                           <div class="col" style="padding-left:3%">
-                            <h5><p class="badge bg-muted rounded border text-dark" id="pricep">Price: ${{product[15]}}</p></h5>
-                            <input name="fprice" id='fprice' value="{{product[15]}}" hidden/>
+                            <h5><p class="badge bg-muted rounded border text-dark" id="pricep">Price: ${{product.price}}</p></h5>
+                            <input name="fprice" id='fprice' value="{{product.price}}" hidden/>
                           </div>
                           <div class="col-8">
                           <p id="stock" style=""></p>
                         </div>
                         </div>
                           <h4><u>Product Details</u></p>
-                          <h6 class="mt-0 text-muted" style="word-break: break-word;">{{product[14]|safe}}</h6>
+                          <h6 class="mt-0 text-muted" style="word-break: break-word;">{{product.body|safe}}</h6>
                       </div>
 
                       <div class="row m-2">
@@ -274,12 +274,12 @@
       // py -> js objects (needs to be inside product.html)
       const variants = {{jvariants|safe}};
       const productinfo = {{jproductinfo|safe}};
-      const mainprice = '{{product[15]}}';
-      const pid = '{{product[13]}}';
+      const mainprice = '{{product.price}}';
+      const pid = '{{product.product_id}}';
       const vardict = {{jslides|safe}};
 
-      const product_title = '{{product[1]}}'
-      const product_url = '{{product[5]}}'
+      const product_title = '{{product.title}}'
+      const product_url = '{{product.product_urlsystem}}'
       // py -> js objects
       </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -6,7 +6,8 @@ Author: S. Jangra & Mark A.R. Pequeras
 
 keys = {
 		"orders" : ['id','fulfilled','customer_name', 'customer_email', 'amount_total', 'created', 'payment_status', 'customer_country', 'customer_postal', 'currency', 'items', 'session_id', 'notes','tracking','metadata', 'address', 'phone', 'shipping_cost','history','ordernumber','additional'],
-		"mod" : ["popup","announcement","uparrow","socialshare","videoembed","custom","extras"]
+		"mod" : ["popup","announcement","uparrow","socialshare","videoembed","custom","extras"],
+		"product" : ["id","title","category","variants","product_url","product_urlsystem","seo_description","seo_keywords","images","mainimage","variant_details","timestamp","hidden","product_id","body","price","stock"],
 		}
 
 def zipper(key: str,combinewith: list) -> dict:

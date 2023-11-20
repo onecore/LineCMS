@@ -103,7 +103,7 @@ def productlist():
     par_q = request.args.get('search')
     par_c = request.args.get('category')
     
-    if par_c == settings.productlist_select_none:
+    if par_c == settings.productlist_select_none: # if the front end's select is modified this should also be modified.
         par_c = ""
         
     showpager = True
@@ -162,7 +162,7 @@ def pproductpage(new=None, pid=None):
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
-    product = de.get_product_single(pid)
+    product = dataparser.Product("product",de.get_product_single(pid))
     mod = {
         "popup": lite(all_d[0]),
         "announcement": lite(all_d[1]),
@@ -176,11 +176,11 @@ def pproductpage(new=None, pid=None):
     if not product:
         return redirect("/product-manage")
     
-    variants = lite(product[3])  
-    productinfo = lite(product[10])
+    variants = lite(product.variants)  
+    productinfo = lite(product.variant_details)
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
-    imags = getimages(product[13])
+    imags = getimages(product.images)
     return render_template(f"/SYSTEM/{themes}/product.html",
                            product=product, 
                            mod=mod, 
@@ -193,8 +193,8 @@ def pproductpage(new=None, pid=None):
                            jproductinfo=jproductinfo, # Javascript obj
                            jslides=variantpush(variants, imags, js=True),  # Javascript obj
                            jslidespy=variantpush(variants, imags, js=False), # Python obj
-                           similarproducts=de.productsimilar(settings.product_similar_load, product[2]),  
-                           mainimage=product[9],
+                           similarproducts=de.productsimilar(settings.product_similar_load, product.category),  
+                           mainimage=product.mainimage,
                            )
 
 
