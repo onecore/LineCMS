@@ -32,7 +32,6 @@ class pagination(Pagination):
         if self.total_pages <= 1:
             if self.show_single_page:
                 return self._get_single_page_link()
-
             return ""
 
         if self.css_framework == "bulma":
@@ -104,7 +103,7 @@ def productlist():
     par_q = request.args.get('search')
     par_c = request.args.get('category')
     
-    if par_c == "Group by Categories":
+    if par_c == settings.productlist_select_none:
         par_c = ""
         
     showpager = True
