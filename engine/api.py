@@ -17,6 +17,9 @@ _de = dataengine.SandEngine()
 def epoch():
     return time.time()
 
+def deductq(obj):
+    "Deduct stock value Main/Variant"
+    print(obj)
 
 @api.route("/api/product-fulfill", methods=['POST'])
 def prodfulfill():
@@ -38,6 +41,7 @@ def prodfulfill():
                 history = lite(_load_h[0])
             except Exception as e:
                 pass
+
             # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}        
         
             if _de.orderfulfill(_d):
@@ -80,6 +84,8 @@ def prodfulfill():
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
         
+                deductq(_order.metadata)
+
                 return jsonify({"status": 1,"message":"Order fulfilled","historyobj":json.dumps(history_obj)})
             return jsonify({"status": 0,"message":"Unable to fulfill"})
         
