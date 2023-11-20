@@ -350,6 +350,7 @@ swal("", `{{error}}`, "warning");
                     <div class="card border shadow-none rounded border m-3" style="background: #F4F5F7">
                       <div class="card-body bordered shadow-none">
                         <h5 class="text-muted"><p class="icon-handbag d-inline"></p> ITEMS FROM ORDER #{{order[0]}}{{order[5]}}</h5>
+                        <br>
                         {% for item in items %}
                             {% for k,v in item.items() %}
                           <div class="card border shadow rounded border" style="background: #ffffff;">

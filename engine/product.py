@@ -358,7 +358,7 @@ def ratetemplater(obj) -> list:
 @product.route('/event', methods=['POST'])
 def new_event():
     """
-    views - stripe webhook
+    views - stripe webhook (Only captures 'Completed')
     """
     sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,_,_ = ps.productsettings_get() # wk is not needed
     event = None

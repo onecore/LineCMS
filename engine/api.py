@@ -39,7 +39,7 @@ def prodfulfill():
             except Exception as e:
                 pass
             # data = {"ordernumber":orn,"tracking":trv,"addition":adv,"template":""}        
-                    
+        
             if _de.orderfulfill(_d):
                 if shipstatus == "on":
                     shipstatus = True
@@ -79,7 +79,7 @@ def prodfulfill():
 
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
-
+        
                 return jsonify({"status": 1,"message":"Order fulfilled","historyobj":json.dumps(history_obj)})
             return jsonify({"status": 0,"message":"Unable to fulfill"})
         
