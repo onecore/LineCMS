@@ -169,6 +169,7 @@ def parseorders(l,obj) -> dict:
     return c
 
 @product.route("/product-settings", methods=['GET', 'POST'])
+@checkpoint.onlylogged
 def product_sett():
     "views - product settings"
     error, success = None, None
@@ -195,6 +196,7 @@ def product_sett():
     return render_template("/dashboard/product-settings.html", countries = country.countries, currencies=currencieslist, error=error, success=success, settings=settings)
 
 @product.route("/product-edit/<route>", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def product_edt(route):
     "views - product edit"
     if route == "upload-p-variant" or route == "upload-p-variant":
@@ -205,6 +207,7 @@ def product_edt(route):
     return render_template("/dashboard/product-edit.html", d=variantimagemodifier(d))
 
 @product.route("/product-new", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def product_new():
     "views - create new product"
     setup = False
@@ -215,6 +218,7 @@ def product_new():
 
 @product.route("/product-manage", methods=['POST', 'GET'])
 @product.route("/product-manage/<alert>", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def product_mng(alert=None):
     "views - product manage (lists)"
     page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -237,6 +241,7 @@ def product_mng(alert=None):
     return render_template("/dashboard/product-manage.html", product=pr, pagination=pagination, alert=alert)
 
 @product.route("/product-orders", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def product_orders():
     "views - product orders (lists)"
     alert=None
@@ -275,6 +280,7 @@ def product_orders():
     return render_template("/dashboard/product-orders.html", orders=orders, page=page,per_page=per_page,pagination=paging, alert=alert,status=status,showpager=showpager)
 
 @product.route("/product-orders/<ids>", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def product_orders_single(ids):
     "views - product order single"
     order = ps.productorders_single_get(ids)
@@ -526,12 +532,3 @@ def prodcheck():
     else:
         return jsonify({"status": 0})
 
-
-checkpoint.onlylogged(prodcheck)
-checkpoint.onlylogged(check)
-checkpoint.onlylogged(new_event)
-checkpoint.onlylogged(product_orders_single)
-checkpoint.onlylogged(product_orders)
-checkpoint.onlylogged(product_mng)
-checkpoint.onlylogged(product_new)
-checkpoint.onlylogged(product_sett)
