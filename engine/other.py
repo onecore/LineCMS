@@ -14,6 +14,7 @@ log = de.log
 
 
 @other.route("/logoff")
+@checkpoint.onlylogged
 def logout():
     try:
         log("Logged out, Session deleted")
@@ -24,16 +25,14 @@ def logout():
 
 
 @other.route("/other")
+@checkpoint.onlylogged
 def helpv():
     dt = de.load_data_index(None)  # loads datas
     return render_template("dashboard/help.html", version=version, data=dt)
 
 
 @other.route("/mwebsite")
+@checkpoint.onlylogged
 def logpage():
     data = de.get_logs()
     return render_template("dashboard/log.html", data=data)
-
-
-checkpoint.onlylogged(helpv)
-checkpoint.onlylogged(logpage)

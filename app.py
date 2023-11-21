@@ -17,6 +17,7 @@ import dataengine
 from flask import Flask, request, jsonify,session,redirect,request,url_for
 from flask_ckeditor import CKEditor
 import helpers.templateparser as rf
+from helpers import checkpoint
 from enginepublic import loaders
 from flask_mail import Mail, Message
 from ast import literal_eval as lite
@@ -79,6 +80,7 @@ mail = Mail(app)
 
 
 @app.route("/test-mail",methods=["POST"])
+@checkpoint.onlylogged
 def sendmail_test():
     if request.method == "POST":
         subject = 'Test Email!'

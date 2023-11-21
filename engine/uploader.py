@@ -64,6 +64,7 @@ def showuploaded_products_variant(folderid, file) -> str:
 
 @uploader.route('/product-edit/upload-p-main', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-main', methods=['POST', 'GET', 'DELETE'])
+@checkpoint.onlylogged
 def upload_file_product_main():
     """
     main image file upload
@@ -109,6 +110,7 @@ def upload_file_product_main():
 
 @uploader.route('/product-edit/upload-p-images', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-images', methods=['POST', 'GET', 'DELETE'])
+@checkpoint.onlylogged
 def upload_file_product_images():
     """
     images files upload
@@ -150,6 +152,7 @@ def upload_file_product_images():
 
 @uploader.route('/product-edit/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
 @uploader.route('/upload-p-variant', methods=['POST', 'GET', 'DELETE'])
+@checkpoint.onlylogged
 def upload_file_product_variant():
     """
     file upload for variants
@@ -203,6 +206,7 @@ def upload_file_product_variant():
 
 @uploader.route('/blog-edit/upload-blog', methods=['POST', 'DELETE'])
 @uploader.route('/upload-blog', methods=['POST', 'DELETE'])
+@checkpoint.onlylogged
 def upload_file_blog():
     "blog thumbnail upload"
     if request.method == 'POST':
@@ -228,6 +232,7 @@ def upload_file_blog():
 
 
 @uploader.route('/upload_fav', methods=['POST'])
+@checkpoint.onlylogged
 def upload_fav():
     "favicon uploader"
     if request.method == 'POST':
@@ -256,6 +261,7 @@ def upload_fav():
 
 
 @uploader.route('/upload', methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def upload_file():
     "logo uploader"
     if request.method == 'POST':
@@ -278,9 +284,4 @@ def upload_file():
             return jsonify({"status": filename})
     return jsonify({"status": 0})
 
-checkpoint.onlylogged(upload_file)
-checkpoint.onlylogged(upload_fav)
-checkpoint.onlylogged(upload_file_blog)
-checkpoint.onlylogged(upload_file_product_images)
-checkpoint.onlylogged(upload_file_product_main)
-checkpoint.onlylogged(upload_file_product_variant)
+

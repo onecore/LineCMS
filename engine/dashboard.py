@@ -10,8 +10,8 @@ import settings
 
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
-
 @dashboard.route("/dashboard", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def dashboard_main():
     """
     main dashboard page
@@ -65,4 +65,3 @@ def dashboard_main():
     return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
 
 
-checkpoint.onlylogged(dashboard_main)

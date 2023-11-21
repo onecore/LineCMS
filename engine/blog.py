@@ -65,6 +65,7 @@ def trydelete(image):
 
 
 @blog.route("/blog-edit/<url>", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def blog_edit(url):
     "view - blog edit"
     de = dataengine.SandEngine()
@@ -106,6 +107,7 @@ def blog_edit(url):
 
 @blog.route("/blog-manage", methods=['POST', 'GET'])
 @blog.route("/blog-manage/<alert>", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def blog_manage(alert=None):
     "view - lists blog posts"
     showpager = True
@@ -131,6 +133,7 @@ def blog_manage(alert=None):
 
 
 @blog.route("/blog-new", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def blog_new():
     "view - publish new blog "
     if request.method == 'POST':
@@ -165,7 +168,3 @@ def blog_new():
             except Exception as e:
                 return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
     return render_template("/dashboard/blog-new.html")
-
-checkpoint.onlylogged(blog_edit)
-checkpoint.onlylogged(blog_new)
-checkpoint.onlylogged(blog_manage)

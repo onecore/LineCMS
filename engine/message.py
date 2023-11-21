@@ -14,6 +14,7 @@ log = _logger.log
 
 
 @message.route("/messages")
+@checkpoint.onlylogged
 def messages():
     "view - list all messages"
     
@@ -43,4 +44,3 @@ def messagerec():
 
 
 
-checkpoint.onlylogged(messages)

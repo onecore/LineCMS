@@ -14,6 +14,7 @@ log = _logger.log
 
 
 @module.route("/modules")
+@checkpoint.onlylogged
 def modules():
     "view - modules control"
     de = dataengine.SandEngine()

@@ -22,6 +22,7 @@ def deductq(obj):
     print(obj)
 
 @api.route("/api/product-fulfill", methods=['POST'])
+@checkpoint.onlylogged
 def prodfulfill():
     "order fulfillment api"
     try:
@@ -96,6 +97,7 @@ def prodfulfill():
         
 
 @api.route("/api/prodset-smtp", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def prodset_smtp():
     "mail settings api update"
 
@@ -110,6 +112,7 @@ def prodset_smtp():
 
 
 @api.route("/api/prodset-temp", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def prodset_template():
     "api for saving template (fulfilled & placed)"
     try:
@@ -123,6 +126,7 @@ def prodset_template():
 
 
 @api.route("/api/prodset-str", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def prodset_stripe():
     "stripe api credential api"
     try:
@@ -136,6 +140,7 @@ def prodset_stripe():
 
 
 @api.route("/api/prodset-ship", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def prodset_ship():
     "shipping options api update"
     try:
@@ -149,6 +154,7 @@ def prodset_ship():
 
 
 @api.route("/api/themeset", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def themeup():
     "theme settings update"
     if (request.data):
@@ -160,6 +166,7 @@ def themeup():
 
 
 @api.route("/product-update", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def productupd():
     "product update api"
     _d = json.loads(request.data)
@@ -172,6 +179,7 @@ def productupd():
 
 
 @api.route("/product-d", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def productdel():
     "product delete api"
     _d = json.loads(request.data)
@@ -184,6 +192,7 @@ def productdel():
 
 
 @api.route("/product-publish", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def productpub():
     "product publish api"
     _d = json.loads(request.data)
@@ -197,6 +206,7 @@ def productpub():
 
 
 @api.route("/module_update", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def modupdate():
     "module update api"
     if request.method == "POST":
@@ -210,6 +220,7 @@ def modupdate():
 
 
 @api.route("/knightclientapi", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def knightapi():
     "api updater (Needs update)"
     if request.method == "POST":
@@ -224,6 +235,7 @@ def knightapi():
 
 
 @api.route("/deleapip", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def delete_apip():
     "blog post deleter api"
     if request.method == "POST":
@@ -239,6 +251,7 @@ def delete_apip():
 
 
 @api.route("/deleapi", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def delete_api():
     "blog post deleter api"
     if request.method == "POST":
@@ -254,6 +267,7 @@ def delete_api():
 
 
 @api.route("/knightclientapiv2", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def knightapi2():
     "api needs an update"
     if request.method == "POST":
@@ -267,6 +281,7 @@ def knightapi2():
 
 
 @api.route("/api/delpartialim", methods=['POST', 'GET'])
+@checkpoint.onlylogged
 def api_deletepartialimage():
     "partial delete image (image that is not needed, not inserted in db)"
     if request.method == "POST":
@@ -278,6 +293,7 @@ def api_deletepartialimage():
 
 
 @api.route("/delete/<table>/<id>")
+@checkpoint.onlylogged
 def ddelete(table, ids):
     'Deletes table (soon to be removed)'
     mid = ids
@@ -289,20 +305,3 @@ def ddelete(table, ids):
 
 
 
-checkpoint.onlylogged(ddelete)
-checkpoint.onlylogged(api_deletepartialimage)
-checkpoint.onlylogged(knightapi2)
-checkpoint.onlylogged(knightapi)
-checkpoint.onlylogged(delete_api)
-checkpoint.onlylogged(delete_apip)
-checkpoint.onlylogged(modupdate)
-checkpoint.onlylogged(productpub)
-checkpoint.onlylogged(productdel)
-checkpoint.onlylogged(productpub)
-checkpoint.onlylogged(themeup)
-checkpoint.onlylogged(prodset_ship)
-checkpoint.onlylogged(prodset_smtp)
-checkpoint.onlylogged(prodset_stripe)
-checkpoint.onlylogged(prodset_template)
-checkpoint.onlylogged(prodfulfill)
-checkpoint.onlylogged(deductq)
