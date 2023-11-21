@@ -5,6 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, jsonify
 import dataengine
+from helpers import checkpoint
 
 message = Blueprint("message", __name__)
 
@@ -39,3 +40,7 @@ def messagerec():
     else:
         log("New message failed to process")
         return jsonify({'status': False})
+
+
+
+checkpoint.onlylogged(messages)

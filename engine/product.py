@@ -12,7 +12,7 @@ import os
 from helpers import currency, dataparser
 from helpers import country
 from decimal import Decimal
-from helpers import emailparser
+from helpers import emailparser,checkpoint
 from ast import literal_eval as lite
 from jinja2 import Template
 import stripe
@@ -525,3 +525,13 @@ def prodcheck():
         return jsonify({"status": 0})
     else:
         return jsonify({"status": 0})
+
+
+checkpoint.onlylogged(prodcheck)
+checkpoint.onlylogged(check)
+checkpoint.onlylogged(new_event)
+checkpoint.onlylogged(product_orders_single)
+checkpoint.onlylogged(product_orders)
+checkpoint.onlylogged(product_mng)
+checkpoint.onlylogged(product_new)
+checkpoint.onlylogged(product_sett)

@@ -6,7 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, request, session, jsonify
 import dataengine
 import json
-from helpers import dataparser, emailparser
+from helpers import dataparser, emailparser,checkpoint
 from ast import literal_eval as lite
 import time
 
@@ -286,3 +286,23 @@ def ddelete(table, ids):
             return jsonify({"status": True})
         return jsonify("status", False)
     return jsonify({"status": False})
+
+
+
+checkpoint.onlylogged(ddelete)
+checkpoint.onlylogged(api_deletepartialimage)
+checkpoint.onlylogged(knightapi2)
+checkpoint.onlylogged(knightapi)
+checkpoint.onlylogged(delete_api)
+checkpoint.onlylogged(delete_apip)
+checkpoint.onlylogged(modupdate)
+checkpoint.onlylogged(productpub)
+checkpoint.onlylogged(productdel)
+checkpoint.onlylogged(productpub)
+checkpoint.onlylogged(themeup)
+checkpoint.onlylogged(prodset_ship)
+checkpoint.onlylogged(prodset_smtp)
+checkpoint.onlylogged(prodset_stripe)
+checkpoint.onlylogged(prodset_template)
+checkpoint.onlylogged(prodfulfill)
+checkpoint.onlylogged(deductq)

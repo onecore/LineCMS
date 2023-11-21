@@ -8,6 +8,7 @@ import dataengine
 from flask_paginate import Pagination, get_page_parameter
 import settings as temple
 import os
+from helpers import checkpoint
 
 blog = Blueprint("blog", __name__)
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
@@ -164,3 +165,7 @@ def blog_new():
             except Exception as e:
                 return render_template("/dashboard/blog-new.html", error="Blog post failed to publish.")
     return render_template("/dashboard/blog-new.html")
+
+checkpoint.onlylogged(blog_edit)
+checkpoint.onlylogged(blog_new)
+checkpoint.onlylogged(blog_manage)

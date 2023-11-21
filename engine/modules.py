@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template
 import dataengine
 from ast import literal_eval as lite
+from helpers import checkpoint
 module = Blueprint("module", __name__)
 
 _logger = dataengine.SandEngine()
@@ -30,3 +31,5 @@ def modules():
         "extras": lite(all_d[6]),
     }
     return render_template("dashboard/modules.html", data=dt, mod=dicts)
+
+checkpoint.onlylogged(modules)

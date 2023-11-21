@@ -12,6 +12,7 @@ from settings import uploads_allowedext
 from settings import uploads_products
 from settings import uploads_blog
 from settings import uploads_dashboard
+from helpers import checkpoint
 
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)
@@ -277,3 +278,9 @@ def upload_file():
             return jsonify({"status": filename})
     return jsonify({"status": 0})
 
+checkpoint.onlylogged(upload_file)
+checkpoint.onlylogged(upload_fav)
+checkpoint.onlylogged(upload_file_blog)
+checkpoint.onlylogged(upload_file_product_images)
+checkpoint.onlylogged(upload_file_product_main)
+checkpoint.onlylogged(upload_file_product_variant)

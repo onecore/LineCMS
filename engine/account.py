@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, redirect, session
 import dataengine
-
+from helpers import checkpoint
 account = Blueprint("account", __name__)
 
 
@@ -43,3 +43,5 @@ def dashboard_account():
 
     except Exception as e:
         return redirect("/logoff")
+
+checkpoint.onlylogged(dashboard_account)

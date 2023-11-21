@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, redirect, session
 import dataengine
-
+from helpers import checkpoint
 other = Blueprint("other", __name__)
 version = "1.4"
 
@@ -33,3 +33,7 @@ def helpv():
 def logpage():
     data = de.get_logs()
     return render_template("dashboard/log.html", data=data)
+
+
+checkpoint.onlylogged(helpv)
+checkpoint.onlylogged(logpage)
