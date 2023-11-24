@@ -19,7 +19,17 @@ def epoch():
 
 def deductq(obj):
     "Deduct stock value Main/Variant"
-    print(obj)
+    meta = lite(obj['metadata'])
+    for item, ordernumber in meta.items():
+        if "Variant:" in item:
+            variant_s = str(item).split("Variant: ")
+            variant_n = variant_s[1]
+            print(variant_n)
+            # item variant
+        else:
+            # item only without any attached variant
+            pass
+
 
 @api.route("/api/product-fulfill", methods=['POST'])
 @checkpoint.onlylogged
@@ -29,7 +39,7 @@ def prodfulfill():
         if (request.data):
             _d = json.loads(request.data)
             _load_h = _de.orderhistory_get(_d['ordernumber'])
-            _,_,_,_,_,_,shipstatus,_,_,_,_,_,_,_,_ = _de.productsettings_get() # wk is not needed
+            _,_,_,_,_,_,shipstatus,_,_,_,_,_,_,_,_ = _de.productsettings_get() 
             temp_settings = _de.productsettings_get()
             comp_data = _de.load_data_index(0)
             _order = _de.productorders_single_get(0,_d['ordernumber'])
@@ -85,7 +95,7 @@ def prodfulfill():
                 args = {"obj":history_obj,"ordernumber":_d['ordernumber']}
                 _de.orderhistory_add(args)
         
-                deductq(_order.metadata)
+                deductq(_order)
 
                 return jsonify({"status": 1,"message":"Order fulfilled","historyobj":json.dumps(history_obj)})
             return jsonify({"status": 0,"message":"Unable to fulfill"})

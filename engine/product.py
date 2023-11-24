@@ -455,16 +455,19 @@ def check(data):
     for product, values in data.items():
         _, _price, _quantity, _variant = values.split(",")
         
-        def includevariant():
+        def includevariant(nameonly=False):
             "includes variant in product single page view"
             selected_variant = ""
             if _variant != settings.order_novariant_selected:
                 selected_variant = _variant
+                if nameonly:
+                    return selected_variant
                 return f" - Variant: {selected_variant}"
             return selected_variant
             
         product_data = ps.get_product_single(route=False, checkout=product)
-        product_meta[product_data[1] + includevariant()] = product
+        product_meta[product] = {"name":product_data[1],"quantity":_quantity,"variant":includevariant(nameonly=True)}
+
         clone = {
                 'price_data': {
                     'product_data': {

@@ -167,6 +167,15 @@
                             {% endfor %}
                           </select>
                         </div>
+                        {% else %}
+                        <div class="col-lg-8" style="display: none;">
+                          <select class="form-select form-select-md" aria-label=".form-select-lg example" id="varsel">
+                            <option selected>Available variants</option>
+                            {% for variant in variants %}
+                            <option value="{{productinfo[variant]['price']}}">{{variant.replace("-ivar","")}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
                         {% endif %}
                       </div>
                         <div class="row m-2">

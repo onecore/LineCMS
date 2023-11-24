@@ -38,6 +38,7 @@ class SandEngine:
         fetch = c.execute(q)
         return fetch.fetchone()
 
+
     def orderlist(self,page,perpage,offset,search,status,initload=False):
         c = self.connection.cursor()
 
@@ -59,6 +60,16 @@ class SandEngine:
         except Exception as t:
             return False
         
+    def stockdeduct(self,productnumber,productvariant=False):
+        c = self.connection.cursor()
+
+        if productnumber:
+            stock_item_e = c.execute("SELECT stock FROM products WHERE product_id='{}';".format(productnumber))
+            current_stock_item = stock_item_e.fetchone()[0]
+                        
+            q = """UPDATE products SET tracking="{t}", fulfilled="2", additional="{a}"  where ordernumber='{o}';"""
+
+
     def orderhistory_get(self,orn):
         c = self.connection.cursor()
         q = f"SELECT history FROM productorders WHERE ordernumber='{orn}';"
