@@ -96,7 +96,7 @@
                               <img class="img-fluid" src="/media/mainimage/{{product.product_id}}/{{product.mainimage}}" style="width:100%"/>
                           </li>
                           {% endif %}
-
+                        {% if jslidespy %}
                           {% for ke ,val in jslidespy.items() %}
                               {% if "/variants/" in ke %}
                               <li data-thumb="/{{ke.replace('static/dashboard/uploads/products/','')}}"/>
@@ -108,6 +108,7 @@
                               </li>
                               {% endif %}
                           {% endfor %}
+                        {% endif %}
                         </ul>
                     </div>
 
@@ -157,6 +158,7 @@
                             <input type="text" class="form-control" aria-describedby="basic-addon1" value="1" id="quant">
                           </div>
                         </div>
+                        {% if variants %}
                         <div class="col-lg-8">
                           <select class="form-select form-select-md" aria-label=".form-select-lg example" id="varsel">
                             <option selected>Available variants</option>
@@ -165,10 +167,16 @@
                             {% endfor %}
                           </select>
                         </div>
+                        {% endif %}
                       </div>
                         <div class="row m-2">
                           <div class="col-lg-10">
+                            {% if product.stock != "0" %}
                             <button class="btn btn-lg btn-success text-white bordered" style="max-width:100%;width:100%;" id="addtocart">ADD TO CART</button>
+                            {% else %}
+                            <center><b>Product out of stock</b></center>
+                            <button class="btn btn-lg btn-success text-white bordered" style="max-width:100%;width:100%;" id="addtocart" disabled>Out Of Stock</button>
+                            {% endif %}
                           </div>
                           <div class="col-lg-2">
                           <button class="btn btn-m btn-white btn-dark border mdi mdi-heart mt-1" style="border-radius:50%" id="addtolike"></button>

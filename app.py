@@ -158,4 +158,6 @@ functions for Jinja templating (Public)
 app.jinja_env.globals.update(loadblogs=loaders.loadblogs)
 app.jinja_env.globals.update(loadproducts=loaders.loadproducts)
 app.jinja_env.globals.update(loaddate=loaders.dateformatter)
+app.jinja_env.globals.update(dictcast=rf.ks_todict)
+
 
