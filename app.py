@@ -21,7 +21,7 @@ from helpers import checkpoint
 from enginepublic import loaders
 from flask_mail import Mail, Message
 from ast import literal_eval as lite
-import settings
+
 # Dashboard imports/views
 from engine.blog import blog
 from engine.api import api
@@ -69,7 +69,6 @@ try:
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
     logger(f"SandCMS: Mail SMTP settings/credentials Loaded")
     print("SandCMS: Mail SMTP settings/credentials Loaded\n")
-
     MAILCONFIGLOADED = True
 
 except Exception as e:
