@@ -6,7 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template, request, redirect, jsonify
 import dataengine
 from flask_paginate import Pagination, get_page_parameter,get_page_args
-from flask import Markup
+from markupsafe import Markup
 import json
 import os
 from helpers import currency, dataparser

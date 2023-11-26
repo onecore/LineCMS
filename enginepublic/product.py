@@ -3,7 +3,8 @@ SandCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, Markup,render_template, request, redirect, send_from_directory
+from flask import Blueprint, render_template, request, redirect, send_from_directory
+from markupsafe import Markup
 from flask_paginate import Pagination, get_page_parameter
 from engine.product import getimages
 from helpers import dataparser
