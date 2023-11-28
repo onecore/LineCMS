@@ -82,4 +82,7 @@ def sitemap():
 @mains.route("/robots.txt")
 def robots():
     "views - generated robots file"
-    pass
+    robots_file = render_template("robots.txt",host=request.host_url)
+    response = make_response(robots_file)
+    response.headers["Content-Type"] = "text/plain"    
+    return response

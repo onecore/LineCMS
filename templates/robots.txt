@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /blog
+Disallow: /product
+Allow: /
+Allow: /blogs
+Allow: /blogs/*
+Allow: /products
+Allow: /products/*
+Allow: products?category=*
+
+
+Sitemap: {{host}}sitemap.xml
