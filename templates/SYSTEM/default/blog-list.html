@@ -73,14 +73,16 @@
           </nav>
           <div class="row">
             <br>
-            {{ pagination.info }}
-            {{ pagination.links }}
             {% for blog in blogs %}
               {% if blog[5] == '0' %}
 
                 <div class="col-md-3  pt-3">
                   <div class="card pt-0">
+                    {% if blog[3] %}
                     <a href="/blog/{{blog[6]}}"><img src="/media/blog/{{blog[3]}}" class="card-img-top img-fluid" alt="{{blog[1]}}" style="padding-top:5px;"></a>
+                    {% else %}
+                    <a href="/blog/{{blog[6]}}"><img src="/media/blog/no-image.jpeg" class="card-img-top img-fluid" alt="{{blog[1]}}" style="padding-top:5px;"></a>
+                    {% endif %}
                     <div class="card-body">
                       <h5 class="card-title text-truncate" style="max-width: 200px";>{{blog[1]}}</h5>
                       <p class="text-truncate" style="max-width: 400px">{{khtml2text(blog[2])}}</p>
@@ -96,7 +98,6 @@
                 <!-- Side widgets-->
           </div>
             <br>
-            {{ pagination.info }}
             {{ pagination.links }}
         </div>
         <!-- Footer-->

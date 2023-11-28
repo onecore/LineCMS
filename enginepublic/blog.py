@@ -76,7 +76,6 @@ def blog_list():
     if q:
         search = True
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    tt = len(blogs)
-    pagination = Pagination(page=page, total=tt,
-                            search=search, record_name='blogs', css_framework="bootstrap5")
+    pagination = Pagination(page=page, total=len(blogs),
+                            search=search, record_name='blogs', css_framework="bootstrap5", align="center")
     return render_template(f"/SYSTEM/{themes}/blog-list.html", data=dt, mod=mod, blogs=blogs, pagination=pagination)
