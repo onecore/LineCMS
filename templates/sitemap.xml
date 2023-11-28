@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+  <loc>{{host}}</loc>
+  </url>
+  {% if blog_cats %}
+    {% for cat in blog_cats %}
+        <url>
+        <loc>{{host}}blog/category/{{cat}}</loc>
+        </url>
+    {% endfor %}
+  {% endif %}
+
+  {% if blog_posts %}
+    {% for post in blog_posts %}
+        <url>
+        <loc>{{host}}blog/{{post[6]}}</loc>
+        </url>
+    {% endfor %}
+  {% endif %}
+
+
+</urlset>

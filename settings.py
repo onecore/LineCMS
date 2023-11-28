@@ -86,6 +86,13 @@ logging_enabled = False
 
 
 # Products
-product_similar_load = 7 # try to pull similar in this count (if similar runs out it will pull random product)
-product_similar_noimage_set = "ni.jpeg" # Image file needs to be in '/static/dashboard/uploads/'
+product_similar_load = 7                        # try to pull similar in this count (if similar runs out it will pull random product)
+product_similar_noimage_set = "ni.jpeg"         # Image file needs to be in '/static/dashboard/uploads/'
 productlist_select_none = "Group by Categories" # Product listing (No value selected)
+
+
+# sitemap & robots generator (SEO)
+sitemap_blogcategory = True         # include blog categories links
+sitemap_blogposts = True            # include blog posts
+sitemap_productscategory = True     # include products categories
+sitemap_productsposts = True        # include products posts

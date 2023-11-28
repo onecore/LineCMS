@@ -3,10 +3,11 @@ SandCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, make_response,request
 import dataengine
 from ast import literal_eval as lite
 from helpers import dataparser
+import settings
 
 mains = Blueprint("mains", __name__)
 
@@ -38,10 +39,29 @@ def main():
     
     return render_template(f"/SYSTEM/{themes}/index.html", data=dt, mod=mod,site=sitedata)
 
-@mains.route("/sitemap.txt")
+@mains.route("/sitemap.xml")
 def sitemap():
     "views - generated sitemap file"
-    pass
+    host = request.host_url
+    blog_categories = de.get_blog_cat_lists()
+    blog_posts_tp = de.get_blog_listings()
+    blog_posts = []
+    if blog_posts_tp:
+        for post in blog_posts_tp:
+            if post[6] and post[5] == "0":
+                blog_posts.append(post)
+
+
+    if not settings.sitemap_blogcategory:
+        blog_categories = False
+    if not settings.sitemap_blogposts:
+        blog_posts = False
+        
+    sitemap_xml = render_template("/sitemap.xml",host=host,
+                                  blog_cats=blog_categories,blog_posts=blog_posts)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"    
+    return response
 
 @mains.route("/robots.txt")
 def robots():

@@ -42,7 +42,10 @@ def blog_mainview(new=None, url=None):
             "extras": lite(all_d[6]),
         }
         blog = de.get_blog_single(url)
-        cats = blog[7].split(",")
+        try:
+            cats = blog[7].split(",")
+        except:
+            cats = []
         cats_list = de.get_blog_cat_lists()
         return render_template(f"/SYSTEM/{themes}/blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
     else:

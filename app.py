@@ -14,7 +14,7 @@ else:
 
     
 import dataengine
-from flask import Flask, request, jsonify,session,redirect,request,url_for
+from flask import Flask, request, jsonify,render_template,request
 from flask_ckeditor import CKEditor
 import helpers.templateparser as rf
 from helpers import checkpoint
@@ -53,7 +53,6 @@ app = Flask(__name__,
 ckeditor = CKEditor()
 ckeditor.init_app(app)  # wysiwyg html editor
 
-MAILCONFIGLOADED = False
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
 # Mail Infos below
 __de = dataengine.SandEngine()
@@ -69,7 +68,6 @@ try:
     app.config['MAIL_USE_SSL'] =  True if maildata['ssl'] == "YES" else False
     logger(f"SandCMS: Mail SMTP settings/credentials Loaded")
     print("SandCMS: Mail SMTP settings/credentials Loaded\n")
-    MAILCONFIGLOADED = True
 
 except Exception as e:
     logger(f"SandCMS: Mail Error -> {e}")
