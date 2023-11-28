@@ -19,5 +19,11 @@
     {% endfor %}
   {% endif %}
 
-
+  {% if products_cats %}
+    {% for cat in products_cats %}
+        <url>
+        <loc>{{host}}products?category={{cat}}</loc>
+        </url>
+    {% endfor %}
+  {% endif %}
 </urlset>

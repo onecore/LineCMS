@@ -45,7 +45,11 @@ def sitemap():
     host = request.host_url
     blog_categories = de.get_blog_cat_lists()
     blog_posts_tp = de.get_blog_listings()
+    products_posts_tp = de.get_product_listings()
+    products_categories = de.get_products_cat_lists()
+
     blog_posts = []
+
     if blog_posts_tp:
         for post in blog_posts_tp:
             if post[6] and post[5] == "0":
@@ -56,9 +60,10 @@ def sitemap():
         blog_categories = False
     if not settings.sitemap_blogposts:
         blog_posts = False
-        
+
     sitemap_xml = render_template("/sitemap.xml",host=host,
-                                  blog_cats=blog_categories,blog_posts=blog_posts)
+                                  blog_cats=blog_categories,blog_posts=blog_posts,
+                                  products_cats=products_categories)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"    
     return response

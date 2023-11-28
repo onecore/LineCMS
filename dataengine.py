@@ -104,6 +104,22 @@ class SandEngine:
         fetch = c.execute(q)
         return fetch.fetchall()
    
+    def get_products_cat_lists(self) -> list:
+        c = self.connection.cursor()
+        m = c.execute("SELECT category FROM products")
+        mf = m.fetchall()
+        cats = {}
+        for cat in mf:
+            if not cat[0]:  # empty
+                pass
+            else:
+                for itm in cat[0].split(","):
+                    if itm in cats:
+                        cats[itm] = cats[itm] + 1
+                    else:
+                        cats[itm] = 1
+        return cats
+    
     
     def productorders_single_get(self,ids,loadfulfill=False):
         c = self.connection.cursor()
@@ -495,6 +511,7 @@ class SandEngine:
                     else:
                         cats[itm] = 1
         return cats
+    
 
     def knightclientapi(self, action) -> bool:
         try:

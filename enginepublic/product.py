@@ -84,6 +84,7 @@ def variantpush(v, i, js=False) -> dict:
     return d
 
 @productuser.route('/product-list', methods=['GET', 'POST'])
+@productuser.route('/products', methods=['GET', 'POST'])
 def productlist():
     "views - product list"
     dt = de.load_data_index(None)  # loads datas
