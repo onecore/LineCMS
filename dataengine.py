@@ -447,7 +447,7 @@ class SandEngine:
             return c.fetchall()
         
         c.execute("SELECT * FROM products ORDER BY id DESC")
-        c.fetchall()
+        return c.fetchall()
 
     def blog_publish(self, dicts) -> bool:
         c = self.connection.cursor()

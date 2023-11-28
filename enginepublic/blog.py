@@ -53,6 +53,7 @@ def blog_mainview(new=None, url=None):
 
 
 @bloguser.route(settings.route_blog_list, methods=['GET'])
+@bloguser.route("/blogs",methods=['GET'])
 def blog_list():
     """
     views - blog posts listings

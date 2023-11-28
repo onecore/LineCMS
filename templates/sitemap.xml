@@ -11,19 +11,35 @@
     {% endfor %}
   {% endif %}
 
+
   {% if blog_posts %}
+    <url>
+        <loc>{{host}}blogs</loc>
+    </url>
     {% for post in blog_posts %}
         <url>
-        <loc>{{host}}blog/{{post[6]}}</loc>
+        <loc>{{host}}blog/{{post}}</loc>
         </url>
     {% endfor %}
   {% endif %}
 
   {% if products_cats %}
+    <url>
+        <loc>{{host}}products</loc>
+    </url>
     {% for cat in products_cats %}
         <url>
         <loc>{{host}}products?category={{cat}}</loc>
         </url>
     {% endfor %}
   {% endif %}
+
+  {% if products_posts %}
+    {% for product in products_posts %}
+        <url>
+        <loc>{{host}}product/{{product}}</loc>
+        </url>
+    {% endfor %}
+  {% endif %}
+
 </urlset>

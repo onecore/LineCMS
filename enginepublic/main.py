@@ -48,22 +48,33 @@ def sitemap():
     products_posts_tp = de.get_product_listings()
     products_categories = de.get_products_cat_lists()
 
-    blog_posts = []
+    blog_posts,products_posts = [],[]
 
     if blog_posts_tp:
         for post in blog_posts_tp:
             if post[6] and post[5] == "0":
-                blog_posts.append(post)
+                blog_posts.append(post[6])
 
+    if products_posts_tp:
+        for product in products_posts_tp:
+            if product[12] == "0":
+                products_posts.append(product[4] or product[5])
 
     if not settings.sitemap_blogcategory:
         blog_categories = False
+
     if not settings.sitemap_blogposts:
         blog_posts = False
+    
+    if not settings.sitemap_productscategory:
+        products_categories = False
+
+    if not settings.sitemap_productsposts:
+        products_posts = False
 
     sitemap_xml = render_template("/sitemap.xml",host=host,
                                   blog_cats=blog_categories,blog_posts=blog_posts,
-                                  products_cats=products_categories)
+                                  products_cats=products_categories,products_posts=products_posts)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"    
     return response
