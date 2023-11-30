@@ -500,7 +500,7 @@ def check(data):
             line_items=items,
             payment_method_types=settings.order_payment_method,
             mode='payment',
-            success_url=request.host_url + 'order/success',
+            success_url=request.host_url + 'order/success?sid={CHECKOUT_SESSION_ID}',
             cancel_url=request.host_url + 'order/cancel',
             metadata = product_meta,
         )
@@ -510,7 +510,7 @@ def check(data):
             line_items=items,
             payment_method_types=settings.order_payment_method,
             mode='payment',
-            success_url=request.host_url + 'order/success',
+            success_url=request.host_url + 'order/success?sid={CHECKOUT_SESSION_ID}',
             cancel_url=request.host_url + 'order/cancel',
             metadata=product_meta
         )
