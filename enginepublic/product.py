@@ -138,8 +138,13 @@ def productlist():
 @productuser.route('/order/success')
 def purchase_success():
     "views - checkout success (stripe call)"
-    sid = request.args.get("sid")
-    print(retrieve_session(sid))
+    try:
+        sid = request.args.get("sid")
+        session_info = retrieve_session(sid)
+        prod_list = session_info['metadata']
+        prod_ids = prod_list.values()
+    except:
+        prod_ids = []
 
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
@@ -153,7 +158,8 @@ def purchase_success():
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
-    return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod)
+    # process prod_ids thru js (remove from LS)
+    return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod,prod_ids=prod_ids)
 
 
 @productuser.route('/order/cancel')
