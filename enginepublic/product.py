@@ -9,6 +9,7 @@ from flask_paginate import Pagination, get_page_parameter
 from engine.product import getimages
 from helpers import dataparser
 from ast import literal_eval as lite
+from engine.product import retrieve_session
 import dataengine
 import settings
 import json
@@ -137,6 +138,9 @@ def productlist():
 @productuser.route('/order/success')
 def purchase_success():
     "views - checkout success (stripe call)"
+    sid = request.args.get("sid")
+    print(retrieve_session(sid))
+
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]

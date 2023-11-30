@@ -66,6 +66,9 @@ class pagination(Pagination):
 
         return Markup("".join(s))
 
+def retrieve_session(sid):
+    return stripe.checkout.Session.retrieve(sid,)
+
 def allowed_file(filename) -> str:
     "returns allowed file extensions"
     return '.' in filename and \
@@ -92,8 +95,6 @@ def getimages(ids) -> list:
     
 def getmainimage(ids) -> str:
     "returns product's main image"
-
-
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}/mainimage"
@@ -466,7 +467,7 @@ def check(data):
             return selected_variant
             
         product_data = ps.get_product_single(route=False, checkout=product)
-        product_meta[product] = {"name":product_data[1],"quantity":_quantity,"variant":includevariant(nameonly=True)}
+        product_meta[product_data[1] + includevariant()] = product
 
         clone = {
                 'price_data': {
@@ -534,4 +535,5 @@ def prodcheck():
         return jsonify({"status": 0})
     else:
         return jsonify({"status": 0})
+
 
