@@ -9,7 +9,7 @@ from flask_paginate import Pagination, get_page_parameter
 from engine.product import getimages
 from helpers import dataparser
 from ast import literal_eval as lite
-from engine.product import retrieve_session
+from engine.product import retrieve_session, product_deduct
 import dataengine
 import settings
 import json
@@ -143,8 +143,10 @@ def purchase_success():
         session_info = retrieve_session(sid)
         prod_list = session_info['metadata']
         prod_ids = prod_list.values()
+        product_deduct(prod_list)
     except:
         prod_ids = []
+
 
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()

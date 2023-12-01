@@ -69,6 +69,13 @@ class pagination(Pagination):
 def retrieve_session(sid):
     return stripe.checkout.Session.retrieve(sid,)
 
+def product_deduct(meta):
+    for ids in meta:
+        if "Variant:" in ids: # product (Variant)
+            pass
+        else:                # product
+            pass
+
 def allowed_file(filename) -> str:
     "returns allowed file extensions"
     return '.' in filename and \
