@@ -33,10 +33,12 @@
 
       </style>
       <script>
-        let pid = {{prod_ids|safe}}
+        // clears products thats been successfully checked out 
+        let pid = {{prod_ids|safe}} 
         for (var i = 0; i < pid.length; i++) {
             localStorage.removeItem(pid[i])
         }
+        // clears products thats been successfully checked out 
       </script>
     </head>
     <body>
