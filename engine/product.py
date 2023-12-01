@@ -71,9 +71,9 @@ def retrieve_session(sid):
 
 def product_deduct(meta):
     for ids in meta:
-        if "Variant:" in ids: # product (Variant)
+        if "Variant:" in ids:    # product (Variant)
             pass
-        else:                # product
+        else:                    # product
             pass
 
 def allowed_file(filename) -> str:
