@@ -70,11 +70,12 @@ def retrieve_session(sid):
     return stripe.checkout.Session.retrieve(sid,)
 
 def product_deduct(meta):
-    for ids in meta:
-        if "Variant:" in ids:    # product (Variant)
-            pass
+    for name,ids in meta.items():
+        if "Variant:" in name:    # product (Variant)
+            variant_ = name.split(": ")[1]
+            ps.productstock_deduct(ids,variant_)
         else:                    # product
-            pass
+            ps.productstock_deduct(ids)
 
 def allowed_file(filename) -> str:
     "returns allowed file extensions"

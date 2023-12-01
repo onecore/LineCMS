@@ -13,6 +13,7 @@ from flask import g
 import json
 import os
 from icecream import ic
+from ast import literal_eval as lite
 import random
 import settings
 
@@ -155,6 +156,37 @@ class SandEngine:
             print(e)
             return False
         
+    def productstock_deduct(self,ids,isvariant=False):
+        c = self.connection.cursor()
+
+        if isvariant:
+            pull = c.execute(f"SELECT variant_details FROM products WHERE product_id='{ids}';")
+            dict_cast = None
+            try:
+                dict_cast = lite(pull.fetchone()[0])
+            except:
+                pass
+            if dict_cast:
+                try:
+                    d = dict_cast[isvariant+"-ivar"]['instock']
+                    dict_cast[isvariant+"-ivar"]['instock'] = int(d) - 1 # will update soon with dynamic from quantity
+                    c.execute(f"""UPDATE products SET variant_details = "{str(dict_cast)}" WHERE product_id='{ids}';""")
+                    self.connection.commit()
+                except Exception as e:
+                    pass
+
+        else:
+            pull = c.execute(f"SELECT stock FROM products WHERE product_id='{ids}';")
+            pull_ = pull.fetchone()
+            if pull_:
+                count_ = int(pull_[0]) - 1  # will update soon with dynamic from quantity
+                c.execute(f"UPDATE products SET stock = {count_} WHERE product_id = '{ids}';")
+                self.connection.commit()
+
+        
+
+
+
     def productsettings_temp(self,data):
         "Updates productsettings shipping opt"
         try:
