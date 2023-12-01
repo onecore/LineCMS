@@ -33,7 +33,10 @@
 
       </style>
       <script>
-        localStorage.clear()
+        let pid = {{prod_ids|safe}}
+        for (var i = 0; i < pid.length; i++) {
+            localStorage.removeItem(pid[i])
+        }
       </script>
     </head>
     <body>

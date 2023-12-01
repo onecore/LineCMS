@@ -159,7 +159,7 @@ def purchase_success():
         "extras": lite(all_d[6]),
     }
     # process prod_ids thru js (remove from LS)
-    return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod,prod_ids=prod_ids)
+    return render_template(f"/SYSTEM/{themes}/order-success.html",data=dt,mod=mod,prod_ids=list(prod_ids))
 
 
 @productuser.route('/order/cancel')
