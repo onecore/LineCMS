@@ -33,6 +33,7 @@ from engine.account import account
 from engine.message import message
 from engine.login import logins
 from engine.other import other
+from engine.editor import editor
 import dataengine
 # Dashboard imports/views
 
@@ -125,6 +126,7 @@ app.register_blueprint(account)
 app.register_blueprint(message)
 app.register_blueprint(logins)
 app.register_blueprint(other)
+app.register_blueprint(editor)
 # Dashboard
 
 # User
