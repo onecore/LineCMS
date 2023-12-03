@@ -51,6 +51,9 @@ def get_templates():
 def get_robotssitemap():
     pass
 
+def get_enginepublic():
+    pass
+
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
 def codeedit():

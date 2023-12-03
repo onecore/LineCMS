@@ -5,12 +5,12 @@ const sel2 = document.getElementById("sel2")
 const sel3 = document.getElementById("sel3")
 const data = {temps}
 
-function sourceupdate(file,load=false){
+function sourceupdate(file,pattern,load=false){
     var d = {};
     if (load){
-        d = {"source":"load","file":file}
+        d = {"source":"load","file":file,"pattern":pattern}
     }else{
-        d = {"source":"save","file":file}
+        d = {"source":"save","file":file,"pattern":pattern}
     }
 
     fetch("/edit", {
