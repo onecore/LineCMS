@@ -14,7 +14,13 @@ function saved(success=true) {
 
 sel1.addEventListener('change', function (e) {
     let val_ = e.target.value;
-    alert(val_)
 });
 
-saved()
+sel2.addEventListener('change', function (e) {
+    let val_ = e.target.value;
+});
+
+sel3.addEventListener('change', function (e) {
+    let val_ = e.target.value;
+});
+

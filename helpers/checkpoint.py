@@ -5,7 +5,6 @@ from flask import g, request, redirect, url_for,session
 def onlylogged(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        print(session)
         if "authenticated" not in session:
             return redirect("login")
 
