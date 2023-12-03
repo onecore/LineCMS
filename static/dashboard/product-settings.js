@@ -138,4 +138,5 @@ function smtptest(){
     let r = document.getElementById("temail")
     prodapi("/test-mail",{"receiver":r.value},getret=1)
 }
+
 init_ps()
