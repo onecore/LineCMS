@@ -206,19 +206,11 @@ swal("", `{{error}}`, "warning");
         <div class="col-3 m-0 p-0">
           <select class="form-select bg-muted text-dark" aria-label="Default select example" id="sel2">
             <option selected>Sub-folder</option>
-            <option value="th">Theme</option>
-            <option value="sr">Sitemap/Robots</option>
-            <option value="py">Python files</option>
-            <option value="sf">Settings file</option>
           </select>
         </div>
         <div class="col-3 m-0 p-0">
           <select class="form-select bg-muted text-dark" aria-label="Default select example" id="sel3">
             <option selected>Source files</option>
-            <option value="th">Theme</option>
-            <option value="sr">Sitemap/Robots</option>
-            <option value="py">Python files</option>
-            <option value="sf">Settings file</option>
           </select>
         </div>
         <div class="col-3 m-0 p-1">
@@ -274,12 +266,11 @@ swal("", `{{error}}`, "warning");
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
+    var temps = {{templates|safe}};
+    var pyfiles = {{serverfiles|safe}};
 </script>
   <!-- End custom js for this page-->
   <script src="../../dashboard/cmseditor.js"></script>
-<script>
-var temps = {{templates|safe}};
-</script>
 </body>
 
 </html>

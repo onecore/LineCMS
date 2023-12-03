@@ -1,14 +1,18 @@
 from flask import Blueprint, render_template, request, redirect, jsonify
 # import dataengine
 from helpers import checkpoint
-import os, runpy
+import os, runpy, glob
 from settings import cms_version
 
 THEMES = "templates/SYSTEM/"
 THEMES_STAT = "static/SYSTEM/"
 THEME_DATA = "theme.py"
+
 THEME_STORE = {}
-VERIFIED_THEMES,TO_VERIFY = [],{}
+SERVER_STORE = {}
+
+VERIFIED_THEMES = []
+
 
 editor = Blueprint("editor", __name__)
 
@@ -47,20 +51,26 @@ def get_templates():
                 verify_theme(theme_,t_data)
             except:
                 pass # not a template file
+    return THEME_STORE
 
 def get_robotssitemap():
     pass
 
 def get_enginepublic():
-    pass
+    files = glob.glob("enginepublic/*py")
+    for py in files:
+        spl = py.split("/")
+        SERVER_STORE[spl[1]] = spl
+
+    return SERVER_STORE.keys()
 
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
 def codeedit():
-    get_templates()
-    templates = THEME_STORE
+    templates = get_templates()
+    sfiles = get_enginepublic()
 
     if request.method == "POST":
         pass
     
-    return render_template("/dashboard/editor.html",templates=templates)
+    return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles))
