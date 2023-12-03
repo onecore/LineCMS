@@ -31,7 +31,6 @@ def verify_theme(theme,theme_pack):
                             if theme_ == theme:
                                 VERIFIED_THEMES.append(theme_)
                                 THEME_STORE[theme_] = theme_pack
-                    
                     except Exception as e:
                         print(e) # not a template file
 
@@ -44,7 +43,7 @@ def get_templates():
         if os.path.isdir(theme_fold):
             theme_fold_in = runpy.run_path(theme_fold+"/"+THEME_DATA)
             try:
-                t_data = {theme_:[theme_fold_in['linecms_name'],theme_fold_in['linecms_compat'],theme_fold_in['linecms_info'],theme_fold]}
+                t_data = {theme_:[theme_fold_in['linecms_name'],theme_fold_in['linecms_compat'],theme_fold_in['linecms_info']]}
                 verify_theme(theme_,t_data)
             except:
                 pass # not a template file
@@ -55,9 +54,6 @@ def get_robotssitemap():
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
 def codeedit():
-    items = {}
     get_templates()
-    print(THEME_STORE)
-
-
-    return render_template("/dashboard/editor.html")
+    templates = THEME_STORE
+    return render_template("/dashboard/editor.html",templates=templates)
