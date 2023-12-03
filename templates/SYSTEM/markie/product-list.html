@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Products - {{ data['sitename'] }}</title>
+<link href="/media/{{data['favicon']}}" rel="icon">
+
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<style>
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+</style>
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+      <div class="container-xxl position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+          <a href="/" class="navbar-brand p-0">
+            <img src="/media/{{data['logo']}}" alt="Logo" class="flex"> {{data['sitename']}}
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0 pe-4">
+              <a href="/" class="nav-item nav-link active">Home</a>
+              {% if 'authenticated' in session %}
+                  {{admin_button()|safe}}
+              {% endif %}
+
+            </div>
+            <!-- <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a> -->
+          </div>
+        </nav>
+      </div>
+        <!-- Page content-->
+
+        <div class="container mt-5">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/product-list">Products list</a></li>
+            </ol>
+          </nav>
+
+          <div class="row">
+            <div class="col float-left">
+              <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="categorysel" style="width: 200px">
+                <option selected>Group by Categories</option>
+                  {% if selectedcat %}
+                    <option value="{{selectedcat}}" selected>{{selectedcat}}</option>
+                  {% endif %}
+                  {% for cat in categories %}
+                    {% if cat[0] %}
+                    <option value="{{cat[0]}}">{{cat[0]}}</option>
+                    {% endif %}
+                  {% endfor %}
+              </select>
+            </div>
+
+            <div class="col float-right">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search product" name="q" id="q">
+              <div class="input-group-append">
+                <button class="btn btn-secondary" onclick="trigg()" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+             <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
+            <br>
+            <br>
+            {% if not products %}
+            <center><h3 class="pt-5">No products found..</h3></center>
+            {% endif %}
+            {% for product in products %}
+              {% if product[12] == '0' %}
+
+                <div class="col-md-3  pt-3 pb-3">
+
+                  <div class="card pt-0">
+
+                  {% if product[9] %}
+                    <a href="/product/{{product[5]}}"><img src="/media/mainimage/{{product[13]}}/{{product[9]}}" class="card-img-top img-fluid" style="padding-top:5px;"></a>
+                  {% else %}
+                    <a href="/product/{{product[5]}}"><img src="/media/ni.jpeg" class="card-img-top img-fluid" style="padding-top:5px;"></a>
+                  {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title text-truncate" style="max-width: 200px";>{{product[1]}}</h5>
+                      <p class="text-truncate" style="max-width: 400px">{{khtml2text(product[14])}}</p>
+                      {% if product[2] %}
+                      <p class="text-truncate text-mute p-0" style="max-width: 200px;font-size:14px;margin-top:-15px;color:grey";>Categories: {{blog_list_badge_category(product[2])|safe}}</p>
+                      {% endif %}
+                      <a href="/product/{{product[5]}}" class="btn btn-primary float-right">View product</a>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+              {% endfor %}
+                <!-- Side widgets-->
+          </div>
+            <br>
+            {% if showpager %}
+            {{ pagination.links }}
+            {% else %}
+            {% if page > 1%}
+            <ul class="pagination   justify-content-center">
+                  {{ pagination.prev_page|safe}}
+            </ul>
+            {% endif %}
+            {% endif %}
+        </div>
+        <!-- Footer-->
+
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+      <div class="container py-3">
+        <div class="row g-5">
+          <div class="col-lg-6 col-md-4">
+            <div style="width: 100%"><iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2606.262318812828!2d-123.09029242436087!3d49.21455207557749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867445f389ef7f%3A0xab5e2e2633dd98c6!2s7710%20Prince%20Albert%20St%2C%20Vancouver%2C%20BC%20V5X%203Z6!5e0!3m2!1sen!2sca!4v1693270858778!5m2!1sen!2sca">Calculate population in area</a></iframe></div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            {% if mod['extras']['enabled'] %}
+            <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+            {% if mod['extras']['address'] %}
+            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{mod['extras']['address']}}</p>
+            {% endif %}
+
+            {% if mod['extras']['number'] %}
+            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{mod['extras']['number']}}</p>
+            {% endif %}
+
+            {% if mod['extras']['email'] %}
+            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{mod['extras']['email']}}</p>
+            {% endif %}
+            {% endif %}
+
+            {% if mod.socialshare['enabled'] %}
+            <div class="d-flex pt-2">
+              {% if mod['socialshare']['tw'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['tw']}}" target="_blank"><i class="fab fa-twitter"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['fb'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['fb']}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['gl'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['gl']}}" target="_blank"><i class="fab fa-google"></i></a>
+              {% endif %}
+              {% if mod['socialshare']['ig'] %}
+              <a class="btn btn-outline-light btn-social" href="{{mod['socialshare']['ig']}}" target="_blank"><i class="fab fa-instagram"></i></a>
+              {% endif %}
+
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+            <h5 class="text-light fw-normal">Monday - Saturday</h5>
+            <p>09AM - 09PM</p>
+            <h5 class="text-light fw-normal">Sunday</h5>
+            <p>10AM - 08PM</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              {{data['sitename']}} &copy; <a class="border-bottom" href="#">{{data['footercopyright']}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/ks/js/product-listings.js"></script>
+    </body>
+</html>
