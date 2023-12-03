@@ -3,17 +3,32 @@ const editor_ = document.getElementById("editor")
 const sel1 = document.getElementById("sel1")
 const sel2 = document.getElementById("sel2")
 const sel3 = document.getElementById("sel3")
+const data = {temps}
 
-function saved(success=true) {
-    if (success){
-        swal("", 'File saved!', "success");
+function sourceupdate(file,load=false){
+    var d = {};
+    if (load){
+        d = {"source":"load","file":file}
     }else{
-        swal("", 'File saved!', "error");
+        d = {"source":"save","file":file}
     }
+
+    fetch("/edit", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(d)
+    }).then(res => {
+        swal("", 'File saved', "success");
+    });
+
 }
 
 sel1.addEventListener('change', function (e) {
     let val_ = e.target.value;
+    if (val_ === "th"){
+    }
 });
 
 sel2.addEventListener('change', function (e) {

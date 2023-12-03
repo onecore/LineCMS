@@ -56,4 +56,8 @@ def get_robotssitemap():
 def codeedit():
     get_templates()
     templates = THEME_STORE
+
+    if request.method == "POST":
+        pass
+    
     return render_template("/dashboard/editor.html",templates=templates)

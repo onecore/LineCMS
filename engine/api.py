@@ -17,19 +17,22 @@ _de = dataengine.SandEngine()
 def epoch():
     return time.time()
 
-def deductq(obj):
+def deductq(obj): #/ unsused
     "Deduct stock value Main/Variant"
     meta = lite(obj['metadata'])
     for item, ordernumber in meta.items():
         if "Variant:" in item:
             variant_s = str(item).split("Variant: ")
             variant_n = variant_s[1]
-            print(variant_n)
             # item variant
         else:
             # item only without any attached variant
             pass
 
+@api.route("/api/sourceupdate", methods=['POST'])
+@checkpoint.onlylogged
+def sourceedit():
+    pass
 
 @api.route("/api/product-fulfill", methods=['POST'])
 @checkpoint.onlylogged
