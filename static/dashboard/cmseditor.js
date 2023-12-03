@@ -4,7 +4,9 @@ const sel1 = document.getElementById("sel1")
 const sel2 = document.getElementById("sel2")
 const sel3 = document.getElementById("sel3")
 
-
+var selv1 = "";
+var selv2 = "";
+var selv3 = "";
 
 function sourceupdate(file,pattern,load=false){
     var d = {};
@@ -57,6 +59,7 @@ sel1.addEventListener('change', function (e) {
             option.value = "sr";
             sel2.appendChild(option)
     sel2.dispatchEvent(new Event('change'));
+
     }else if (val_ === "py"){
         sel3.innerHTML = "";        
         sel2.innerHTML = "";
@@ -87,6 +90,7 @@ sel1.addEventListener('change', function (e) {
 
 sel2.addEventListener('change', function (e) {
     let val_ = e.target.value;
+    var sel2_t = sel2.options[sel2.selectedIndex].text;
     sel1_val = sel1.value;
 
     switch (sel1_val) {
@@ -107,12 +111,7 @@ sel2.addEventListener('change', function (e) {
                 option.value = k[o];
                 sel3.appendChild(option)
             }
-
             break;
-        
-    
-        // default:
-        //     break;
     }
 });
 

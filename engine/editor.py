@@ -13,6 +13,7 @@ SERVER_STORE = {}
 
 VERIFIED_THEMES = []
 
+SPREAD_STATIC, SPREAD_TEMPLATE = [], []
 
 editor = Blueprint("editor", __name__)
 
@@ -24,6 +25,7 @@ def verify_theme(theme,theme_pack):
         else:
             for theme_ in os.listdir(THEMES_STAT):
                 theme_fold = THEMES_STAT+theme_
+
                 if os.path.isdir(theme_fold):
                     theme_fold_in = runpy.run_path(theme_fold+"/"+THEME_DATA)
                     try:
@@ -35,6 +37,7 @@ def verify_theme(theme,theme_pack):
                             if theme_ == theme:
                                 VERIFIED_THEMES.append(theme_)
                                 THEME_STORE[theme_] = theme_pack
+                                
                     except Exception as e:
                         print(e) # not a template file
 
@@ -64,13 +67,30 @@ def get_enginepublic():
 
     return SERVER_STORE.keys()
 
+def load_files(path):
+    allowed_ext = (".html",".js",".css",".py")
+    items_ = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(allowed_ext):
+                items_.append(file)
+    return items_
+
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
 def codeedit():
+    files_templates, files_static = {},{}
     templates = get_templates()
     sfiles = get_enginepublic()
+
+    if templates:
+        for theme in templates.keys():
+            files_templates[theme] = load_files(THEMES+theme)
+            files_static[theme] = load_files(THEMES_STAT+theme)
+
+    print (files_templates,files_static)
 
     if request.method == "POST":
         pass
     
-    return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles))
+    return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles),static_list=files_static,template_list=files_templates)
