@@ -23,7 +23,8 @@ function sourceupdate(s1,s2,s3,load=false){
         },
         body: JSON.stringify(d)
     }).then(res => {
-        swal("", 'File saved', "success");
+        // swal("", 'File saved', "success");
+        console.log("sent")
     });
 
 }

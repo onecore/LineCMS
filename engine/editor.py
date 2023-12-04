@@ -3,10 +3,12 @@ from flask import Blueprint, render_template, request, redirect, jsonify
 from helpers import checkpoint
 import os, runpy, glob
 from settings import cms_version
+import json
 
 THEMES = "templates/SYSTEM/"
 THEMES_STAT = "static/SYSTEM/"
 THEME_DATA = "theme.py"
+BACKUPS = "engine/backups"
 
 THEME_STORE = {}
 SERVER_STORE = {}
@@ -76,7 +78,9 @@ def load_files(path):
                 items_.append(file)
     return items_
 
-def process_source(read=True):
+def process_source(req_,read=True):
+    source,s1,s2,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
+
     if read:
         pass
 
@@ -88,13 +92,15 @@ def codeedit():
     templates = get_templates()
     sfiles = get_enginepublic()
     pathing = {"th":THEMES,"tl":THEMES_STAT,"sr":"templates/","py":"enginepublic/","sf":""}
-    
+
     if templates:
         for theme in templates.keys():
             files_templates[theme] = load_files(THEMES+theme)
             files_static[theme] = load_files(THEMES_STAT+theme)
 
     if request.method == "POST":
-        pass
+        req_ = json.loads(request.data)
+        process_source(req_)
+
     
     return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles),static_list=files_static,template_list=files_templates)
