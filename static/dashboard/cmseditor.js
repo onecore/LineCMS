@@ -8,12 +8,12 @@ var selv1 = "";
 var selv2 = "";
 var selv3 = "";
 
-function sourceupdate(file,pattern,load=false){
+function sourceupdate(s1,s2,s3,load=false){
     var d = {};
     if (load){
-        d = {"source":"load","file":file,"pattern":pattern}
+        d = {"source":"load","s1":s1,"s2":s2,"s3":s3}
     }else{
-        d = {"source":"save","file":file,"pattern":pattern}
+        d = {"source":"save","s1":s1,"s2":s2,"s3":s3}
     }
 
     fetch("/edit", {
@@ -153,7 +153,7 @@ sel3.addEventListener('change', function (e) {
     let select_1 = sel1.value
     let select_2 = sel2.options[sel2.selectedIndex].text;
 
-    console.log(select_1,select_2)
+    sourceupdate(select_1,select_2,val_,)
 
 });
 
