@@ -100,7 +100,9 @@ def codeedit():
 
     if request.method == "POST":
         req_ = json.loads(request.data)
-        process_source(req_)
+        if process_source(req_):
+            return jsonify({"status":1})
+        return jsonify({"status":0})
 
     
     return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles),static_list=files_static,template_list=files_templates)
