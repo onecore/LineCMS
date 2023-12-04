@@ -43,15 +43,15 @@ sel1.addEventListener('change', function (e) {
             sel2.appendChild(option)
         }
     sel2.dispatchEvent(new Event('change'));
-    }else if (val_ === "ts"){
+    }else if (val_ === "tl"){
         sel2.innerHTML = "";
         for (let o in temps) {
             var option = document.createElement("option");
             option.text = o;
-            option.value = "ts";
+            option.value = "tl";
             sel2.appendChild(option)
         }
-    
+    sel2.dispatchEvent(new Event('change'));
     }else if (val_ === "sr"){
         sel2.innerHTML = "";
         let option = document.createElement("option");
@@ -92,7 +92,7 @@ sel2.addEventListener('change', function (e) {
     let val_ = e.target.value;
     var sel2_t = sel2.options[sel2.selectedIndex].text;
     sel1_val = sel1.value;
-
+    console.log(sel2_t)
     switch (sel1_val) {
         case "sf":
             sel3.innerHTML = "";
