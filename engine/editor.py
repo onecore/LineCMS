@@ -76,6 +76,11 @@ def load_files(path):
                 items_.append(file)
     return items_
 
+def process_source(read=True):
+    if read:
+        pass
+    
+
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
 def codeedit():
@@ -87,8 +92,6 @@ def codeedit():
         for theme in templates.keys():
             files_templates[theme] = load_files(THEMES+theme)
             files_static[theme] = load_files(THEMES_STAT+theme)
-
-    print (files_templates,files_static)
 
     if request.method == "POST":
         pass

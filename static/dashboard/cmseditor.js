@@ -92,7 +92,7 @@ sel2.addEventListener('change', function (e) {
     let val_ = e.target.value;
     var sel2_t = sel2.options[sel2.selectedIndex].text;
     sel1_val = sel1.value;
-    console.log(sel2_t)
+
     switch (sel1_val) {
         case "sf":
             sel3.innerHTML = "";
@@ -139,5 +139,6 @@ sel2.addEventListener('change', function (e) {
 
 sel3.addEventListener('change', function (e) {
     let val_ = e.target.value;
+    alert(val_)
 });
 
