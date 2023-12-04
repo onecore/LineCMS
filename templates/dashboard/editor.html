@@ -197,7 +197,7 @@ swal("", `{{error}}`, "warning");
                 <select class="form-select bg-muted text-dark" aria-label="Default select example" id="sel1">
                   <option selected>Select folder</option>
                   <option value="th">Theme Template</option>
-                  <option value="ts">Theme Static</option>
+                  <option value="tl">Theme Static</option>
                   <option value="sr">Sitemap/Robots</option>
                   <option value="py">Server files</option>
                   <option value="sf">Settings file</option>
@@ -268,8 +268,8 @@ swal("", `{{error}}`, "warning");
     editor.setTheme("ace/theme/monokai");
     var temps = {{templates|safe}};
     var pyfiles = {{serverfiles|safe}};
-    var static_files = {{static_list|safe}}
-    var template_files = {{template_list|safe}}
+    var static_files = {{static_list|safe}};
+    var template_files = {{template_list|safe}};
 </script>
   <!-- End custom js for this page-->
   <script src="../../dashboard/cmseditor.js"></script>

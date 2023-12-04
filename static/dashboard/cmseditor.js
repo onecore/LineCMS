@@ -112,6 +112,28 @@ sel2.addEventListener('change', function (e) {
                 sel3.appendChild(option)
             }
             break;
+
+        case "th": // template
+            sel3.innerHTML = "";
+            let p = template_files[sel2_t]
+            for (let o in p){
+                let option = document.createElement("option");
+                option.text = p[o];
+                option.value = p[o];
+                sel3.appendChild(option)
+            }
+            break;
+
+        case "tl": // static
+            sel3.innerHTML = "";
+            let pl = static_files[sel2_t];
+            for (let i in pl){
+                let option = document.createElement("option");
+                option.text = pl[i];
+                option.value = pl[i];
+                sel3.appendChild(option)
+            }
+            break;
     }
 });
 
