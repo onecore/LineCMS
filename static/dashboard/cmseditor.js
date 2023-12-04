@@ -100,6 +100,8 @@ sel2.addEventListener('change', function (e) {
             option.text = "settings.py";
             option.value = "sf";
             sel3.appendChild(option)
+            sel3.dispatchEvent(new Event('change'));
+
             break;
 
         case "sr":
@@ -111,6 +113,7 @@ sel2.addEventListener('change', function (e) {
                 option.value = k[o];
                 sel3.appendChild(option)
             }
+            sel3.dispatchEvent(new Event('change'));
             break;
 
         case "th": // template
@@ -122,6 +125,8 @@ sel2.addEventListener('change', function (e) {
                 option.value = p[o];
                 sel3.appendChild(option)
             }
+            sel3.dispatchEvent(new Event('change'));
+
             break;
 
         case "tl": // static
@@ -133,12 +138,22 @@ sel2.addEventListener('change', function (e) {
                 option.value = pl[i];
                 sel3.appendChild(option)
             }
+            sel3.dispatchEvent(new Event('change'));
             break;
+        
+        case "py":
+            sel3.dispatchEvent(new Event('change'));
+
+
     }
 });
 
 sel3.addEventListener('change', function (e) {
     let val_ = e.target.value;
-    alert(val_)
+    let select_1 = sel1.value
+    let select_2 = sel2.options[sel2.selectedIndex].text;
+
+    console.log(select_1,select_2)
+
 });
 

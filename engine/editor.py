@@ -79,7 +79,7 @@ def load_files(path):
 def process_source(read=True):
     if read:
         pass
-    
+
 
 @editor.route("/edit",methods=['GET','POST'])
 @checkpoint.onlylogged
@@ -87,7 +87,8 @@ def codeedit():
     files_templates, files_static = {},{}
     templates = get_templates()
     sfiles = get_enginepublic()
-
+    pathing = {"th":THEMES,"tl":THEMES_STAT,"sr":"templates/","py":"enginepublic/","sf":""}
+    
     if templates:
         for theme in templates.keys():
             files_templates[theme] = load_files(THEMES+theme)
