@@ -79,9 +79,10 @@ def load_files(path):
 def process_source(req_):
     "move the request file (read) to static"
     pathing = {"sr":"templates/","py":"enginepublic/","sf":"settings.py"}
-    source,s1,_,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
+    source,s1,s2,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
+    path_ = False
+
     if "l" in source:
-        path_ = False
         if s1 in pathing.keys():
             path_ = f"{pathing[s1]}/{s3}"
             if s1 == "sf":
@@ -92,7 +93,16 @@ def process_source(req_):
             with open(path_) as src:
                 return src.read()
     elif "s" in source:
-        pass
+        if s1 in pathing.keys():
+            path_ = f"{pathing[s1]}/{s3}"
+            if s1 == "sf":
+                path_ = pathing[s1]
+        else:
+            path_ = FILE_STORE[s3]
+        if path_:
+            with open(path_,"w+") as src:
+                src.write(s2)
+            return True
 
     else:
         return "Parameter request failed"
@@ -127,8 +137,10 @@ def codeedit():
         req_ = json.loads(request.data)
         prs = process_source(req_)
         if isinstance(prs,bool):
+            print("saved")
             return jsonify({"status":1,"saved":True,"lang":get_lang(req_['s3']),"file":req_['s3']})
         elif prs:
+            print("loaded")
             return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3']),"file":req_['s3']})
         return jsonify({"status":0})
 

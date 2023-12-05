@@ -30,7 +30,7 @@ function sourceupdate(s1,s2,s3,load=false){
 
         }else if ("src" in data){
             editor.setValue(data['src'])
-            editor.session.setMode(`ace/mode/${data['lang']}`);
+            // editor.session.setMode(`ace/mode/${data['lang']}`);
             einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
         }
 
@@ -40,7 +40,7 @@ function sourceupdate(s1,s2,s3,load=false){
 
 function save_file(){
     if (current){
-        sourceupdate(s1.value,editor.getValue(),sel3.options[sel3.selectedIndex].text)
+        sourceupdate(sel1.value,editor.getValue(),sel3.options[sel3.selectedIndex].text)
     }
 }
 
