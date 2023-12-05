@@ -4,14 +4,13 @@ const sel1 = document.getElementById("sel1")
 const sel2 = document.getElementById("sel2")
 const sel3 = document.getElementById("sel3")
 
-var selv1 = "";
-var selv2 = "";
-var selv3 = "";
+var current = "";
 
 function sourceupdate(s1,s2,s3,load=false){
     var d = {};
     if (load){
         d = {"source":"load","s1":s1,"s2":s2,"s3":s3}
+        current = s3;
     }else{
         d = {"source":"save","s1":s1,"s2":s2,"s3":s3}
     }
@@ -25,11 +24,24 @@ function sourceupdate(s1,s2,s3,load=false){
     })
     .then((response) => response.json())
     .then((data) => {
-    editor.setValue(data['src'])
-    editor.session.setMode(`ace/mode/${data['lang']}`);
-    einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
+        if ("save" in data){
+            einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
+            swal("", 'File has been saved', "success");
+
+        }else if ("src" in data){
+            editor.setValue(data['src'])
+            editor.session.setMode(`ace/mode/${data['lang']}`);
+            einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
+        }
+
 });
 
+}
+
+function save_file(){
+    if (current){
+        sourceupdate(s1.value,editor.getValue(),sel3.options[sel3.selectedIndex].text)
+    }
 }
 
 function loader_init(){
