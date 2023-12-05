@@ -173,3 +173,12 @@ sel3.addEventListener('change', function (e) {
 
 });
 
+
+const q = window.location.search;
+const pars = new URLSearchParams(q);
+const folder = pars.get('folder')
+
+if (folder){
+    sel1.value = folder;
+    sel1.dispatchEvent(new Event('change'));
+}
