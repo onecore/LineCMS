@@ -80,7 +80,6 @@ def process_source(req_):
     "move the request file (read) to static"
     pathing = {"sr":"templates/","py":"enginepublic/","sf":"settings.py"}
     source,s1,_,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
-    print(source)
     if "l" in source:
         path_ = False
         if s1 in pathing.keys():
@@ -92,6 +91,11 @@ def process_source(req_):
         if path_:
             with open(path_) as src:
                 return src.read()
+    elif "s" in source:
+        pass
+
+    else:
+        return "Parameter request failed"
 
 def get_lang(file):
     if str(file).endswith(".py"):
@@ -123,7 +127,7 @@ def codeedit():
         req_ = json.loads(request.data)
         prs = process_source(req_)
         if prs:
-            return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3'])})
+            return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3']),"file":req_['s3']})
         return jsonify({"status":0})
 
     

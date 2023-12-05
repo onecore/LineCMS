@@ -27,6 +27,7 @@ function sourceupdate(s1,s2,s3,load=false){
     .then((data) => {
     editor.setValue(data['src'])
     editor.session.setMode(`ace/mode/${data['lang']}`);
+    einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
 });
 
 }
