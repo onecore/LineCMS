@@ -137,10 +137,8 @@ def codeedit():
         req_ = json.loads(request.data)
         prs = process_source(req_)
         if isinstance(prs,bool):
-            print("saved")
             return jsonify({"status":1,"saved":True,"lang":get_lang(req_['s3']),"file":req_['s3']})
         elif prs:
-            print("loaded")
             return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3']),"file":req_['s3']})
         return jsonify({"status":0})
 

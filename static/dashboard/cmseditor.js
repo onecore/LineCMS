@@ -24,7 +24,7 @@ function sourceupdate(s1,s2,s3,load=false){
     })
     .then((response) => response.json())
     .then((data) => {
-        if ("save" in data){
+        if ("saved" in data){
             einfo.textContent = `File loaded: ${data['file']}  Language: ${data['lang']}`
             swal("", 'File has been saved', "success");
 
