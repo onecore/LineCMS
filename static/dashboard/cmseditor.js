@@ -26,6 +26,7 @@ function sourceupdate(s1,s2,s3,load=false){
     .then((response) => response.json())
     .then((data) => {
     editor.setValue(data['src'])
+    editor.session.setMode(`ace/mode/${data['lang']}`);
 });
 
 }
@@ -155,7 +156,7 @@ sel3.addEventListener('change', function (e) {
     let select_1 = sel1.value
     let select_2 = sel2.options[sel2.selectedIndex].text;
 
-    sourceupdate(select_1,select_2,val_,)
+    sourceupdate(select_1,select_2,val_,load=true)
 
 });
 

@@ -76,22 +76,36 @@ def load_files(path):
                 items_.append(file)
     return items_
 
-def process_source(req_,read=True):
+def process_source(req_):
     "move the request file (read) to static"
     pathing = {"sr":"templates/","py":"enginepublic/","sf":"settings.py"}
-    source,s1,s2,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
-    
-    if s1 in pathing.keys():
-        path_ = f"{pathing[s1]}/{s3}"
-        if s1 == "sf":
-            path_ = pathing[s1]
+    source,s1,_,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
+    print(source)
+    if "l" in source:
+        path_ = False
+        if s1 in pathing.keys():
+            path_ = f"{pathing[s1]}/{s3}"
+            if s1 == "sf":
+                path_ = pathing[s1]
+        else:
+            path_ = FILE_STORE[s3]
+        if path_:
+            with open(path_) as src:
+                return src.read()
 
+def get_lang(file):
+    if str(file).endswith(".py"):
+        return "python"
+    elif str(file).endswith(".js"):
+        return "javascript"
+    elif str(file).endswith(".css"):
+        return "css"
+    elif str(file).endswith(".html"):
+        return "html"
+    elif str(file).endswith(".xml"):
+        return "xml"
     else:
-        path_ = FILE_STORE[s3]
-
-    if read:
-        with open(path_) as src:
-            return src.read()
+        return "python"
 
 
 @editor.route("/edit",methods=['GET','POST'])
@@ -109,7 +123,7 @@ def codeedit():
         req_ = json.loads(request.data)
         prs = process_source(req_)
         if prs:
-            return jsonify({"status":1,"src":prs})
+            return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3'])})
         return jsonify({"status":0})
 
     
