@@ -22,10 +22,11 @@ function sourceupdate(s1,s2,s3,load=false){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(d)
-    }).then(res => {
-        // swal("", 'File saved', "success");
-        console.log("sent")
-    });
+    })
+    .then((response) => response.json())
+    .then((data) => {
+    editor.setValue(data['src'])
+});
 
 }
 
@@ -72,7 +73,7 @@ sel1.addEventListener('change', function (e) {
         for (let o in pyfiles) {
             var option = document.createElement("option");
             option.text = pyfiles[o];
-            option.value = "th";
+            option.value = pyfiles[o];
             sel3.appendChild(option)
         }
     sel2.dispatchEvent(new Event('change'));

@@ -3,24 +3,20 @@ from flask import Blueprint, render_template, request, redirect, jsonify
 from helpers import checkpoint
 import os, runpy, glob
 from settings import cms_version
-import json
+import json, pathlib
 
 THEMES = "templates/SYSTEM/"
 THEMES_STAT = "static/SYSTEM/"
 THEME_DATA = "theme.py"
 BACKUPS = "engine/backups"
-
 THEME_STORE = {}
 SERVER_STORE = {}
-
 VERIFIED_THEMES = []
-
-SPREAD_STATIC, SPREAD_TEMPLATE = [], []
+FILE_STORE = {}
 
 editor = Blueprint("editor", __name__)
 
 def verify_theme(theme,theme_pack):
-
     try:
         if float(cms_version) < float(theme_pack[theme][1]):
             print("Version not compat")
@@ -72,17 +68,28 @@ def get_enginepublic():
 def load_files(path):
     allowed_ext = (".html",".js",".css",".py")
     items_ = []
-    for root, dirs, files in os.walk(path):
+
+    for root, directory, files in os.walk(path):
         for file in files:
             if file.endswith(allowed_ext):
+                FILE_STORE[file] = f"{root}/{file}"
                 items_.append(file)
     return items_
 
 def process_source(req_,read=True):
+    "move the request file (read) to static"
+    pathing = {"sr":"templates/","py":"enginepublic/","sf":""}
     source,s1,s2,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
+    
+    if s1 in pathing.keys():
+        path_ = f"{pathing[s1]}/{s3}"
+
+    else:
+        path_ = FILE_STORE[s3]
 
     if read:
-        pass
+        with open(path_) as src:
+            return src.read()
 
 
 @editor.route("/edit",methods=['GET','POST'])
@@ -91,8 +98,6 @@ def codeedit():
     files_templates, files_static = {},{}
     templates = get_templates()
     sfiles = get_enginepublic()
-    pathing = {"th":THEMES,"tl":THEMES_STAT,"sr":"templates/","py":"enginepublic/","sf":""}
-
     if templates:
         for theme in templates.keys():
             files_templates[theme] = load_files(THEMES+theme)
@@ -100,8 +105,9 @@ def codeedit():
 
     if request.method == "POST":
         req_ = json.loads(request.data)
-        if process_source(req_):
-            return jsonify({"status":1})
+        prs = process_source(req_)
+        if prs:
+            return jsonify({"status":1,"src":prs})
         return jsonify({"status":0})
 
     
