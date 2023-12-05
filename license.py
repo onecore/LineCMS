@@ -4,16 +4,17 @@ Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 notice = """
+Copyright 2023 (c) Line Content Management System, MA/RP
 
-KnightStudio Canada (c) 2023 / KnightStudio Dashboard
-Developed by Mark Anthony Pequeras for KnightStudio
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), 
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Redistribution is not allowed if you have the full source-code
-You can use it, Modify, Upgrade the source only if you are
-a registered client of KnightStudio Canada, We also allow anyone who has access
-to our source to add Credits to 'KnightStudio Canada'.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-September,14,2023
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 
