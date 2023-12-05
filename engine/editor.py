@@ -78,11 +78,13 @@ def load_files(path):
 
 def process_source(req_,read=True):
     "move the request file (read) to static"
-    pathing = {"sr":"templates/","py":"enginepublic/","sf":""}
+    pathing = {"sr":"templates/","py":"enginepublic/","sf":"settings.py"}
     source,s1,s2,s3 = req_['source'],req_['s1'],req_['s2'],req_['s3']
     
     if s1 in pathing.keys():
         path_ = f"{pathing[s1]}/{s3}"
+        if s1 == "sf":
+            path_ = pathing[s1]
 
     else:
         path_ = FILE_STORE[s3]
