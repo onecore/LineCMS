@@ -4,20 +4,18 @@ Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 import os
+from engine.editor import get_templates
+from settings import cms_version
 
-templates_list = []
-
-themes = os.listdir("templates/SYSTEM")
-
-
-for theme in themes:
-    if "." not in theme:
-        templates_list.append(theme)
+templates_list = [theme for theme in get_templates()]
 
 
-def loadtemplatedb():
+def unpack_theme():
     pass
 
 
-def template():
-    pass
+
+
+
+
+
