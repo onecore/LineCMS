@@ -838,3 +838,10 @@ function disabledspace(e) {
 
 }
 
+
+function openedit(folder){
+    const sel = document.getElementById('ktheme')
+    let selected = sel.options[sel.selectedIndex].text
+    location.href = `/edit?folder=${folder}&subfolder=${selected}`
+}
+

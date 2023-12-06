@@ -177,8 +177,21 @@ sel3.addEventListener('change', function (e) {
 const q = window.location.search;
 const pars = new URLSearchParams(q);
 const folder = pars.get('folder')
+const subfolder = pars.get('subfolder')
+const file_ = pars.get('file')
 
-if (folder){
-    sel1.value = folder;
+if (folder == 'theme'){
+    sel1.selectedIndex = 1;
     sel1.dispatchEvent(new Event('change'));
+    
+    var ddl = document.getElementById('sel2');
+    var opts = ddl.options.length;
+    if (subfolder){
+    for (var i=0; i<opts; i++){
+        if (ddl.options[i].text == subfolder){
+            ddl.options[i].selected = true;
+            break;
+        }
+    }
+  }
 }

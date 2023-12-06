@@ -142,5 +142,9 @@ def codeedit():
             return jsonify({"status":1,"src":prs,"lang":get_lang(req_['s3']),"file":req_['s3']})
         return jsonify({"status":0})
 
+    isfolder = request.args.get("folder")
+    issubfolder = request.args.get("subfolder")
+    isfile = request.args.get("file")
     
-    return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles),static_list=files_static,template_list=files_templates)
+    return render_template("/dashboard/editor.html",templates=templates,serverfiles=list(sfiles),static_list=files_static,
+                           template_list=files_templates,isfolder=isfolder,issubfolder=issubfolder,isfile=isfile)

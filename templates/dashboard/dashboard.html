@@ -344,15 +344,19 @@ swal("", `{{error}}`, "warning");
                     {% endfor %}
                   </select>
                   <br>
-                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded" style="background:#28a745;border: 1px gray">Set Current Theme</button><a type="button" href="/edit?folder=default" onclick="kstheme()" class="btn btn-m btn-muted border me-2 d-inline rounded">Access Editor</a></center>
+                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded" style="background:#28a745;border: 1px gray">Set Current Theme</button><button type="button" onclick="openedit('theme')" class="btn btn-m btn-muted border me-2 d-inline rounded">Access Editor</button></center>
 
               </fieldset>
               <br>
                 <fieldset class="border p-2 text-muted rounded">
                 <legend class="float-none w-auto text-muted" style="font-size:15px">Miscellaneous</legend>
+                  <center><p>Data Backup</p></center>
+                  <center><button type="button" onclick="kstheme()" class="btn btn-muted me-2 rounded border d-inline">Backup Database</button>
+                  <button type="button" onclick="kstheme()" class="btn btn-muted me-2 rounded border mt-1 d-inline">Backup Resources</button></center>
+                  <hr>                    
+                  <center><a type="button" href="/edit" class="btn btn-muted me-2 rounded border mt-2 ">View or Edit Source</a></center><br>
 
-                  <center><button type="button" onclick="kstheme()" class="btn btn-lg btn-muted me-2 rounded border">Backup Database</button></center>
-                  <center><button type="button" onclick="kstheme()" class="btn btn-lg btn-muted me-2 rounded border mt-1">Backup Resources</button></center>
+
 
               </fieldset>
                 </div>
