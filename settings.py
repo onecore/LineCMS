@@ -74,6 +74,7 @@ ADDITIONAL INFO: {{ADDITIONAL}}
 
 # Uploads
 uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])       # Allowed File Extentions in uploader
+uploads_allowedext_theme = set(['zip'])       # Allowed File Extentions in uploader
 uploads_blog = 'static/dashboard/uploads/blog'                              # Blog Uploads
 uploads_products = 'static/dashboard/uploads/products'                      # Product Images / Main images and Variant images
 uploads_dashboard = "static/dashboard/uploads/dashboard"                    # SandCMS Dashboard Uploads ()

@@ -285,3 +285,28 @@ def upload_file():
     return jsonify({"status": 0})
 
 
+
+@uploader.route('/upload_th', methods=['POST', 'GET'])
+@checkpoint.onlylogged
+def upload_file_th():
+    "theme uploader"
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(uploads_dashboard, filename))
+            try:
+                de.update_data_uploads("control", "logo", filename,
+                                        "owner", session['authenticated'][0])
+            except Exception as e:
+                # if fails, revert to sample logo
+                de.update_data_uploads("control", "logo", 'sample.png',
+                                        "owner", session['authenticated'][0])
+                filename = "sample.png"
+            return jsonify({"status": filename})
+    return jsonify({"status": 0})
+

@@ -45,7 +45,7 @@ $(function() {
         var form_data = new FormData($('#upload-file-th')[0]);
         $.ajax({
             type: 'POST',
-            url: '/upload_fav',
+            url: '/upload_th',
             data: form_data,
             contentType: false,
             cache: false,
