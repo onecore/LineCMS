@@ -8,20 +8,25 @@ from engine.editor import get_templates
 from settings import cms_version
 # from settings import uploads_temporary_autodelete
 import zipfile, shutil
+from pathlib import Path
 templates_list = [theme for theme in get_templates()]
 
 
 def procfiles(temp,folder):
     folders = {'resources':False,'html':False}
     extracted = os.path.join(temp,folder)
-    print(extracted)
+    fname_we = Path(temp)
+    woe = fname_we.with_suffix('')
 
     for folder,bools in folders.items():
-        if os.path.isdir(os.path.join(temp,folder)):
+        print(temp+"/"+folder)
+        if os.path.isdir(temp+"/"+woe+"/"+folder):
+            print(temp+"/"+folder)
             folders[folder] = True
+            print(folders)
     print(folders)
-    if folders.values():
-        print("passed")
+
+
 
     shutil.rmtree(os.path.join(temp,folder)) # delete
 
