@@ -13,6 +13,8 @@ from settings import uploads_products
 from settings import uploads_blog
 from settings import uploads_dashboard
 from settings import uploads_allowedext_theme
+from settings import uploads_temporary
+from helpers import themeengine
 from helpers import checkpoint
 
 uploads_data = {}
@@ -28,6 +30,7 @@ log = de.log
 def allowed_file(filename,theme=False) -> str:
     "validates file extension"
     if theme:
+        print("Passed")
         return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in uploads_allowedext_theme
     
@@ -301,17 +304,11 @@ def upload_file_th():
         file = request.files['file']
         if file.filename == '':
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.filename,theme=True):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(uploads_dashboard, filename))
-            try:
-                de.update_data_uploads("control", "logo", filename,
-                                        "owner", session['authenticated'][0])
-            except Exception as e:
-                # if fails, revert to sample logo
-                de.update_data_uploads("control", "logo", 'sample.png',
-                                        "owner", session['authenticated'][0])
-                filename = "sample.png"
-            return jsonify({"status": filename})
+            file.save(os.path.join(uploads_temporary, filename))
+            unpack = themeengine.unpack_theme(uploads_temporary,filename)
+            if unpack:
+                return jsonify({"status": unpack})
     return jsonify({"status": 0})
 
