@@ -344,10 +344,15 @@ swal("", `{{error}}`, "warning");
                     {% endfor %}
                   </select>
                   <br>
-                  <center><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded" style="background:#28a745;border: 1px gray">Set Current Theme</button><button type="button" onclick="openedit('theme')" class="btn btn-m btn-muted border me-2 d-inline rounded">Access Editor</button>
-                    <button type="button" onclick="openedit('theme')" class="btn btn-m btn-muted border me-2 d-inline rounded"><li class="icon-done_all"></li>Upload</button></center>
-
-              </fieldset>
+                  <center><button type="button" onclick="openedit('theme')" class="btn btn-m btn-muted border me-2 d-inline rounded">Access Editor</button><button type="button" onclick="kstheme()" class="btn btn-m btn-primary me-2 d-inline rounded" style="background:#28a745;border: 1px gray">Set Selected Theme</button>
+                    <label class="custom-file-upload center">
+                      <form id="upload-file-th" name="upload-file-th">
+                        <input type="file" name="file" accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"/>
+                        <i class="fa fa-cloud-upload"></i> Click here to browse&nbsp&nbsp
+                        <button class="btn btn-primary rounded" id="upload-th-btn" type="button"
+                          style="background:#28a745;border: 1px gray">Upload Theme</button>
+                      </form>
+                    </label>              </fieldset>
               <br>
                 <fieldset class="border p-2 text-muted rounded">
                 <legend class="float-none w-auto text-muted" style="font-size:15px">Miscellaneous</legend>
@@ -360,6 +365,8 @@ swal("", `{{error}}`, "warning");
 
 
               </fieldset>
+              <br>
+              <center><small class="text-muted">SandCMS Version: <b>1.40</b>  Latest stable: <b>1.41</b></small></center>
                 </div>
               </div>
             </div>
@@ -401,54 +408,10 @@ swal("", `{{error}}`, "warning");
   <script src="../../dashboard/js/file-upload.js"></script>
   <script src="../../dashboard/js/typeahead.js"></script>
   <script src="../../dashboard/js/select2.js"></script>
+  <script src="../../dashboard/dashup.js"></script>
+
   <!-- End custom js for this page-->
-  <script>
-$(function() {
-    $('#upload-file-btn').click(function() {
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                if (data['status'] === 0){
-                  console.log("False")
-                  return false;
-                }
-                $("#logoview").attr('src','/media/'+data['status']);
-                swal("", 'Website Logo updated', "success");
 
-            },
-        });
-    });
-});
-
-$(function() {
-    $('#upload-fav-btn').click(function() {
-        var form_data = new FormData($('#upload-fav')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload_fav',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-              if (data['status'] === 0) {
-                console.log("False")
-                return false;
-              }
-                $("#favview").attr('src','/media/'+data['status']);
-                swal("", 'Website Favicon updated', "success");
-
-            },
-        });
-    });
-});
-  </script>
 </body>
 
 </html>
