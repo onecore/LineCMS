@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 import os
 from engine.editor import get_templates
 from settings import cms_version
+from flask import jsonify
 # from settings import uploads_temporary_autodelete
 import zipfile, shutil
 from pathlib import Path
@@ -27,11 +28,15 @@ def procfiles(temp,folder):
         except: pass
 
     if theme:
-        temp = shutil.move(f"{theme_p}/html", f'templates/SYSTEM/{theme}')
-        stat = shutil.move(f"{theme_p}/resources", f'static/SYSTEM/{theme}')
+        try:
+            temp = shutil.move(f"{theme_p}/html", f'templates/SYSTEM/{theme}') # future usage var
+            stat = shutil.move(f"{theme_p}/resources", f'static/SYSTEM/{theme}') # future usage var
+            l = [th for th in get_templates()]
+            return jsonify({'status':1,'theme':theme,'list':l})
+        except:
+            return 0
 
-        
-    return False
+    return 0
 
 
     
@@ -46,7 +51,7 @@ def unpack_theme(temp,filename) -> bool:
 
     except Exception as e:
         print(e)
-        return False
+        return 0
     
 
 

@@ -310,6 +310,7 @@ def upload_file_th():
             file.save(os.path.join(uploads_temporary, filename))
             unpack = themeengine.unpack_theme(uploads_temporary,filename)
             if unpack:
-                return jsonify({"status": unpack})
+                return unpack
+                
     return jsonify({"status": 0})
 

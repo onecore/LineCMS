@@ -19,8 +19,8 @@ def dashboard_main():
     error, success = False, False
     de = dataengine.SandEngine()
     dt = de.load_data_index(None)  # loads datas
-
-    tmplist = themeengine.templates_list
+    tmplist = themeengine.get_templates()
+    # tmplist = themeengine.templates_list
     theme = de.themeget()
     if not theme:
         de.themeset("default")
