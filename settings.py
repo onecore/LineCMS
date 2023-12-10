@@ -78,7 +78,7 @@ uploads_allowedext_theme = set(['zip'])                                     # Al
 uploads_blog = 'static/dashboard/uploads/blog'                              # Blog Uploads
 uploads_products = 'static/dashboard/uploads/products'                      # Product Images / Main images and Variant images
 uploads_dashboard = "static/dashboard/uploads/dashboard"                    # SandCMS Dashboard Uploads ()
-uploads_temporary = "engine/temp"                                           # Folder for theme files 
+uploads_temporary = "engine/temp/extern"                                           # Folder for theme files 
 
 # Database Path and File
 dbase_path = "dbase/sand"

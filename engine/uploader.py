@@ -30,7 +30,6 @@ log = de.log
 def allowed_file(filename,theme=False) -> str:
     "validates file extension"
     if theme:
-        print("Passed")
         return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in uploads_allowedext_theme
     
@@ -306,6 +305,8 @@ def upload_file_th():
             return redirect(request.url)
         if file and allowed_file(file.filename,theme=True):
             filename = secure_filename(file.filename)
+            if not os.path.isdir(uploads_temporary):
+                os.makedirs(uploads_temporary)
             file.save(os.path.join(uploads_temporary, filename))
             unpack = themeengine.unpack_theme(uploads_temporary,filename)
             if unpack:

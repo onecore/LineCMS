@@ -13,23 +13,24 @@ templates_list = [theme for theme in get_templates()]
 
 
 def procfiles(temp,folder):
-    folders = {'resources':False,'html':False}
-    extracted = os.path.join(temp,folder)
-    fname_we = Path(temp)
-    woe = fname_we.with_suffix('')
+    # verify version or legit theme
+    temp_f = os.listdir(temp)
+    theme = False
+    theme_p = False
+    for conts in temp_f:
+        try:
+            if os.path.isdir(os.path.join(temp,conts)):
+                sub = os.path.join(temp,conts)
+                if "html" in os.listdir(sub) and "resources" in os.listdir(sub):
+                    theme = conts
+                    theme_p = sub
+        except: pass
 
-    for folder,bools in folders.items():
-        print(temp+"/"+folder)
-        if os.path.isdir(temp+"/"+woe+"/"+folder):
-            print(temp+"/"+folder)
-            folders[folder] = True
-            print(folders)
-    print(folders)
+    if theme:
+        temp = shutil.move(f"{theme_p}/html", f'templates/SYSTEM/{theme}')
+        stat = shutil.move(f"{theme_p}/resources", f'static/SYSTEM/{theme}')
 
-
-
-    shutil.rmtree(os.path.join(temp,folder)) # delete
-
+        
     return False
 
 
@@ -40,8 +41,11 @@ def unpack_theme(temp,filename) -> bool:
         fp = os.path.join(temp,filename)
         with zipfile.ZipFile(fp, 'r') as zip_ref:
             zip_ref.extractall(temp)
-        procfiles(temp,filename)
-    except:
+
+        return procfiles(temp,filename)
+
+    except Exception as e:
+        print(e)
         return False
     
 
