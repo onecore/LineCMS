@@ -73,11 +73,12 @@ ADDITIONAL INFO: {{ADDITIONAL}}
 
 
 # Uploads
-uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])       # Allowed File Extentions in uploader
-uploads_allowedext_theme = set(['zip'])       # Allowed File Extentions in uploader
+uploads_allowedext = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])       # Allowed File Extentions in uploader (image files)
+uploads_allowedext_theme = set(['zip'])                                     # Allowed File Extentions in uploader (compressed theme files)
 uploads_blog = 'static/dashboard/uploads/blog'                              # Blog Uploads
 uploads_products = 'static/dashboard/uploads/products'                      # Product Images / Main images and Variant images
 uploads_dashboard = "static/dashboard/uploads/dashboard"                    # SandCMS Dashboard Uploads ()
+uploads_temporary = "engine/temp"                                           # Folder for theme files 
 
 # Database Path and File
 dbase_path = "dbase/sand"

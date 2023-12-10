@@ -52,10 +52,8 @@ $(function() {
             processData: false,
             success: function(data) {
               if (data['status'] === 0) {
-                console.log("False")
                 return false;
               }
-                $("#favview").attr('src','/media/'+data['status']);
                 swal("", 'Theme uploaded', "success");
 
             },
