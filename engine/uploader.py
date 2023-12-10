@@ -12,6 +12,7 @@ from settings import uploads_allowedext
 from settings import uploads_products
 from settings import uploads_blog
 from settings import uploads_dashboard
+from settings import uploads_allowedext_theme
 from helpers import checkpoint
 
 uploads_data = {}
@@ -24,8 +25,12 @@ log = de.log
 
 
 
-def allowed_file(filename) -> str:
+def allowed_file(filename,theme=False) -> str:
     "validates file extension"
+    if theme:
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in uploads_allowedext_theme
+    
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in uploads_allowedext
 
