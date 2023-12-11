@@ -51,11 +51,14 @@ $(function() {
             cache: false,
             processData: false,
             success: function(data) {
-              if (data['status'] === 0) {
-                return false;
-              }
-                swal("", 'Theme uploaded', "success");
-
+              console.log(data)
+                if (data.hasOwnProperty('theme')) {
+                    swal("", `${data['theme']} Theme uploaded`, "success");
+                    update_sel(data['list'])
+                }else{
+                  swal("", `Cannot process theme files`, "error");
+                }
+                
             },
         });
     });

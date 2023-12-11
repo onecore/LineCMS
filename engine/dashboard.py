@@ -22,10 +22,10 @@ def dashboard_main():
     tmplist = themeengine.get_templates()
     # tmplist = themeengine.templates_list
     theme = de.themeget()
+
     if not theme:
         de.themeset("default")
         theme = ("default")
-
 
     if request.method == "POST":
 
