@@ -390,6 +390,26 @@ swal("", `{{error}}`, "warning");
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
+  <script>
+    let cr = '{{tmpcurrent[0]}}'
+    function update_sel(li,sel=cr){
+      var outletOptions = document.querySelector("#ktheme");
+
+      Array.from(outletOptions).forEach((option) => {
+        outletOptions.removeChild(option)
+      })
+
+      li.forEach((op) => {
+        var opt = document.createElement('option')
+        opt.appendChild(document.createTextNode(op));
+        opt.value = op;
+        if (op === cr){
+          opt.selected = true;
+        }
+        outletOptions.appendChild(opt);
+      })
+    }
+  </script>
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
