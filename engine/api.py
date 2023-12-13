@@ -7,12 +7,24 @@ from flask import Blueprint, request, session, jsonify
 import dataengine
 import json
 from helpers import dataparser, emailparser,checkpoint
+from helpers.backup import backup_db, backup_res
 from ast import literal_eval as lite
 import time
 
 api = Blueprint("api", __name__)
 version = "1.4"
 _de = dataengine.SandEngine()
+
+@api.route("/api/backup", methods=['POST'])
+@checkpoint.onlylogged
+def backup():
+    r = json.loads(request.data)
+    if "backup" in r:
+        if r["backup"] == "d":
+            backup_db()
+        return jsonify({"status":1})
+    return jsonify({"status":0})
+
 
 def epoch():
     return time.time()

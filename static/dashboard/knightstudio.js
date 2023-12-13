@@ -845,4 +845,22 @@ function openedit(folder){
     location.href = `/edit?folder=${folder}&subfolder=${selected}`
 }
 
+function backupreq(w){
+    swal("","Backup request sent","success")
+    fetch('/api/backup', {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"backup":w})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status == parseInt(1)){
+            swal("Backup success", "Check your backups list", "success");
+        }else{
+            swal("Backup failed", "Could be an internal error", "error");
+        }
+    });
 
+}
