@@ -98,3 +98,11 @@ sitemap_blogcategory = True         # include blog categories links
 sitemap_blogposts = True            # include blog posts
 sitemap_productscategory = True     # include products categories
 sitemap_productsposts = True        # include products posts
+
+
+# Resources backup
+backup_res_folders = {
+                        "static":"static/SYSTEM",
+                        "templates":"templates/SYSTEM",
+                        "uploads":"static/dashboard/uploads",
+                    }

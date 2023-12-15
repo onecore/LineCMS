@@ -857,6 +857,7 @@ function backupreq(w){
     .then((response) => response.json())
     .then((data) => {
         if (data.status == parseInt(1)){
+            console.log(data.fname)
             swal("Backup success", "Check your backups list", "success");
         }else{
             swal("Backup failed", "Could be an internal error", "error");
