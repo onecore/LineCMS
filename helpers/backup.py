@@ -15,21 +15,23 @@ def del_back(type,file) -> dict:
 
 def backup_db() -> dict:
     try:
-        fname = f"db-{datetime.now()}"
-        shutil.copyfile("dbase/sand", f"engine/backups/db/{fname}")
-        return {"status":1, "fname":fname}
+        now = datetime.now()
+        dt_string = now.strftime("%d-%m-%Y-%H%M%S")
+        shutil.copyfile("dbase/sand", f"engine/backups/db/{dt_string}")
+        return {"status":1, "fname":dt_string,"type":"db"}
     except:
         return {"status":0}
 
 def backup_res() -> dict:
-    m_fname = f"res-{datetime.now()}"
+    now = datetime.now()
+    dt_string = now.strftime("%d-%m-%Y-%H%M%S")
     try:
         for folder,path in settings.backup_res_folders.items():
             fname = f"{folder}-{datetime.now()}"
-            shutil.copytree(path,f"engine/backups/resources/{m_fname}/{fname}")
-        out_f = f"engine/backups/resources/{m_fname}"
+            shutil.copytree(path,f"engine/backups/resources/{dt_string}/{fname}")
+        out_f = f"engine/backups/resources/{dt_string}"
         shutil.make_archive(f"{out_f}","zip",out_f)
         shutil.rmtree(out_f)
-        return {"status":1, "fname":m_fname+".zip"}
+        return {"status":1, "fname":dt_string+".zip", "type":"zip"}
     except:
         return {"status":0}

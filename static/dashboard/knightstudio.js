@@ -857,8 +857,12 @@ function backupreq(w){
     .then((response) => response.json())
     .then((data) => {
         if (data.status == parseInt(1)){
-            console.log(data.fname)
-            swal("Backup success", "Check your backups list", "success");
+            let fname = data.fname;
+            if (".zip" in fname){
+                swal("Resources Backup success", "Check your backups list", "success");
+            }else{
+                swal("Database Backup success", "Check your backups list (Warning: Credentials are in database file)", "success");
+            }
         }else{
             swal("Backup failed", "Could be an internal error", "error");
         }
