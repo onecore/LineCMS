@@ -845,9 +845,9 @@ function openedit(folder){
     location.href = `/edit?folder=${folder}&subfolder=${selected}`
 }
 
-function backupreq(w){
-    swal("","Backup request sent","success")
-    fetch('/api/backup', {
+async function backupreq(w){
+    swal("","Backup request sent, Please wait..","success")
+    await fetch('/api/backup', {
         method: "POST",
         headers: {
         'Content-Type': 'application/json'
