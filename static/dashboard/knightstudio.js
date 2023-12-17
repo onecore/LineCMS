@@ -846,6 +846,7 @@ function openedit(folder){
 }
 
 async function backupreq(w){
+    const lip = document.getElementById("li-"+w)
     swal("","Backup request sent, Please wait..","success")
     await fetch('/api/backup', {
         method: "POST",

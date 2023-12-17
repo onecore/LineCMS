@@ -30,9 +30,9 @@ def backup_down(file):
 def backup():
     r = json.loads(request.data)
     if "backup" in r:
-        if r["backup"] == "d":
+        if r["backup"] == "db":
             return backup_db()
-        if r["backup"] == "r":
+        if r["backup"] == "rs":
             return backup_res()
         return jsonify({"status":1})
     return jsonify({"status":0})
