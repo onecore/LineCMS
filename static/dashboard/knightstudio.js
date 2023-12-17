@@ -856,12 +856,13 @@ async function backupreq(w){
     })
     .then((response) => response.json())
     .then((data) => {
-        if (data.status == parseInt(1)){
+        if (data.status == 1){
+            console.log(data.fname)
             let fname = data.fname;
-            if (".zip" in fname){
-                swal("Resources Backup success", "Check your backups list", "success");
+            if (fname.includes(".zip")){
+                swal("Resources Backup success", `File ${fname} processed`, "success");
             }else{
-                swal("Database Backup success", "Check your backups list (Warning: Credentials are in database file)", "success");
+                swal("Database Backup success", `File ${fname} processed`, "success");
             }
         }else{
             swal("Backup failed", "Could be an internal error", "error");
