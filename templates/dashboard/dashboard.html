@@ -376,7 +376,7 @@ swal("", `{{error}}`, "warning");
                         <ul class="pt-2" style="list-style: none;" id="li-db">
                         {% if backs_db %}
                           {% for links in backs_db %}
-                              <li><button class="btn btn-xs border" onclick="backupreq_d('d','{{links}}','d')">x</button>&nbsp&nbsp<a href="/api/backup/{{links}}" target="_blank">raw-{{links}}</a></li>
+                              <li><button class="btn btn-xs border" style="list-style: none;" onclick="backupreq_d('d','{{links}}','d')">x</button>&nbsp&nbsp<a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
                           {% endfor %}
                         {% else %}
                         {% endif %}
@@ -385,7 +385,7 @@ swal("", `{{error}}`, "warning");
                       </div>
                       <div class="col pull-right">
                         <small>Resources</small>
-                          <ul class="pt-2" style="list-style: none;" id="li-res">
+                          <ul class="pt-2" style="list-style: none;" id="li-rs">
                           {% if backs_rs %}
                             {% for links in backs_rs %}
                             <li><button class="btn btn-xs border" onclick="backupreq_d('d','{{links}}','r')">x</button>&nbsp&nbsp<a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>

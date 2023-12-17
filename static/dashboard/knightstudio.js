@@ -845,6 +845,24 @@ function openedit(folder){
     location.href = `/edit?folder=${folder}&subfolder=${selected}`
 }
 
+function bu_listadd(w,tn) {
+    var ul = document.getElementById("li-"+w);
+        if (w.includes("d")){
+        ul.insertAdjacentHTML("afterbegin", `
+            <li>
+                <button class="btn btn-xs border" onclick="backupreq_d('d','${tn}','d')">x</button>&nbsp&nbsp<a href="/api/backup/${tn}" target="_blank">${tn}</a>
+            </li>
+            `);
+        }else{
+        ul.insertAdjacentHTML("afterbegin", `
+            <li>
+                <button class="btn btn-xs border" onclick="backupreq_d('d','${tn}','r')">x</button>&nbsp&nbsp<a href="/api/backup/${tn}" target="_blank">${tn}</a>
+            </li>
+            `);
+        }
+
+}
+
 async function backupreq(w){
     const lip = document.getElementById("li-"+w)
     swal("","Backup request sent, Please wait..","success")
@@ -860,8 +878,10 @@ async function backupreq(w){
         if (data.status == 1){
             let fname = data.fname;
             if (fname.includes(".zip")){
+                bu_listadd(w,fname)
                 swal("Resources Backup success", `File ${fname} processed`, "success");
             }else{
+                bu_listadd(w,fname)
                 swal("Database Backup success", `File ${fname} processed`, "success");
             }
         }else{
