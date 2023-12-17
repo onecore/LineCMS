@@ -4,14 +4,35 @@ Website: www.sandcms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 
-import shutil, settings
+import shutil, settings,os
 from datetime import datetime
 
-def showlist() -> dict:
-    pass
 
-def del_back(type,file) -> dict:
-    pass
+def show_backs_list() -> dict:
+    try:
+        db_backs = [file for file in os.listdir("../engine/backups/db/") if "." != file[0]]
+        rs_backs = [file for file in os.listdir("../engine/backups/resources/") if "." != file[0] and file.endswith(".zip")]
+        return {"status":1,"db":db_backs,"rs":rs_backs}
+    except:
+        return {"status":0}
+
+
+def del_backs(f_type,file) -> dict:
+    if "r" in f_type: # resource
+        try:
+            shutil.rmtree("../engine/backups/resources/"+file)    # remove folder
+            return {"status":1}
+        except:
+            return {"status":0}
+
+    elif "d" in f_type: # database
+        try:
+            shutil.rmtree("../engine/backups/db/"+file)    # remove folder
+            return {"status":1}
+        except:
+            return {"status":0}
+    else:
+        return {"status":0}
 
 def backup_db() -> dict:
     try:
@@ -30,8 +51,8 @@ def backup_res() -> dict:
             fname = f"{folder}-{datetime.now()}"
             shutil.copytree(path,f"engine/backups/resources/{dt_string}/{fname}")
         out_f = f"engine/backups/resources/{dt_string}"
-        shutil.make_archive(f"{out_f}","zip",out_f)
-        shutil.rmtree(out_f)
+        shutil.make_archive(f"{out_f}","zip",out_f) # create zip
+        shutil.rmtree(out_f)    # remove folder
         return {"status":1, "fname":dt_string+".zip", "type":"zip"}
     except:
         return {"status":0}

@@ -14,7 +14,7 @@ templates_list = [theme for theme in get_templates()]
 
 
 def procfiles(temp,folder):
-    # verify version or legit theme
+    # verify version or legit theme (base on theme.py)
     temp_f = os.listdir(temp)
     theme = False
     theme_p = False

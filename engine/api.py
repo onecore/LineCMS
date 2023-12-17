@@ -27,6 +27,18 @@ def backup():
         return jsonify({"status":1})
     return jsonify({"status":0})
 
+@api.route("/api/backup-a", methods=['POST'])
+@checkpoint.onlylogged
+def backup_a():
+    r = json.loads(request.data)
+    if "backup-a" in r:
+        if r["backup-a"] == "v":
+            return backup_db()
+        if r["backup-a"] == "d":
+            return backup_res()
+        return jsonify({"status":1})
+    return jsonify({"status":0})
+
 
 def epoch():
     return time.time()
