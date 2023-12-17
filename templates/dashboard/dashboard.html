@@ -43,6 +43,7 @@ input[type="file"] {
 
 <body class="sidebar-dark">
 <script>
+
 {% if success %}
 swal("", 'Website information updated', "success");
 {% endif %}
@@ -373,9 +374,9 @@ swal("", `{{error}}`, "warning");
                         <small>Database</small>
                         <br>
                         {% if backs_db %}
-                        <ul class="pt-2">
+                        <ul class="pt-2" style="list-style: none;">
                           {% for links in backs_db %}
-                              <li><a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
+                              <li><button class="btn btn-xs border" onclick="backupreq_d('d','{{links}}','d')">x</button>&nbsp&nbsp<a href="/api/backup/{{links}}" target="_blank">raw-{{links}}</a></li>
                           {% endfor %}
                         </ul>
                         {% else %}
@@ -385,9 +386,9 @@ swal("", `{{error}}`, "warning");
                       <div class="col pull-right">
                         <small>Resources</small>
                           {% if backs_rs %}
-                          <ul class="pt-2">
+                          <ul class="pt-2" style="list-style: none;">
                             {% for links in backs_rs %}
-                            <li><a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
+                            <li><button class="btn btn-xs border" onclick="backupreq_d('d','{{links}}','r')">x</button>&nbsp&nbsp<a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
                             {% endfor %}
                           </ul>
                           {% else %}
@@ -447,7 +448,10 @@ swal("", `{{error}}`, "warning");
         outletOptions.appendChild(opt);
       })
     }
+
+
   </script>
+  
   <script src="../../dashboard/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

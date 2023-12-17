@@ -857,7 +857,6 @@ async function backupreq(w){
     .then((response) => response.json())
     .then((data) => {
         if (data.status == 1){
-            console.log(data.fname)
             let fname = data.fname;
             if (fname.includes(".zip")){
                 swal("Resources Backup success", `File ${fname} processed`, "success");
@@ -870,3 +869,25 @@ async function backupreq(w){
     });
 
 }
+
+
+function backupreq_d(w,fname,type){
+    swal("","Backup request sent, Please wait..","success")
+    fetch('/api/backup-a', {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"backup-a":w,"fname":fname,"type":type})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status == 1){
+            swal("Backup deleted", "Backup file deleted", "success");
+        }else{
+            swal("Backup failed", "Could be an internal error", "error");
+        }
+    });
+
+}
+

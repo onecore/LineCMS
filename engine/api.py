@@ -7,7 +7,7 @@ from flask import Blueprint, request, session, jsonify
 import dataengine
 import json
 from helpers import dataparser, emailparser,checkpoint
-from helpers.backup import backup_db, backup_res
+from helpers.backup import backup_db, backup_res, del_backs
 from ast import literal_eval as lite
 from flask import send_file
 import time
@@ -20,9 +20,10 @@ _de = dataengine.SandEngine()
 @api.route("/api/backup/<file>")
 @checkpoint.onlylogged
 def backup_down(file):
-    if ".zip" in file:
-        return send_file("engine/backups/resources/"+file)
-    return send_file("engine/backups/db/"+file)
+    if file:
+        if ".zip" in file:
+            return send_file("engine/backups/resources/"+file)
+        return send_file("engine/backups/db/"+file)
 
 @api.route("/api/backup", methods=['POST'])
 @checkpoint.onlylogged
@@ -44,7 +45,7 @@ def backup_a():
         if r["backup-a"] == "v":
             return backup_db()
         if r["backup-a"] == "d":
-            return backup_res()
+            return del_backs(r["type"],r["fname"])
         return jsonify({"status":1})
     return jsonify({"status":0})
 
