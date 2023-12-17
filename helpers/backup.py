@@ -22,16 +22,13 @@ def show_backs_list() -> dict:
 def del_backs(f_type,file) -> dict:
     "deletes requested backup file"
     if "r" in f_type: # resource
-        print("here")
         try:
-            os.remove("../engine/backups/resources/"+file)    # remove folder
+            os.remove("engine/backups/resources/"+file)    # remove folder
             return {"status":1}
         except Exception as e:
-            print(e)
             return {"status":0}
 
     elif "d" in f_type: # database
-        print("here db")
         try:
             os.remove("engine/backups/db/"+file)    # remove folder
             return {"status":1}
