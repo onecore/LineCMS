@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, redirect, session, redirect
 import dataengine
-from helpers import themeengine,checkpoint
+from helpers import themeengine,checkpoint, backup
 import settings
 
 dashboard = Blueprint("dashboard", __name__)
@@ -22,13 +22,13 @@ def dashboard_main():
     tmplist = themeengine.get_templates()
     # tmplist = themeengine.templates_list
     theme = de.themeget()
-
+    backups = backup.show_backs_list()
+    backs_db, backs_rs = backups['db'], backups['rs']
     if not theme:
         de.themeset("default")
         theme = ("default")
 
     if request.method == "POST":
-
         u_sitename = request.form.get('sitename')
         u_description = request.form.get('description')
         u_metadescription = request.form.get('meta_description')
@@ -52,16 +52,16 @@ def dashboard_main():
             if k not in settings.inputs_dashboard_settings and len(v) <= settings.inputs_dashboard_minumum_length:
                 error = f"Some information must be {settings.inputs_dashboard_minumum_length} characters or more"
         if error: 
-            return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
+            return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme,backs_rs=backs_rs,backs_db=backs_db)
         else:
             upd = dataengine.SandEngine()
             if (upd.update_websitesettings(dicts, owner=session['authenticated'][0])):
                 dt = de.load_data_index(None)  # loads datas
-                return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme)
+                return render_template("dashboard/dashboard.html", data=dt, error=False, success=True, tmplist=tmplist, tmpcurrent=theme,backs_rs=backs_rs,backs_db=backs_db)
             else:
                 error = "System cannot process your request"
-                return render_template("dashboard/dashboard.html", data=dt, error=error, success=False, tmplist=tmplist, tmpcurrent=theme)
+                return render_template("dashboard/dashboard.html", data=dt, error=error, success=False, tmplist=tmplist, tmpcurrent=theme,backs_rs=backs_rs,backs_db=backs_db)
             
-    return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme)
+    return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme,backs_rs=backs_rs,backs_db=backs_db)
 
 

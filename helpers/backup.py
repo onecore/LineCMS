@@ -11,11 +11,12 @@ from datetime import datetime
 def show_backs_list() -> dict:
     "shows list of backups from resources to db"
     try:
-        db_backs = [file for file in os.listdir("../engine/backups/db/") if "." != file[0]]
-        rs_backs = [file for file in os.listdir("../engine/backups/resources/") if "." != file[0] and file.endswith(".zip")]
+        db_backs = [file for file in os.listdir("engine/backups/db/") if "." != file[0]]
+        rs_backs = [file for file in os.listdir("engine/backups/resources/") if "." != file[0] and file.endswith(".zip")]
         return {"status":1,"db":db_backs,"rs":rs_backs}
-    except:
-        return {"status":0}
+    except Exception as e:
+        print(e)
+        return {"status":0,"db":[],"rs":[]}
 
 
 def del_backs(f_type,file) -> dict:

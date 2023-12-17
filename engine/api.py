@@ -9,11 +9,20 @@ import json
 from helpers import dataparser, emailparser,checkpoint
 from helpers.backup import backup_db, backup_res
 from ast import literal_eval as lite
+from flask import send_file
 import time
+
 
 api = Blueprint("api", __name__)
 version = "1.4"
 _de = dataengine.SandEngine()
+
+@api.route("/api/backup/<file>")
+@checkpoint.onlylogged
+def backup_down(file):
+    if ".zip" in file:
+        return send_file("engine/backups/resources/"+file)
+    return send_file("engine/backups/db/"+file)
 
 @api.route("/api/backup", methods=['POST'])
 @checkpoint.onlylogged

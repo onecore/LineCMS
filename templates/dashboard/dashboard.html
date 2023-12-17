@@ -371,15 +371,27 @@ swal("", `{{error}}`, "warning");
                     <div class="row">
                       <div class="col">
                         <small>Database</small>
-                        <p class="pt-2"><a href="as">Download</a> Backup: 12-24-23 <button class="btn btn-xs border">x</button></p><br>
+                        <br>
+                        {% if backs_db %}
+                        <ul class="pt-2">
+                          {% for links in backs_db %}
+                              <li><a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
+                          {% endfor %}
+                        </ul>
+                        {% else %}
+                        {% endif %}
                   
                       </div>
                       <div class="col pull-right">
                         <small>Resources</small>
-                        <p class="pt-0 mt-0"><a href="as">Download</a> 12-24-23 &nbsp<button class="btn btn-xs border pl-2">x</button></p><br>
-                        <p class="pt-0 mt-0"><a href="as">Download</a> 12-24-23 &nbsp<button class="btn btn-xs border pl-2">x</button></p><br>
-                        <p class="pt-0 mt-0"><a href="as">Download</a> 12-24-23 &nbsp<button class="btn btn-xs border pl-2">x</button></p><br>
-                        <p class="pt-0 mt-0"><a href="as">Download</a> 12-24-23 &nbsp<button class="btn btn-xs border pl-2">x</button></p><br>
+                          {% if backs_rs %}
+                          <ul class="pt-2">
+                            {% for links in backs_rs %}
+                            <li><a href="/api/backup/{{links}}" target="_blank">{{links}}</a></li>
+                            {% endfor %}
+                          </ul>
+                          {% else %}
+                          {% endif %}
                       </div>
                     </div>
                   </div>
