@@ -9,6 +9,7 @@ from datetime import datetime
 
 
 def show_backs_list() -> dict:
+    "shows list of backups from resources to db"
     try:
         db_backs = [file for file in os.listdir("../engine/backups/db/") if "." != file[0]]
         rs_backs = [file for file in os.listdir("../engine/backups/resources/") if "." != file[0] and file.endswith(".zip")]
@@ -18,6 +19,7 @@ def show_backs_list() -> dict:
 
 
 def del_backs(f_type,file) -> dict:
+    "deletes requested backup file"
     if "r" in f_type: # resource
         try:
             shutil.rmtree("../engine/backups/resources/"+file)    # remove folder
@@ -35,6 +37,7 @@ def del_backs(f_type,file) -> dict:
         return {"status":0}
 
 def backup_db() -> dict:
+    "compress database into zip"
     try:
         now = datetime.now()
         dt_string = now.strftime("%d-%m-%Y-%H%M%S")
@@ -44,6 +47,7 @@ def backup_db() -> dict:
         return {"status":0}
 
 def backup_res() -> dict:
+    "Packs all resources and compress to zip"
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y-%H%M%S")
     try:
