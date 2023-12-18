@@ -1,3 +1,8 @@
+"""
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
 from flask import Blueprint, render_template, request, redirect, jsonify
 # import dataengine
 from helpers import checkpoint

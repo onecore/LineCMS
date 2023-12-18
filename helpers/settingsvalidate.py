@@ -1,3 +1,9 @@
+"""
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
+
 import settings
 
 defaults = {

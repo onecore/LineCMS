@@ -1,8 +1,9 @@
 """
-SandCMS - Content Management System (Product & Blogging) for Rapid website development
-Website: www.sandcms.com
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
+
 # stripe supported currency
 currency = ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BND', 'BOB', 
             'BRL', 'BSD', 'BTN', 'BWP', 'BYR', 'BZD', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CZK', 'DKK', 'DOP', 'DZD', 'EGP', 

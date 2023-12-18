@@ -1,8 +1,9 @@
 """
-SandCMS - Content Management System (Product & Blogging) for Rapid website development
-Website: www.sandcms.com
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
+
 notice = """
 Copyright 2023 (c) Line Content Management System, MA/RP
 

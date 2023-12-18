@@ -1,6 +1,6 @@
 """
-SandCMS - Content Management System (Product & Blogging) for Rapid website development
-Website: www.sandcms.com
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 from flask import Blueprint, render_template, request, redirect, session, redirect
@@ -10,6 +10,8 @@ import settings
 
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
+
+
 @dashboard.route("/dashboard", methods=['POST', 'GET'])
 @checkpoint.onlylogged
 def dashboard_main():
