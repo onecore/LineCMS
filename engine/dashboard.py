@@ -11,6 +11,9 @@ import settings
 dashboard = Blueprint("dashboard", __name__)
 version = "1.4"
 
+@dashboard.route("/install", methods=['GET','POST'])
+def dashboard_install():
+    return render_template("dashboard/install/install.html")
 
 @dashboard.route("/dashboard", methods=['POST', 'GET'])
 @checkpoint.onlylogged
