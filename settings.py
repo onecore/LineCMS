@@ -33,7 +33,7 @@ route_blog_list = "/blog-list"
 
 
 # Misc Settings / Variables below
-cms_debug = False  
+cms_debug = False  # not functional
 cms_version = "1.40"
 
 # Email template paths for (Abandoned, Placed, Fulfilled) templates in .HTML form (Do not add Leading slash)
