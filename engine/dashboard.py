@@ -21,13 +21,14 @@ def dashboard_install():
         u_pass = request.form.get("pwd")
         u_pass1 = request.form.get("pwd1")
 
-        if [u_email,u_name,u_pass,u_pass1]:
+        if [u_name,u_pass,u_pass1]:
             if u_pass == u_pass1:
-                if not validators.email(u_email):
-                    error = "Not a valid email"
-                    return render_template("dashboard/install/install.html",error=error)
-                de.install_cred(u_email,u_name,u_pass)
-                return redirect("/dashboard")
+                if len(u_pass) >= 12:
+                    de.install_cred(u_name,u_pass)
+                    return redirect("/dashboard")
+                else:
+                    error = "Password must have atleast 10 characters" 
+                    return render_template("dashboard/install/install.html",error=error)             
             
             error = "Password doesn't match" 
             return render_template("dashboard/install/install.html",error=error)

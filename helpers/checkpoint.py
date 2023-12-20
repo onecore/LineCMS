@@ -29,9 +29,12 @@ def onlylogged(f):
             return redirect("login")
         else:
             _cred = _de.get_cred()
-            _cred_data = _cred[0]
-            if _cred_data[0] == session['authenticated'][0] and _cred_data[1] == session['authenticated'][1]:
-                return f(*args, **kwargs)
-            return redirect("login")
+            if _cred:
+                _cred_data = _cred[0]
+                if _cred_data[0] == session['authenticated'][0] and _cred_data[1] == session['authenticated'][1]:
+                    return f(*args, **kwargs)
+                return redirect("login")
+            else:
+                return redirect("/install")
 
     return checkpoint

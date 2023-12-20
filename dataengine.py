@@ -26,10 +26,11 @@ class SandEngine:
     connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
     # cursor = connection.cursor()
 
-    def install_cred(self,wname,uname,pwd,email):
-        params = "INSERT INTO users (username,passw,email) VALUES (?,?,?)"
-        vals = (uname,pwd,email)
-        self.cursor.execute(params, vals)
+    def install_cred(self,uname,pwd):
+        params = "INSERT INTO users (username,passw) VALUES (?,?)"
+        vals = (uname,pwd)
+        c = self.connection.cursor()
+        c.execute(params, vals)
         self.connection.commit()
 
     def themeset(self, theme):
