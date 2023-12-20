@@ -14,7 +14,9 @@ de = dataengine.SandEngine()
 
 @dashboard.route("/install", methods=['GET','POST'])
 def dashboard_install():
-
+    if checkpoint.installed:
+        return ("Line Content Management System")
+    
     if request.method == "POST":
         error = None
         u_name = request.form.get("uname")
