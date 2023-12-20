@@ -27,7 +27,6 @@ def dashboard_install():
             if u_pass == u_pass1:
                 if len(u_pass) >= 12:
                     de.install_cred(u_name,u_pass)
-                    session['authenticated'] = (u_name, u_pass)
                     return redirect("/dashboard")
                 else:
                     error = "Password must have atleast 10 characters" 
