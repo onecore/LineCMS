@@ -26,6 +26,12 @@ class SandEngine:
     connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
     # cursor = connection.cursor()
 
+    def install_cred(self,wname,uname,pwd,email):
+        params = "INSERT INTO users (username,passw,email) VALUES (?,?,?)"
+        vals = (uname,pwd,email)
+        self.cursor.execute(params, vals)
+        self.connection.commit()
+
     def themeset(self, theme):
         c = self.connection.cursor()
         q = f"UPDATE control SET theme = '{theme}'"
@@ -718,7 +724,7 @@ class SandEngine:
             "SELECT * FROM logging ORDER BY id DESC")
         return m.fetchall()
 
-    def get_cred(self, username, passw) -> tuple:
+    def get_cred(self, *args,**kwargs) -> tuple:
         c = self.connection.cursor()
         m = c.execute("SELECT * FROM users")
         return m.fetchall()

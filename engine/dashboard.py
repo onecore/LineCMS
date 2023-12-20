@@ -6,13 +6,37 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template, request, redirect, session, redirect
 import dataengine
 from helpers import themeengine,checkpoint, backup
-import settings
+import settings, validators
 
 dashboard = Blueprint("dashboard", __name__)
-version = "1.4"
+de = dataengine.SandEngine()
+
 
 @dashboard.route("/install", methods=['GET','POST'])
 def dashboard_install():
+    if request.method == "POST":
+        error = None
+        u_email = request.form.get("email")
+        u_name = request.form.get("uname")
+        u_pass = request.form.get("pwd")
+        u_pass1 = request.form.get("pwd1")
+
+        if [u_email,u_name,u_pass,u_pass1]:
+            if u_pass == u_pass1:
+                if not validators.email(u_email):
+                    error = "Not a valid email"
+                    return render_template("dashboard/install/install.html",error=error)
+                de.install_cred(u_email,u_name,u_pass)
+                return redirect("/dashboard")
+            
+            error = "Password doesn't match" 
+            return render_template("dashboard/install/install.html",error=error)
+        
+        else:
+            error = "Missing information"
+            return render_template("dashboard/install/install.html",error=error)
+
+
     return render_template("dashboard/install/install.html")
 
 @dashboard.route("/dashboard", methods=['POST', 'GET'])
@@ -22,7 +46,6 @@ def dashboard_main():
     main dashboard page
     """
     error, success = False, False
-    de = dataengine.SandEngine()
     dt = de.load_data_index(None)  # loads datas
     tmplist = themeengine.get_templates()
     # tmplist = themeengine.templates_list

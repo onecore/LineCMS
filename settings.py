@@ -99,10 +99,12 @@ sitemap_blogposts = True            # include blog posts
 sitemap_productscategory = True     # include products categories
 sitemap_productsposts = True        # include products posts
 
+# stop installed check
+installed_check = True              # stops install status check for all dashboard related routes
 
-# Resources backup
-backup_res_folders = {
-                        "static":"static/SYSTEM",
+# Resources backup (Do not change unless you want to backup other stuff)
+backup_res_folders = {                                  
+                        "static":"static/SYSTEM",        
                         "templates":"templates/SYSTEM",
                         "uploads":"static/dashboard/uploads",
                     }

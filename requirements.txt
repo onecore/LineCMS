@@ -10,3 +10,4 @@ stripe
 currencies
 flask_mail
 lxml
+validators
