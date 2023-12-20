@@ -34,6 +34,7 @@ from engine.message import message
 from engine.login import logins
 from engine.other import other
 from engine.editor import editor
+from engine.install import install
 import dataengine
 # Dashboard imports/views
 
@@ -116,6 +117,7 @@ def sendmail(**data):
 Blueprinted routes
 """
 # Dashboard
+app.register_blueprint(install)    # Remove this line after installation (for extra sec)
 app.register_blueprint(blog)
 app.register_blueprint(api)
 app.register_blueprint(uploader)
