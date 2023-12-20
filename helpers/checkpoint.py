@@ -18,6 +18,7 @@ if settings.installed_check:
     else:
         installed = False
 
+
 def onlylogged(f):
     @wraps(f)
     def checkpoint(*args, **kwargs):

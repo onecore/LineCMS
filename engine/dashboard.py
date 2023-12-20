@@ -6,7 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 from flask import Blueprint, render_template, request, redirect, session, redirect
 import dataengine
 from helpers import themeengine,checkpoint, backup
-import settings, validators
+import settings
 
 dashboard = Blueprint("dashboard", __name__)
 de = dataengine.SandEngine()
@@ -14,9 +14,9 @@ de = dataengine.SandEngine()
 
 @dashboard.route("/install", methods=['GET','POST'])
 def dashboard_install():
+
     if request.method == "POST":
         error = None
-        u_email = request.form.get("email")
         u_name = request.form.get("uname")
         u_pass = request.form.get("pwd")
         u_pass1 = request.form.get("pwd1")
