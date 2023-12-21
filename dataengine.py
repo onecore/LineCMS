@@ -9,53 +9,63 @@ import time
 import urllib
 import re
 import random
-from flask import g
 import json
 import os
-from icecream import ic
-from ast import literal_eval as lite
 import random
 import settings
+from ast import literal_eval as lite
+from flask import g
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'
 
-
 class SandEngine:
-
+    """Group of functions for database actions
+    """
     connection = sqlite3.connect(settings.dbase_path, check_same_thread=False)
-    # cursor = connection.cursor()
 
-    def install_cred(self,uname,pwd):
+    def install_cred(self,uname: str,pwd: str) -> None:
+        """Install login credential
+        Args:
+            uname (str): username
+            pwd (str): password (raw)
+        """
         params = "INSERT INTO users (username,passw) VALUES (?,?)"
         vals = (uname,pwd)
         c = self.connection.cursor()
         c.execute(params, vals)
         self.connection.commit()
 
-    def themeset(self, theme):
+    def themeset(self, theme: str) -> None:
+        """Sets selected theme
+
+        Args:
+            theme (str): theme name
+        """
         c = self.connection.cursor()
         q = f"UPDATE control SET theme = '{theme}'"
         c.execute(q)
         self.connection.commit()
 
-    def themeget(self):
-        """Product settings db table has to be premade"""
+    def themeget(self) -> tuple:
+        """Current selected theme
+
+        Returns:
+            tuple: assigned theme
+        """
         c = self.connection.cursor()
         q = "SELECT theme FROM control"
-        fetch = c.execute(q)
-        return fetch.fetchone()
-
-
-    def orderlist(self,page,perpage,offset,search,status,initload=False):
-        c = self.connection.cursor()
-
-        try:
-            pass
-        except:
-            return False
+        c.execute(q)
+        return c.fetchone()
         
-    def orderfulfill(self,data):
+    def orderfulfill(self,data: dict) -> bool:
+        """Mark order as Fulfilled
+        fulfilled 1 = Manual (No Email)
+        fulfilled 2 = Auto  (Sends email)
+
+        Returns:
+            bool: if success
+        """
         try:
             c = self.connection.cursor()
             if "manual" in data:
@@ -67,35 +77,43 @@ class SandEngine:
             return True    
         except Exception as t:
             return False
-        
-    def stockdeduct(self,productnumber,productvariant=False):
+
+    def orderhistory_get(self,onum: str) -> tuple:
+        """loads order history
+
+        Args:
+            onum (str): order number
+
+        Returns:
+            tuple: order history
+        """
         c = self.connection.cursor()
-
-        if productnumber:
-            stock_item_e = c.execute("SELECT stock FROM products WHERE product_id='{}';".format(productnumber))
-            current_stock_item = stock_item_e.fetchone()[0]
-                        
-            q = """UPDATE products SET tracking="{t}", fulfilled="2", additional="{a}"  where ordernumber='{o}';"""
-
-
-    def orderhistory_get(self,orn):
-        c = self.connection.cursor()
-        q = f"SELECT history FROM productorders WHERE ordernumber='{orn}';"
+        q = f"SELECT history FROM productorders WHERE ordernumber='{onum}';"
         c.execute(q)
         return c.fetchone()
 
-        
-    def orderhistory_add(self,data):
+    def orderhistory_add(self,data: dict) -> bool:
+        """Attach history to order
+
+        Args:
+            data (dict): contains history information
+        Returns:
+            bool: if success
+        """
         c = self.connection.cursor()
         q = """UPDATE productorders SET history="{o}" where ordernumber="{orn}";""".format(o=str(data['obj']),orn=str(data['ordernumber']))
         c.execute(q)
         self.connection.commit()
         return True
     
-    def url_gen(self, content) -> str:
-        """
-        content: string format url
-        Generates encoded friendly url (removes whitespaces and some symbols)
+    def url_gen(self, content: str) -> str:
+        """_summary_
+
+        Args:
+            content (str): url to modify
+
+        Returns:
+            str: modified url str
         """
         remove_sym = re.sub(r'[^\w]', ' ', content)
         v = urllib.parse.quote_plus(str(random.randint(10, 50))+remove_sym)
@@ -103,16 +121,29 @@ class SandEngine:
         g.new_blog_url = n
         return n
     
-    def productorders_get(self,q=False,total=False):
+    def productorders_get(self,q=False,total=False) -> tuple:
+        """_summary_
+
+        Args:
+            q (bool, optional): query. Defaults to False.
+            total (bool, optional): Length. Defaults to False.
+
+        Returns:
+            tuple: order
+        """
         c = self.connection.cursor()
         if total:        
-            fetch = c.execute("SELECT Count(*) FROM productorders")
-            return fetch.fetchone()
-        
+            c.execute("SELECT Count(*) FROM productorders")
+            return c.fetchone()
         fetch = c.execute(q)
         return fetch.fetchall()
    
     def get_products_cat_lists(self) -> list:
+        """Builds category list
+
+        Returns:
+            list: generated (seperated categories)
+        """
         c = self.connection.cursor()
         m = c.execute("SELECT category FROM products")
         mf = m.fetchall()
@@ -128,16 +159,32 @@ class SandEngine:
                         cats[itm] = 1
         return cats
     
-    
-    def productorders_single_get(self,ids,loadfulfill=False):
+    def productorders_single_get(self,ids: str,loadfulfill=False) -> tuple:
+        """Load product Order
+
+        Args:
+            ids (str): load using order ID
+            loadfulfill (bool, optional): load using order number. Defaults to False.
+
+        Returns:
+            tuple: order
+        """
         c = self.connection.cursor()
         q = f"SELECT * FROM productorders WHERE id = {ids}"
         if loadfulfill:
             q = f"SELECT * FROM productorders WHERE ordernumber = '{loadfulfill}'"
-        fetch = c.execute(q)
-        return fetch.fetchone()
+        c.execute(q)
+        return c.fetchone()
     
-    def productorders_set(self,order):
+    def productorders_set(self,order: dict) -> str:
+        """Set new order
+
+        Args:
+            order (dict): data generated by stripe
+
+        Returns:
+            str: Id and Timestamp
+        """
         try:
             c = self.connection.cursor()
             params = "INSERT INTO productorders (fulfilled,customer_name,customer_email,amount_total,created,payment_status,customer_country,customer_postal,currency,items,session_id,metadata,address,phone,shipping_cost) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
@@ -151,8 +198,15 @@ class SandEngine:
         except Exception as e:
             return False
         
-    def productsettings_smtp(self,data):
-        "Updates productsettings shipping opt"
+    def productsettings_smtp(self,data: dict) -> bool:
+        """Update SMTP Settings
+
+        Args:
+            data (dict): contains dict of data (smtp credentials)
+
+        Returns:
+            bool: if no error
+        """        
         try:
             c = self.connection.cursor()
             q = f"""UPDATE productsetting SET smtp="{str(data)}";"""
@@ -163,7 +217,17 @@ class SandEngine:
             print(e)
             return False
         
-    def productstock_deduct(self,ids,isvariant=False):
+    def productstock_deduct(self,ids: str,isvariant=False) -> None:
+        """Deduct Stock on success payment
+        2 types of stock, Main product and Variant
+
+        Args:
+            ids (str): product_id
+            isvariant (bool): to deduct on variant (dict) in db
+
+        Returns:
+            None: Not needed
+        """        
         c = self.connection.cursor()
 
         if isvariant:
@@ -186,16 +250,22 @@ class SandEngine:
             pull = c.execute(f"SELECT stock FROM products WHERE product_id='{ids}';")
             pull_ = pull.fetchone()
             if pull_:
-                count_ = int(pull_[0]) - 1  # will update soon with dynamic from quantity
-                c.execute(f"UPDATE products SET stock = {count_} WHERE product_id = '{ids}';")
-                self.connection.commit()
+                if int(pull_[0]) > 1:
+                    count_ = int(pull_[0]) - 1  # will update soon with dynamic from quantity
+                    c.execute(f"UPDATE products SET stock = {count_} WHERE product_id = '{ids}';")
+                    self.connection.commit()
+                else:
+                    pass
+            
+    def productsettings_temp(self,data: dict) -> bool:
+        """Update template (Jinja style)
 
-        
+        Args:
+            data (dict): Type of template with Html/Jinja syntax
 
-
-
-    def productsettings_temp(self,data):
-        "Updates productsettings shipping opt"
+        Returns:
+            bool: if no error
+        """
         try:
             _p = {"f":data['templates']['fulfilled'],"p":data['templates']['placed'],"a":data['templates']['abandoned']}
             c = self.connection.cursor()
@@ -207,8 +277,15 @@ class SandEngine:
             print(e)
             return False
          
-    def productsettings_ship(self,data):
-        "Updates productsettings shipping opt"
+    def productsettings_ship(self,data: dict) -> bool:
+        """Shipping rates
+
+        Args:
+            data (dict): shipping data
+
+        Returns:
+            bool: if no error
+        """
         try:
             c = self.connection.cursor()
             q = f"""UPDATE productsetting SET shipping_enable='{data['status']}', shipping_rates='{str(data['shipping'])}', shipping_countries="{data['countries']}";"""
@@ -219,8 +296,15 @@ class SandEngine:
             print(e)
             return False
         
-    def productsettings_str(self,data):
-        "Updates productsettings shipping opt"
+    def productsettings_str(self,data: dict) -> bool:
+        """Save Shop data (API information)
+
+        Args:
+            data (dict): shop information (Stripe Api, etc..)
+
+        Returns:
+            bool: if no error
+        """        
         try:
             c = self.connection.cursor()
             q = f"""UPDATE productsetting SET secretkey='{data['sk']}', publishablekey='{data['pk']}', currency='{data['ck']}', webhookkey='{data['wsk']}', signkey='{data['wsk']}';"""
@@ -231,7 +315,7 @@ class SandEngine:
             print(e)
             return False
 
-    def productsettings_set(self, sk, pk, ck, wk,wsk,s_enable,s_rates,s_countries) -> tuple:
+    def productsettings_set(self, sk: str, pk: str, ck: str, wk: str, wsk: str,s_enable: str,s_rates: str,s_countries: list) -> tuple:
         "Unused func, will delete soon"
         try:
             c = self.connection.cursor()
@@ -245,18 +329,17 @@ class SandEngine:
             return False
 
     def productsettings_get(self) -> tuple:
-        """Product settings db table has to be premade"""
+        """Product settings (Mostly Stripe data)
+
+        Returns:
+            tuple: shop settings
+        """
         c = self.connection.cursor()
         q = "SELECT * FROM productsetting where id=1"
-        fetch = c.execute(q)
-        return fetch.fetchone()
+        c.execute(q)
+        return c.fetchone()
 
     def productimagesupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
-        """
-        Loads data from product table
-        pars: variants, images, mainimage
-        trigger: uploader (images)
-        """
         c = self.connection.cursor()
         m_fetch = c.execute(
             "SELECT {sel} FROM products WHERE product_id='{m}'".format(
@@ -276,33 +359,16 @@ class SandEngine:
             print(e)
             return False
 
-    def productmainupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
-        """
-        Loads data from product table
-        pars: variants, images, mainimage
-        trigger: uploader (main)
-        """
-        _c = self.connection.cursor()
-        m_fetch = _c.execute(
-            "SELECT {sel} FROM products WHERE product_id='{m}'".format(
-                sel=imgcat, m=data['p_id'])
-            )
-        _old = m_fetch.fetchone()
-        try:
-            _inserts = """UPDATE products SET mainimage = "{mainm}" WHERE product_id = '{product_id}'""".format(
-                mainm=filename, product_id=data['p_id'])
-            _c.execute(_inserts)
-            self.connection.commit()
-            return True
-        except Exception as e:
-            print(e)
-            return False
+    def productvariantsupdater(self, imgcat: str, data: dict, newimage: str) -> bool:
+        """Variant image update
 
-    def productvariantsupdater(self, imgcat: str, data: dict, newimage: str) -> tuple:
-        """
-        Loads data from product table
-        pars: variants, images, mainimage
-        trigger: uploader (variant)
+        Args:
+            imgcat (str): image cat
+            data (dict): product info
+            newimage (str): file
+
+        Returns:
+            bool: if no error
         """
         variant_name = data['p_variant']+"-ivar"
         _c = self.connection.cursor()
@@ -321,13 +387,17 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print(e)
             return False
 
-    def productsimilar(self, count=5, category=0):
-        """
-        Loads similar products, adds random
-        if category length is not enough to given count
+    def productsimilar(self, count=5, category=0) -> list:
+        """Groups similar categories (pull random if not enough)
+
+        Args:
+            count (int, optional): result. Defaults to 5.
+            category (int, optional): target category. Defaults to 0.
+
+        Returns:
+            list: sorted products
         """
         categ_split = category.split(",")
         category = random.choice(categ_split)
@@ -366,7 +436,15 @@ class SandEngine:
             print(f"productimagesmod() error: {e}")
             return False
 
-    def delete_pr(self, value) -> bool:
+    def delete_pr(self, value: str) -> bool:
+        """deletes product
+
+        Args:
+            value (str): product id
+
+        Returns:
+            bool: true if success
+        """        
         q = """DELETE FROM products WHERE product_id = '{value}';""".format(
             value=value)
         c = self.connection.cursor()
@@ -377,11 +455,10 @@ class SandEngine:
             self.log("Product deleted")
             return True
         except Exception as e:
-            print(e)
             return False
 
     def delete_apip(self, table, column, value) -> bool:
-        print(table, column, value)
+        "@mark to be deleted"
         q = """DELETE FROM {tb} WHERE product_urlsystem = '{value}';""".format(
             tb=table, column=column, value=value)
         c = self.connection.cursor()
@@ -396,7 +473,7 @@ class SandEngine:
             return False
 
     def delete_api(self, table, column, value) -> bool:
-        print(table, column, value)
+        "@mark to be deleted"
         q = """DELETE FROM {tb} WHERE route = '{value}';""".format(
             tb=table, column=column, value=value)
         c = self.connection.cursor()
@@ -410,7 +487,15 @@ class SandEngine:
             print(e)
             return False
 
-    def product_update(self, d) -> bool:
+    def product_update(self, d: dict) -> bool:
+        """updates product data
+
+        Args:
+            d (dict): product data
+
+        Returns:
+            bool: true if no error
+        """        
         c = self.connection.cursor()
         q = f"""UPDATE products SET body = "{d['body']}",category = "{d['category']}",images = "{d['images']}", mainimage = "{d['mainimage']}", price = "{d['price']}", product_url = "{d['product_url']}", product_urlsystem = "{d['product_urlsystem']}",  seo_description = "{d['seo_description']}", seo_keywords = "{d['seo_keywords']}",  title = "{d['title']}",  variant_details = "{d['variant_details']}", variants = "{d['variants']}", hidden = "{d['hidden']}" WHERE product_id = "{d['id']}";"""
         try:
@@ -421,7 +506,16 @@ class SandEngine:
             print("Error ", e)
             return False
 
-    def product_publish(self, d) -> bool:
+    def product_publish(self, d: dict) -> bool or str:
+        """new product insert
+
+        Args:
+            d (dict): new product data
+
+        Returns:
+            str: if success (URL)
+            bool: if not
+        """
         c = self.connection.cursor()
         try:
             ts = self.timestamp(routeStyle=1)
@@ -433,10 +527,14 @@ class SandEngine:
             self.connection.commit()
             return ugen
         except Exception as e:
-            print("Error ", e)
             return False
 
-    def delete_image_partial(self, data):
+    def delete_image_partial(self, data: dict) -> None:
+        """deletes uploaded yet changed image file (unused) (Blog publish)
+
+        Args:
+            data (dict): image data
+        """
         c = self.connection.cursor()
         try:
             os.remove(os.path.join(UPLOAD_FOLDER_BLOG, data['image']))
@@ -447,48 +545,70 @@ class SandEngine:
         c.execute(q)
         self.connection.commit()
 
-    def get_product_single(self, route, checkout=False):
+    def get_product_single(self, route: str, checkout=False) -> tuple:
+        """Load Product data (Single)
+
+        Args:
+            route (_type_): product route
+            checkout (bool, optional): uses product_urlsystem instead of product_id. Defaults to False.
+
+        Returns:
+            tuple: product data
+        """
         c = self.connection.cursor()
         if checkout:
-            m = c.execute(
+            c.execute(
                 "SELECT * FROM products WHERE product_id='{m}'".format(m=checkout))
         else:
-            m = c.execute(
+            c.execute(
                 "SELECT * FROM products WHERE product_urlsystem='{m}'".format(m=route))
-        return m.fetchone()
+        return c.fetchone()
 
-    def get_product_listings(self, getcount=False,getcats=False,quer=[],custom={}):
+    def get_product_listings(self, getcount=False,getcats=False,quer=[],custom={}) -> tuple:
+        """Custom load products from db (product listings)
+
+        Args:
+            getcount (bool, optional): length. Defaults to False.
+            getcats (bool, optional): categories. Defaults to False.
+            quer (list, optional): custom db query. Defaults to [].
+            custom (dict, optional): custom filter. Defaults to {}.
+
+        Returns:
+            tuple: _description_
+        """
         c = self.connection.cursor()
         if custom:
             if custom['s']:
                 if custom['c']:
                     c.execute("select * from products where hidden=0 AND category='{}' AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['c'],custom['s'],custom['s'],custom['off'],custom['perp']))
                     return c.fetchall()
-                
                 c.execute("select * from products where hidden=0 AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['s'],custom['s'],custom['off'],custom['perp']))
                 return c.fetchall()
-            
             if custom['c']:
                 if custom['s']:
                     c.execute("select * from products where hidden=0 AND category='{}' AND (title like '%{}%' OR body like '%{}%') order by id desc limit {},{}".format(custom['c'],custom['s'],custom['s'],custom['off'],custom['perp']))
                 c.execute("select * from products where hidden=0 AND category='{}' order by id desc limit {},{}".format(custom['c'],custom['off'],custom['perp']))
                 return c.fetchall()
-        
         if getcats:
             c.execute("select category from products order by id desc")
             return c.fetchall()
-
         if getcount:
             c.execute("SELECT Count(*) FROM products")
             return c.fetchone()
         if quer:
             c.execute("select * from products order by id desc limit {},{}".format(quer[0],quer[1]))
             return c.fetchall()
-        
         c.execute("SELECT * FROM products ORDER BY id DESC")
         return c.fetchall()
 
-    def blog_publish(self, dicts) -> bool:
+    def blog_publish(self, dicts: dict) -> bool:
+        """insert new blog data
+        Args:
+            dicts (dict): new blog data
+
+        Returns:
+            bool: true if no error
+        """
         c = self.connection.cursor()
         try:
             ts = self.timestamp(routeStyle=1)
@@ -500,10 +620,16 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print("Error ", e)
             return False
 
-    def blog_update(self, dicts) -> bool:
+    def blog_update(self, dicts: dict) -> bool:
+        """update existing blog data
+        Args:
+            dicts (dict): new blog data
+
+        Returns:
+            bool: true if no error
+        """
         c = self.connection.cursor()
         try:
             q = "UPDATE blog SET title = '{title}',message = '{message}', image = '{image}',hidden = '{hidden}', category = '{category}' WHERE route = '{route}';".format(
@@ -512,17 +638,35 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print("Error ", e)
             return False
 
 
-    def get_blog_single(self, route) -> tuple:
+    def get_blog_single(self, route: str) -> tuple:
+        """load blog post
+
+        Args:
+            route (str): blog route
+
+        Returns:
+            tuple: blog data
+        """
         c = self.connection.cursor()
         m = c.execute(
             "SELECT * FROM blog WHERE route='{m}'".format(m=route))
         return m.fetchone()
 
     def get_blog_listings(self, page=0, result=10,getcount=False,quer=[]) -> list:        
+        """blog listings
+
+        Args:
+            page (int, optional): unused. Defaults to 0.
+            result (int, optional): unused. Defaults to 10.
+            getcount (bool, optional): length. Defaults to False.
+            quer (list, optional): custom query. Defaults to [].
+
+        Returns:
+            list: _description_
+        """
         c = self.connection.cursor()
         if getcount:
             fetch = c.execute("SELECT Count(*) FROM blog")
@@ -536,6 +680,11 @@ class SandEngine:
         return m.fetchall()
 
     def get_blog_cat_lists(self) -> list:
+        """creates a list of categories
+
+        Returns:
+            list: generated category list from blog
+        """
         c = self.connection.cursor()
         m = c.execute("SELECT category FROM blog")
         mf = m.fetchall()
@@ -553,6 +702,7 @@ class SandEngine:
     
 
     def knightclientapi(self, action) -> bool:
+        "needs a recode"
         try:
             c = self.connection.cursor()
             a = {
@@ -564,6 +714,7 @@ class SandEngine:
             return False
 
     def knightclientapiv2(self, action) -> bool:
+        "needs a recode"
         c = self.connection.cursor()
         where = action['where']
         action = action['action']
@@ -577,13 +728,16 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print(e)
-            self.log("API DB Update failed")
             return False
 
     def timestamp(self, routeStyle=False) -> str:
-        """
-        Returns timestamp
+        """generates timestamp (returns only date if routeStyle)
+
+        Args:
+            routeStyle (bool, optional): only date if true. Defaults to False.
+
+        Returns:
+            str: _description_
         """
         _n = datetime.datetime.now()
         d_ = str(_n).split()
@@ -594,7 +748,15 @@ class SandEngine:
             return dt
         return ts
 
-    def message(self, dicts) -> bool:
+    def message(self, dicts: dict) -> bool:
+        """adds new visitor message
+
+        Args:
+            dicts (dict): message dict
+
+        Returns:
+            bool: true if no error
+        """
         try:
             params = "INSERT INTO messages (name,email,message,phone,timestamp) VALUES (?,?,?,?,?)"
             vals = (dicts['name'], dicts['email'],
@@ -603,35 +765,55 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print("Error ", e)
             return False
 
-    def delete_blog(self, route):
+    def delete_blog(self, route: str) -> bool:
+        """deletes blog post
+
+        Args:
+            route (str): blog route
+
+        Returns:
+            bool: true if no error
+        """
         c = self.connection.cursor()
         try:
-            q = "DELETE FROM blog WHERE route = {id};".format(id=route)
+            q = "DELETE FROM blog WHERE route = {ids};".format(ids=route)
             c.execute(q)
             self.connection.commit()
-            self.log("Blog post deleted #id "+id)
+            self.log("Blog post deleted #id "+route)
             return True
         except Exception as e:
             self.log("Unable to delete blog post, "+str(e))
             return False
 
-    def ddelete(self, table, id):
+    def mvdelete(self, ids: str) -> bool:
+        """delete visitor message 
+
+        Args:
+            ids (str): message id
+
+        Returns:
+            bool: true if no error
+        """
         c = self.connection.cursor()
         try:
-            q = "DELETE FROM {table} WHERE id = {id};".format(
-                table=table, id=id)
+            q = "DELETE FROM messages WHERE id = {ids};".format(ids=ids)
             c.execute(q)
-            self.log("Message deleted #id "+id)
+            self.log("Message deleted #id "+ids)
             self.connection.commit()
             return True
         except Exception as e:
             self.log("Unable to delete message, "+str(e))
             return False
 
-    def log(self, message) -> bool:
+    def log(self, message: dict) -> bool:
+        """logger
+        Args: 
+            message (dict): message
+        Returns:
+            true: true if no error
+        """
         if not settings.logging_enabled:
             return False 
         c = self.connection.cursor()
@@ -642,18 +824,11 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print("Error ", e)
             return False
 
-    # def closedb(self):
-    #     """
-    #     Need to be close out of scope
-    #     """
-    #     self.connection.close()
-
-    def update_data_uploads(self, table, column, newvalue, where, whereequal):
+    def update_data_uploads(self, table, column, newvalue, where, whereequal) -> dict:
         """
-        Update existing data
+        @mark to be deleted
         """
         c = self.connection.cursor()
         q = "UPDATE {table} SET {column} = '{value}' WHERE {where} = '{whereequal}';".format(
@@ -663,26 +838,35 @@ class SandEngine:
         self.connection.commit()
         return {"status": "success"}
 
-    def update_websitesettings(self, dicts, owner) -> bool:
-        """
-        Website settings
+    def update_websitesettings(self, dicts: dict, owner: str) -> bool:
+        """_summary_
+
+        Args:
+            dicts (dict): new website data
+            owner (str): needs to be removed (Useless arg)
+
+        Returns:
+            bool: true if no error
         """
         c = self.connection.cursor()
         try:
-            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}', sitenumber = '{sitenumber}', siteemail='{siteemail}', siteaddress='{siteaddress}' WHERE owner = '{owner}';".format(
-                sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'],sitenumber=dicts['sitenumber'],siteemail=dicts['siteemail'],siteaddress=dicts['siteaddress'],owner=owner)
+            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}', sitenumber = '{sitenumber}', siteemail='{siteemail}', siteaddress='{siteaddress}' WHERE id = 1;".format(
+                sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'],sitenumber=dicts['sitenumber'],siteemail=dicts['siteemail'],siteaddress=dicts['siteaddress'])
             c.execute(q)
             self.connection.commit()
             return True
         except Exception as e:
-            print("update_wsettings() error ", e)
             return False
 
     def update_module(self, data) -> bool:
-        """
-        Update module data
-        """
-        import json
+        """updates module
+
+        Args:
+            data (dict): module info
+
+        Returns:
+            bool: true if no error
+        """        
         c = self.connection.cursor()
         try:
             data = eval(data)
@@ -695,12 +879,17 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print(e)
             return False
 
-    def update_credential(self, uname, newpwd) -> bool:
-        """
-        Only for Account password update
+    def update_credential(self, uname: str, newpwd: str) -> bool:
+        """website login update
+
+        Args:
+            uname (str): username
+            newpwd (str): new password
+
+        Returns:
+            bool: true if success
         """
         c = self.connection.cursor()
         try:
@@ -710,34 +899,56 @@ class SandEngine:
             self.connection.commit()
             return True
         except Exception as e:
-            print("update_credential() error ", e)
             return False
 
     def get_messages(self) -> tuple:
+        """messages from visitors (if included)
+
+        Returns:
+            tuple: messages
+        """
         c = self.connection.cursor()
-        m = c.execute(
-            "SELECT * FROM messages ORDER BY id DESC")
-        return m.fetchall()
+        c.execute("SELECT * FROM messages ORDER BY id DESC")
+        return c.fetchall()
 
     def get_logs(self) -> tuple:
+        """Logging (Deployment / Debugging safe)
+
+        Returns:
+            tuple: Logging messages
+        """
         c = self.connection.cursor()
-        m = c.execute(
-            "SELECT * FROM logging ORDER BY id DESC")
-        return m.fetchall()
+        c.execute("SELECT * FROM logging ORDER BY id DESC")
+        return c.fetchall()
 
     def get_cred(self, *args,**kwargs) -> tuple:
+        """Account information (raw) / Credential will be updated soon for more sec.
+
+        Returns:
+            tuple: Account credentials (raw)
+        """
         c = self.connection.cursor()
-        m = c.execute("SELECT * FROM users")
-        return m.fetchall()
+        c.execute("SELECT * FROM users")
+        return c.fetchall()
 
     def load_modules_settings(self) -> tuple:
-        c = self.connection.cursor()
-        m = c.execute("SELECT * FROM modules")
-        return m.fetchall()
+        """Loads module settings
 
-    def load_data_index(self, load) -> tuple:
+        Returns:
+            tuple: contains module name and status
         """
-        Loads data from DB, function calls in main page
+        c = self.connection.cursor()
+        c.execute("SELECT * FROM modules")
+        return c.fetchall()
+
+    def load_data_index(self, load: bool) -> tuple:
+        """Loads information (for Enginepublic templates usage)
+
+        Args:
+            load (bool): returns site desc.
+
+        Returns:
+            tuple: website information
         """
         c = self.connection.cursor()
         self.fetch_control = c.execute("SELECT * FROM control")

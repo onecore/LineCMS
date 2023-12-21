@@ -345,9 +345,8 @@ def api_deletepartialimage():
 @checkpoint.onlylogged
 def ddelete(table, ids):
     'Deletes table (soon to be removed)'
-    mid = ids
     if 'authenticated' in session:
-        if _de.ddelete(table, ids):
+        if _de.mvdelete(ids):
             return jsonify({"status": True})
         return jsonify("status", False)
     return jsonify({"status": False})
