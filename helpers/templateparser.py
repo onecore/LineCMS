@@ -9,11 +9,14 @@ from flask import jsonify
 from ast import literal_eval as lite
 
 def ks_include_adminbutton() -> str:
-    "Includes Admin button if session exists"
+    """admin button
+
+    Returns:
+        str: html button 
+    """
     c = temple.sc_admin_button
     v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
         c+"'"+"style='color:white'"+">Owner Dashboard</a>"
-    
     return v
 
 

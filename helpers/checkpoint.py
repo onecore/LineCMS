@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 
 from functools import wraps
-from flask import g, request, redirect, url_for,session
+from flask import redirect,session
 import dataengine, settings
 
 installed = False
@@ -23,7 +23,7 @@ def onlylogged(f):
     @wraps(f)
     def checkpoint(*args, **kwargs):
         """Uses for all Dashboard routes, Checks for session and install status"""
-        if not installed:
+        if not installed: 
             return redirect("/install")
 
         if "authenticated" not in session:

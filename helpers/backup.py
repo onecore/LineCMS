@@ -9,18 +9,28 @@ from datetime import datetime
 
 
 def show_backs_list() -> dict:
-    "shows list of backups from resources to db"
+    """shows backups for database and resources
+
+    Returns:
+        dict: _description_
+    """
     try:
         db_backs = [file for file in os.listdir("engine/backups/db/") if "." != file[0]]
         rs_backs = [file for file in os.listdir("engine/backups/resources/") if "." != file[0] and file.endswith(".zip")]
         return {"status":1,"db":db_backs,"rs":rs_backs}
     except Exception as e:
-        print(e)
         return {"status":0,"db":[],"rs":[]}
 
+def del_backs(f_type: str,file: str) -> dict:
+    """Deletes backup file
 
-def del_backs(f_type,file) -> dict:
-    "deletes requested backup file"
+    Args:
+        f_type (str): backup type (db or rs)
+        file (str): file to delete
+
+    Returns:
+        dict: response
+    """
     if "r" in f_type: # resource
         try:
             os.remove("engine/backups/resources/"+file)    # remove folder
@@ -38,7 +48,10 @@ def del_backs(f_type,file) -> dict:
         return {"status":0}
 
 def backup_db() -> dict:
-    "compress database into zip"
+    """Compresses database file
+    Returns:
+        dict: response
+    """
     try:
         now = datetime.now()
         dt_string = now.strftime("%d-%m-%Y-%H%M%S")
@@ -48,7 +61,11 @@ def backup_db() -> dict:
         return {"status":0}
 
 def backup_res() -> dict:
-    "Packs all resources and compress to zip"
+    """Compresses resources file
+
+    Returns:
+        dict: response
+    """
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y-%H%M%S")
     try:

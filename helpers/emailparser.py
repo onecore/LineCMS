@@ -16,10 +16,16 @@ logger = d.log
 
 sk, pk, ck, _, wk, wsk,shipstatus,shiprates,shipcountries,_,_,_,_,sender,_ = d.productsettings_get()
 
-def price(price) -> int:
-    "parces stripe int into decimal (unlike float this keeps the 2 decimal places)"
-    o = round(Decimal(price)*100) 
-    return o
+def price(price) -> float:
+    """parces stripe int into decimal (unlike float this keeps the 2 decimal places)
+
+    Args:
+        price (float or int): _description_
+
+    Returns:
+        float: float with 2 decimal places e.g 13.00
+    """
+    return round(Decimal(price)*100) 
 
 def data(which,order,company,shipstatus=False,tracking=False,additional=False,parsedate=False,disableTrackAdditional=False) -> dict:
     """adds all the jinja templating values"""

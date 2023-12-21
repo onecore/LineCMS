@@ -13,8 +13,16 @@ from pathlib import Path
 templates_list = [theme for theme in get_templates()]
 
 
-def procfiles(temp,folder):
-    # verify version or legit theme (base on theme.py)
+def procfiles(temp: str,folder: str) -> bool or dict:
+    """verify unpacked theme files based on theme.py and some other res.
+
+    Args:
+        temp (str): temp folder
+        folder (str): theme folder
+
+    Returns:
+        bool or dict: dict if success
+    """
     temp_f = os.listdir(temp)
     theme = False
     theme_p = False
@@ -35,22 +43,29 @@ def procfiles(temp,folder):
             return jsonify({'status':1,'theme':theme,'list':l})
         except:
             return 0
-
     return 0
 
 
     
 
-def unpack_theme(temp,filename) -> bool:
+def unpack_theme(temp: str,filename: str) -> bool:
+    """unpack compressed uploaded file
+
+    Args:
+        temp (str): temporary folder
+        filename (str): filename
+
+    Returns:
+        bool: if error
+        dict: if success (jsonified)
+        
+    """
     try:
         fp = os.path.join(temp,filename)
         with zipfile.ZipFile(fp, 'r') as zip_ref:
             zip_ref.extractall(temp)
-
         return procfiles(temp,filename)
-
     except Exception as e:
-        print(e)
         return 0
     
 
