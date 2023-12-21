@@ -14,9 +14,9 @@ else:
 
     
 import dataengine
+import helpers.templateparser as rf
 from flask import Flask, request, jsonify,render_template,request
 from flask_ckeditor import CKEditor
-import helpers.templateparser as rf
 from helpers import checkpoint
 from enginepublic import loaders
 from flask_mail import Mail, Message
@@ -35,7 +35,6 @@ from engine.login import logins
 from engine.other import other
 from engine.editor import editor
 from engine.install import install
-import dataengine
 # Dashboard imports/views
 
 # Public views
@@ -54,12 +53,12 @@ app = Flask(__name__,
 
 ckeditor = CKEditor()
 ckeditor.init_app(app)  # wysiwyg html editor
-
 app.secret_key = '\xb2\xcb\x06\x85\xb1\xcfZ\x9a\xcf\xb3h\x13\xf6\xa6\xda)\x7f\xdd\xdb\xb2BK>'
-# Mail Infos below
+
 __de = dataengine.SandEngine()
 mailinfo = __de.productsettings_get()
-logger = __de.log
+logger = __de.log 
+
 try:
     maildata = lite(mailinfo[13])
     app.config['MAIL_SERVER']= maildata['server']
@@ -98,7 +97,13 @@ def sendmail_test():
             except Exception as e:
                 return jsonify({"status":0,"message":f"Error occured: {e}"})
 
-def sendmail(**data):
+def sendmail(**data) -> dict:
+    """Sends email using supplied SMTP settings
+    Args:
+        data (dict): mail data
+    Returns:
+        dict: jsonified response
+    """    
     msg = Message(
         subject=data['subject'],
         recipients=[data['reciever']],
