@@ -337,7 +337,11 @@ class SandEngine:
         c = self.connection.cursor()
         q = "SELECT * FROM productsetting where id=1"
         c.execute(q)
-        return c.fetchone()
+        _c = c.fetchone()
+        if _c:
+            return _c
+        else:
+            return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     def productimagesupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
         c = self.connection.cursor()
