@@ -3,13 +3,13 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from ast import literal_eval as le
 import dataengine
+import settings
 from jinja2 import Template
 from decimal import Decimal
 from flask import current_app
-import settings
 from enginepublic import loaders
+from ast import literal_eval as le
 
 d = dataengine.SandEngine()
 logger = d.log

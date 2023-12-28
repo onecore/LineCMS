@@ -3,9 +3,9 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, render_template
 import dataengine
 from ast import literal_eval as lite
+from flask import Blueprint, render_template
 
 notfound = Blueprint("notfound", __name__)
 

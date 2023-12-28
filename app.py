@@ -15,7 +15,7 @@ else:
     
 import dataengine
 import helpers.templateparser as rf
-from flask import Flask, request, jsonify,render_template,request
+from flask import Flask, request, jsonify,request
 from flask_ckeditor import CKEditor
 from helpers import checkpoint
 from enginepublic import loaders
@@ -38,9 +38,9 @@ from engine.install import install
 # Dashboard imports/views
 
 # Public views
-from enginepublic.product import productuser
-from enginepublic.blog import bloguser
 from enginepublic.main import mains
+from enginepublic.blog import bloguser
+from enginepublic.product import productuser
 from enginepublic.notfound import notfound
 # Public views
 

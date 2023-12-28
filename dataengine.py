@@ -13,8 +13,8 @@ import json
 import os
 import random
 import settings
-from ast import literal_eval as lite
 from flask import g
+from ast import literal_eval as lite
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 UPLOAD_FOLDER_BLOG = 'static/dashboard/uploads/blog'

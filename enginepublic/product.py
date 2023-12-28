@@ -3,16 +3,17 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, render_template, request, redirect, send_from_directory
-from markupsafe import Markup
-from flask_paginate import Pagination, get_page_parameter
-from engine.product import getimages
-from helpers import dataparser
-from ast import literal_eval as lite
-from engine.product import retrieve_session, product_deduct
-import dataengine
-import settings
 import json
+import settings
+import dataengine
+from markupsafe import Markup
+from helpers import dataparser
+from engine.product import getimages
+from ast import literal_eval as lite
+from flask_paginate import Pagination, get_page_parameter
+from engine.product import retrieve_session, product_deduct
+from flask import Blueprint, render_template, request, redirect, send_from_directory
+
 
 
 de = dataengine.SandEngine()

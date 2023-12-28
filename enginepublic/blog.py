@@ -3,14 +3,11 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-import dataengine
 import settings
 import dataengine
-from flask import Blueprint, render_template, request, redirect
-from flask_paginate import Pagination, get_page_parameter
-from flask_paginate import Pagination, get_page_parameter
 from ast import literal_eval as lite
-from helpers import dataparser
+from flask_paginate import Pagination, get_page_parameter
+from flask import Blueprint, render_template, request, redirect
 
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 

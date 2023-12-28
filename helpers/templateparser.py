@@ -3,8 +3,8 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-import settings as temple
 import json
+import settings as temple
 from flask import jsonify
 from ast import literal_eval as lite
 

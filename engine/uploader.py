@@ -8,14 +8,14 @@ import dataengine
 from werkzeug.utils import secure_filename
 import os
 import json
-from settings import uploads_allowedext
-from settings import uploads_products
-from settings import uploads_blog
-from settings import uploads_dashboard
-from settings import uploads_allowedext_theme
-from settings import uploads_temporary
-from helpers import themeengine
 from helpers import checkpoint
+from helpers import themeengine
+from settings import uploads_blog
+from settings import uploads_products
+from settings import uploads_temporary
+from settings import uploads_dashboard
+from settings import uploads_allowedext
+from settings import uploads_allowedext_theme
 
 uploads_data = {}
 uploader = Blueprint("uploader", __name__)

@@ -3,7 +3,7 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-
+license = "MIT License"
 notice = """
 Copyright 2023 (c) Line Content Management System, MA/RP
 

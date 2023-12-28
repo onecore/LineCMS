@@ -4,12 +4,11 @@ Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
 import os
-from engine.editor import get_templates
-from settings import cms_version
-from flask import jsonify
-# from settings import uploads_temporary_autodelete
 import zipfile, shutil
-from pathlib import Path
+from flask import jsonify
+from engine.editor import get_templates
+
+
 templates_list = [theme for theme in get_templates()]
 
 

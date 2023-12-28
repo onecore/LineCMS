@@ -3,10 +3,9 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-
+import dataengine, settings
 from functools import wraps
 from flask import redirect,session
-import dataengine, settings
 
 installed = False
 _de = dataengine.SandEngine()
