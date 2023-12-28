@@ -457,11 +457,11 @@ swal("", `{{error}}`, "warning");
 
                 {% else %}
                 <br>
-                {% if status %}
-                <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} {{status}} orders.</p></center>
-                {% else %}
-                <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} Pending orders </p></center>
-                {% endif %}
+                  {% if status %}
+                    <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} {{status}} orders.</p></center>
+                  {% else %}
+                    <center><p class="badge btn-muted border text-dark">Loaded {{orders|length}} Pending orders </p></center>
+                  {% endif %}
                 {% endif %}
               </tbody>
             </table>
