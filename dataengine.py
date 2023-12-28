@@ -341,7 +341,7 @@ class SandEngine:
         if _c:
             return _c
         else:
-            return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] # Empty
 
     def productimagesupdater(self, imgcat: str, data: dict, newimage: str, filename: str) -> tuple:
         c = self.connection.cursor()
