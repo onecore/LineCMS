@@ -34,7 +34,7 @@ def blog_mainview(new=None, url=None):
         dt = de.load_data_index(None)  # loads datas
         modules_settings = de.load_modules_settings()
         sitedata = dataparser.Site("site",de.load_data_index(True))
-
+        blogdata = dataparser.Blog("blog")
         all_d = modules_settings[0]
         mod = {
             "popup": lite(all_d[0]),
@@ -51,7 +51,7 @@ def blog_mainview(new=None, url=None):
         except:
             cats = []
         cats_list = de.get_blog_cat_lists()
-        return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blogdata, cats=cats, catslist=cats_list, new=new)
     else:
         return redirect(f"/SYSTEM/{themes}/blog.html")
 
