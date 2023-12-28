@@ -44,7 +44,6 @@ from enginepublic.main import mains
 from enginepublic.notfound import notfound
 # Public views
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'])
 version = "1.4"
 app = Flask(__name__,
             static_url_path='',
