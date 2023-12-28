@@ -3,13 +3,15 @@ LineCMS - Content Management System (Product & Blogging) for Rapid website devel
 Website: www.linecms.com
 Author: S. Jangra & Mark A.R. Pequeras
 """
-from flask import Blueprint, render_template, request, redirect
 import dataengine
-from flask_paginate import Pagination, get_page_parameter
 import settings
 import dataengine
+from flask import Blueprint, render_template, request, redirect
+from flask_paginate import Pagination, get_page_parameter
 from flask_paginate import Pagination, get_page_parameter
 from ast import literal_eval as lite
+from helpers import dataparser
+
 UPLOAD_FOLDER_PRODUCTS = 'static/dashboard/uploads/products'
 
 de = dataengine.SandEngine()
@@ -31,6 +33,8 @@ def blog_mainview(new=None, url=None):
     if url:
         dt = de.load_data_index(None)  # loads datas
         modules_settings = de.load_modules_settings()
+        sitedata = dataparser.Site("site",de.load_data_index(True))
+
         all_d = modules_settings[0]
         mod = {
             "popup": lite(all_d[0]),
@@ -47,7 +51,7 @@ def blog_mainview(new=None, url=None):
         except:
             cats = []
         cats_list = de.get_blog_cat_lists()
-        return render_template(f"/SYSTEM/{themes}/blog.html", data=dt, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
+        return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blog, cats=cats, catslist=cats_list, new=new)
     else:
         return redirect(f"/SYSTEM/{themes}/blog.html")
 

@@ -9,6 +9,7 @@ keys = {
 		"mod" : ["popup","announcement","uparrow","socialshare","videoembed","custom","extras"],
 		"product" : ["id","title","category","variants","product_url","product_urlsystem","seo_description","seo_keywords","images","mainimage","variant_details","timestamp","hidden","product_id","body","price","stock"],
 		"site" : ["site_description","sitename","footer_copyright","logo","up_arrow","domain","social_share","pop_up","meta_description","meta_keywords","favicon","site_type","messages","site_phone","site_email","site_location"],
+		"public_blog" : ["id","title","body","image","timestamp","hidden","url","category"],
 		}
 
 def zipper(key: str,combinewith: list) -> dict:
