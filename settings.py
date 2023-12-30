@@ -49,7 +49,7 @@ cms_version = "1.40"
 # -"sitenumber"
 # -"siteemail"
 # -"siteaddress"
-inputs_dashboard_settings = set(["sitename"])           # Form inputs that can be Empty
+inputs_dashboard_settings = set(["sitename","description","meta_description","meta_keywords","footercopyright","sitenumber","siteemail","siteaddress"])           # Form inputs that can be Empty
 inputs_dashboard_minumum_length = 5                     # Less than the value will return a required or not enough error
 
 # Orders

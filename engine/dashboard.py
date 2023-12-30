@@ -50,6 +50,7 @@ def dashboard_main():
 
         for k, v in dicts.items():
             if k not in settings.inputs_dashboard_settings and len(v) <= settings.inputs_dashboard_minumum_length:
+                print(k)
                 error = f"Some information must be {settings.inputs_dashboard_minumum_length} characters or more"
         if error: 
             return render_template("dashboard/dashboard.html", data=dt, error=error, success=success, tmplist=tmplist, tmpcurrent=theme,backs_rs=backs_rs,backs_db=backs_db)

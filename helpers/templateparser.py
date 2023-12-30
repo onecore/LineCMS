@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 import json
 import settings as temple
-from flask import jsonify
+from flask import jsonify, url_for
 from ast import literal_eval as lite
 
 def ks_include_adminbutton() -> str:
@@ -84,4 +84,7 @@ def ks_variantcount(v) -> int:
 def ks_tojson(v) -> dict:
     "python dict obj to json"
     return json.dumps(v)
+
+def link_for(theme, path):
+    return url_for("static",filename=f"SYSTEM/{theme}/{path}")
 

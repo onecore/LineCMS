@@ -23,7 +23,7 @@ def main():
     main page / index
     """
     dt = de.load_data_index(None)  # loads datas
-    sitedata = dataparser.Site("site",de.load_data_index(True))
+    sitedata = dataparser.Obj("site",de.load_data_index(True))
 
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]

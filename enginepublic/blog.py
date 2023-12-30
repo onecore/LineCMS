@@ -5,6 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 import settings
 import dataengine
+from helpers import dataparser
 from ast import literal_eval as lite
 from flask_paginate import Pagination, get_page_parameter
 from flask import Blueprint, render_template, request, redirect
@@ -28,11 +29,12 @@ def blog_mainview(new=None, url=None):
     views - blog main view
     """
     if url:
-        dt = de.load_data_index(None)  # loads datas
         modules_settings = de.load_modules_settings()
-        sitedata = dataparser.Site("site",de.load_data_index(True))
-        blogdata = dataparser.Blog("blog")
+        blog = de.get_blog_single(url)
+        sitedata = dataparser.Obj("site",de.load_data_index(True))
+        blogdata = dataparser.Obj("blog",blog)
         all_d = modules_settings[0]
+
         mod = {
             "popup": lite(all_d[0]),
             "announcement": lite(all_d[1]),
@@ -42,7 +44,6 @@ def blog_mainview(new=None, url=None):
             "custom": lite(all_d[5]),
             "extras": lite(all_d[6]),
         }
-        blog = de.get_blog_single(url)
         try:
             cats = blog[7].split(",")
         except:

@@ -854,12 +854,13 @@ class SandEngine:
         """
         c = self.connection.cursor()
         try:
-            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}', sitenumber = '{sitenumber}', siteemail='{siteemail}', siteaddress='{siteaddress}' WHERE id = 1;".format(
+            q = "UPDATE control SET sitename = '{sitename}',sitedescription = '{sitedescription}',footercopyright = '{footercopyright}',meta_description = '{meta_description}',meta_keywords = '{meta_keywords}', sitenumber = '{sitenumber}', siteemail='{siteemail}', siteaddress='{siteaddress}';".format(
                 sitename=dicts['sitename'], sitedescription=dicts['description'], footercopyright=dicts['footercopyright'], meta_description=dicts['meta_description'], meta_keywords=dicts['meta_keywords'],sitenumber=dicts['sitenumber'],siteemail=dicts['siteemail'],siteaddress=dicts['siteaddress'])
             c.execute(q)
             self.connection.commit()
             return True
         except Exception as e:
+            print(e)
             return False
 
     def update_module(self, data) -> bool:
