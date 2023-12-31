@@ -505,6 +505,7 @@ function grabinputs() {
     // product_data['mainimage'] = categorydocument.getElementById("categ").value;
     if (product_data['title'].length <= 4) {
         swal("", 'Failed validating title, must contain 5 or more characters', "error");
+        console.log("title")
         return false;
     }
     // if (product_data['product_url'].length <= 4 ){
@@ -513,23 +514,28 @@ function grabinputs() {
     // }
     if (product_data['body'].length <= 4) {
         swal("", 'Product description must have 5 or more characters', "error");
+        console.log("body")
         return false;
     }
     if (product_data['price'].length <= 0) {
         swal("", 'Price not accepted, unable to validate', "error");
+        console.log("price")
         return false;
     }
     if (product_data['stock'].length <= 0) {
         swal("", 'Stock not accepted, unable to validate', "error");
+        console.log("stock")
         return false;
     }   
     if (!validatePrice(product_data['stock'])) {
         swal("", 'Stock not accepted, unable to validate', "error");
+        console.log("stock1")
         return false;
     } 
 
     if (!validatePrice(product_data['price'])) {
         swal("", 'Price not accepted, unable to validate', "error");
+        console.log("price")
         return false;
     }
     return grabvariantdata()
@@ -582,7 +588,7 @@ function p_updatepost() {
 
     // document.getElementById("loading").style = 'display:block';
     // document.getElementById("publishb").style = 'display:none';
-    if (!build_variants()) {
+    if (!build_variants() == false) {
         swal("", 'Please check for any missing information.', "error");
         document.getElementById("cover-spin").style.display = "none";
 

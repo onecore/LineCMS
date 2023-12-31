@@ -321,11 +321,6 @@ const pond = FilePond.create(inputElement, {
         fileMetadataObject: {
             p_id: product_data['id'],
         },
-        fileRenameFunction: (file) => {
-            let _st = fname(19);
-            document.getElementById("bimg").value = _st+`${file.extension}`;
-            return _st+`${file.extension}`;
-        },
   });
 
 pond.on('removefile', (error, file) => {

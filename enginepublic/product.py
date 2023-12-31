@@ -177,7 +177,7 @@ def pproductpage(new=None, pid=None):
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
-    product = dataparser.Product("product",de.get_product_single(pid))
+    product = dataparser.Obj("product",de.get_product_single(pid))
     mod = {
         "popup": lite(all_d[0]),
         "announcement": lite(all_d[1]),
