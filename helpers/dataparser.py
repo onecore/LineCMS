@@ -30,6 +30,11 @@ class Obj:
 				contents = contents.split(",")
 				setattr(Obj,"categories",contents)
 
+			if key == "blog" and column == "timestamp":
+				setattr(Obj,"timestamp",Obj.timestamp.split(" ")[0])
+
+
+
 		
 	@classmethod
 	def getempty(cls):

@@ -32,7 +32,7 @@ def blog_mainview(new=None, url=None):
         modules_settings = de.load_modules_settings()
         blog = de.get_blog_single(url)
         catsdata = de.get_blog_cat_lists()
-        sitedata = dataparser.Obj("site",de.load_data_index(0))
+        sitedata = dataparser.Obj("site",de.load_data_index(True))
         blogdata = dataparser.Obj("blog",blog)
         all_d = modules_settings[0]
 
@@ -59,6 +59,7 @@ def blog_list():
     """
     dt = de.load_data_index(None)  # loads datas
     modules_settings = de.load_modules_settings()
+    sitedata = dataparser.Obj("site",de.load_data_index(True))
     all_d = modules_settings[0]
     mod = {
         "popup": lite(all_d[0]),
@@ -70,6 +71,7 @@ def blog_list():
         "extras": lite(all_d[6]),
     }
     blogs = de.get_blog_listings()
+    
     search = False
     q = request.args.get('q')
     if q:
@@ -77,4 +79,4 @@ def blog_list():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=len(blogs),
                             search=search, record_name='blogs', css_framework="bootstrap5", align="center")
-    return render_template(f"/SYSTEM/{themes}/blog-list.html", data=dt, mod=mod, blogs=blogs, pagination=pagination)
+    return render_template(f"/SYSTEM/{themes}/blog-list.html", site=sitedata,data=dt, mod=mod, blogs=blogs, pagination=pagination)

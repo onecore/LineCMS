@@ -160,11 +160,14 @@ app.jinja_env.globals.update(ks_todict=rf.ks_todict)
 """
 functions for Jinja templating (Public)
 """
+from helpers import dataparser
 app.jinja_env.globals.update(loadblogs=loaders.loadblogs)
 app.jinja_env.globals.update(loadproducts=loaders.loadproducts)
 app.jinja_env.globals.update(loaddate=loaders.dateformatter)
 app.jinja_env.globals.update(link_for=rf.link_for)
 app.jinja_env.globals.update(dictcast=rf.ks_todict)
+app.jinja_env.globals.update(setattribute=dataparser.Obj)
+app.jinja_env.globals.update(htmltext=rf.ks_html2text)
 
 
 
