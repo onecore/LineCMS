@@ -14,7 +14,7 @@ log = de.log
 themes = de.themeget()[0]
 
 
-@notfound.route("/notfound.html")
+@notfound.route("/notfound")
 def notfoundfn():
     """
     404 Error Page

@@ -31,7 +31,8 @@ def blog_mainview(new=None, url=None):
     if url:
         modules_settings = de.load_modules_settings()
         blog = de.get_blog_single(url)
-        sitedata = dataparser.Obj("site",de.load_data_index(True))
+        catsdata = de.get_blog_cat_lists()
+        sitedata = dataparser.Obj("site",de.load_data_index(0))
         blogdata = dataparser.Obj("blog",blog)
         all_d = modules_settings[0]
 
@@ -44,12 +45,8 @@ def blog_mainview(new=None, url=None):
             "custom": lite(all_d[5]),
             "extras": lite(all_d[6]),
         }
-        try:
-            cats = blog[7].split(",")
-        except:
-            cats = []
-        cats_list = de.get_blog_cat_lists()
-        return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blogdata, cats=cats, catslist=cats_list, new=new)
+
+        return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blogdata, all_categories=catsdata, new=new)
     else:
         return redirect(f"/SYSTEM/{themes}/blog.html")
 

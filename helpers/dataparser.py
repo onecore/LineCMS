@@ -19,16 +19,27 @@ class Obj:
 	empty = [] # list of empty cols
 	def __init__(self,key,lst) -> None:
 		self.obj = zipper(key,lst)
-
 		for column, contents in self.obj.items():
 			if contents == None:
 				contents = ""
 				Obj.empty.append(column)
+
 			setattr(Obj,column,contents)
 
+			if key == "blog" and column == "category": # modifies category into list (splitted using ",")
+				contents = contents.split(",")
+				setattr(Obj,"categories",contents)
+
+		
 	@classmethod
 	def getempty(cls):
 		return cls.empty
+	
+	@classmethod
+	def blog_timestamp(cls):
+		return cls.timestamp.split(" ")[0]
+
+		
 
 
 

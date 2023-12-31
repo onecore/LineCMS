@@ -5,7 +5,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 """
 import json
 import settings as temple
-from flask import jsonify, url_for
+from flask import jsonify, url_for, session
 from ast import literal_eval as lite
 
 def ks_include_adminbutton() -> str:
@@ -17,7 +17,11 @@ def ks_include_adminbutton() -> str:
     c = temple.sc_admin_button
     v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
         c+"'"+"style='color:white'"+">Owner Dashboard</a>"
-    return v
+    if "authenticated" in session:
+        if session['authenticated']:
+            return v
+    
+    return ""
 
 
 def ks_badge_insert(v) -> str:
