@@ -48,7 +48,7 @@ def blog_mainview(new=None, url=None):
 
         return render_template(f"/SYSTEM/{themes}/blog.html", site=sitedata, mod=mod, blog=blogdata, all_categories=catsdata, new=new)
     else:
-        return redirect(f"/SYSTEM/{themes}/blog.html")
+        return redirect("/notfound")
 
 
 @bloguser.route(settings.route_blog_list, methods=['GET'])

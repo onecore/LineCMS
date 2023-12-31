@@ -23,10 +23,8 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
@@ -59,7 +57,7 @@
                                     <!-- Post title-->
                                     <h1 class="fw-bolder mb-1">{{ blog.title }}</h1>
                                     <!-- Post meta content-->
-                                    <div class="text-muted fst-italic mb-2">Published {{ blog.blog_timestamp() }}</div>
+                                    <div class="text-muted fst-italic mb-2">Published {{ blog.blog_timestamp() }} - 3 minutes read</div>
                                     {% for category in blog.categories %}
                                         <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ category }}</a>
                                     {% endfor %}

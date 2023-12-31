@@ -335,7 +335,8 @@ def api_deletepartialimage():
     "partial delete image (image that is not needed, not inserted in db)"
     if request.method == "POST":
         if 'authenticated' in session:  # Logged in
-            _de.delete_image_partial(lite(request.data))
+            print("here")
+            _de.delete_image_partial(eval(request.data))
         return "KnightStudio Dashboard build ", version
     else:
         return "KnightStudio Dashboard build ", version

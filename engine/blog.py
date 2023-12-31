@@ -95,6 +95,7 @@ def blog_edit(url):
             else:
                 data['category'] = 'blog'
             try:
+                print(data)
                 if (de.blog_update(data)):
                     # /1/ pattern will show Success
                     return redirect(temple.route_blog+"/1/"+data['route'])

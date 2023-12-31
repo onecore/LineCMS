@@ -330,9 +330,14 @@ pond.on('removefile', (error, file) => {
 })
 
 {% if blog[3] %}
-  pond.addFile("{{blog[3]}}");
+  pond.addFile("/media/blog/{{blog[3]}}");
 {% endif %}
+
+pond.on('addfile', (error, file) => {
+  document.getElementById("bimg").value = file.filename;
+})
 </script>
+
 
 <script>
 $("#form").submit( function(eventObj) {

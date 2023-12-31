@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Publish post - LineCMS Dashboard</title>
+  <title>Edit post - LineCMS Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../dashboard/vendors/feather/feather.css">
   <link rel="stylesheet" href="../../dashboard/vendors/mdi/css/materialdesignicons.min.css">
@@ -26,20 +26,28 @@
   <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
   <link href="../../dashboard/ks-js/filepond.css" rel="stylesheet" />
   <link href="../../dashboard/ks-js/filepond-plugin-image-preview.min.css" rel="stylesheet"/>
-
+<style>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius: 13px 13px 13px 13px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top:10px;
+    cursor: pointer;
+}
+</style>
 </head>
 
 <body class="sidebar-dark">
 <script>
 var image_nm = "";
-{% if success %}
-swal("", 'Website information updated', "success");
-{% endif %}
 
 
-{% if error %}
-swal("", `{{error}}`, "warning");
-{% endif %}
+
+
 </script>
 
   <div class="container-scroller">
@@ -61,8 +69,8 @@ swal("", `{{error}}`, "warning");
         </div>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-top">
-        <h4 class="text-dark ms-auto">Create blog post</h4>
-        <ul class="navbar-nav ms-auto">
+        <h4 class="text-dark ms-auto">Update blog post</h4>
+        <ul class="navbar-nav ms-auto float-start">
           <li class="nav-item d-none d-sm-block">
               <span class="input-group-addon input-group-prepend border-right">
                 <a href="/logoff" class="btn btn-sm btn-dark">Log out</a>
@@ -146,8 +154,8 @@ swal("", `{{error}}`, "warning");
             </a>
             <div class="collapse" id="KnightStudio-blog">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/blog-new"><b class="btn btn-xs btn-warning text-dark">New Post</b></a></li>
-                <li class="nav-item"> <a class="nav-link" href="/blog-manage">Manage Posts</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-new">New Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/blog-manage"><b class="btn btn-xs btn-warning text-dark">Manage Posts</b></a></li>
               </ul>
             </div>
 
@@ -178,13 +186,14 @@ swal("", `{{error}}`, "warning");
       <div class="main-panel">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-md-4 p-3">
+
+            <div class="col-12 col-md-4">
 
               <div class="input-group mb-3 pt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Blog category</span>
+                  <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">Blog category</span>
                 </div>
-                  <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','">
+                  <input type="text" class="form-control" id="categ" name="categ" aria-label="" placeholder="Seperate categories by ','" value="">
               </div>
 
 
@@ -197,39 +206,72 @@ swal("", `{{error}}`, "warning");
                   </center>
                 </fieldset>
                 <br>
+
+                <div class="border rounded">
+                  <br>
+                  <center><h4 class="badge badge-dark text-mute">Blog settings</h4></center>
+                  <br>
+                  <center><p class="text-muted">No additional settings</p></center>
+                  <hr>
+                  <center><h4 class="badge badge-dark text-mute">Information</h4></center>
+                  <center><p class="text-muted p-0">Timestamp: </p></center>
+                  <center><p class="text-muted p-0">Blog URL: </p></center>
+                  <hr>
+                  <center>
+                  
+                  <button type="button" class="btn btn-xs btn-muted border" id='hb2' onclick="knightapi2('')">Unhide post</button>
+                  
+                  <button type="button" class="btn btn-xs btn-muted border" onclick="confirm_dedit('1','')">Delete</button>
+                  <button type="button" class="btn btn-xs btn-danger mdi mdi-check border" onclick="deleapi('1','','9999')" style="display:none;" id="finald"></button>
+
+                  </center>
+                  <br>
+                </div>
+                <br>
                 <fieldset class="border p-2 text-muted">
                   <legend class="float-none w-auto text-muted" style="font-size:15px">Information</legend>
                   <center>
-                    <p>Image Alt text automatically set using your Blog's title, Every blog post or product post also added to an automated sitemap generator, to edit sitemap or robots.txt for search engine optimization please click <a href="/edit">here</a></p>
+                    <p>Image Alt text automatically set using your Blog's title, Every blog post or product post also added to an automated sitemap generator, to edit sitemap or robots.txt for search engine optimization please click <a href="/">here</a></p>
                   </center>
                 </fieldset>
             </div>
 
 
-            <div class="col-12 col-md-8 p-3">
+            <div class="col-12 col-md-8">
             <form method="post" id="form" name="form">
+
               <div class="input-group mb-3 pt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text btn-muted text-muted" style="border-radius:8px 0 0 8px">Blog title</span>
+                  <span class="input-group-text btn-muted text-dark" style="border-radius:8px 0 0 8px">Blog title</span>
                 </div>
-                    <input type="text" class="form-control" id="title" name="title" aria-label="" placeholder="Post title">
+                    <input type="text" class="form-control" id="title" name="title" aria-label="" placeholder="Post title" value="">
                     <input type="hidden" class="form-control" id="bimg" name="bimg" placeholder="" value="">
                     <input type="hidden" class="form-control" id="cat" name="cat" placeholder="" value="">
+                    <input type="hidden" class="form-control" id="ishidden" name="ishidden" placeholder="" value="">
               </div>
 
 
-                  {{ ckeditor.create() }}
+                  <textarea class="ckeditor" name="ckeditor" id="ckeditor"></textarea>
                 <br>
-                <button type="submit" class="btn btn-primary" style="background:#28a745;border: 1px gray">Publish post</button>
+
+                <button type="submit" class="btn btn-primary">Update post</button>
               </form>
             </div>
+
           </div>
         </div>
         <br>
 
         <!-- content-wrapper ends -->
         <!-- partial:../../dashboard/partials/_footer.html -->
-        {% include "/dashboard/includes/footer.html" %}
+        <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><a
+                href="https://www.KnightStudio.ca/" target="_blank">LineCMS build 1.4</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © LineCMS 2023. All rights
+            reserved.</span>
+    </div>
+</footer>
 
         <!-- partial -->
       </div>
@@ -261,6 +303,7 @@ swal("", `{{error}}`, "warning");
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
   <!-- End custom js for this page-->
+
 <script src="../../dashboard/ks-js/filepond-plugin-file-metadata.min.js"></script>
 <script src="../../dashboard/ks-js/filepond-plugin-image-preview.min.js"></script>
 <script src="../../dashboard/ks-js/filepond-plugin-file-rename.min.js"></script>
@@ -269,6 +312,8 @@ swal("", `{{error}}`, "warning");
 FilePond.registerPlugin(FilePondPluginImagePreview);
 FilePond.registerPlugin(FilePondPluginFileMetadata);
 FilePond.registerPlugin(FilePondPluginFileRename);
+
+const r = ""
 const inputElement = document.querySelector(`#mainfile`);
 const pond = FilePond.create(inputElement, {
         server: './upload-blog',
@@ -286,6 +331,8 @@ const pond = FilePond.create(inputElement, {
 
 pond.on('removefile', (error, file) => {
   document.getElementById("bimg").value = "";
+  let _d = {"image":file.filename,"route":r};
+  delpartialim(_d);
 })
 
 

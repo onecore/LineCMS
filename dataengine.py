@@ -547,6 +547,7 @@ class SandEngine:
         q = "UPDATE blog SET image = '' WHERE route = '{r}';".format(
             r=data['route'])
         c.execute(q)
+        print("Updated...")
         self.connection.commit()
 
     def get_product_single(self, route: str, checkout=False) -> tuple:
@@ -640,8 +641,10 @@ class SandEngine:
                 title=dicts['title'], message=dicts['body'], image=dicts['image'], hidden=dicts['hidden'], category=dicts['category'], route=dicts['route'])
             c.execute(q)
             self.connection.commit()
+            print("Blog updated")
             return True
         except Exception as e:
+            print(e, "<< err")
             return False
 
 
