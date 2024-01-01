@@ -1,9 +1,14 @@
+"""
+LineCMS - Content Management System (Product & Blogging) for Rapid website development
+Website: www.linecms.com
+Author: S. Jangra & Mark A.R. Pequeras
+"""
+
 import dataengine
 from ast import literal_eval as lite
 from flask import Blueprint, render_template
 
 extra = Blueprint("extra", __name__)
-
 
 @extra.route("/_")
 def extra_1():

@@ -127,6 +127,7 @@ def load_blogs(counts=[0,5], single=None) -> tuple:
         return _p
     else:
         _d = ps.get_blog_listings(quer=counts)
+        print(_d)
         return _d
 
 
