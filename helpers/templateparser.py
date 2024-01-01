@@ -8,74 +8,83 @@ import settings as temple
 from flask import jsonify, url_for, session
 from ast import literal_eval as lite
 
+def ks_badge_insert(v) -> str:
+    """badgify strings
+
+    Args:
+        v: list
+    Returns:
+        str: badged string
+    """    
+    q = ""
+    if "," in v:
+        if v:
+            i = str(v).split(",")
+            for cat in i:
+                q += f"<badge class='badge {temple.sc_badge_insert}'>{cat}</badge>&nbsp"
+    return q
+
 def ks_include_adminbutton() -> str:
     """admin button
 
     Returns:
-        str: html button 
+        str: html button (bootstrap)
     """
-    c = temple.sc_admin_button
-    v = "&nbsp&nbsp<a href='"+temple.route_dashboard+"' class='btn " + \
-        c+"'"+"style='color:white'"+">Owner Dashboard</a>"
+    v = f"&nbsp&nbsp<a href='{temple.route_dashboard}' class='btn {temple.sc_admin_button}' style='color:white'>Owner Dashboard</a>"
     if "authenticated" in session:
         if session['authenticated']:
             return v
-    
     return ""
 
-
-def ks_badge_insert(v) -> str:
-    "bootstrap badge inserter (single/multi)"
-    q = ""
-    if v:
-        i = str(v).split(",")
-        for cat in i:
-            q += "<badge class='badge {c}'>".format(
-                c=temple.sc_badge_insert)+cat+"</badge>&nbsp"
-    return q
-
-
 def ks_html2text(v) -> str:
-    """parses html to text"""
+    """html to plain
+
+    Args:
+        v: str
+    Returns:
+        str: html to text
+    """    
     from lxml import html
     if v:
         return html.fromstring(v).text_content()
-    else:
-        return ""
+    return ""
 
+def ks_html2text_truncate(v,custom=[]) -> str:
+    """html to plain with truncate
 
-def ks_html2text_truncate(v) -> str:
-    "parses html to text with truncation"
+    Args:
+        v: str
+        custom: concat right and left e.g [:210,210:]
+    Returns:
+        str: html to text with truncated txt
+    """    
     from lxml import html
     if v:
         ret = html.fromstring(v).text_content()
         trunc = ret[:210] + (ret[210:] and '..')
+        if custom:
+            trunc = ret[custom[0]] + (ret[custom[1]] and '..')
         return trunc
-    else:
-        return ""
-
+    return ""
 
 def ks_tolist(v) -> list:
-    "liteuate parsed string to python list type"
+    "cast to list"  
     return lite(v)
 
 def ks_todict(v) -> dict:
-    "liteuate parsed string to python dict type"
+    "cast to dict"
     try:
         return lite(v)
     except:
-        return ""
-
+        return {}
 
 def ks_getdictkeys(v) -> list:
-    "returns list of keys from string dict"
+    "returns list of keys from a dict with k/v"
     o = []
     p = jsonify(v)
-
     for k, v in p.items():
         o.append(k)
     return lite(o)
-
 
 def ks_variantcount(v) -> int:
     "return variant's length"
@@ -84,14 +93,15 @@ def ks_variantcount(v) -> int:
         return len(p.keys())
     return 0
 
-
 def ks_tojson(v) -> dict:
     "python dict obj to json"
     return json.dumps(v)
 
 def link_for(theme, path):
+    "returns static path"
     return url_for("static",filename=f"SYSTEM/{theme}/{path}")
 
 def version():
+    "returns string version/date built"
     return temple.cms_version, temple.cms_date
     

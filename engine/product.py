@@ -83,7 +83,7 @@ def allowed_file(filename) -> str:
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def getimages(ids) -> list:
-    "returns product images from local folder"
+    "returns product images from local folder excluded mainimages and variants folder"
     res = []
     # Iterate directory
     dir_path = f"{UPLOAD_FOLDER_PRODUCTS}/{ids}"
@@ -95,7 +95,6 @@ def getimages(ids) -> list:
                 res.append(file_path)
     except Exception as e: # no images
         pass
-
     return res
     
 def getmainimage(ids) -> str:

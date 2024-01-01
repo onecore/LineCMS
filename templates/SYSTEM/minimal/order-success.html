@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Blog Posts - {{ data['sitename'] }}</title>
+        <title>Thank you! Payment Success</title>
         <!-- Favicon-->
         <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="ks/css/style.css" rel="stylesheet" />
     <!-- Favicon -->
     <link href="/media/{{data['favicon']}}" rel="icon">
 
@@ -21,20 +22,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="/ks/css/bootstrap.min.css" rel="stylesheet">
+      <style>
+      .checkmark {
+        color: #86d942;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
 
-<style>
-.card-img-top {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
-}
-</style>
+      </style>
+      <script>
+        // clears products thats been successfully checked out 
+        let pid = {{prod_ids|safe}} 
+        for (var i = 0; i < pid.length; i++) {
+            localStorage.removeItem(pid[i])
+        }
+        // clears products thats been successfully checked out 
+      </script>
     </head>
     <body>
         <!-- Responsive navbar-->
-      <div class="container-xxl position-relative p-0">
+      <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
           <a href="/" class="navbar-brand p-0">
             <img src="/media/{{data['logo']}}" alt="Logo" class="flex"> {{data['sitename']}}
@@ -44,58 +53,43 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 pe-4">
-              <a href="/" class="nav-item nav-link active">Home</a>
+              <!-- <div class="nav-item dropdown">
+                              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                              <div class="dropdown-menu m-0">
+                                  <a href="booking.html" class="dropdown-item">Booking</a>
+                                  <a href="team.html" class="dropdown-item">Our Team</a>
+                                  <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                              </div>
+                          </div> -->
+            </div>
               {% if 'authenticated' in session %}
                   {{admin_button()|safe}}
               {% endif %}
-
-            </div>
+            <!-- <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a> -->
           </div>
         </nav>
       </div>
         <!-- Page content-->
 
         <div class="container mt-5">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/blog-list">Blog list</a></li>
-            </ol>
-          </nav>
-          <div class="row">
-            <br>
-            
-            {% for blog in blogs %}
-              {% set blog = setattribute("blog",blog) %} 
-              {% if blog.hidden == '0' %}
-                  <div class="col-lg-4 mb-5">
-                      <div class="card h-100 shadow border-0">
-                          <img class="card-img-top" src="/media/blog/{{ blog.image }}" alt="..." />
-                          <div class="card-body p-4">
-                              {% for category in blog.categories %}
-                                  <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ category }}</div>
-                              {% endfor %}
-                              <a class="text-decoration-none link-dark stretched-link" href="/blog/{{ blog.url }}"><h5 class="card-title mb-3">{{ blog.title }}</h5></a>
-                              <p class="card-text mb-0">{{ htmltext( blog.body ) }}</p>
-                          </div>
-                          <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                              <div class="d-flex align-items-end justify-content-between">
-                                  <div class="d-flex align-items-center">
-                                      <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                      <div class="small">
-                                          <div class="text-muted">Published {{ blog.blog_timestamp() }} &middot;</div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+            <div class="row">
+              <br>
+              <br>
+              <center>
+                <br>
+                <div class="card col-md-5">
+                  <div class="p-3 m-3 " style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+                    <i class="checkmark">✓</i>
                   </div>
-              {% endif %}
-          {% endfor %}
+                  <h1>Purchase Success</h1>
+                  <p>We received your purchase request;<br /> we'll be in touch shortly!</p>
+                </div>
+                <br>
+                <a class="btn btn-success" href="/">Go home</a>&nbsp<a class="btn btn-success" href="/product-list">Browse products</a>&nbsp
+              </center>
                 <!-- Side widgets-->
-          </div>
-            <br>
-            {{ pagination.links }}
+
+            </div>
         </div>
         <!-- Footer-->
 
