@@ -103,7 +103,7 @@ def productlist():
     }
 
 
-    alert=None
+    alert = None
     par_q = request.args.get('search')
     par_c = request.args.get('category')
     

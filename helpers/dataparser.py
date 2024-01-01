@@ -29,7 +29,9 @@ class Obj:
 			if key == "blog" and column == "category": # modifies category into list (splitted using ",")
 				contents = contents.split(",")
 				setattr(Obj,"categories",contents)
-
+			if key == "product" and column == "category": # modifies category into list (splitted using ",")
+				contents = contents.split(",")
+				setattr(Obj,"categories",contents)
 			if key == "blog" and column == "timestamp":
 				setattr(Obj,"timestamp",Obj.timestamp.split(" ")[0])
 

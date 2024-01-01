@@ -1,38 +1,39 @@
-        <div class="col-md-6 bg-dark d-flex align-items-center">
-          <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-            <h5 class="section-title ff-secondary text-start text-primary fw-normal">Send us a message</h5>
-            <!-- <h1 class="text-white mb-4">Send us a message!</h1> -->
-            <form id="sendusmessage">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                    <label for="name">Name</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                    <label for="email">Email</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="email" class="form-control" id="phone" placeholder="Your Phone number">
-                    <label for="email">Phone #</label>
-                  </div>
-                </div>
 
-                <div class="col-12">
-                  <div class="form-floating">
-                    <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                    <label for="message">Message</label>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <button class="btn btn-primary w-100 py-3" type="submit" onclick="sendMail();return false">Send Now</button>
-                </div>
-              </div>
-            </form>
+<div class="col-md-12  d-flex align-items-center">
+  <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+    <h5 class="section-title ff-secondary text-start text-white fw-normal">Send us a message</h5>
+    <!-- <h1 class="text-white mb-4">Send us a message!</h1> -->
+    <form id="sendusmessage">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="name" placeholder="Your Name">
+            <label for="name">Name</label>
           </div>
         </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="email" class="form-control" id="email" placeholder="Your Email">
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="number" class="form-control" id="phone" placeholder="Your Phone number">
+            <label for="email">Phone #</label>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
+            <label for="message">Message</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-light w-100 py-3" type="submit" onclick="sendMail();return false">Send Now</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
