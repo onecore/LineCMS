@@ -131,7 +131,7 @@ def load_blogs(counts=[0,5], single=None) -> tuple:
         return _d
 
 
-def load_products(single=False,search=None, category=None, offset=0,per_page=3) -> tuple: 
+def load_products(single=False,search=None, category=None, counts=[0,3]) -> tuple: 
     """Load Products (Jinja usage) inline loader for template usage
     Args:
         single (str, optional): product_id. Defaults to False.
@@ -147,7 +147,5 @@ def load_products(single=False,search=None, category=None, offset=0,per_page=3) 
     if single:
         _p = dataparser.Obj('product',ps.get_product_single(single))
         return _p
-    
-    offs = offset * int(per_page)
-    products = ps.get_product_listings(custom={"s":search,"c":category,"off":offs,"perp":per_page})
+    products = ps.get_product_listings(custom={"s":search,"c":category,"off":counts[0],"perp":counts[1]})
     return products
