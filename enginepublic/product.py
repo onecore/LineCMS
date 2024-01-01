@@ -174,7 +174,8 @@ def purchase_cancel():
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
 def pproductpage(new=None, pid=None):
-    dt = de.load_data_index(None)  # loads datas
+    sitedata = dataparser.Obj("site",de.load_data_index(True))
+
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     product = dataparser.Obj("product",de.get_product_single(pid))
@@ -195,13 +196,11 @@ def pproductpage(new=None, pid=None):
     productinfo = lite(product.variant_details)
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
-    imags = getimages(product.images)
+    imags = getimages(product.product_id)
     return render_template(f"/SYSTEM/{themes}/product.html",
                            product=product, 
                            mod=mod, 
-                           data=dt,
                            new=new, 
-                           images=imags,
                            variants=variants, 
                            productinfo=productinfo,
                            jvariants=jvariants,  # Javascript obj
@@ -210,6 +209,7 @@ def pproductpage(new=None, pid=None):
                            jslidespy=variantpush(variants, imags, js=False), # Python obj
                            similarproducts=de.productsimilar(settings.product_similar_load, product.category),  
                            mainimage=product.mainimage,
+                           site=sitedata,
                            )
 
 

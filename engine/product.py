@@ -93,13 +93,10 @@ def getimages(ids) -> list:
             if os.path.isfile(os.path.join(dir_path, file_path)) and allowed_file(file_path):
                 # add filename to list
                 res.append(file_path)
-    except FileNotFoundError: # no images
+    except Exception as e: # no images
         pass
-    
-    if res:
-        return res
-    else:
-        return []
+
+    return res
     
 def getmainimage(ids) -> str:
     "returns product's main image"
