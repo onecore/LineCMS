@@ -168,6 +168,7 @@ app.jinja_env.globals.update(link_for=rf.link_for)
 app.jinja_env.globals.update(dictcast=rf.ks_todict)
 app.jinja_env.globals.update(setattribute=dataparser.Obj)
 app.jinja_env.globals.update(htmltext=rf.ks_html2text)
+app.jinja_env.globals.update(version=rf.version)
 
 
 

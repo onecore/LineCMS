@@ -92,3 +92,6 @@ def ks_tojson(v) -> dict:
 def link_for(theme, path):
     return url_for("static",filename=f"SYSTEM/{theme}/{path}")
 
+def version():
+    return temple.cms_version, temple.cms_date
+    
