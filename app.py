@@ -21,6 +21,7 @@ from helpers import checkpoint
 from enginepublic import loaders
 from flask_mail import Mail, Message
 from ast import literal_eval as lite
+from helpers import dataparser
 
 # Dashboard imports/views
 from engine.blog import blog
@@ -42,6 +43,7 @@ from enginepublic.main import mains
 from enginepublic.blog import bloguser
 from enginepublic.product import productuser
 from enginepublic.notfound import notfound
+from enginepublic.extra import extra
 # Public views
 
 version = "1.4"
@@ -140,6 +142,7 @@ app.register_blueprint(productuser)
 app.register_blueprint(bloguser)
 app.register_blueprint(mains)
 app.register_blueprint(notfound)
+app.register_blueprint(extra)
 # User
 
 
@@ -160,16 +163,14 @@ app.jinja_env.globals.update(ks_todict=rf.ks_todict)
 """
 functions for Jinja templating (Public)
 """
-from helpers import dataparser
-app.jinja_env.globals.update(loadblogs=loaders.loadblogs)
-app.jinja_env.globals.update(loadproducts=loaders.loadproducts)
+app.jinja_env.globals.update(load_blogs=rf.load_blogs)
+app.jinja_env.globals.update(load_products=rf.load_products)
 app.jinja_env.globals.update(loaddate=loaders.dateformatter)
 app.jinja_env.globals.update(link_for=rf.link_for)
 app.jinja_env.globals.update(dictcast=rf.ks_todict)
 app.jinja_env.globals.update(setattribute=dataparser.Obj)
 app.jinja_env.globals.update(htmltext=rf.ks_html2text)
 app.jinja_env.globals.update(version=rf.version)
-
 
 
 # hooks
