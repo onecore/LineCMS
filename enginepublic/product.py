@@ -197,19 +197,20 @@ def pproductpage(new=None, pid=None):
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
     imags = getimages(product.product_id)
-    return render_template(f"/SYSTEM/{themes}/product.html",
-                           product=product, 
-                           mod=mod, 
-                           new=new, 
-                           variants=variants, 
-                           productinfo=productinfo,
-                           jvariants=jvariants,  # Javascript obj
-                           jproductinfo=jproductinfo, # Javascript obj
-                           jslides=variantpush(variants, imags, js=True),  # Javascript obj
-                           jslidespy=variantpush(variants, imags, js=False), # Python obj
-                           similarproducts=de.productsimilar(settings.product_similar_load, product.category),  
-                           mainimage=product.mainimage,
-                           site=sitedata,
+    return render_template(
+                                f"/SYSTEM/{themes}/product.html",
+                                product=product, 
+                                mod=mod, 
+                                new=new, 
+                                variants=variants, 
+                                productinfo=productinfo,
+                                jvariants=jvariants,  # Javascript obj
+                                jproductinfo=jproductinfo, # Javascript obj
+                                jslides=variantpush(variants, imags, js=True),  # Javascript obj
+                                jslidespy=variantpush(variants, imags, js=False), # Python obj
+                                similarproducts=de.productsimilar(settings.product_similar_load, product.category),  
+                                mainimage=product.mainimage,
+                                site=sitedata,
                            )
 
 

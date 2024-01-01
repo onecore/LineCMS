@@ -3,19 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="description" content="{{ site.seo_description }}" />
+<meta name="author" content="{{ site.sitename }}" />
 <title>Products - {{ site.sitename }}</title>
 <link href="/media/{{ site.favicon }}" rel="icon">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 <link href="{{ link_for('minimal','/css/styles.css') }}" rel="stylesheet" />
-
-
 </head>
+
 <body>
-    <!-- Responsive navbar-->
-  <div class="container-xxl position-relative p-0">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+
+<div class="container-xxl position-relative p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
       <a href="/" class="navbar-brand p-0">
         <img src="/media/{{ site.logo }}" alt="Logo" class="flex"> {{data['sitename']}}
       </a>
@@ -25,6 +24,8 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0 pe-4">
           <a href="/" class="nav-item nav-link active">Home</a>
+          <a href="/products" class="nav-item nav-link active">Products</a>
+          <a href="/blogs" class="nav-item nav-link active">Blogs</a>
           {% if 'authenticated' in session %}
               {{admin_button()|safe}}
           {% endif %}
@@ -32,100 +33,100 @@
         </div>
         <!-- <a href="" class="btn btn-primary py-2 px-4">Order on Skip</a> -->
       </div>
-    </nav>
-  </div>
-    <!-- Page content-->
+  </nav>
+</div>
+<!-- Page content-->
 
-    <div class="container mt-5">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item"><a href="/product-list">Products list</a></li>
-        </ol>
-      </nav>
+<div class="container mt-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/products">Products list</a></li>
+    </ol>
+  </nav>
 
-      <div class="row">
-        <div class="col float-left">
-          <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="categorysel" style="width: 200px">
-            <option selected>Group by Categories</option>
-              {% if selectedcat %}
-                <option value="{{selectedcat}}" selected>{{selectedcat}}</option>
+  <div class="row">
+    <div class="col float-left">
+      <select class="form-select form-select-md d-inline float-left" aria-label=".form-select-lg example" id="categorysel" style="width: 200px">
+        <option selected>Group by Categories</option>
+          {% if selectedcat %}
+              <option value="{{selectedcat}}" selected>{{selectedcat}}</option>
+          {% endif %}
+
+          {% for cat in categories %}
+              {% if cat[0] %}
+              <option value="{{cat[0]}}">{{cat[0]}}</option>
               {% endif %}
+          {% endfor %}
+      </select>
+    </div>
 
-              {% for cat in categories %}
-                  {% if cat[0] %}
-                  <option value="{{cat[0]}}">{{cat[0]}}</option>
-                  {% endif %}
-              {% endfor %}
-          </select>
-        </div>
-
-        <div class="col float-right">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search product" name="q" id="q">
-          <div class="input-group-append">
-            <button class="btn btn-secondary" onclick="trigg()" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-        </div>
+    <div class="col float-right">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search product" name="q" id="q">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" onclick="trigg()" type="button">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
-      <div class="row">
-          <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
-        <br>
-        <br>
-        {% if not products %}
-            <center><h3 class="pt-5">No products found..</h3></center>
-        {% endif %}
+    </div>
+    </div>
+  </div>
+  <div class="row">
+      <!-- <input class="d-inline" placeholder="Search product"><button>Search</button></input> -->
+    <br>
+    <br>
+    {% if not products %}
+        <center><h3 class="pt-5">No products found..</h3></center>
+    {% endif %}
 
-        {% for product in products %}
-          {% set product = setattribute('product',product) %}
-          {% if product.hidden == '0' %}
-              
-              <div class="col-lg-4 mb-5 pt-5">
-                  <div class="card h-100 shadow border-0">
-                    {% if product.mainimage %}
-                        <a href="/product/{{ product.product_urlsystem }}"><img class="card-img-top" src="/media/mainimage/{{product.product_id}}/{{ product.mainimage }}" alt="{{product.title}}" /></a>
-                    {% else %}
-                        <img class="card-img-top" src="/media/ni.jpeg" alt="{{ product.title }}" />
-                    {% endif %}
-                      <div class="card-body p-4">
-                          {% for category in product.categories %}
-                              <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ category }}</div>
-                          {% endfor %}
-                          <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">${{ product.price }} - {{ product.title }}</h5></a>
-                          <p class="card-text mb-0">{{ htmltext( product.body ) }}</p>
-                      </div>
-                      <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                          <div class="d-flex align-items-end justify-content-between">
-                              <div class="d-flex align-items-center">
-                                  <div class="small">
-                                      <div class="text-muted">Published {{ product.timestamp }} &middot; <button class="btn btn-xs btn-primary">View product</button></div>
-                                  </div>
+    {% for product in products %}
+      {% set product = setattribute('product',product) %}
+      {% if product.hidden == '0' %}
+          
+          <div class="col-lg-4 mb-5 pt-5">
+              <div class="card h-100 shadow border-0">
+                {% if product.mainimage %}
+                    <a href="/product/{{ product.product_urlsystem }}"><img class="card-img-top" src="/media/mainimage/{{product.product_id}}/{{ product.mainimage }}" alt="{{product.title}}" /></a>
+                {% else %}
+                    <img class="card-img-top" src="/media/ni.jpeg" alt="{{ product.title }}" />
+                {% endif %}
+                  <div class="card-body p-4">
+                      {% for category in product.categories %}
+                          <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ category }}</div>
+                      {% endfor %}
+                      <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">${{ product.price }} - {{ product.title }}</h5></a>
+                      <p class="card-text mb-0">{{ htmltext( product.body ) }}</p>
+                  </div>
+                  <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                      <div class="d-flex align-items-end justify-content-between">
+                          <div class="d-flex align-items-center">
+                              <div class="small">
+                                  <div class="text-muted">Published {{ product.timestamp }} &middot; <button class="btn btn-xs btn-primary">View product</button></div>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
-          {% endif %}
-          {% endfor %}
-            <!-- Side widgets-->
-      </div>
-        <br>
-        {% if showpager %}
-          {{ pagination.links }}
-        {% else %}
+          </div>
+      {% endif %}
+    {% endfor %}
+        <!-- Side widgets-->
+  </div>
+    <br>
+    {% if showpager %}
+        {{ pagination.links }}
+    {% else %}
 
         {% if page > 1%}
-          <ul class="pagination   justify-content-center">
+            <ul class="pagination   justify-content-center">
                 {{ pagination.prev_page|safe}}
-          </ul>
+            </ul>
         {% endif %}
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
 
-        {% include 'SYSTEM/minimal/product-includes/footer.html' %}
+{% include 'SYSTEM/minimal/product-includes/footer.html' %}
 
 <script src="/ks/js/product-listings.js"></script>
 </body>

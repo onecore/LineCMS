@@ -662,7 +662,7 @@ class SandEngine:
             "SELECT * FROM blog WHERE route='{m}'".format(m=route))
         return m.fetchone()
 
-    def get_blog_listings(self, page=0, result=10,getcount=False,quer=[]) -> list:        
+    def get_blog_listings(self, page=0, result=10,count=5,getcount=5,quer=[]) -> list:        
         """blog listings
 
         Args:
@@ -672,9 +672,10 @@ class SandEngine:
             quer (list, optional): custom query. Defaults to [].
 
         Returns:
-            list: _description_
+            list: tupled blog posts
         """
         c = self.connection.cursor()
+
         if getcount:
             fetch = c.execute("SELECT Count(*) FROM blog")
             return fetch.fetchone()

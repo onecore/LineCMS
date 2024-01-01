@@ -7,6 +7,10 @@ import json
 import settings as temple
 from flask import jsonify, url_for, session
 from ast import literal_eval as lite
+import dataengine as de
+from helpers import dataparser
+
+ps = de.SandEngine()
 
 def ks_badge_insert(v) -> str:
     """badgify strings
@@ -105,3 +109,44 @@ def version():
     "returns string version/date built"
     return temple.cms_version, temple.cms_date
     
+# public
+
+def load_blogs(counts=[0,5], single=None) -> tuple:
+    """_summary_
+
+    Args:
+        count (int [offset,offset], optional): modifies limit. Defaults to 5.
+        single (str, optional): blog route, loads single blog post. Defaults to None.
+
+    Returns:
+        tuple: _description_
+    """
+    if single:
+        _d = ps.get_blog_single(single)
+        _p = dataparser.Obj("blog",_d)
+        return _p
+    else:
+        _d = ps.get_blog_listings(quer=counts)
+        return _d
+
+
+def load_products(single=False,search=None, category=None, offset=0,per_page=3) -> tuple: 
+    """Load Products (Jinja usage) inline loader for template usage
+    Args:
+        single (str, optional): product_id. Defaults to False.
+        search (str, optional): string search. Defaults to None.
+        category (str, optional): categorize search_. Defaults to None.
+        offset (int, optional): offset search. Defaults to 0.
+        per_page (int, optional): per_page for navigation. Defaults to 3.
+
+    Returns:
+        single: returns class Obj
+        ** else: returns tuple
+    """
+    if single:
+        _p = dataparser.Obj('product',ps.get_product_single(single))
+        return _p
+    
+    offs = offset * int(per_page)
+    products = ps.get_product_listings(custom={"s":search,"c":category,"off":offs,"perp":per_page})
+    return products
