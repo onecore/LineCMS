@@ -765,13 +765,15 @@ class SandEngine:
             bool: true if no error
         """
         try:
+            c = self.connection.cursor()
             params = "INSERT INTO messages (name,email,message,phone,timestamp) VALUES (?,?,?,?,?)"
             vals = (dicts['name'], dicts['email'],
                     dicts['message'], dicts['phone'], self.timestamp())
-            self.cursor.execute(params, vals)
+            c.execute(params, vals)
             self.connection.commit()
             return True
         except Exception as e:
+            print(e)
             return False
 
     def delete_blog(self, route: str) -> bool:
