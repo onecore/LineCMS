@@ -89,7 +89,8 @@ def variantpush(v, i, js=False) -> dict:
 @productuser.route('/products', methods=['GET', 'POST'])
 def productlist():
     "views - product list"
-    dt = de.load_data_index(None)  # loads datas
+    dt = de.load_data_index(True)  # loads datas
+    sitedata = dataparser.Obj("site",de.load_data_index(True))
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
@@ -103,7 +104,6 @@ def productlist():
     }
 
 
-    alert = None
     par_q = request.args.get('search')
     par_c = request.args.get('category')
     
@@ -133,7 +133,7 @@ def productlist():
     paginate = pagination(page=page, total=products_count,record_name='products',css_framework="bootstrap5",
                             inner_window=3,outer_window=3,prev_label="< Previous Page",next_label="Next Page >",alignment="center")
     return render_template(f"/SYSTEM/{themes}/product-list.html", data=dt, mod=mod, products=products, pagination=paginate,showpager=showpager,page=page,
-                           categories=products_cats,selectedcat=par_c)
+                           categories=products_cats,selectedcat=par_c,site=sitedata)
 
 
 @productuser.route('/order/success')
