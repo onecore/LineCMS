@@ -80,6 +80,9 @@ def variantpush(v, i, main=None,js=False) -> dict:
         c = c + 1
 
     for key, val in v.items():  # variants
+        if "static/" in val:
+            val = val.replace("static/dashboard/uploads/products/","")
+
         if v[key]:
             d[val] = c
             c = c + 1
@@ -196,6 +199,12 @@ def pproductpage(new=None, pid=None):
         return redirect("/product-manage")
     
     variants = lite(product.variants)  
+    
+    if variants:
+        for k,v in variants.items():
+            v = v.replace("static/dashboard/uploads/products/","")
+            variants[k] = v
+        
     productinfo = lite(product.variant_details)
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)

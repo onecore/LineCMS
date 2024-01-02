@@ -88,14 +88,14 @@
 
                   {% if jslidespy %}
                     {% for ke ,val in jslidespy.items() %}
-                        {% if "/variants/" in ke %}
-                        <li data-thumb="/{{ke.replace('static/dashboard/uploads/products/','')}}"/>
-                            <img class="img-fluid" src="/{{ke.replace('static/dashboard/uploads/products/','')}}" style="width:100%"/>
-                        </li>
+                        {% if "/variants/" in ke %}            
+                            <li data-thumb="/{{ke.replace('static/dashboard/uploads/products/','')}}"/>
+                                <img class="img-fluid" src="/{{ke.replace('static/dashboard/uploads/products/','')}}" style="width:100%"/>
+                            </li>
                         {% else %}
-                        <li data-thumb="/media/products/{{ product.product_id }}/{{ ke }}"/>
-                            <img class="img-fluid" src="/media/products/{{product.product_id}}/{{ke}}" style="width:100%"/>
-                        </li>
+                            <li data-thumb="/media/products/{{ product.product_id }}/{{ ke }}"/>
+                                <img class="img-fluid" src="/media/products/{{product.product_id}}/{{ke}}" style="width:100%"/>
+                            </li>
                         {% endif %}
                     {% endfor %}
                   {% endif %}
