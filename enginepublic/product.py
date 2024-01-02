@@ -68,19 +68,22 @@ def safeget(ret,val):
     except:
         return val
 
-def variantpush(v, i, js=False) -> dict:
+def variantpush(v, i, main=None,js=False) -> dict:
     """
     function to change images into a dictionary with index,
     purpose to show variant image in lightslider when variant changed
     """
     c, d = 0, {}
+
     for im in i:  # images
         d[im] = c
         c = c + 1
+
     for key, val in v.items():  # variants
         if v[key]:
             d[val] = c
             c = c + 1
+
     if js:
         return json.dumps(d)
     return d
@@ -197,6 +200,7 @@ def pproductpage(new=None, pid=None):
     jvariants = json.dumps(variants)
     jproductinfo = json.dumps(productinfo)
     imags = getimages(product.product_id)
+    
     return render_template(
                                 f"/SYSTEM/{themes}/product.html",
                                 product=product, 
@@ -206,7 +210,7 @@ def pproductpage(new=None, pid=None):
                                 productinfo=productinfo,
                                 jvariants=jvariants,  # Javascript obj
                                 jproductinfo=jproductinfo, # Javascript obj
-                                jslides=variantpush(variants, imags, js=True),  # Javascript obj
+                                jslides=variantpush(variants, imags, product.mainimage,js=True),  # Javascript obj
                                 jslidespy=variantpush(variants, imags, js=False), # Python obj
                                 similarproducts=de.productsimilar(settings.product_similar_load, product.category),  
                                 mainimage=product.mainimage,
@@ -214,7 +218,7 @@ def pproductpage(new=None, pid=None):
                            )
 
 
-@productuser.route("/ks/<folder>/<file>")
-def staticgetter(folder: str, file: str) -> str:
+@productuser.route("/static/<theme>/<folder>/<file>")
+def staticgetter(theme: str, folder: str, file: str) -> str:
     "jj formatter - returns image file"
-    return send_from_directory(f"static/SYSTEM/default/{folder}", file)
+    return send_from_directory(f"static/SYSTEM/{theme}/{folder}", file)

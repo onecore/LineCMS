@@ -682,7 +682,6 @@ class SandEngine:
         
         if quer:
             c.execute("select * from blog order by id desc limit {},{}".format(quer[0],quer[1]))
-            print("here.>>>")
             return c.fetchall()
         
         m = c.execute("SELECT * FROM blog ORDER BY id DESC")
