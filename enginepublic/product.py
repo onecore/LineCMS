@@ -181,8 +181,10 @@ def purchase_cancel():
 @productuser.route("/product/<pid>", methods=['GET', 'POST'])
 @productuser.route("/product/<new>/<pid>", methods=['GET', 'POST'])
 def pproductpage(new=None, pid=None):
+    if not pid:
+        return redirect("/products")
+    
     sitedata = dataparser.Obj("site",de.load_data_index(True))
-
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     product = dataparser.Obj("product",de.get_product_single(pid))
