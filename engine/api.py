@@ -342,7 +342,7 @@ def api_deletepartialimage():
         return "KnightStudio Dashboard build ", version
 
 
-@api.route("/delete/<table>/<id>")
+@api.route("/delete/<table>/<ids>")
 @checkpoint.onlylogged
 def ddelete(table, ids):
     'Deletes table (soon to be removed)'

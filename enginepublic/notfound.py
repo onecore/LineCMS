@@ -6,6 +6,7 @@ Author: S. Jangra & Mark A.R. Pequeras
 import dataengine
 from ast import literal_eval as lite
 from flask import Blueprint, render_template
+from helpers import dataparser
 
 notfound = Blueprint("notfound", __name__)
 
@@ -19,7 +20,7 @@ def notfoundfn():
     """
     404 Error Page
     """
-    dt = de.load_data_index(None)  # loads datas
+    sitedata = dataparser.Obj("site",de.load_data_index(True))
     modules_settings = de.load_modules_settings()
     all_d = modules_settings[0]
     mod = {
@@ -31,4 +32,4 @@ def notfoundfn():
         "custom": lite(all_d[5]),
         "extras": lite(all_d[6]),
     }
-    return render_template(f"/SYSTEM/{themes}/notfound.html", data=dt, mod=mod)
+    return render_template(f"/SYSTEM/{themes}/notfound.html", site=sitedata, mod=mod)
