@@ -7,7 +7,6 @@ Author: S. Jangra & Mark A.R. Pequeras
 import shutil, settings,os
 from datetime import datetime
 
-
 def show_backs_list() -> dict:
     """shows backups for database and resources
 

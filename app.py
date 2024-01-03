@@ -83,7 +83,7 @@ mail = Mail(app)
 def sendmail_test():
     if request.method == "POST":
         subject = 'Test Email!'
-        message = '<b>Hello from KnightStudio</b>'
+        message = '<b>Hello from LineCMS</b>'
         if request.data:
             r = lite(request.data)
             msg = Message(
@@ -163,7 +163,7 @@ app.jinja_env.globals.update(ks_todict=rf.ks_todict)
 """
 functions for Jinja templating (Public)
 """
-app.jinja_env.globals.update(load_blogs=rf.load_blogs)
+app.jinja_env.globals.update(load_blogs=rf.load_blogs)     
 app.jinja_env.globals.update(load_products=rf.load_products)
 app.jinja_env.globals.update(loaddate=loaders.dateformatter)
 app.jinja_env.globals.update(link_for=rf.link_for)

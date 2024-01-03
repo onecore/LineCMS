@@ -35,6 +35,7 @@ class SandEngine:
         c = self.connection.cursor()
         c.execute(params, vals)
         self.connection.commit()
+        self.log(f"Welcome to LineCMS, Credentials Installed")
 
     def themeset(self, theme: str) -> None:
         """Sets selected theme
@@ -42,10 +43,14 @@ class SandEngine:
         Args:
             theme (str): theme name
         """
-        c = self.connection.cursor()
-        q = f"UPDATE control SET theme = '{theme}'"
-        c.execute(q)
-        self.connection.commit()
+        try:
+            c = self.connection.cursor()
+            q = f"UPDATE control SET theme = '{theme}'"
+            c.execute(q)
+            self.connection.commit()
+            self.log(f"Theme changed to {theme}")
+        except Exception as err:
+            self.log(f"Theme assignment error: {err}")
 
     def themeget(self) -> tuple:
         """Current selected theme
@@ -75,7 +80,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True    
-        except Exception as t:
+        except Exception as err:
+            self.log(f"Order fulfilment error: {err}")
             return False
 
     def orderhistory_get(self,onum: str) -> tuple:
@@ -195,7 +201,8 @@ class SandEngine:
             c.execute(secq)
             self.connection.commit()
             return f"{curr_id}{order['created']}"
-        except Exception as e:
+        except Exception as err:
+            self.log(f"Adding new order error: {err}")
             return False
         
     def productsettings_smtp(self,data: dict) -> bool:
@@ -213,8 +220,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
-            print(e)
+        except Exception as err:
+            self.log(f"SMTP assignment error: {err}")
             return False
         
     def productstock_deduct(self,ids: str,isvariant=False) -> None:
@@ -292,8 +299,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
-            print(e)
+        except Exception as err:
+            self.log(f"Shipping options error: {err}")
             return False
         
     def productsettings_str(self,data: dict) -> bool:
@@ -311,8 +318,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
-            print(e)
+        except Exception as err:
+            self.log(f"Product settings (STR) assignment error: {err}")
             return False
 
     def productsettings_set(self, sk: str, pk: str, ck: str, wk: str, wsk: str,s_enable: str,s_rates: str,s_countries: list) -> tuple:
@@ -324,8 +331,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
-            print("Error: ",e)
+        except Exception as err:
+            self.log(f"Product settings assignment: {err}")
             return False
 
     def productsettings_get(self) -> tuple:
@@ -436,8 +443,8 @@ class SandEngine:
             c.execute(inserts)
             self.connection.commit()
             return True
-        except Exception as e:
-            print(f"productimagesmod() error: {e}")
+        except Exception as err:
+            self.log(f"Product images modifier error: {err}")
             return False
 
     def delete_pr(self, value: str) -> bool:
@@ -456,9 +463,9 @@ class SandEngine:
         try:
             c.execute(q)
             self.connection.commit()
-            self.log("Product deleted")
             return True
-        except Exception as e:
+        except Exception as err:
+            self.log(f"Product deletion error: {err}")
             return False
 
     def delete_apip(self, table, column, value) -> bool:
@@ -470,10 +477,8 @@ class SandEngine:
         try:
             c.execute(q)
             self.connection.commit()
-            self.log("Product deleted")
             return True
         except Exception as e:
-            print(e)
             return False
 
     def delete_api(self, table, column, value) -> bool:
@@ -506,8 +511,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return d['product_urlsystem']
-        except Exception as e:
-            print("Error ", e)
+        except Exception as err:
+            self.log(f"Product update error: {err}")
             return False
 
     def product_publish(self, d: dict) -> bool or str:
@@ -530,8 +535,8 @@ class SandEngine:
             c.execute(params, vals)
             self.connection.commit()
             return ugen
-        except Exception as e:
-            return False
+        except Exception as err:
+            self.log(f"Product publish error: {err}")
 
     def delete_image_partial(self, data: dict) -> None:
         """deletes uploaded yet changed image file (unused) (Blog publish)
@@ -547,7 +552,6 @@ class SandEngine:
         q = "UPDATE blog SET image = '' WHERE route = '{r}';".format(
             r=data['route'])
         c.execute(q)
-        print("Updated...")
         self.connection.commit()
 
     def get_product_single(self, route: str, checkout=False) -> tuple:
@@ -624,7 +628,8 @@ class SandEngine:
             c.execute(params, vals)
             self.connection.commit()
             return True
-        except Exception as e:
+        except Exception as err:
+            self.log(f"Blog publish error: {err}")
             return False
 
     def blog_update(self, dicts: dict) -> bool:
@@ -643,8 +648,8 @@ class SandEngine:
             self.connection.commit()
             print("Blog updated")
             return True
-        except Exception as e:
-            print(e, "<< err")
+        except Exception as err:
+            self.log(f"Blog update error: {err}")
             return False
 
 
@@ -773,8 +778,8 @@ class SandEngine:
             c.execute(params, vals)
             self.connection.commit()
             return True
-        except Exception as e:
-            print(e)
+        except Exception as err:
+            self.log(f"Visitor message error: {err}")
             return False
 
     def delete_blog(self, route: str) -> bool:
@@ -791,7 +796,6 @@ class SandEngine:
             q = "DELETE FROM blog WHERE route = {ids};".format(ids=route)
             c.execute(q)
             self.connection.commit()
-            self.log("Blog post deleted #id "+route)
             return True
         except Exception as e:
             self.log("Unable to delete blog post, "+str(e))
@@ -810,7 +814,6 @@ class SandEngine:
         try:
             q = "DELETE FROM messages WHERE id = {ids};".format(ids=ids)
             c.execute(q)
-            self.log("Message deleted #id "+ids)
             self.connection.commit()
             return True
         except Exception as e:
@@ -889,7 +892,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
+        except Exception as err:
+            self.log(f"Module update error: {err}")
             return False
 
     def update_credential(self, uname: str, newpwd: str) -> bool:
@@ -909,7 +913,8 @@ class SandEngine:
             c.execute(q)
             self.connection.commit()
             return True
-        except Exception as e:
+        except Exception as err:
+            self.log(f"Update credential error: {err}")
             return False
 
     def get_messages(self) -> tuple:
