@@ -22,13 +22,8 @@ Python  3.5 or greater is required
 		 flask run
 By default the server will be available on `127.0.0.1:5000`
 
-Online demo:
-http://demo.knightstudio.ca
-
-Dashboard:
-http://demo.knightstudio.ca/dashboard
-U: admin   P: admin
-
+Online docs:
+https://www.linecms.com/documentation
 
 
 **Not recommended for deployment yet, not stable and still under development, We published it to receive any ideas reviews etc.
