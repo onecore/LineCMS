@@ -102,7 +102,15 @@ def ks_tojson(v) -> dict:
     return json.dumps(v)
 
 def link_for(theme, path):
-    "returns static path"
+    """retrieve a file from static's theme folder
+
+    Args:
+        theme (str): theme name
+        path (str): file name or a folder path to a file
+
+    Returns:
+        string: url of a file
+    """
     return url_for("static",filename=f"SYSTEM/{theme}/{path}")
 
 def version():
@@ -112,14 +120,14 @@ def version():
 # public
 
 def load_blogs(counts=[0,5], single=None) -> tuple:
-    """_summary_
+    """loads blogs
 
     Args:
         count (int [offset,offset], optional): modifies limit. Defaults to 5.
         single (str, optional): blog route, loads single blog post. Defaults to None.
 
     Returns:
-        tuple: _description_
+        tuple: list of blogs
     """
     if single:
         _d = ps.get_blog_single(single)

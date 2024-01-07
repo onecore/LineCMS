@@ -27,12 +27,14 @@ class Obj:
 			setattr(Obj,column,contents)
 
 			if key == "blog" and column == "category": # modifies category into list (splitted using ",")
-				contents = contents.split(",")
-				setattr(Obj,"categories",contents)
+				if "," in contents:
+					contents = contents.split(",")
+					setattr(Obj,"categories",contents)
 
 			if key == "product" and column == "category": # modifies category into list (splitted using ",")
-				contents = contents.split(",")
-				setattr(Obj,"categories",contents)
+				if "," in contents:
+					contents = contents.split(",")
+					setattr(Obj,"categories",contents)
 				
 			if key == "blog" and column == "timestamp":
 				setattr(Obj,"timestamp",Obj.timestamp.split(" ")[0])
@@ -40,10 +42,12 @@ class Obj:
 		
 	@classmethod
 	def getempty(cls):
+		"returns empty column(s)"
 		return cls.empty
 	
 	@classmethod
 	def blog_timestamp(cls):
+		"retunrs only date (excluded time)"
 		return cls.timestamp.split(" ")[0]
 
 		
