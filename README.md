@@ -26,7 +26,7 @@ Online docs:
 https://www.linecms.com/documentation
 
 
-**Not recommended for deployment yet, not stable and still under development, We published it to receive any ideas reviews etc.
-**
+Author: Mark Anthony R. Pequeras
+
 
 
